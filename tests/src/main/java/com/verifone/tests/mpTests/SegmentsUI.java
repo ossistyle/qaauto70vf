@@ -56,8 +56,71 @@ public class SegmentsUI extends BaseTest {
 		Steps.loginMPPortal(EOAdminSupportMail, EOAdminSupportPwd, EOAdminSupportAnsw);
 	}
 
+	// In case segment from old test exist in MP need to delete it before test start
+    @Test(enabled = true, priority=1, testName = "Delete segment before test", groups = { "MPRegression" }, alwaysRun = true)
+    public void DeleteSegmentIfExistUI() throws Exception {
+        WebDriver driver = new MPHomePage().getDriver();
+        Boolean TestPassFlag = true;
 
-		@Test(enabled = true, priority=1, testName = "Add Segment Group", groups = { "MPRegression" }, alwaysRun = true)
+        navigator();
+        ArrayList<String> availableWindows = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
+        MPHomePage MPHomePage = (MPHomePage) PageFactory.getPage("MPHomePage");
+
+
+        testLog.info("------------------------------------------------- Navigate to My Profile page -------------------------------------------------");
+
+        MPHomePage.clickHeaderManageMenu();
+        Thread.sleep(TimeOut);
+        MPHomePage.clickMarketplaceSubMenu();
+
+        testLog.info("------------------------------------------------- Manage Marketplace page -------------------------------------------------");
+
+        Thread.sleep(TimeOut + 1000);
+        availableWindows = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
+        ManageMarketplacePage ManageMarketplacePage = (ManageMarketplacePage) PageFactory.getPage("ManageMarketplacePage");
+
+//		Click Product tab
+        ManageMarketplacePage.clickTabProduct();
+
+        testLog.info("------------------------------------------------- Products tab -------------------------------------------------");
+
+        Thread.sleep(TimeOut);
+        availableWindows = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
+        ProductsTab ProductsTab = (ProductsTab) PageFactory.getPage("ProductsTab");
+        ProductsTab.clickMenuSegmentGroups();
+
+        Thread.sleep(TimeOut + 1000);
+        int ActualRow = ProductsTab.getTblRowSegmentGroups(SegmentGroupName);
+
+        if(ActualRow>0){
+        while(ActualRow>0) {
+            ProductsTab.clickMenuTriggerSegmentGroup(ActualRow);
+            Thread.sleep(TimeOut);
+            ProductsTab.clickMenuContextDeleteSegment(String.valueOf(ActualRow));
+
+            testLog.info("------------------------------------------------- Verify Delete dialog visible before test --------------------------------------------------");
+            if (!Assertions.compareBoolean(true, ProductsTab.existsDlgDeleteSegmentGroup(), "Delete Segment Group dialog displayed as expected: ", testLog, driver)) {
+                TestPassFlag = false;
+            }
+            ProductsTab.clickDlgDeleteSegmentGroupBtnYes();
+
+            testLog.info("------------------------------------------------- Verify Confirmation message before test --------------------------------------------------");
+            if (!Assertions.compareBoolean(true, ProductsTab.msgConfirmationText().contains("deleted"), "Delete Segment Group confirmation message displayed as expected: ", testLog, driver)) {
+                TestPassFlag = false;
+            }
+            ActualRow = ProductsTab.getTblRowSegmentGroups(SegmentGroupName);
+            Assert.assertTrue(TestPassFlag);
+        }}
+        else{
+            testLog.info("------------------------------------------------- Check before test didn't find existing segment --------------------------------------------------");
+            Assert.assertTrue(TestPassFlag);
+        }
+    }
+
+		@Test(enabled = true, priority=2, testName = "Add Segment Group", groups = { "MPRegression" }, alwaysRun = true)
         public void AddSegmentGroupUI() throws Exception {
             WebDriver driver = new MPHomePage().getDriver();
             Boolean TestPassFlag = true;
@@ -157,7 +220,7 @@ public class SegmentsUI extends BaseTest {
         }
 
 
-        @Test(enabled = true, priority=2, testName = "Edit Segment Group, Add Segments", groups = { "MPRegression" }, alwaysRun = true)
+        @Test(enabled = true, priority=3, testName = "Edit Segment Group, Add Segments", groups = { "MPRegression" }, alwaysRun = true)
 
         public void EditSegmentGroupAddSegmentsUI() throws Exception {
             WebDriver driver = new MPHomePage().getDriver();
@@ -278,7 +341,7 @@ public class SegmentsUI extends BaseTest {
             }
             Assert.assertTrue(TestPassFlag);
         }
-        @Test(enabled = true, priority=3, testName = "Edit Segment, Add Company", groups = { "MPRegression" }, alwaysRun = true)
+        @Test(enabled = true, priority=4, testName = "Edit Segment, Add Company", groups = { "MPRegression" }, alwaysRun = true)
 
         public void EditSegmentAddCompanyUI() throws Exception {
             WebDriver driver = new MPHomePage().getDriver();
@@ -412,7 +475,7 @@ public class SegmentsUI extends BaseTest {
             Thread.sleep(TimeOut + 4000);
             Assert.assertTrue(TestPassFlag);
         }
-        @Test(enabled = true, priority=4, testName = "Associate Product to Segment", groups = { "MPRegression" }, alwaysRun = true)
+        @Test(enabled = true, priority=5, testName = "Associate Product to Segment", groups = { "MPRegression" }, alwaysRun = true)
 
         public void AssociateProductToSegmentUI() throws Exception {
             WebDriver driver = new MPHomePage().getDriver();
@@ -526,7 +589,7 @@ public class SegmentsUI extends BaseTest {
             }
             Assert.assertTrue(TestPassFlag);
         }
-	@Test(enabled = true, priority=5, testName = "Merchant login and Search Products of his and other Segments", groups = { "MPRegression" }, alwaysRun = true)
+	@Test(enabled = true, priority=6, testName = "Merchant login and Search Products of his and other Segments", groups = { "MPRegression" }, alwaysRun = true)
 
 	public void MerchantSearchProductUI() throws Exception {
 		//navigation for merchant one
@@ -568,7 +631,7 @@ public class SegmentsUI extends BaseTest {
 		Assert.assertTrue(TestPassFlag);
 	}
 
-	@Test(enabled = true, priority=6, testName = "Second Merchant login and Search Products of his and other Segments", groups = { "MPRegression" }, alwaysRun = true)
+	@Test(enabled = true, priority=7, testName = "Second Merchant login and Search Products of his and other Segments", groups = { "MPRegression" }, alwaysRun = true)
 
 	public void MerchantSearchProduct2UI() throws Exception {
 		WebDriver driver = new MPHomePage().getDriver();
@@ -607,8 +670,7 @@ public class SegmentsUI extends BaseTest {
 		}
 		Assert.assertTrue(TestPassFlag);
 	}
-
-	@Test(enabled = true, priority=7, testName = "Delete Segment Group", groups = { "MPRegression" }, alwaysRun = true)
+	@Test(enabled = true, priority=8, testName = "Delete Segment Group", groups = { "MPRegression" }, alwaysRun = true)
 
 	public void DeleteSegmentGroupUI() throws Exception {
 		WebDriver driver = new MPHomePage().getDriver();
