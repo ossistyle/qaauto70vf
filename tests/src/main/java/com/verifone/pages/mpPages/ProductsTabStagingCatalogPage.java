@@ -4,12 +4,6 @@ package com.verifone.pages.mpPages;
 import com.verifone.pages.BasePage;
 import org.openqa.selenium.By;
 
-//--------------------------------------------------------------------------
-/**
- * This class described all elements and actions can be executed on Staging Catalog.
- * @authors Sergey Vinickiy
- */
-//--------------------------------------------------------------------------
 
 public class ProductsTabStagingCatalogPage extends BasePage {
 

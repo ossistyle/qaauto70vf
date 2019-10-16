@@ -617,7 +617,19 @@ public class SegmentsUI extends BaseTest {
 
 		testLog.info("------------------------------------------------- Verify Product visible --------------------------------------------------");
 		if (!Assertions.compareBoolean(true, MarketplacePage.existsProductByName(Product1), "Product "+Product1+" found as expected: ", testLog, driver)) {
-			TestPassFlag = false;
+            int k =0;
+            while(k<12){
+                driver.navigate().refresh();
+                //MarketplacePage.inputSearchProduct(Product1);
+                Thread.sleep(TimeOut);
+                MarketplacePage.clickBtnSearchProduct();
+                if(MarketplacePage.existsProductByName(Product1)){
+                    break;
+                }
+                else{TestPassFlag = false;}
+                k++;
+                Thread.sleep(30000);
+            }
 		}
 		testLog.info("------------------------------------------------- Search for Product from other Segment --------------------------------------------------");
 		MarketplacePage.inputSearchProduct(Product2);
@@ -657,7 +669,19 @@ public class SegmentsUI extends BaseTest {
 
 		testLog.info("------------------------------------------------- Verify Product visible --------------------------------------------------");
 		if (!Assertions.compareBoolean(true, MarketplacePage.existsProductByName(Product2), "Product "+Product2+" found as expected: ", testLog, driver)) {
-			TestPassFlag = false;
+		    int k =0;
+		    while(k<12){
+                driver.navigate().refresh();
+                //MarketplacePage.inputSearchProduct(Product2);
+                Thread.sleep(TimeOut);
+                MarketplacePage.clickBtnSearchProduct();
+                if(MarketplacePage.existsProductByName(Product2)){
+                    break;
+                }
+                else{TestPassFlag = false;}
+                k++;
+                Thread.sleep(30000);
+            }
 		}
 		testLog.info("------------------------------------------------- Search for Product from other Segment --------------------------------------------------");
 		MarketplacePage.inputSearchProduct(Product1);

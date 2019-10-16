@@ -178,12 +178,6 @@ public class EditSegmentGroupPage extends BasePage {
         click(menuContextEditSegmentLoc);
     }
 //--------------------------------------------------------------------------
-//--------------------------------------------------------------------------
-    /**
-     * Method: Get list of Create Buttons
-     * @authors Sergey Vinickiy
-     */
-//--------------------------------------------------------------------------
     public List<WebElement> getCreateBtnList (){
         createButtonList = getWebElements(btnCreateSegmentLoc, 500, ExpectedConditions.presenceOfElementLocated(btnCreateSegmentLoc));
         return createButtonList;
@@ -205,6 +199,5 @@ public class EditSegmentGroupPage extends BasePage {
     public void clickOnManualSegment(){
         click(titleManual);
     }
-
-
+//--------------------------------------------------------------------------
 }
