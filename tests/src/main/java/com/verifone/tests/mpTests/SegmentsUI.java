@@ -413,6 +413,7 @@ public class SegmentsUI extends BaseTest {
 
             testLog.info("------------------------------------------------- Search for Company ----------------------------------------------------");
             EditSegmentPage.inputSearchCompany(MerchantCompany1);
+            Thread.sleep(TimeOut);
             EditSegmentPage.clickBtnSearchCompany();
 
             testLog.info("----------------------------------------------------- Select Company ----------------------------------------------------");
@@ -458,6 +459,7 @@ public class SegmentsUI extends BaseTest {
 
             testLog.info("------------------------------------------------- Search for Company ----------------------------------------------------");
             EditSegmentPage.inputSearchCompany(MerchantCompany2);
+            Thread.sleep(TimeOut);
             EditSegmentPage.clickBtnSearchCompany();
 
             testLog.info("----------------------------------------------------- Select Company ----------------------------------------------------");
@@ -618,9 +620,9 @@ public class SegmentsUI extends BaseTest {
 		testLog.info("------------------------------------------------- Verify Product visible --------------------------------------------------");
 		if (!Assertions.compareBoolean(true, MarketplacePage.existsProductByName(Product1), "Product "+Product1+" found as expected: ", testLog, driver)) {
             int k =0;
-            while(k<12){
+            while(k<6){
                 driver.navigate().refresh();
-                //MarketplacePage.inputSearchProduct(Product1);
+                MarketplacePage.inputSearchProduct(Product1);
                 Thread.sleep(TimeOut);
                 MarketplacePage.clickBtnSearchProduct();
                 if(MarketplacePage.existsProductByName(Product1)){
@@ -670,7 +672,7 @@ public class SegmentsUI extends BaseTest {
 		testLog.info("------------------------------------------------- Verify Product visible --------------------------------------------------");
 		if (!Assertions.compareBoolean(true, MarketplacePage.existsProductByName(Product2), "Product "+Product2+" found as expected: ", testLog, driver)) {
 		    int k =0;
-		    while(k<12){
+		    while(k<6){
                 driver.navigate().refresh();
                 //MarketplacePage.inputSearchProduct(Product2);
                 Thread.sleep(TimeOut);
