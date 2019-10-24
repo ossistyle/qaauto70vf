@@ -422,7 +422,9 @@ public class SegmentsUI extends BaseTest {
 
             testLog.info("------------------------------------------------- Update Segmant Name----------------------------------------------------");
             String n = EditSegmentPage.GetSegmentName();
+            Thread.sleep(TimeOut);
             EditSegmentPage.inputSegmentName(n+" Updated");
+            Thread.sleep(TimeOut);
 
             testLog.info("------------------------------------------------- Update Segmant Code----------------------------------------------------");
             String c = EditSegmentPage.GetSegmentCode();
