@@ -123,4 +123,10 @@
         </classes>
     </test>
 
+    <test name="SegmentsUI">
+        <classes>
+            <class name="com.verifone.tests.mpTests.SegmentsUI"/>
+        </classes>
+    </test>
+
 </suite>

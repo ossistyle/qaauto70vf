@@ -192,12 +192,6 @@ public class ProductsTab extends BasePage {
         click(dlgDeleteSegmentGroupBtnYesLoc);
     }
 //--------------------------------------------------------------------------
-// --------------------------------------------------------------------------
-    /**
-     * Method: Click on Staging Catalog menu.
-     * @authors Sergey Vinickiy
-     */
-//--------------------------------------------------------------------------
     public void clickMenuStagingCatalog () throws InterruptedException {
         waitForLoader(menuStagingCatalog);
         click(menuStagingCatalog);

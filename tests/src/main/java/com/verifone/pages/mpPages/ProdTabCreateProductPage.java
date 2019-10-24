@@ -1,13 +1,5 @@
 package com.verifone.pages.mpPages;
 
-//--------------------------------------------------------------------------
-/**
- * This class described all elements and actions can be executed on Create Product page in Product tab.
- * @authors Sergey Vinickiy
- */
-//--------------------------------------------------------------------------
-
-
 import com.verifone.pages.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
