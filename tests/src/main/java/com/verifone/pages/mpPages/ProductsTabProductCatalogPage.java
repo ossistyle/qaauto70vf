@@ -19,6 +19,7 @@ public class ProductsTabProductCatalogPage extends BasePage {
     private By btnConfigProductLoc = By.xpath("//*[@class='adb-js-context_menu adb-context_menu']");
     private By menuEditMarketplaceSettingsLoc = By.xpath("//span[text()='Edit Marketplace Settings']");
 
+
     public ProductsTabProductCatalogPage() {
         super(url, title);
     }
@@ -62,6 +63,17 @@ public class ProductsTabProductCatalogPage extends BasePage {
     public void clickMenuEditMarketplaceSettings()  throws InterruptedException {
         click(menuEditMarketplaceSettingsLoc);
     }
+
 //--------------------------------------------------------------------------
+    public Boolean verifyProductExist(By name) throws Exception {
+       return isExists(name,20);
+    }
+//--------------------------------------------------------------------------
+public void removeProduct(By name) throws Exception {
+     isExists(name,20);
+}
+//--------------------------------------------------------------------------
+
+
 }
 
