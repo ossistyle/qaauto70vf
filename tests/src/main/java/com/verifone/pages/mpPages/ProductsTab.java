@@ -5,6 +5,8 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import static com.verifone.tests.mpTests.PurchaseBundleUI.fBPath;
 //--------------------------------------------------------------------------
 
 /**
@@ -17,22 +19,22 @@ public class ProductsTab extends BasePage {
     private final static String url = "";
     private final static String title = "Segment Groups";
 
+    private By menuProductionCatalog = By.xpath("//a[text()='Production Catalog']");
+    private By menuBundle = By.xpath("//a[text()='Bundles']");
     private By menuSegmentGroupsLoc = By.xpath("//a[text()='Segments']");
+    private By menuStagingCatalog = By.xpath("//a[text()='Staging Catalog']");
     private By titleSegmentGroupsLoc = By.xpath("//div[text()='Segment Folders']");
     private By btnCreateSegmentGroupsLoc = By.xpath("//*[@data-auto-action='redirect:create-company-group']");
     private By titleSegmentGroupLoc = By.xpath("//th[text()='Segment group']");
     private By btnCreateSegmentGroupLoc = By.xpath("//span[text()='Create Segment Folder']");
     private By tblSegmentGroupsLoc = By.xpath("//*[@style='border-collapse: collapse; border-spacing: 0px; width: 100%;']");
     //    private By menuContextEditSegmentLoc = By.xpath("(//a[text()='Edit'])[5]");
-    private By menuStagingCatalog = By.xpath("//a[text()='Staging Catalog']");
-    private By menuProductionCatalog = By.xpath("//a[text()='Production Catalog']");
     private By dlgDeleteSegmentGroupLoc = By.xpath("//*[@role='dialog']");
     private By dlgDeleteSegmentGroupBtnYesLoc = By.xpath("//span[text()='Yes']");
-
-
     private By msgConfirmationLoc = By.xpath("//*[@class='adb-local_alert--content']");
     private By msgConfirmationLoc1 = By.xpath("//*[@class='feedbackPanelINFO']");
-    private By bundleLoc = By.xpath("//a[text()='Bundles']");
+    private By waitToAppear = By.xpath("//a[text()='New Bundle']");
+
 
     public ProductsTab() {
         super(url, title);
@@ -217,23 +219,25 @@ public class ProductsTab extends BasePage {
      * @authors Yana Fridman
      */
 //--------------------------------------------------------------------------
-    public void clickDlgDeleteSegmentGroupBtnYes() throws InterruptedException {
+    public void clickDlgDeleteSegmentGroupBtnYes() {
 
         click(dlgDeleteSegmentGroupBtnYesLoc);
     }
 
 //--------------------------------------------------------------------------
-    public void clickMenuStagingCatalog() throws InterruptedException {
+    public void clickMenuStagingCatalog() {
         waitForLoader(menuStagingCatalog);
         click(menuStagingCatalog);
     }
 
 //--------------------------------------------------------------------------
     public void clickMenuBundle() throws InterruptedException {
-        click(bundleLoc);
+        Thread.sleep(4000);
+        click(menuBundle);
+        waitUntilPageLoad(waitToAppear);
     }
 //--------------------------------------------------------------------------
-    public void clickMenuProductionCatalog() throws InterruptedException {
+    public void clickMenuProductionCatalog() {
         click(menuProductionCatalog);
     }
 

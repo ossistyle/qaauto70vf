@@ -165,7 +165,8 @@ public class PageFactory {
                 return new MarketplacePage();
             case "LoginMPPortal":
                 return new LoginMPPortal();
-
+            case "ProductsTabBundlePage":
+                return new ProductsTabBundlePage();
             default:
                 System.out.println("Can not create a Page, missing implementation of class " + page);
         }
