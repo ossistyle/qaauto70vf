@@ -1,12 +1,7 @@
 package com.verifone.pages.mpPages;
 
 import com.verifone.pages.BasePage;
-import java.util.List;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import static com.verifone.tests.mpTests.PurchaseBundleUI.fBPath;
 //--------------------------------------------------------------------------
 
 /**
@@ -28,7 +23,6 @@ public class ProductsTab extends BasePage {
     private By titleSegmentGroupLoc = By.xpath("//th[text()='Segment group']");
     private By btnCreateSegmentGroupLoc = By.xpath("//span[text()='Create Segment Folder']");
     private By tblSegmentGroupsLoc = By.xpath("//*[@style='border-collapse: collapse; border-spacing: 0px; width: 100%;']");
-    //    private By menuContextEditSegmentLoc = By.xpath("(//a[text()='Edit'])[5]");
     private By dlgDeleteSegmentGroupLoc = By.xpath("//*[@role='dialog']");
     private By dlgDeleteSegmentGroupBtnYesLoc = By.xpath("//span[text()='Yes']");
     private By msgConfirmationLoc = By.xpath("//*[@class='adb-local_alert--content']");
@@ -115,6 +109,9 @@ public class ProductsTab extends BasePage {
         return getText(msgConfirmationLoc);
     }
 //--------------------------------------------------------------------------
+    public String msgConfirmationText(By str) throws InterruptedException {
+        return getText(str);
+}
 //--------------------------------------------------------------------------
 
     /**
