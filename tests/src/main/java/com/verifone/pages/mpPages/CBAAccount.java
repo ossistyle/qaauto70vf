@@ -27,7 +27,7 @@ public class CBAAccount extends BasePage {
     private By manageApps = By.xpath("//*[@class='adb-link__nav adb-stack--item_content js-count'][@href='/account/apps']");
     private By mySearch = By.xpath("//input[@class='js-search-input adb-input_row--item_content adb-search_field--input adb-text__small']");
     private By iconSearch = By.xpath("//button[@class='adb-input_row--item_content adb-search_field--button adb-button__small']");
-    private By allertContent = By.xpath("(//*[@class='adb-local_alert--content'])[2]");
+    private By allertContent = By.xpath("(//*[@class='adb-local_alert--content'])[3]");
     private By manage = By.xpath("//button[@class='adb-button adb-button__neutral adb-js-context_menu--trigger adb-context_menu--trigger']");
     private By cancelSubscr = By.xpath("//a[@class='cancelSubscriptionLink adb-link__option adb-stack--item_content']");
     private By cancelCheckboxBundle = By.xpath("//input[@id='checkbox-cancel-bundle']");
@@ -97,6 +97,8 @@ public class CBAAccount extends BasePage {
         click(iconSearch);
         //ExpectedConditions.presenceOfElementLocated(manage);
         hoverAndClickOnElement(manage);
+        hoverAndClickOnElement(cancelSubscr);
+
 
         WebElement element = getWebElement(allertContent, 30, ExpectedConditions.presenceOfElementLocated(allertContent));
         List<WebElement> tr = element.findElements(By.className("app-tile"));

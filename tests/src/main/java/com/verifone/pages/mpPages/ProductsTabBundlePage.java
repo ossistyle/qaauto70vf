@@ -57,6 +57,12 @@ public class ProductsTabBundlePage extends BasePage {
         By removeSpecificBundleBtn = By.xpath(deleteBtn + "["+row+"]");
         click(removeSpecificBundleBtn);
         click(approveDeleteBtn);
+        try{
+            Thread.sleep(6000);
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addBundle() {

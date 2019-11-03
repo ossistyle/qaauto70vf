@@ -26,7 +26,7 @@ public class ProductsTab extends BasePage {
     private By dlgDeleteSegmentGroupLoc = By.xpath("//*[@role='dialog']");
     private By dlgDeleteSegmentGroupBtnYesLoc = By.xpath("//span[text()='Yes']");
     private By msgConfirmationLoc = By.xpath("//*[@class='adb-local_alert--content']");
-    private By msgConfirmationLoc1 = By.xpath("//*[@class='feedbackPanelINFO']");
+    private By msgConfirmationLoc1 = By.xpath("//span[@class='feedbackPanelINFO']");
     private By waitToAppear = By.xpath("//a[text()='New Bundle']");
 
 

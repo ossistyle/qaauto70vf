@@ -7,7 +7,6 @@ import com.verifone.pages.mpPages.*;
 import com.verifone.tests.BaseTest;
 import com.verifone.tests.steps.mpPortal.Steps;
 import com.verifone.utils.Assertions;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -31,10 +30,6 @@ public class PurchaseBundleUI extends BaseTest {
     private String app2 = "ADQA Conflict Package";
     private String app3 = "NewBroccoli";
     private String app4 = "New Spinach";
-    private static String Env = "https://verifoneausandbox.byappdirect.com/login";
-    private static String MerchantEmail1 = "merchantforautomation01@getnada.com";
-    private static String MerchantPassw1 = "Veri1234";
-
 
 
 
@@ -47,7 +42,8 @@ public class PurchaseBundleUI extends BaseTest {
         Steps.loginMPPortal(EOAdminSupportMail, EOAdminSupportPwd, EOAdminSupportAnsw);
     }
 
-   /* @Test(enabled = true, priority=1, testName = "Verify no bundle from old test exist in MP", groups = { "MPRegression" }, alwaysRun = true)
+
+    @Test(enabled = true, priority=1, testName = "Verify no bundle from old test exist in MP", groups = { "MPRegression" }, alwaysRun = true)
     public void bundleVerificationUI() throws Exception {
 
         WebDriver driver = new MPHomePage().getDriver();
@@ -85,47 +81,85 @@ public class PurchaseBundleUI extends BaseTest {
         //Checking first product if exist
         productsTab.clickMenuProductionCatalog();
         prodCatalog.clickLastPage();
+
         int ActualRow = prodCatalog.getTblRowProduct(fBundle);
-        if(ActualRow!=0)
-        {
-            prodCatalog.clickMenuEditProduct(ActualRow);
-            prodCatalog.clickMenuRemoveProduct(ActualRow);
-            productsTab.clickMenuBundle();
-            int ActualBundleRow = productsTabBundlePage.getTblRowBundle(fBundle,bundleTbl);
-            productsTabBundlePage.clickMenuEditBundle(ActualBundleRow);
-            productsTabBundlePage.clickMenuDeleteBundle(ActualBundleRow);
-
-            testLog.info("------------------------------------------------- Verify Confirmation First bundle deleted --------------------------------------------------");
-            if (!Assertions.compareBoolean(true, productsTab.msgConfirmationText1().contains("deleted " + fBundle), "Delete Bundle confirmation message displayed as expected: ", testLog, driver)) {
-                TestPassFlag = false;
+        if(ActualRow!=0) {
+            while (ActualRow != 0) {
+                prodCatalog.clickMenuEditProduct(ActualRow);
+                prodCatalog.clickMenuRemoveProduct(ActualRow);
+                ActualRow = prodCatalog.getTblRowProduct(fBundle);
             }
-
-            productsTab.clickMenuProductionCatalog();
-            prodCatalog.clickLastPage();
         }
 
         //Checking second product if exist
         int ActualRow2 = prodCatalog.getTblRowProduct(sBundle);
-
         if(ActualRow2!=0)
         {
-            prodCatalog.clickLastPage();
-            prodCatalog.clickMenuEditProduct(ActualRow);
-            prodCatalog.clickMenuRemoveProduct(ActualRow);
-            productsTab.clickMenuBundle();
-            int ActualBundleRow = productsTabBundlePage.getTblRowBundle(sBundle,bundleTbl);
-            productsTabBundlePage.clickMenuEditBundle(ActualBundleRow);
-            productsTabBundlePage.clickMenuDeleteBundle(ActualBundleRow);
+            while(ActualRow2!=0) {
+                prodCatalog.clickMenuEditProduct(ActualRow2);
+                prodCatalog.clickMenuRemoveProduct(ActualRow2);
+                ActualRow2 = prodCatalog.getTblRowProduct(sBundle);
+            }
+        }
 
-            testLog.info("------------------------------------------------- Verify Confirmation Second bundle deleted --------------------------------------------------");
-            if (!Assertions.compareBoolean(true, productsTab.msgConfirmationText1().contains("deleted " + sBundle), "Delete Bundle confirmation message displayed as expected: ", testLog, driver)) {
-                TestPassFlag = false;
+        productsTab.clickMenuBundle();
+
+        int ActualBundleRow = productsTabBundlePage.getTblRowBundle(sBundle, bundleTbl);
+        if(ActualBundleRow!=0) {
+            while(ActualBundleRow!=0) {
+                productsTabBundlePage.clickMenuEditBundle(ActualBundleRow);
+                productsTabBundlePage.clickMenuDeleteBundle(ActualBundleRow);
+
+                testLog.info("------------------------------------------------- Verify Confirmation Second bundle deleted --------------------------------------------------");
+                if (!Assertions.compareBoolean(true, productsTab.msgConfirmationText1().contains("deleted " + sBundle), "Delete Bundle confirmation message displayed as expected: ", testLog, driver)) {
+                    TestPassFlag = false;
+                }
+
+                ActualBundleRow = productsTabBundlePage.getTblRowBundle(sBundle, bundleTbl);
+            }
+        }
+
+        int ActualBundleRow2 = productsTabBundlePage.getTblRowBundle(fBundle,bundleTbl);
+        if(ActualBundleRow2!=0) {
+            while(ActualBundleRow2!=0) {
+                productsTabBundlePage.clickMenuEditBundle(ActualBundleRow2);
+                productsTabBundlePage.clickMenuDeleteBundle(ActualBundleRow2);
+
+                testLog.info("------------------------------------------------- Verify Confirmation First bundle deleted --------------------------------------------------");
+                if (!Assertions.compareBoolean(true, productsTab.msgConfirmationText1().contains("deleted " + fBundle), "Delete Bundle confirmation message displayed as expected: ", testLog, driver)) {
+                    TestPassFlag = false;
+                }
+                ActualBundleRow2 = productsTabBundlePage.getTblRowBundle(fBundle,bundleTbl);
             }
         }
         Assert.assertTrue(TestPassFlag);
-    }*/
-/*
-    @Test(enabled = true, priority=2, testName = "Create Bundle with Checkout for partial bundle", groups = { "MPRegression" }, alwaysRun = true)
+    }
+
+    @Test(enabled = true, priority=2, testName = "Verify no apps from old test exist in MP", groups = { "MPRegression" }, alwaysRun = true)
+    public void appVerificationUI() throws Exception {
+
+        loginCBA(createMerchantUser());
+
+        CBAAccount account = PageFactory.getCBAAccount();
+        try{
+        account.cancelSubscribsion(app1);}
+        catch(Exception e){
+            testLog.info(app1 +" wasn't exist in app list before test");
+        }
+        try{
+        account.cancelSubscribsion(app2);}
+        catch(Exception e){
+            testLog.info(app2 +" wasn't exist in app list before test");
+        }
+        try{
+        account.cancelBundleSubsucribsion(app3);}
+        catch(Exception e){
+            testLog.info(app3 +" wasn't exist in app list before test");
+        }
+
+    }
+
+    @Test(enabled = true, priority=3, testName = "Create Bundle with Checkout for partial bundle", groups = { "MPRegression" }, alwaysRun = true)
     public void newBundlePartialCheckoutUI() throws Exception {
 
         WebDriver driver = new MPHomePage().getDriver();
@@ -184,7 +218,7 @@ public class PurchaseBundleUI extends BaseTest {
         Assert.assertTrue(TestPassFlag);
     }
 
-    @Test(enabled = true, priority=3, testName = "Create Bundle with full checkout  bundle", groups = { "MPRegression" }, alwaysRun = true)
+    @Test(enabled = true, priority=4, testName = "Create Bundle with full checkout  bundle", groups = { "MPRegression" }, alwaysRun = true)
     public void newBundleFullCheckoutUI() throws Exception {
 
         WebDriver driver = new MPHomePage().getDriver();
@@ -243,23 +277,29 @@ public class PurchaseBundleUI extends BaseTest {
         }
         Assert.assertTrue(TestPassFlag);
     }
-*/
 
-    @Test(enabled = true, priority=4, testName = "Purchase Bundles ", groups = { "MPRegression" }, alwaysRun = true)
+
+    @Test(enabled = true, priority=5, testName = "Purchase Bundles ", groups = { "MPRegression" }, alwaysRun = true)
     public void MerchantPurchaseProductUI() throws Exception {
         loginCBA(createMerchantUser());
         CBAMarketplace market = PageFactory.getCBAMarketplace();
         market.buyBundle(fBundle);
         market.clickMarketplaceBtn();
         market.buyBundle(sBundle);
+    }
 
 
+
+     @Test(enabled = true, priority=6, testName = "Cancel subscription to app", groups = { "MPRegression" }, alwaysRun = true)
+     public void CancelSubscriptionToAppUI() throws Exception {
+
+        loginCBA(createMerchantUser());
         CBAAccount account = PageFactory.getCBAAccount();
         account.cancelSubscribsion(app1);
         account.cancelSubscribsion(app2);
         account.cancelBundleSubsucribsion(app3);
 
-
+        }
         /*testLog.info("------------------------------------------------- Verify No Apps  --------------------------------------------------");
         if (!Assertions.compareBoolean(true, productsTab.msgConfirmationText1().contains("added " + sBundle), "Add second Bundle confirmation message displayed as expected: ", testLog, driver)) {
             TestPassFlag = false;
@@ -268,7 +308,4 @@ public class PurchaseBundleUI extends BaseTest {
 //p[text()='Visit the marketplace to get started.']
 
 
-
-
     }
-}
