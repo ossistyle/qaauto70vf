@@ -14,7 +14,7 @@ public class ProductsTabStagingCatalogPage extends BasePage {
         super(url, title);
     }
 
-    private By CreateProductButton = By.xpath("//*[@id='id109']");
+    private By CreateProductButton = By.xpath("//button[text()[contains(.,'Create Product')]]");
 
 
     //--------------------------------------------------------------------------
