@@ -129,6 +129,12 @@
         </classes>
     </test>
 
+    <test name="PurchaseBundleUI">
+        <classes>
+            <class name="com.verifone.tests.mpTests.PurchaseBundleUI"/>
+        </classes>
+    </test>
+
     <test name="ResellerPurchaseFreeAppUI">
         <classes>
             <class name="com.verifone.tests.mpTests.ResellerPurchaseFreeAppUI"/>
@@ -140,5 +146,7 @@
             <class name="com.verifone.tests.mpTests.ResellerManageCompanies"/>
         </classes>
     </test>
+
+
 
 </suite>

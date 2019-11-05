@@ -11,13 +11,17 @@ import org.openqa.selenium.By;
 //--------------------------------------------------------------------------
 public class ProductsTabProductCatalogPage extends BasePage {
 
+    String removeButton="(//*[text()='Remove'])";
     private final static String url = "";
     private final static String title = "Segment Groups";
-
     private By fldSearchLoc = By.xpath("//*[@placeholder='Search']");
     private By btnSearchProductLoc = By.xpath("//*[@class='adb-icon__search']");
     private By btnConfigProductLoc = By.xpath("//*[@class='adb-js-context_menu adb-context_menu']");
     private By menuEditMarketplaceSettingsLoc = By.xpath("//span[text()='Edit Marketplace Settings']");
+    private By tblProductLoc = By.xpath("//*[@class='adb-styled adb-container']");
+    private By approveRemoveBtn = By.xpath("//span[text()='Remove Product']");
+    private By btnClickOnLastPage = By.xpath("//*[@class='adb-icon__angle_double_right adb-pagination--button adb-pagination--button__last']");
+
 
     public ProductsTabProductCatalogPage() {
         super(url, title);
@@ -30,7 +34,7 @@ public class ProductsTabProductCatalogPage extends BasePage {
      */
 //--------------------------------------------------------------------------
     public void inputSearchProduct(String SName)  throws Exception {
-        sendKeys(fldSearchLoc, SName);
+        sendKeysNoClear(fldSearchLoc, SName);
     }
 //--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
@@ -62,6 +66,39 @@ public class ProductsTabProductCatalogPage extends BasePage {
     public void clickMenuEditMarketplaceSettings()  throws InterruptedException {
         click(menuEditMarketplaceSettingsLoc);
     }
+
 //--------------------------------------------------------------------------
+    public Boolean verifyProductExist(By name) throws Exception {
+       return isExists(name,20);
+    }
+//--------------------------------------------------------------------------
+    public void removeProduct(By name) throws Exception {
+     isExists(name,20);
+}
+//--------------------------------------------------------------------------
+    public int getTblRowProduct(String name) throws InterruptedException {
+        return getRowNumberFromTable(tblProductLoc, name);
+    }
+
+    public void clickLastPage(){
+        try{
+            hoverAndClickOnElement(btnClickOnLastPage);}
+        catch(Exception e){
+            click(btnClickOnLastPage);
+        }
+    }
+
+    public void clickMenuEditProduct(int row) {
+        String a = "html/body/div[3]/div[3]/div/div[2]/div/div[5]/div[1]/div[2]/table/tbody/tr[" + row + "]/td[4]/div/menu/button/i";
+        By menuMenuEditProductLoc = By.xpath(a);
+        click(menuMenuEditProductLoc);
+    }
+
+    public void clickMenuRemoveProduct(int row){
+        By removeSpecificProductBtn = By.xpath(removeButton+ "[" + row + "]");
+        click(removeSpecificProductBtn);
+        click(approveRemoveBtn);
+    }
+
 }
 
