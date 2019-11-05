@@ -129,4 +129,11 @@
         </classes>
     </test>
 
+    <test name="PurchaseBundleUI">
+        <classes>
+            <class name="com.verifone.tests.mpTests.PurchaseBundleUI"/>
+        </classes>
+    </test>
+
+
 </suite>

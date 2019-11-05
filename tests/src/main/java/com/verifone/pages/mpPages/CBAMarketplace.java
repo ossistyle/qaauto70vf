@@ -1,6 +1,7 @@
 package com.verifone.pages.mpPages;
 
 import com.verifone.pages.BasePage;
+import com.verifone.pages.PageFactory;
 import com.verifone.tests.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -22,6 +23,7 @@ public class CBAMarketplace extends BasePage {
     private By continueBtn = By.cssSelector("button[class='adb-button__primary continue buttonResponse continue-to-next']");
     private By placeOrderBtn = By.cssSelector("button[id='placeOrder']");
     private By goToMyAppsBtn = By.xpath("//button[@class='adb-button adb-toolbar--item adb-button__primary']");
+    private By myAppBtn = By.xpath("//button[@class='adb-button__emphasis adb-button__large buttonResponse']");
     private By tryFree = By.xpath("//button[@class='adb-button adb-toolbar--item adb-button__emphasis adb-button__large'][1]");
 
     //private By btnStartFreeTrial = By.xpath("//*[@class='adb-button adb-toolbar--item adb-button__emphasis adb-button__large'] //*[text() = 'Start a Free Trial']");
@@ -71,6 +73,20 @@ public class CBAMarketplace extends BasePage {
         ExpectedConditions.visibilityOfElementLocated(tryFree);
         click(tryFree);
         click(goToMyAppsBtn);
+    }
+
+    public void buyFreeBundle() throws Exception {
+        hoverAndClickOnElement(tryFree);
+        hoverAndClickOnElement(continueBtn);
+        if (isExists(agreeToTermsCheckbox,30))
+            click(agreeToTermsCheckbox);
+        hoverAndClickOnElement(placeOrderBtn);
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        hoverAndClickOnElement(myAppBtn);
     }
 
     /**
@@ -157,4 +173,17 @@ public class CBAMarketplace extends BasePage {
             Thread.sleep(5000);
         }
     }
+
+    public static void buyBundle(String appName) throws Exception {
+        CBAMarketplace market = PageFactory.getCBAMarketplace();
+        market.searchForApp(appName);
+        market.veryfyListingApps();
+        market.isAppPurchased(appName);
+        market.buyFreeBundle();
+    }
+
+    public void clickMarketplaceBtn(){
+        click(marketPlace);
+    }
+
 }
