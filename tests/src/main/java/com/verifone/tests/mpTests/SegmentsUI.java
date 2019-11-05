@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 
 import static com.verifone.pages.BasePage.testLog;
+import static com.verifone.tests.steps.mpPortal.Steps.mpEoNavigator;
 import static com.verifone.tests.steps.mpPortal.Steps.navigateCBAHome;
 //--------------------------------------------------------------------------
 
@@ -47,14 +48,6 @@ public class SegmentsUI extends BaseTest {
 	private static String Product1 = "test product seba";
 	private static String Product2 = "NewBroccoli";
 
-	public void navigator() throws Exception {
-		User EOAdminSupport = EntitiesFactory.getEntity("EOAdminSupport");
-		String EOAdminSupportMail = EOAdminSupport.getUserName();
-		String EOAdminSupportPwd = EOAdminSupport.getPassword();
-		String EOAdminSupportAnsw = EOAdminSupport.getSecurityAnswer();
-		navigateCBAHome();
-		Steps.loginMPPortal(EOAdminSupportMail, EOAdminSupportPwd, EOAdminSupportAnsw);
-	}
 
 	// In case segment from old test exist in MP need to delete it before test start
     @Test(enabled = true, priority=1, testName = "Delete segment before test", groups = { "MPRegression" }, alwaysRun = true)
@@ -62,7 +55,7 @@ public class SegmentsUI extends BaseTest {
         WebDriver driver = new MPHomePage().getDriver();
         Boolean TestPassFlag = true;
 
-        navigator();
+        mpEoNavigator();
         ArrayList<String> availableWindows = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
         MPHomePage MPHomePage = (MPHomePage) PageFactory.getPage("MPHomePage");
@@ -125,7 +118,7 @@ public class SegmentsUI extends BaseTest {
             WebDriver driver = new MPHomePage().getDriver();
             Boolean TestPassFlag = true;
 
-            navigator();
+            mpEoNavigator();
             ArrayList<String> availableWindows = new ArrayList<String>(driver.getWindowHandles());
             driver.switchTo().window(availableWindows.get(0));
             MPHomePage MPHomePage = (MPHomePage) PageFactory.getPage("MPHomePage");
@@ -227,7 +220,7 @@ public class SegmentsUI extends BaseTest {
             Boolean TestPassFlag = true;
 
 
-            navigator();
+            mpEoNavigator();
             ArrayList<String> availableWindows = new ArrayList<String>(driver.getWindowHandles());
             driver.switchTo().window(availableWindows.get(0));
             MPHomePage MPHomePage = (MPHomePage) PageFactory.getPage("MPHomePage");
@@ -257,7 +250,6 @@ public class SegmentsUI extends BaseTest {
 
             Thread.sleep(TimeOut + 1000);
             int ActualRow = ProductsTab.getTblRowSegmentGroups(SegmentGroupName);
-            System.out.println(ActualRow);
 
             ProductsTab.clickMenuTriggerSegmentGroup(ActualRow);
             Thread.sleep(TimeOut);
@@ -347,7 +339,7 @@ public class SegmentsUI extends BaseTest {
             WebDriver driver = new MPHomePage().getDriver();
             Boolean TestPassFlag = true;
 
-            navigator();
+            mpEoNavigator();
             ArrayList<String> availableWindows = new ArrayList<String>(driver.getWindowHandles());
             driver.switchTo().window(availableWindows.get(0));
             MPHomePage MPHomePage = (MPHomePage) PageFactory.getPage("MPHomePage");
@@ -377,7 +369,6 @@ public class SegmentsUI extends BaseTest {
 
             Thread.sleep(TimeOut + 1000);
             int ActualRow = ProductsTab.getTblRowSegmentGroups(SegmentGroupName);
-            System.out.println(ActualRow);
 
             ProductsTab.clickMenuTriggerSegmentGroup(ActualRow);
             Thread.sleep(TimeOut);
@@ -391,7 +382,6 @@ public class SegmentsUI extends BaseTest {
             EditSegmentGroupPage EditSegmentGroupPage = (EditSegmentGroupPage) PageFactory.getPage("EditSegmentGroupPage");
 
             ActualRow = EditSegmentGroupPage.getTblRowSegments(SegmentName1);
-            System.out.println(ActualRow);
 
             testLog.info("------------------------------------------------- Edit Segment --------------------------------------------------------");
 
@@ -448,7 +438,6 @@ public class SegmentsUI extends BaseTest {
             EditSegmentGroupPage = (EditSegmentGroupPage) PageFactory.getPage("EditSegmentGroupPage");
 
             ActualRow = EditSegmentGroupPage.getTblRowSegments(SegmentName2);
-            System.out.println(ActualRow);
 
             testLog.info("------------------------------------------------- Edit Segment --------------------------------------------------------");
 
@@ -485,7 +474,7 @@ public class SegmentsUI extends BaseTest {
             WebDriver driver = new MPHomePage().getDriver();
             Boolean TestPassFlag = true;
 
-            navigator();
+            mpEoNavigator();
             ArrayList<String> availableWindows = new ArrayList<String>(driver.getWindowHandles());
             driver.switchTo().window(availableWindows.get(0));
             MPHomePage MPHomePage = (MPHomePage) PageFactory.getPage("MPHomePage");
@@ -704,7 +693,7 @@ public class SegmentsUI extends BaseTest {
 		WebDriver driver = new MPHomePage().getDriver();
 		Boolean TestPassFlag = true;
 
-		navigator();
+        mpEoNavigator();
 		ArrayList<String> availableWindows = new ArrayList<String>(driver.getWindowHandles());
 		driver.switchTo().window(availableWindows.get(0));
 		MPHomePage MPHomePage = (MPHomePage) PageFactory.getPage("MPHomePage");

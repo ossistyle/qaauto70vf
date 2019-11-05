@@ -15,7 +15,7 @@ public class ManageMarketplacePage extends BasePage {
 
     private final static String url = "";
     private final static String title = "Sign Up with Verifone Identity Server";
-
+    private By productTab = By.xpath("//table[@class='adb-item-table']");
     private By tabProductLoc = By.xpath("//*[@id='subnav-header']/div/ul[1]/li[3]/a");
 
     public ManageMarketplacePage() {
@@ -29,8 +29,8 @@ public class ManageMarketplacePage extends BasePage {
      */
 //--------------------------------------------------------------------------
     public void clickTabProduct () throws InterruptedException {
-
         click(tabProductLoc);
+        waitUntilPageLoad(productTab);
     }
 //--------------------------------------------------------------------------
 

@@ -1,6 +1,7 @@
 package com.verifone.pages.mpPages;
 
 import com.verifone.pages.BasePage;
+import com.verifone.utils.Assertions;
 import org.openqa.selenium.By;
 import java.awt.*;
 
@@ -111,13 +112,13 @@ public class ProductsTabBundlePage extends BasePage {
     public void chooseRestrictionType(String type) {
 
             if(type.equals("partial")){
-                click(saveAppScreenBtn);}
+                hoverAndClickOnElement(saveAppScreenBtn);}
             else if(type.equals("full")){
                 By Partial = By.xpath(checkoutTypeBtn+"["+1+"]");
                 By notPartial = By.xpath(checkoutTypeBtn+"["+2+"]");
                 click(Partial);
                 click(notPartial);
-                click(saveAppScreenBtn);}
+                hoverAndClickOnElement(saveAppScreenBtn);}
         }
 
     public void clickPublish(){
@@ -130,5 +131,16 @@ public class ProductsTabBundlePage extends BasePage {
 
     public void clickNextApp(){
         hoverAndClickOnElement(nextApp);
+    }
+
+    public void deleteBundle(String bundleName) throws InterruptedException {
+        int actualBundleRow = getTblRowBundle(bundleName, bundleTbl);
+        if(actualBundleRow!=0) {
+            while(actualBundleRow!=0) {
+                clickMenuEditBundle(actualBundleRow);
+                clickMenuDeleteBundle(actualBundleRow);
+                actualBundleRow = getTblRowBundle(bundleName, bundleTbl);
+            }
+        }
     }
 }
