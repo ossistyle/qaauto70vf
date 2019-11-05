@@ -100,5 +100,17 @@ public class ProductsTabProductCatalogPage extends BasePage {
         click(approveRemoveBtn);
     }
 
+    //need to be on page that has the specific bundle
+    public void unpublishBundleIfExist(String bundleName) throws InterruptedException {
+        int actualRow = getTblRowProduct(bundleName);
+        if(actualRow!=0) {
+            while (actualRow != 0) {
+                clickMenuEditProduct(actualRow);
+                clickMenuRemoveProduct(actualRow);
+                actualRow = getTblRowProduct(bundleName);
+            }
+        }
+    }
+
 }
 

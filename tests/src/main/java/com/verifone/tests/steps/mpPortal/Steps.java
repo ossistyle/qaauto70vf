@@ -162,9 +162,8 @@ public class Steps {
 
     public static void loginCGPortal(User user) throws Exception {
         CGLoginPage loginPage = PageFactory.getCGLoginPage();
-        //loginPage.navigateToCGLogin();
         loginPage.doLogin(user);
-       // loginPage.getV1SignedPackage();
+        //loginPage.getV1SignedPackage();
     }
 
    /* public static void loginCGPortal() throws Exception{
@@ -182,11 +181,12 @@ public class Steps {
         return testCGUser;
     }
 
-    public static void loginMPPortalAsEOAdmin() throws Exception {
+    public static void mpEoNavigator() throws Exception {
         User EOAdminSupport = EntitiesFactory.getEntity("EOAdminSupport");
+        String EOAdminSupportMail = EOAdminSupport.getUserName();
+        String EOAdminSupportPwd = EOAdminSupport.getPassword();
+        String EOAdminSupportAnsw = EOAdminSupport.getSecurityAnswer();
         navigateCBAHome();
-        loginMPPortal(EOAdminSupport.getUserName(), EOAdminSupport.getPassword(), EOAdminSupport.getSecurityAnswer());
+        loginMPPortal(EOAdminSupportMail, EOAdminSupportPwd, EOAdminSupportAnsw);
     }
-
-
 }
