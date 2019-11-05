@@ -1,6 +1,7 @@
 package com.verifone.pages.mpPages;
 
 import com.verifone.pages.BasePage;
+import com.verifone.pages.PageFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -25,7 +26,8 @@ public class CBADashboard extends BasePage {
     private By stagingCatalog = By.xpath("//a[@class='adb-link__nav adb-stack--item_content'][@href='#staging-products']");
     private By createProductBtn = By.xpath("//button[contains(text(),'Create Product')][@class='go-to-import-link adb-button__small']");
 
-    public void manageMarketpace()  {
+    public void manageMarketpace() throws Exception {
+        testLog.info("<b>Info -> <u> Go to the Product sections & create product </u></b>");
         click(manage);
         click(marketPlace);
         //ExpectedConditions.presenceOfElementLocated(welcomeBack);
@@ -36,9 +38,18 @@ public class CBADashboard extends BasePage {
         click(products);
         ExpectedConditions.presenceOfElementLocated(stagingCatalog);
         click(stagingCatalog);
+
+        //delete product if it is already exists.
+        CBAProducts isProductExist = PageFactory.getCBAProducts();
+        isProductExist.deleteSatgingProduct();
+
         ExpectedConditions.elementToBeClickable(createProductBtn);
         click(createProductBtn);
-
     }
 
+    public void manageMarketPlaceProducts() {
+        click(manage);
+        click(marketPlace);
+        click(products);
+    }
 }

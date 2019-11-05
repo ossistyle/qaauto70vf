@@ -627,16 +627,6 @@ public abstract class BasePage {
     }
 
     /**
-     * @method : Method return date and time in GMT +03:00 Time zone.
-     * This helps to find the created jobs in VHQ
-     */
-    protected String getDownloadScheduleTime() {
-        DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy hh:mm");
-        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+03:00"));
-        return dateFormat.format(new Date());
-    }
-
-    /**
      * @method : This Method delete the values from the text box by selecting all the elements
      */
     protected void clearTextBoxValue(By loc) {
@@ -681,4 +671,21 @@ public abstract class BasePage {
         Matcher m = p.matcher(source);
         return m.find();
     }
+
+    /**
+     * This method validate the file is exists in the directory or not
+     *
+     * @author Prashant Lokahnde
+     */
+    protected boolean isFileExists(File file, int maxTimeout) {
+        WebDriverWait wait = new WebDriverWait(driver, maxTimeout);
+        try {
+            wait.until((ExpectedCondition<Boolean>) webDriver -> file.exists());
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }
