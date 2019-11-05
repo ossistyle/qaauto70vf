@@ -4,16 +4,12 @@ package com.verifone.pages.mpPages;
 import com.verifone.pages.BasePage;
 import com.verifone.pages.PageFactory;
 import com.verifone.tests.BaseTest;
+import com.verifone.utils.appUtils.MPUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.Assert;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import static com.verifone.tests.steps.mpPortal.Steps.createAssignUser;
 import static com.verifone.utils.Assertions.assertTextContains;
@@ -152,7 +148,7 @@ public class CBAAssignPage extends BasePage {
 
         //dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+03:00"));
         // jobCreatedOnSubscription = dateFormat.format(new Date());
-        jobCreatedOnSubscription = getDownloadScheduleTime();
+        jobCreatedOnSubscription = MPUtils.getDownloadScheduleTime();
         System.out.println("GMT time UnSubscription : " + jobCreatedOnSubscription);
         testLog.info("----- App Subscription created date & Time : " + jobCreatedOnSubscription + " -----");
     }

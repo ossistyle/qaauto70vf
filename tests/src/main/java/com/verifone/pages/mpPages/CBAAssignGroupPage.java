@@ -4,6 +4,7 @@ import com.verifone.pages.BasePage;
 import com.verifone.pages.PageFactory;
 import com.verifone.pages.vhqPages.VHQDeviceSearch;
 import com.verifone.tests.BaseTest;
+import com.verifone.utils.appUtils.MPUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -49,6 +50,7 @@ public class CBAAssignGroupPage extends BasePage {
     private By linkGroups = By.xpath("//*[@class='adb-stack--item']//a[text()='Groups']");
     private By btnSettings = By.xpath("//*[@class='adb-context_menu adb-context_menu__small']");
     private By deleteGroup = By.xpath("//ul[@class='adb-stack adb-stack__small']/li[3]");
+    private By manageUsers = By.xpath("//ul[@class='adb-stack adb-stack__small']/li[1]");
     private By linkManage = By.xpath("//*[text()='Manage']");
     private By btnAccount = By.xpath("//*[@id='account']");
     private By txtSearchGroup = By.xpath("//input[@class='adb-input_row--item_content adb-search_field--input adb-text__small']");
@@ -309,7 +311,7 @@ public class CBAAssignGroupPage extends BasePage {
         assertTextContains(getText(isMembershipUpdated), textGroupMembership);
 
         //Get the time of Download Schedule
-        jobCreatedOnGroups = getDownloadScheduleTime();
+        jobCreatedOnGroups = MPUtils.getDownloadScheduleTime();
 
         testLog.info("---- (4). " + getText(isMembershipUpdated) + " -----");
 
@@ -343,4 +345,35 @@ public class CBAAssignGroupPage extends BasePage {
         }
     }
 
+    /**
+     * This method use existing group to assign available device user.
+     *
+     * @author Prashant Lokahnde
+     * 4/11/2019
+     */
+
+    public void assignDeviceToGroup(String groupToSearch, String nameOfTheGroup, String groupDescription, ArrayList<String> listOfApp, ArrayList<String> listOfGroup, ArrayList<String> listOfDevices) throws Exception {
+        testLog.info("<b><u> Search group : </u></b>" + groupToSearch + "-----");
+
+        scrollToElement(txtSearchGroup);
+        click(txtSearchGroup);
+        sendKeys(txtSearchGroup, groupToSearch);
+        click(btnSearch);
+        waitForLoader(btnSearch);
+
+        List<WebElement> getEle = driver.findElements(btnSettings);
+        System.out.println("Size of User :" + getEle.size());
+        if (getEle.size() == 0) {
+            testLog.info("<b> Group not Found. Create New Group </b> ---- ");
+            createUsersGroup(nameOfTheGroup, groupDescription, listOfApp, listOfGroup);
+        } else {
+            testLog.info("</b> Group Found </b>");
+            hoverAndClickOnElement(btnSettings);
+            scrollToElement(manageUsers);
+            hoverAndClickOnElement(manageUsers);
+        }
+        addDeviceToGroup(listOfGroup.get(0), listOfDevices, "AddUser");
+
+        Thread.sleep(4000);
+    }
 }
