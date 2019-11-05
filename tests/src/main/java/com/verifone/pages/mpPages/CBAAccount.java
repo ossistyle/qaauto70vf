@@ -100,14 +100,14 @@ public class CBAAccount extends BasePage {
         List<WebElement> tr = element.findElements(By.className("app-tile"));
         for (WebElement w : tr) {
             System.out.println(w.getText());
-            testLog.info("App that are part of bundle: "+ w);
+            testLog.info("App that are part of bundle: " + w);
         }
 
         hoverAndClickOnElement(cancelCheckboxBundle);
         hoverAndClickOnElement(cancelBundle);
 
         //get the date as per GMT+03:00 time zone
-        jobCreatedOnUnsubscription = getDownloadScheduleTime();
+        jobCreatedOnUnsubscription = MPUtils.getDownloadScheduleTime();
 
         System.out.println("GMT time UnSubscription : " + jobCreatedOnUnsubscription);
         testLog.info("----- App UnSubscription created date & Time : " + jobCreatedOnUnsubscription + " -----");
