@@ -238,4 +238,5 @@ public class ProductsTab extends BasePage {
         click(menuProductionCatalog);
     }
 
+
 }

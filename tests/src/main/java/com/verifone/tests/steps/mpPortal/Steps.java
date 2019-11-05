@@ -180,4 +180,13 @@ public class Steps {
         User testCGUser = EntitiesFactory.getEntity("CGPortal");
         return testCGUser;
     }
+
+    public static void mpEoNavigator() throws Exception {
+        User EOAdminSupport = EntitiesFactory.getEntity("EOAdminSupport");
+        String EOAdminSupportMail = EOAdminSupport.getUserName();
+        String EOAdminSupportPwd = EOAdminSupport.getPassword();
+        String EOAdminSupportAnsw = EOAdminSupport.getSecurityAnswer();
+        navigateCBAHome();
+        loginMPPortal(EOAdminSupportMail, EOAdminSupportPwd, EOAdminSupportAnsw);
+    }
 }

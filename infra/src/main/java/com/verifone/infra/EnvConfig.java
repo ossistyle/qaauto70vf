@@ -34,6 +34,8 @@ public class EnvConfig {
     private ArrayList<String> list;
     private ArrayList<String> listOfAppName;
     private ArrayList<String> listOfDevices;
+    private ArrayList<String> listOfBundles;
+    private ArrayList<String> listOfApps;
 
 //    private User user;
 
@@ -151,5 +153,21 @@ public class EnvConfig {
         listOfDevices.add(prop.getProperty(env + "." + "CMFiveDeviceSerialNo01"));
         listOfDevices.add(prop.getProperty(env + "." + "CMFiveDeviceSerialNo02"));
         return listOfDevices;
+    }
+
+    public ArrayList<String> getListOfBundle(){
+        listOfBundles = new ArrayList<>();
+        listOfBundles.add(prop.getProperty(env + "." + "MPfirstBundleName"));
+        listOfBundles.add(prop.getProperty(env + "." + "MPsecondBundleName"));
+        return listOfBundles;
+    }
+
+    public ArrayList<String> getListOfAppforBundle(){
+        listOfApps = new ArrayList<>();
+        listOfApps.add(prop.getProperty(env + "." + "app1"));
+        listOfApps.add(prop.getProperty(env + "." + "app2"));
+        listOfApps.add(prop.getProperty(env + "." + "app3"));
+        listOfApps.add(prop.getProperty(env + "." + "app4"));
+        return listOfApps;
     }
 }

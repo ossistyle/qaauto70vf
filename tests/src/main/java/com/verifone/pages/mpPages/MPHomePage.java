@@ -16,7 +16,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
         private final static String title = "Sign Up with Verifone Identity Server";
 
         private By headerMenuManageLoc = By.xpath("//*[@class='ad-component--link ad-component_dropdown--trigger manage-link']");
-
+        private By revenueTab = By.xpath("//*[@class='payments']");
         private By marketplaceSubMenuLoc = By.xpath("//*[@class='ad-component_list-item ad-component_list-item--channel']");
         private By marketplaceMenuLoc = By.xpath("//a[text()='Marketplace']");
 
@@ -49,8 +49,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
          */
 //--------------------------------------------------------------------------
         public void clickMarketplaceSubMenu () throws InterruptedException {
-
             click(marketplaceSubMenuLoc);
+            waitUntilPageLoad(revenueTab);
         }
 //--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
