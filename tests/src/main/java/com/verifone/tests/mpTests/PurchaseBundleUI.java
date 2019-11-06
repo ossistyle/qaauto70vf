@@ -139,6 +139,8 @@ public class PurchaseBundleUI extends BaseTest {
         productsTabBundlePage.clickApplications();
         productsTabBundlePage.clickNextApp();
         productsTabBundlePage.addApp(appName.get(2));
+        productsTabBundlePage.clickNextApp();
+        productsTabBundlePage.clickNextApp();
         productsTabBundlePage.addApp(appName.get(3));
 
         //Choose Cancellation Restriction
