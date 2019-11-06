@@ -2,18 +2,14 @@ package com.verifone.pages.mpPages;
 
 import com.verifone.pages.BasePage;
 import com.verifone.tests.BaseTest;
-import org.openqa.selenium.Alert;
+import com.verifone.utils.appUtils.MPUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static com.verifone.tests.steps.mpPortal.Steps.createAssignUser;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import static org.testng.AssertJUnit.assertEquals;
 
@@ -72,7 +68,7 @@ public class CBAAccount extends BasePage {
         ExpectedConditions.textToBe(feedBack, textSuccess);
 
         //get the date as per GMT+03:00 time zone
-        jobCreatedOnUnsubscription = getDownloadScheduleTime();
+        jobCreatedOnUnsubscription = MPUtils.getDownloadScheduleTime();
 
         System.out.println("GMT time UnSubscription : " + jobCreatedOnUnsubscription);
         testLog.info("----- App UnSubscription created date & Time : " + jobCreatedOnUnsubscription + " -----");
@@ -104,14 +100,14 @@ public class CBAAccount extends BasePage {
         List<WebElement> tr = element.findElements(By.className("app-tile"));
         for (WebElement w : tr) {
             System.out.println(w.getText());
-            testLog.info("App that are part of bundle: "+ w);
+            testLog.info("App that are part of bundle: " + w);
         }
 
         hoverAndClickOnElement(cancelCheckboxBundle);
         hoverAndClickOnElement(cancelBundle);
 
         //get the date as per GMT+03:00 time zone
-        jobCreatedOnUnsubscription = getDownloadScheduleTime();
+        jobCreatedOnUnsubscription = MPUtils.getDownloadScheduleTime();
 
         System.out.println("GMT time UnSubscription : " + jobCreatedOnUnsubscription);
         testLog.info("----- App UnSubscription created date & Time : " + jobCreatedOnUnsubscription + " -----");

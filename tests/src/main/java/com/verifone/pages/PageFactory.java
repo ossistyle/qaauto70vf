@@ -22,6 +22,8 @@ public class PageFactory {
     public static CBAProducts getCBAProducts() {return new CBAProducts();}
     public static CBADashboard getCBADashboard () {return new CBADashboard ();}
     public static LoginMPPortal getLoginMPPortal() {return new LoginMPPortal();}
+    //public static AndroidProjectOperationPage getAndroidProjectOperationPage() {return new AndroidProjectOperationPage();}
+    public static CBAResellerPage getCBAResellerPage(){return new CBAResellerPage();}
 
     public static CBAAssignPage getAssignAppPage() {return new CBAAssignPage();}
     public static ProdTabCreateProductPage getCreateProduct() {return new ProdTabCreateProductPage();}
@@ -37,7 +39,7 @@ public class PageFactory {
     public static CGLoginPage getCGLoginPage(){return new CGLoginPage();}
     public static DLMLoginPage getDLMLoginPage(){return new DLMLoginPage();}
     public static CBAAssignGroupPage getCBAAssignGroupPage(){return  new CBAAssignGroupPage();}
-
+    public static CBAResellerPage getCBAResellerPage(){return new CBAResellerPage();}
 
     public static BasePage getPage(String page) {
         switch (page) {
