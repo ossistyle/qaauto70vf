@@ -65,7 +65,7 @@ public class AssignAppToUser extends BaseTest {
 
         /* Get VHQ Home Page*/
         VHQHomePage vhqDashboard = PageFactory.getVHQHomePage();
-        vhqDashboard.deviceSearch(getCmFiveDeviceSerialNo01);
+        vhqDashboard.deviceSearch(deviceUserName);
         vhqDashboard.deviceProfile();
 
         VHQDeviceSearch deviceSearch = PageFactory.getVHQDeviceSearch();
@@ -89,7 +89,7 @@ public class AssignAppToUser extends BaseTest {
 
         /* Get VHQ Home Page*/
         VHQHomePage vhqDashboard = PageFactory.getVHQHomePage();
-        vhqDashboard.deviceSearch(getCmFiveDeviceSerialNo01);
+        vhqDashboard.deviceSearch(deviceUserName);
         vhqDashboard.deviceProfile();
 
         VHQDeviceSearch deviceSearch = PageFactory.getVHQDeviceSearch();
