@@ -129,7 +129,7 @@ public class ProductsTabBundlePage extends BasePage {
         waitUntilPageLoad(confirmString);
     }
 
-    public void clickNextApp(){
+    public void clickNextApp() throws InterruptedException {
         hoverAndClickOnElement(nextApp);
     }
 

@@ -181,6 +181,14 @@ public class Steps {
         return testCGUser;
     }
 
+    public static void loginMPPortalAsEOAdmin() throws Exception {
+        User EOAdminSupport = EntitiesFactory.getEntity("EOAdminSupport");
+        navigateCBAHome();
+        loginMPPortal(EOAdminSupport.getUserName(), EOAdminSupport.getPassword(), EOAdminSupport.getSecurityAnswer());
+    }
+
+
+
     public static void mpEoNavigator() throws Exception {
         User EOAdminSupport = EntitiesFactory.getEntity("EOAdminSupport");
         String EOAdminSupportMail = EOAdminSupport.getUserName();
