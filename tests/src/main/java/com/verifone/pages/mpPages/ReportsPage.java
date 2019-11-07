@@ -43,14 +43,14 @@ public class ReportsPage extends BasePage {
     }
 
     public String reportWasCreated(int rowNumber){
-        int algo = 3 +rowNumber * 9;
+        int algo = 3 +(rowNumber * 9);
         String rowNum = reportRow + "[" + algo + "]";
         WebElement timeStamp = driver.findElement(By.xpath(rowNum));
         return timeStamp.getText();
     }
 
     public String reportName(int rowNumber){
-        int algo = 5 +rowNumber * 9;
+        int algo = 5 +(rowNumber * 9);
         String rowNum = reportRow + "[" + algo + "]";
         WebElement timeStamp = driver.findElement(By.xpath(rowNum));
         return timeStamp.getText();
