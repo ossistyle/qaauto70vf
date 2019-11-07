@@ -8,10 +8,7 @@ import com.verifone.pages.cpPages.OktaLogin;
 import com.verifone.pages.mpPages.*;
 import com.verifone.pages.vhqPages.VHQLogin;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static com.verifone.pages.BasePage.testLog;
 
