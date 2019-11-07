@@ -155,25 +155,41 @@ public class EnvConfig {
 
     public ArrayList<String> getListOfDevices() {
         listOfDevices = new ArrayList<>();
-        listOfDevices.add(prop.getProperty(env + "." + "CMFiveDeviceSerialNo01"));
         listOfDevices.add(prop.getProperty(env + "." + "CMFiveDeviceSerialNo02"));
+        listOfDevices.add(prop.getProperty(env + "." + "CMFiveDeviceSerialNo01"));
         return listOfDevices;
     }
 
-    public ArrayList<String> getListOfBundle(){
+    public ArrayList<String> getListOfBundle() {
         listOfBundles = new ArrayList<>();
         listOfBundles.add(prop.getProperty(env + "." + "MPfirstBundleName"));
         listOfBundles.add(prop.getProperty(env + "." + "MPsecondBundleName"));
         return listOfBundles;
     }
 
-    public ArrayList<String> getListOfAppforBundle(){
+    public ArrayList<String> getListOfAppforBundle() {
         listOfApps = new ArrayList<>();
         listOfApps.add(prop.getProperty(env + "." + "app1"));
         listOfApps.add(prop.getProperty(env + "." + "app2"));
         listOfApps.add(prop.getProperty(env + "." + "app3"));
         listOfApps.add(prop.getProperty(env + "." + "app4"));
         return listOfApps;
+    }
+
+    public String getApplicationVersionCode() {
+        return prop.getProperty(env + "." + "ApplicationVersionCode");
+    }
+
+    public String getCbaProductName() {
+        return prop.getProperty(env + "." + "CBAProductName");
+    }
+
+    public String getAppsDirectoryPath() {
+        return System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "resources" + File.separator + "apps";
+    }
+
+    public String getDeviceTimeZone() {
+        return prop.getProperty(env + "." + "CMDeviceTimeZone");
     }
 
     public String getDestinationFolder() {

@@ -1,10 +1,9 @@
 package com.verifone.utils.appUtils;
 
+import com.verifone.tests.BaseTest;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
-import com.verifone.tests.BaseTest;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
