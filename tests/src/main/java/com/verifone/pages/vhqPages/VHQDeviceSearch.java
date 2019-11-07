@@ -33,6 +33,7 @@ import java.util.regex.Pattern;
 
 import static com.verifone.utils.Assertions.assertTextContains;
 import static com.verifone.utils.Assertions.compareValue;
+import static com.verifone.utils.appUtils.MPUtils.getDownloadScheduleTime;
 
 public class VHQDeviceSearch extends BasePage {
     private final static String url = "";

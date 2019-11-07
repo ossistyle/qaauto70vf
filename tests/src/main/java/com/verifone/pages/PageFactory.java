@@ -28,7 +28,7 @@ public class PageFactory {
     public static CBAAssignPage getAssignAppPage() {return new CBAAssignPage();}
     public static ProdTabCreateProductPage getCreateProduct() {return new ProdTabCreateProductPage();}
     public static ProductsTabStagingCatalogPage getStagingCatalog() {return new ProductsTabStagingCatalogPage();}
-
+    public static ReportsPage getReportsPage() {return new ReportsPage();}
 
     ///////////////////VHQ Pages///////////////////////////////
     public static VHQLogin getVHQLogin() {return new VHQLogin();}
@@ -39,7 +39,6 @@ public class PageFactory {
     public static CGLoginPage getCGLoginPage(){return new CGLoginPage();}
     public static DLMLoginPage getDLMLoginPage(){return new DLMLoginPage();}
     public static CBAAssignGroupPage getCBAAssignGroupPage(){return  new CBAAssignGroupPage();}
-    public static CBAResellerPage getCBAResellerPage(){return new CBAResellerPage();}
 
     public static BasePage getPage(String page) {
         switch (page) {

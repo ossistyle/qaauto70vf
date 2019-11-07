@@ -56,7 +56,7 @@ public class ProductsTabBundlePage extends BasePage {
 
     public void clickMenuDeleteBundle(int row) {
         By removeSpecificBundleBtn = By.xpath(deleteBtn + "["+row+"]");
-        click(removeSpecificBundleBtn);
+        hoverAndClickOnElement(removeSpecificBundleBtn);
         click(approveDeleteBtn);
         try{
             Thread.sleep(6000);
