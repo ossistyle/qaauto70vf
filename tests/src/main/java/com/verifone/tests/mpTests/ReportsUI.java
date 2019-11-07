@@ -18,10 +18,11 @@ public class ReportsUI extends BaseTest {
     String reportName1 = "Invoice Details";
     String reportName2 = "Payment Details";
     String reportName3 = "Transactions";
+    String workingDir = System.getProperty("user.dir");
+    String dir = workingDir + "\\src\\test\\resources\\downloads";
 
     @Test(enabled = true, priority = 1, testName = "Download reports", groups = {"MPRegression"}, alwaysRun = true)
     public void downloadReportsUI() throws Exception {
-        String dir = BaseTest.envConfig.getDestinationFolder();
         File folder = new File(dir);
         String backupDir = dir+"\\old";
         mpEoNavigator();

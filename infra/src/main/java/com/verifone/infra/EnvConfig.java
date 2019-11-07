@@ -31,6 +31,11 @@ public class EnvConfig {
     private String applicationName;
     private String applicationVersion;
     private String deviceIPAddress;
+    private String applicationVersionCode;
+    private String cbaProductName;
+    private String appsDirectoryPath;
+    private String deviceTimeZone;
+
     private ArrayList<String> list;
     private ArrayList<String> listOfAppName;
     private ArrayList<String> listOfDevices;
@@ -173,5 +178,21 @@ public class EnvConfig {
 
     public String getDestinationFolder() {
         return prop.getProperty(env + "." + "destinationFolder");
+    }
+
+    public String getApplicationVersionCode() {
+        return prop.getProperty(env + "." + "ApplicationVersionCode");
+    }
+
+    public String getCbaProductName() {
+        return prop.getProperty(env + "." + "CBAProductName");
+    }
+
+    public String getAppsDirectoryPath() {
+        return System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "resources" + File.separator + "apps";
+    }
+
+    public String getDeviceTimeZone() {
+        return prop.getProperty(env + "." + "CMDeviceTimeZone");
     }
 }
