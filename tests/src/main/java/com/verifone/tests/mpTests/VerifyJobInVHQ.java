@@ -28,7 +28,7 @@ public class VerifyJobInVHQ extends BaseTest {
         loginVHQ(createVHQMumbaiUser());
 
         deviceIPAddress = BaseTest.envConfig.getDeviceIPAddress();
-        getCmFiveDeviceSerialNo01 = BaseTest.envConfig.getCmFiveDeviceSerialNo01();
+        getCmFiveDeviceSerialNo01 = BaseTest.envConfig.getDeviceUserName();
         getAppName = BaseTest.envConfig.getAppName();
 
         VHQHomePage vhq = PageFactory.getVHQHomePage();
@@ -48,7 +48,7 @@ public class VerifyJobInVHQ extends BaseTest {
         loginVHQ(createVHQMumbaiUser());
 
         deviceIPAddress = BaseTest.envConfig.getDeviceIPAddress();
-        getCmFiveDeviceSerialNo01 = BaseTest.envConfig.getCmFiveDeviceSerialNo01();
+        getCmFiveDeviceSerialNo01 = BaseTest.envConfig.getDeviceUserName();
         getAppName = BaseTest.envConfig.getAppName();
 
         VHQHomePage vhq = PageFactory.getVHQHomePage();
