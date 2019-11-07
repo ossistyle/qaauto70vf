@@ -170,4 +170,8 @@ public class EnvConfig {
         listOfApps.add(prop.getProperty(env + "." + "app4"));
         return listOfApps;
     }
+
+    public String getDestinationFolder() {
+        return prop.getProperty(env + "." + "destinationFolder");
+    }
 }

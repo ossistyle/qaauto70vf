@@ -29,7 +29,7 @@ public class MPUtils {
         //Look for the file in the folder and move it
         for (File listOfFile : listOfFiles) {
                 String actualName = listOfFile.getName();
-                testLog.info("Downloaded" + listOfFile.getName());
+                testLog.info("File exist in directory: " + listOfFile.getName());
                 if(willMove) {
                     if (actualName.startsWith(fileName)) {
                         found = true;

@@ -37,6 +37,12 @@ public class ManageMarketplacePage extends BasePage {
 //--------------------------------------------------------------------------
     public void clickTabReports () throws InterruptedException {
         click(tabReportsLoc);
+        try{
+            Thread.sleep(4000);
+        }
+        catch(Exception e){
+            System.out.println("Oops " + e);
+        }
         waitUntilPageLoad(reportsTab);
 }
 //--------------------------------------------------------------------------

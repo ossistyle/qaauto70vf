@@ -2,24 +2,16 @@ package com.verifone.pages.mpPages;
 
 import com.verifone.pages.BasePage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-
-import java.util.HashMap;
+import org.openqa.selenium.WebElement;
 
 public class ReportsPage extends BasePage {
 
     private final static String url = "";
     private final static String title = "Reports Page";
 
-    private By invoiceDetailesReport = By.xpath("//tr[contains(@class, 'TableContainer')][1]");
-    private By transactionReport = By.xpath("//tr[contains(@class, 'TableContainer')][2]");
-    private By paymentDetailesReport = By.xpath("//tr[contains(@class, 'TableContainer')][3]");
+    private String reportRow = "(//td[contains(@class, 'TableContainer')])";
     private String editOption = "(//i[contains(@name, 'cog')])";
     private String downloadReport = "(//a[text()='Download'])";
-    private String workingDir = System.getProperty("user.dir");
-    private String downlodDir = workingDir + "\\src\\test\\resources\\reports";
 
     public ReportsPage() {
         super(url, title);
@@ -33,12 +25,36 @@ public class ReportsPage extends BasePage {
     public void clickDownloadButton(int rowNumber){
         By reportToDownload = By.xpath(downloadReport + "[" + rowNumber + "]");
         click(reportToDownload);
+        try{
+            Thread.sleep(4000);
+        }
+        catch(Exception e){
+            System.out.println("Oops " + e);
+        }
 
     }
 
-    public void downloadReport(int rowNumber){
+    public String downloadReport(int rowNumber){
+        String creationTime = reportWasCreated(rowNumber);
+        String reportName = reportName(rowNumber);
         clickOptionButton(rowNumber);
         clickDownloadButton(rowNumber);
+        return (reportName + " that was created on " + creationTime +" downloaded") ;
     }
+
+    public String reportWasCreated(int rowNumber){
+        int algo = 3 +rowNumber * 9;
+        String rowNum = reportRow + "[" + algo + "]";
+        WebElement timeStamp = driver.findElement(By.xpath(rowNum));
+        return timeStamp.getText();
+    }
+
+    public String reportName(int rowNumber){
+        int algo = 5 +rowNumber * 9;
+        String rowNum = reportRow + "[" + algo + "]";
+        WebElement timeStamp = driver.findElement(By.xpath(rowNum));
+        return timeStamp.getText();
+    }
+
 
 }
