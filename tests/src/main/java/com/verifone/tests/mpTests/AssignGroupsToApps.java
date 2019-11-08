@@ -106,13 +106,13 @@ public class AssignGroupsToApps extends BaseTest {
         deviceSerialNumber = listOfDevices.get(0);
         vhqDashboard.deviceSearch(deviceSerialNumber);
         vhqDashboard.deviceProfile();
-        assignGroup.searchDeviceJob(listOfApp, "INSTALL", CBAAssignGroupPage.jobCreatedOnGroups, deviceSerialNumber);
+        assignGroup.searchDeviceJob(listOfApp, "INSTALL", CBAAssignGroupPage.jobCreatedOnGroups, deviceSerialNumber, "positive");
 
         //search jobName in the second device.
         deviceSerialNumber = listOfDevices.get(1);
         vhqDashboard.deviceSearch(deviceSerialNumber);
         vhqDashboard.deviceProfile();
-        assignGroup.searchDeviceJob(listOfApp, "INSTALL", CBAAssignGroupPage.jobCreatedOnGroups, deviceSerialNumber);
+        assignGroup.searchDeviceJob(listOfApp, "INSTALL", CBAAssignGroupPage.jobCreatedOnGroups, deviceSerialNumber, "positive");
     }
 
 
@@ -143,13 +143,13 @@ public class AssignGroupsToApps extends BaseTest {
         deviceSerialNumber = listOfDevices.get(0);
         vhqDashboard.deviceSearch(deviceSerialNumber);
         vhqDashboard.deviceProfile();
-        assignGroup.searchDeviceJob(listOfApp, "UNINSTALL", CBAAssignGroupPage.jobCreatedOnGroups, deviceSerialNumber);
+        assignGroup.searchDeviceJob(listOfApp, "UNINSTALL", CBAAssignGroupPage.jobCreatedOnGroups, deviceSerialNumber, "positive");
 
         //search jobName in the second device.
         deviceSerialNumber = listOfDevices.get(1);
         vhqDashboard.deviceSearch(deviceSerialNumber);
         vhqDashboard.deviceProfile();
-        assignGroup.searchDeviceJob(listOfApp, "UNINSTALL", CBAAssignGroupPage.jobCreatedOnGroups, deviceSerialNumber);
+        assignGroup.searchDeviceJob(listOfApp, "UNINSTALL", CBAAssignGroupPage.jobCreatedOnGroups, deviceSerialNumber, "positive");
 
     }
 

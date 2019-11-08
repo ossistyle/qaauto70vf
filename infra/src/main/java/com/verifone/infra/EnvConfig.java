@@ -41,6 +41,7 @@ public class EnvConfig {
     private ArrayList<String> listOfDevices;
     private ArrayList<String> listOfBundles;
     private ArrayList<String> listOfApps;
+    private ArrayList<String> listOfGroup;
 
 //    private User user;
 
@@ -190,5 +191,12 @@ public class EnvConfig {
 
     public String getDeviceTimeZone() {
         return prop.getProperty(env + "." + "CMDeviceTimeZone");
+    }
+
+    public ArrayList<String> getListOfGroup() {
+        listOfGroup = new ArrayList<>();
+        listOfGroup.add(prop.getProperty(env + "." + "MPSecondGroupName"));
+        listOfGroup.add(prop.getProperty(env + "." + "MPSecondGroupDescription"));
+        return listOfGroup;
     }
 }

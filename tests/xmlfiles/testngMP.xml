@@ -153,4 +153,10 @@
         </classes>
     </test>
 
+    <test name="AssignedDeviceToMoreThanOneGroupUI">
+        <classes>
+            <class name="com.verifone.tests.mpTests.AssignedDeviceToMoreThanOneGroupUI"/>
+        </classes>
+    </test>
+
 </suite>

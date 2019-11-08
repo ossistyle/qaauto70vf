@@ -97,7 +97,7 @@ public class UnsubscribeAppsFromTheGroup extends BaseTest {
         deviceSerialNumber = listOfDevices.get(0);
         vhqDashboard.deviceSearch(deviceSerialNumber);
         vhqDashboard.deviceProfile();
-        assignGroup.searchDeviceJob(listOfApp, "INSTALL", CBAAssignPage.jobCreatedOnSubscription, deviceSerialNumber);
+        assignGroup.searchDeviceJob(listOfApp, "INSTALL", CBAAssignPage.jobCreatedOnSubscription, deviceSerialNumber, "positive");
     }
 
     @Test(priority = 5, testName = "LogIn & Cancel (UnSubscribe) an app", description = "log in to CBA account and remove/cancel app from apps list")
@@ -123,7 +123,7 @@ public class UnsubscribeAppsFromTheGroup extends BaseTest {
         deviceSerialNumber = listOfDevices.get(0);
         vhqDashboard.deviceSearch(deviceSerialNumber);
         vhqDashboard.deviceProfile();
-        assignGroup.searchDeviceJob(listOfApp, "UNINSTALL", CBAAccount.jobCreatedOnUnsubscription, deviceSerialNumber);
+        assignGroup.searchDeviceJob(listOfApp, "UNINSTALL", CBAAccount.jobCreatedOnUnsubscription, deviceSerialNumber, "positive");
     }
 
     @Test(priority = 8, testName = "LogIn & Delete Group", description = "LogIn to CBA Marketplace and delete the group.")
