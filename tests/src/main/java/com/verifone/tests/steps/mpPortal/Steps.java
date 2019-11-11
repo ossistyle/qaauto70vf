@@ -161,8 +161,9 @@ public class Steps {
 
     public static void loginCGPortal(User user) throws Exception {
         CGLoginPage loginPage = PageFactory.getCGLoginPage();
+        loginPage.navigateToCGLogin();
         loginPage.doLogin(user);
-        //loginPage.getV1SignedPackage();
+        loginPage.getV1SignedPackage();
     }
 
    /* public static void loginCGPortal() throws Exception{
@@ -185,7 +186,6 @@ public class Steps {
         navigateCBAHome();
         loginMPPortal(EOAdminSupport.getUserName(), EOAdminSupport.getPassword(), EOAdminSupport.getSecurityAnswer());
     }
-
 
 
     public static void mpEoNavigator() throws Exception {
