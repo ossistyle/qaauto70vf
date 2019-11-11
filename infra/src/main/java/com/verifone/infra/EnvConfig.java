@@ -191,4 +191,11 @@ public class EnvConfig {
     public String getDeviceTimeZone() {
         return prop.getProperty(env + "." + "CMDeviceTimeZone");
     }
+
+    public String getDestinationFolder() {
+        return prop.getProperty(env + "." + "destinationFolder");
+    }
+
+
+
 }

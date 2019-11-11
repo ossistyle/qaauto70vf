@@ -153,4 +153,16 @@
         </classes>
     </test>
 
+    <test name="ReportsUI">
+        <classes>
+            <class name="com.verifone.tests.mpTests.ReportsUI"/>
+        </classes>
+    </test>
+
+    <test name="UnsubscribeAppsFromTheGroup">
+        <classes>
+            <class name="com.verifone.tests.mpTests.UnsubscribeAppsFromTheGroup"/>
+        </classes>
+    </test>
+
 </suite>

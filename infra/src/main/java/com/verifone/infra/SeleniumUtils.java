@@ -17,6 +17,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 //import com.gargoylesoftware.htmlunit.javascript.host.URL;
 //import org.testng.annotations.Test;
@@ -32,7 +33,7 @@ public class SeleniumUtils {
     private WebDriver driver;
     public static String reportDirectory;
     public static String isLinuxMachine;
-
+    private String downloadDir = System.getProperty("user.dir") + "\\src\\test\\resources\\downloads";
     /**
      * Reads General Parameters from application.properties
      * Sets browser (Chrome, Firefox, IE etc...) and navigates to the class related page
@@ -90,9 +91,13 @@ public class SeleniumUtils {
                 } else {
                     System.setProperty("webdriver.chrome.driver", pathToDrivers("chromedriver.exe"));
                 }
+                HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
+                chromePrefs.put("profile.default_content_settings.popups", 0);
+                chromePrefs.put("download.default_directory", downloadDir);
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("test-type");
                 options.addArguments("--incognito");
+                options.setExperimentalOption("prefs", chromePrefs);
                 if (!isLinuxMachine.equalsIgnoreCase("FALSE")) {
                     options.addArguments("headless");
                     options.addArguments("window-size=1743x600");
