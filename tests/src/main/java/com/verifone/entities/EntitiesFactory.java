@@ -75,6 +75,10 @@ public class EntitiesFactory {
             case "GmailUser":
                 user = new User(true);
                 break;
+
+            case "MPReseller":
+                user = BaseTest.envConfig.getCredentials().getMPReseller();
+                break;
         }
 
         System.out.println("User is: " + user.getUserName());

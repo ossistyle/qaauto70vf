@@ -139,6 +139,10 @@ public class EnvConfig {
         return prop.getProperty(env + "." + "CMFiveDeviceIPAddress");
     }
 
+//    public String getMPReseller() {
+//        return prop.getProperty(env + "." + "MPReseller");
+//    }
+
     public ArrayList<String> getList() {
         list = new ArrayList<>();
         list.add(prop.getProperty(env + "." + "MPFirstGroupName"));

@@ -17,8 +17,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
         private By headerMenuManageLoc = By.xpath("//*[@class='ad-component--link ad-component_dropdown--trigger manage-link']");
         private By revenueTab = By.xpath("//*[@class='payments']");
+        private By headerMenuCompanyLoc = By.xpath("//*[@class='ad-component_list--item ad-component_dropdown company-dropdown']");
+//        private By headerMenuManageLoc = By.xpath("//*[@class='ad-component--link ad-component_dropdown--trigger manage-link']");
         private By marketplaceSubMenuLoc = By.xpath("//*[@class='ad-component_list-item ad-component_list-item--channel']");
         private By marketplaceMenuLoc = By.xpath("//a[text()='Marketplace']");
+        private By companySubMenuLoc = By.xpath("//a[text()='MerchantForAutomation']");
+        private By marketplaceMenuAccountLoc = By.id("account");
 
         public MPHomePage() {
             super(url, title);
@@ -53,7 +57,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
             waitUntilPageLoad(revenueTab);
         }
 //--------------------------------------------------------------------------
-//--------------------------------------------------------------------------
         /**
          * Method: Click on Marketplace main menu.
          * @authors Yana Fridman
@@ -63,7 +66,36 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
             click(marketplaceMenuLoc);
         }
+//--------------------------------------------------------------------------\
+        /**
+         * Method: Click on Marketplace main company menu.
+         * @authors Yana Fridman
+         */
 //--------------------------------------------------------------------------
+        public void clickMarketplaceMenuCompany () throws InterruptedException {
 
+            click(headerMenuCompanyLoc);
+        }
+//--------------------------------------------------------------------------
+        /**
+         * Method: Click on Marketplace Merchant company Sub-menu.
+         * @authors Yana Fridman
+         */
+//--------------------------------------------------------------------------
+        public void clickSubMenuCompany () throws InterruptedException {
+
+            click(companySubMenuLoc);
+        }
+//--------------------------------------------------------------------------
+        /**
+         * Method: Click on Account Main Menu.
+         * @authors Yana Fridman
+         */
+//--------------------------------------------------------------------------
+        public void clickMenuAccount () throws InterruptedException {
+
+            click(marketplaceMenuAccountLoc);
+        }
+//--------------------------------------------------------------------------
 }
 

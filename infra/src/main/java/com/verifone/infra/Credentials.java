@@ -69,4 +69,7 @@ public class Credentials {
     public User getMPAssignUser() {
         return new User(prop.getProperty(env + "MPAssignUser"), prop.getProperty(env + "MPMerchantAdminPass"));
     }
+    public User getMPReseller() {
+        return new User(prop.getProperty(env + "MPResellerEmail"), prop.getProperty(env + "MPResellerPwd"));
+    }
 }

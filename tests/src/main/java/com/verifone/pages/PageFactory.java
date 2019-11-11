@@ -168,6 +168,12 @@ public class PageFactory {
                 return new LoginMPPortal();
             case "ProductsTabBundlePage":
                 return new ProductsTabBundlePage();
+            case "MPUsersPage":
+                return new MPUsersPage();
+            case "MPGroupsPage":
+                return new MPGroupsPage();
+            case "MPAccountPage":
+                return new MPAccountPage();
             default:
                 System.out.println("Can not create a Page, missing implementation of class " + page);
         }
