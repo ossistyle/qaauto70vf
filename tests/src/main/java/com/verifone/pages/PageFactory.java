@@ -22,7 +22,7 @@ public class PageFactory {
     public static CBAProducts getCBAProducts() {return new CBAProducts();}
     public static CBADashboard getCBADashboard () {return new CBADashboard ();}
     public static LoginMPPortal getLoginMPPortal() {return new LoginMPPortal();}
-    //public static AndroidProjectOperationPage getAndroidProjectOperationPage() {return new AndroidProjectOperationPage();}
+    public static AndroidProjectOperationPage getAndroidProjectOperationPage() {return new AndroidProjectOperationPage();}
     public static CBAResellerPage getCBAResellerPage(){return new CBAResellerPage();}
 
     public static CBAAssignPage getAssignAppPage() {return new CBAAssignPage();}

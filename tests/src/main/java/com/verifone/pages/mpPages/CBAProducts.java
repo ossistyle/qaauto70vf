@@ -2,20 +2,29 @@ package com.verifone.pages.mpPages;
 
 import com.verifone.pages.BasePage;
 import com.verifone.tests.BaseTest;
-import com.verifone.utils.appUtils.Application;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.awt.*;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static com.verifone.utils.Assertions.assertTextContains;
 
 public class CBAProducts extends BasePage {
     private final static String url = "";
     private final static String title = "";
+    private static String getApplicationName = BaseTest.envConfig.getApplicationName();
+    private static String getApplicationID = BaseTest.envConfig.getApplicationID();
+    private static String getApplicationVersion = BaseTest.envConfig.getApplicationVersion();
+    private static String getApplicationVersionCode = BaseTest.envConfig.getApplicationVersionCode();
+
 
     public CBAProducts() {
         super(url, title);
@@ -29,6 +38,8 @@ public class CBAProducts extends BasePage {
     private By appName = By.id("appNameField");
     private By modelFree = By.cssSelector("input[id='free'][type='radio']");
     private By createProductBtn = By.cssSelector("button[name='createButton'][type='submit']");
+    private By btnCreateProduct = By.xpath("//button[contains(text(),'Create Product')][@class='go-to-import-link adb-button__small']");
+
 
     /////Listing Info/////
     private By listingInfo = By.linkText("Listing Info");
@@ -57,7 +68,8 @@ public class CBAProducts extends BasePage {
     private By autorizationType = By.xpath("//*[@class='sc-hgRTRy jFQzJN'][@name='authorizationType']");
     private By generateKey = By.xpath("//button[@class='sc-gldTML eVenQv'][@type='submit']");
     private By doneBtn = By.xpath("//button[@class='sc-gldTML dSzJck'][@type='button']");
-    private By oathFeedbackInfo = By.xpath("//*[contains(text(),'A new OAuth 1.0 consumer was successfully created')]");
+    // private By oathFeedbackInfo = By.xpath("//*[contains(text(),'A new OAuth 1.0 consumer was successfully created')]");
+    private final By oathFeedbackInfo = By.xpath("//div[@class='sc-dxgOiQ cZsGsY']");
 
     /////Edit Integration/////
     private By integtation = By.linkText("Edit Integration");
@@ -142,9 +154,23 @@ public class CBAProducts extends BasePage {
     private By deleteButton = By.xpath("//button[@class ='adb-button__danger adb-button__small'][contains(@name,'wrapper:contentPanel:productTable:tbody')]");
     private By confirmDelete = By.cssSelector("button[type='button'][class ='adb-button adb-toolbar--item adb-button__primary']");
     private By deleteFeedbackInfo = By.xpath("//*[contains(text(),'You have successfully deleted')]");
+    private By txtAdditionalNotes = By.xpath("//*[@class='js-validation-notes-region']");
+    private By linkAdditionalDetails = By.xpath("//a[@class='adb-local_alert--link' and text()='View additional details.']");
+    private By btnClose = By.xpath("//button[@class='adb-button adb-toolbar--item adb-button__secret']");
+    private By btnDelete = By.xpath("//button[@class='adb-button adb-button__danger']");
+    private By txtDeleteProductVersion = By.xpath("//*[@class='adb-modal--header']");
+    private By descDeleteProductVersion = By.xpath("//*[@class='adb-modal--content modal-content']");
+    private By btnDeleteConfirmProduct = By.xpath("//*[@class='adb-button adb-toolbar--item adb-button__danger']");
+    private By txtConfirmDelete = By.xpath("//*[@class='js-content']/p");
+    private By txtInfoFeedBackPanel = By.xpath("//li[@class='feedbackPanelINFO']/span");
+    private By btnEditStagingProduct = By.xpath("//*[@class='adb-button adb-button__neutral adb-button__small']");
+    private By txtVerifoneDevice = By.xpath("//span[contains(text(),'Verifone Device')]");
+    // private By txtVerifoneDevice = By.cssSelector("a[class ='adb-link__nav adb-stack--item_content adb-is-selected']");
 
     ////Data/////
-    String productName = "CBA-Carbon016 Test";
+    private String productName = BaseTest.envConfig.getCbaProductName();
+    private String productVersionCode = getApplicationVersionCode;
+    private String productVersionName = getApplicationVersion;
     String productDescription = "CBA Test App short description";
     String privacyPolicy = "https://www.commbank.com.au/security-privacy/general-security/privacy.html";
     String termsAndConditions = "https://www.samplestore.com/legal/terms_of_use_mobile";
@@ -155,25 +181,23 @@ public class CBAProducts extends BasePage {
     String notificationURL = "https://verifoneausandbox.byappdirect.com/api/integration/v1/dummy/success";
     String feedBackInfo = "The integration configuration was saved successfully.";
     String headerInfo = "Manage Platform";
-    String productVersionTitle = "Carbon 016";
-    String productVersionCode = "1";//"199245635";
-    String productVersionName = "1.1.0";
     String validationInfo = "Successfully validated package. ";
     String authenticationInfo = "The authentication configuration was saved successfully.";
     String addedInfo = "You have successfully added " + productName + " to your Production Catalog.";
     String removedInfo = "You successfully removed application " + productName + " from the Production Catalog. It is not visible in the marketplace, but it is still present in the Staging Catalog.";
     String unpublishedInfo = "You have successfully unpublished " + productName + ".";
     String oathKeyInfo = "A new OAuth 1.0 consumer was successfully created for your product.";
+    String deleteVersion = "Delete Product Version";
+    String msgDeleteProductVersion = "Product Version " + getApplicationName + "_" + getApplicationVersion + " has successfully been deleted";
+    String infoFeedBackPanel = "You have successfully deleted " + productName;
 
-    /////Files/////
-    String workingDir = System.getProperty("user.dir");
-    String imagepath = workingDir + "\\src\\test\\resources\\apps\\image.jpg";
-    //String packagepath = workingDir + "\\src\\test\\resources\\apps\\AndroidOn-199245635-2.1.1.zip";
-    //String packagepath = workingDir + "\\src\\test\\resources\\apps\\Connectio-529464582-1.0.0.zip";
-    String packagepath = workingDir + "\\src\\test\\resources\\apps\\Carbon016-144132322-1.1.0.zip";
+    private static String generatedAppId = AndroidProjectOperationPage.androidProjectAppId;
+    private static String userDir = BaseTest.envConfig.getAppsDirectoryPath();
+    //private static String packagePath = userDir + File.separator + generatedAppId + "-" + getApplicationVersion + ".zip";
+    private static String imagePath = userDir + File.separator + "image.jpg";
 
     public void createStagingProduct() throws Exception {
-
+        testLog.info("<b>Info -> <u> Create Staging Product </u></b> ");
         waitForLoader(appName);
         sendKeys(appName, productName);
         click(modelFree);
@@ -181,19 +205,20 @@ public class CBAProducts extends BasePage {
     }
 
     public void listingInfoProduct() throws Exception {
+        testLog.info("<b>Info -> Profile & Branding : <u> Create Listing Info </u></b> ");
         waitForLoader(listingInfo);
         click(listingInfo);
         sendKeys(wordDescription, productDescription);
         sendKeys(description, productDescription);
         sendKeys(linkPP, privacyPolicy);
         sendKeys(linkTC, termsAndConditions);
-        sendKeys(listingLogo, imagepath);
-        sendKeys(profileLogo, imagepath);
+        sendKeys(listingLogo, imagePath);
+        sendKeys(profileLogo, imagePath);
         click(saveBtn);
 
         if (isExists(feedBackPanel, 18)) {
             ExpectedConditions.textToBe(feedBackPanel, feedBack);
-            testLog.info(driver.findElement(feedBackPanel).getText());
+            testLog.info("<b>" + driver.findElement(feedBackPanel).getText() + "</b>");
         }
 
         click(savePreviewBtn);
@@ -201,10 +226,11 @@ public class CBAProducts extends BasePage {
     }
 
     public void profileProduct() {
+        testLog.info("<b>Info -> Profile & Branding : <u> Create Profile </u></b> ");
         click(profile);
         sendKeys(splashTitle, splash);
         sendKeys(splashDescript, splash);
-        sendKeys(overviewImg, imagepath);
+        sendKeys(overviewImg, imagePath);
         sendKeys(demoUrl, videoURL);
         sendKeys(docLink, documentLink);
         click(savePreviewBtn);
@@ -212,6 +238,7 @@ public class CBAProducts extends BasePage {
     }
 
     public void credentialsOath() {
+        testLog.info("<b>Info -> Integration : <u> Create Credentials </u></b> ");
         waitForLoader(credentials);
         click(credentials);
         ExpectedConditions.presenceOfElementLocated(autorizationType);
@@ -220,12 +247,16 @@ public class CBAProducts extends BasePage {
         click(generateKey);
         ExpectedConditions.elementToBeClickable(doneBtn);
         click(doneBtn);
+
+        waitUntilPageLoad(oathFeedbackInfo);
         ExpectedConditions.textToBe(oathFeedbackInfo, oathKeyInfo);
+        testLog.info("<b>" + getText(oathFeedbackInfo) + "</b>");
         //click(listingInfo);
         //click(saveBtn);
     }
 
     public void editIntegration() {
+        testLog.info("<b>Info -> Integration : <u> Edit Integration </u></b> ");
         click(integtation);
         sendKeys(subscrCreate, notificationURL);
         sendKeys(subscrChange, notificationURL);
@@ -237,9 +268,11 @@ public class CBAProducts extends BasePage {
         click(saveBtn);
         //click(confirmSaveBtn);
         ExpectedConditions.textToBe(feedBackPanelInfo, feedBackInfo);
+        testLog.info("<b>" + getText(feedBackPanelInfo) + "</b>");
     }
 
     public void editAuthentication() {
+        testLog.info("<b>Info -> Integration : <u> Edit Authentication </u></b> ");
         waitForLoader(authentication);
         click(authentication);
         ExpectedConditions.elementToBeClickable(integrationSelect);
@@ -252,6 +285,7 @@ public class CBAProducts extends BasePage {
     }
 
     public void runPingTests() throws InterruptedException {
+        testLog.info("<b>Info -> Integration : <u> Run Ping Tests </u></b> ");
         waitForLoader(pingTests);
         click(pingTests);
         waitForLoader(runAllTets);
@@ -260,6 +294,7 @@ public class CBAProducts extends BasePage {
     }
 
     public void integrationReport() {
+        testLog.info("<b>Info -> Integration : <u> Integration Report </u></b> ");
         waitForLoader(integrationReport);
         click(integrationReport);
 
@@ -270,6 +305,7 @@ public class CBAProducts extends BasePage {
     }
 
     public void addPlatform() {
+        testLog.info("<b>Info -> Platforms & Versions : <u> Platforms </u></b> ");
         waitForLoader(platforms);
         click(platforms);
         click(addPlatformBtn);
@@ -279,17 +315,21 @@ public class CBAProducts extends BasePage {
         click(addProductVersion);
     }
 
-    public void productVersion() throws InterruptedException, AWTException {
+    public void productVersion(String app2Signed, String productVersionTitle) throws InterruptedException, AWTException {
+        testLog.info("<b>Info -> Platforms : <u> Add Product Version </u></b> ");
+
+        String packagePath = userDir + File.separator + productVersionTitle + "-" + getApplicationVersion + ".zip";
+
         sendKeys(versionTitle, productVersionTitle);
         sendKeys(versionCode, productVersionCode);
         sendKeys(versionName, productVersionName);
         hoverAndClickOnElement(chooseAsset);
-        fileUpload(packagepath);
+        fileUpload(packagePath);
         hoverAndClickOnElement(chooseIcon);
 
-        fileUpload(imagepath);
+        fileUpload(imagePath);
         hoverAndClickOnElement(chooseImage);
-        fileUpload(imagepath);
+        fileUpload(imagePath);
 
         click(mobileFamily);
         click(saveButton);
@@ -308,15 +348,58 @@ public class CBAProducts extends BasePage {
         waitForLoader(validatedPackage);
         ExpectedConditions.textToBe(validatedPackage, validationInfo);
         testLog.info(driver.findElement(validatedPackage).getText());
+
+        // Get -> Additional details after package validation
+        testLog.info("<b>Info-> <u>Test : </u></b> : Verify signature of the package ");
+        getStatusOfPackageValidation(app2Signed);
+        /*List<WebElement> eleAdditionalDetails = driver.findElements(linkAdditionalDetails);
+        System.out.println("size of eleAdditionalDetails :" + eleAdditionalDetails.size());
+        if (eleAdditionalDetails.size() != 0) {
+            click(linkAdditionalDetails);
+            waitUntilPageLoad(txtAdditionalNotes);
+            scrollToElement(txtAdditionalNotes);
+
+            // Verify -> Package is signed with V2 signature or not
+            if (isContain(getText(txtAdditionalNotes), "appV2Signed : true")) {
+                System.out.println("true");
+                testLog.info("<b>Info-> <u>Additional Notes</u></b> :" + getText(txtAdditionalNotes));
+            } else {
+                System.out.println("false");
+                testLog.info("<b>Info-> <u>Additional Notes</u></b> :" + getText(txtAdditionalNotes));
+            }
+
+            //close -> Package Validation Details
+            click(btnClose);
+        }*/
+
+
+    }
+
+    public void deleteProductVersion() {
+        testLog.info("<b>Info -> Platforms : <u> Delete Product Version </u></b> ");
+
+        click(btnDelete);
+        waitUntilPageLoad(txtDeleteProductVersion);
+        assertTextContains(getText(txtDeleteProductVersion), deleteVersion);
+        testLog.info("<b>Info -> <u>" + getText(txtDeleteProductVersion) + " </u></b> : " + getText(descDeleteProductVersion));
+        click(btnDeleteConfirmProduct);
+        waitForLoader(headerItem);
+        assertTextContains(msgDeleteProductVersion, getText(txtConfirmDelete));
+        testLog.info("<b>Info -> <u> Delete Product : </u> " + getText(txtConfirmDelete) + "</b>");
+    }
+
+    public void approveProductVersion() {
+        testLog.info("<b>Info -> Platforms : <u> Approved Product Version </u></b> ");
         click(approveButton);
         waitForLoader(approvedPackage);
         testLog.info(driver.findElement(approvedPackage).getText());
         click(managePlatform);
-        waitForLoader(publishButton);
+        //waitForLoader(publishButton);
     }
 
     public void publishProduct() {
         waitForLoader(publishButton);
+        testLog.info("<b>Info -> Product : <u> Publish Product </u></b> ");
         scrollToElement(publishButton);
         click(publishButton);
         waitForLoader(addToMarket);
@@ -325,10 +408,11 @@ public class CBAProducts extends BasePage {
         click(saveMarket);
         waitForLoader(addedFeedbackInfo);
         ExpectedConditions.textToBe(addedFeedbackInfo, addedInfo);
-        testLog.info(driver.findElement(addedFeedbackInfo).getText());
+        testLog.info("<b>" + driver.findElement(addedFeedbackInfo).getText() + "/<b>");
     }
 
     public void removeProduct() {
+        testLog.info("<b>Info -> <u>Production Catalog </u> :  Remove Product from the production catalog. </b> ");
         sendKeys(searchInput, productName);
         click(searchIcon);
         hoverAndClickOnElement(triggerMenu);
@@ -338,12 +422,12 @@ public class CBAProducts extends BasePage {
         click(removeProduct);
         waitForLoader(removedFeedbackInfo);
         ExpectedConditions.textToBe(removedFeedbackInfo, removedInfo);
-        testLog.info(driver.findElement(removedFeedbackInfo).getText());
+        testLog.info("<b>Info -> <u>Remove Product</u> : " + driver.findElement(removedFeedbackInfo).getText() + "</b>");
         hoverAndClickOnElement(stagingCatalogLink);
-
     }
 
-    public void unpublishProduct() {
+    public void unPublishProduct() {
+        testLog.info("<b>Info -> <u>Staging Catalog </u> : UnPublish Package</b> ");
         waitForLoader(searchInput);
         sendKeys(searchInput, productName);
         click(searchIcon);
@@ -353,18 +437,115 @@ public class CBAProducts extends BasePage {
         click(confirmUnpublish);
         waitForLoader(unpublishedFeedbackInfo);
         ExpectedConditions.textToBe(unpublishedFeedbackInfo, unpublishedInfo);
-        testLog.info(driver.findElement(unpublishedFeedbackInfo).getText());
+        testLog.info("<b>Info -> <u>UnPublish Product</u> : " + driver.findElement(unpublishedFeedbackInfo).getText() + "</b>");
     }
 
-    public void deleteSatgingProduct() {
+    public void deleteSatgingProduct() throws Exception {
+        testLog.info("<b>Info -> <u> Delete Staging Product </u></b> " + productName);
+
         waitForLoader(searchInput);
         sendKeys(searchInput, productName);
         click(searchIcon);
-        hoverAndClickOnElement(deleteButton);
+        waitUntilPageLoad(searchIcon);
 
-        waitForLoader(confirmDelete);
-        hoverAndClickOnElement(confirmDelete);
-        waitForLoader(deleteFeedbackInfo);
-        testLog.info(driver.findElement(deleteFeedbackInfo).getText());
+        Thread.sleep(2000);
+        List<WebElement> productList = driver.findElements(productLink);
+        System.out.println("Size of product list :" + productList.size());
+
+        if (productList.size() != 0) {
+            testLog.info("<b>Product is available to delete.</b>");
+            hoverAndClickOnElement(deleteButton);
+
+            waitForLoader(confirmDelete);
+            hoverAndClickOnElement(confirmDelete);
+            waitForLoader(txtDeleteProductVersion);
+            assertTextContains(infoFeedBackPanel, getText(txtInfoFeedBackPanel));
+            testLog.info("<b>Info -> <u>Delete Staging Product</u> : " + driver.findElement(txtInfoFeedBackPanel).getText() + "</b>");
+        } else {
+            testLog.info("<b>Product is not available to delete.</b>");
+        }
+    }
+
+    public void getStatusOfPackageValidation(String app2Signed) {
+        List<WebElement> eleAdditionalDetails = driver.findElements(linkAdditionalDetails);
+        System.out.println("size of eleAdditionalDetails :" + eleAdditionalDetails.size());
+        if (eleAdditionalDetails.size() != 0) {
+            click(linkAdditionalDetails);
+            waitUntilPageLoad(txtDeleteProductVersion);
+            scrollToElement(txtAdditionalNotes);
+            // Verify -> Package is signed with V2 signature or not
+            if (isContain(getText(txtAdditionalNotes), app2Signed)) {
+                System.out.println("true");
+                testLog.info("<b>Info -> <u>Success :</u></b> : Package validated successfully.");
+                testLog.info("<b>Info -> <u>Additional Notes</u></b> :" + getText(txtAdditionalNotes));
+            } else {
+                System.out.println("false");
+                testLog.info("<b>Info-> <u>Additional Notes</u></b> :" + getText(txtAdditionalNotes));
+                Assert.fail("<b>Info-> <u>Error :</u></b> Package failed to validate.");
+            }
+
+            //close -> Package Validation Details
+            click(btnClose);
+        }
+    }
+
+    /**
+     * This method delete the signed package after all operation
+     * 25/10/2019
+     *
+     * @author : Prashant Lokhande
+     */
+    public void deleteV1SignedPackage(String productVersionTitle) {
+        testLog.info("<b>Info -> Package : <u> Delete signed package from the user directory </u></b> ");
+        String packagePath = userDir + File.separator + productVersionTitle + "-" + getApplicationVersion + ".zip";
+        File deleteFilePath = new File(packagePath);
+        if (isFileExists(deleteFilePath, 10)) {
+            deleteFilePath.delete();
+        }
+    }
+
+    /**
+     * This method edit the product which is present in staging catalog
+     * 31/10/2019
+     *
+     * @author : Prashant Lokhande
+     */
+    public void editStagingCatalogProduct() throws Exception {
+        testLog.info("<b>Info -> <u> Update staging catalog product </u></b> ");
+        click(stagingCatalogLink);
+
+        waitForLoader(searchInput);
+        sendKeys(searchInput, productName);
+        click(searchIcon);
+        waitUntilPageLoad(searchIcon);
+
+        //verify app is available to edit. if not then create new product
+        Thread.sleep(2000);
+        List<WebElement> isAppPresent = driver.findElements(btnEditStagingProduct);
+        System.out.println(" isAppPresent : " + isAppPresent.size());
+
+        if (isAppPresent.size() == 0) {
+            testLog.info("<b> Create Product </b>");
+            click(btnCreateProduct);
+            createStagingProduct();
+            addPlatform();
+        } else {
+            testLog.info("<b> Edit Product </b>");
+            click(btnEditStagingProduct);
+            waitForLoader(platforms);
+
+            scrollToElement(platforms);
+            click(platforms);
+
+            hoverAndClickOnElement(txtVerifoneDevice);
+
+            waitForLoader(headerItem);
+            ExpectedConditions.textToBe(headerItem, headerInfo);
+            click(addProductVersion);
+        }
+    }
+
+    public void clickStagingProduct() {
+        click(stagingCatalogLink);
     }
 }
