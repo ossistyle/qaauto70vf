@@ -37,7 +37,7 @@ public class VerifyJobInVHQ extends BaseTest {
 
         VHQDeviceSearch deviceSearch = PageFactory.getVHQDeviceSearch();
         deviceSearch.deviceProfile();
-        deviceSearch.validateJobInstall(getAppName, "INSTALL", CBAAssignPage.jobCreatedOnSubscription);
+        deviceSearch.validateJobInstall(getAppName, "INSTALL", CBAAssignPage.jobCreatedOnSubscription,"positive");
         //deviceSearch.validateJobInstall(getAppName, "INSTALL", "07/Oct/2019 01:15");
 
     }
@@ -57,6 +57,6 @@ public class VerifyJobInVHQ extends BaseTest {
 
         VHQDeviceSearch deviceSearch = PageFactory.getVHQDeviceSearch();
         deviceSearch.deviceProfile();
-        deviceSearch.validateJobInstall(getAppName, "UNINSTALL", CBAAccount.jobCreatedOnUnsubscription);
+        deviceSearch.validateJobInstall(getAppName, "UNINSTALL", CBAAccount.jobCreatedOnUnsubscription,"positive");
     }
 }

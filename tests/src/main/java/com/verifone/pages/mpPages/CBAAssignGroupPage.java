@@ -303,7 +303,12 @@ public class CBAAssignGroupPage extends BasePage {
             }
         }
 
-        click(btnNext);
+        List<WebElement> getEle = driver.findElements(btnNext);
+        System.out.println("size of btnNext :" + getEle.size());
+        testLog.info("<b> Next Button </b> : " + getEle.size());
+
+        if (getEle.size() != 0)
+            click(btnNext);
 
         waitUntilPageLoad(btnSubmit);
         click(btnSubmit);
@@ -319,12 +324,13 @@ public class CBAAssignGroupPage extends BasePage {
         testLog.info("----- App Subscription created date & Time : " + jobCreatedOnGroups + " -----");
     }
 
-    public void searchDeviceJob(ArrayList<String> listOfApp, String jobName, String jobCreatedOnGroups, String deviceSerialNumber) throws Exception {
+    public void searchDeviceJob(ArrayList<String> listOfApp, String jobName, String jobCreatedOnGroups, String deviceSerialNumber, String testMode) throws Exception {
         VHQDeviceSearch deviceSearch = PageFactory.getVHQDeviceSearch();
         testLog.info("-------Device Serial Number : ( " + deviceSerialNumber + " )----------");
         for (String app : listOfApp) {
             System.out.println("List of app name : " + listOfApp);
-            deviceSearch.validateJobInstall(app, jobName, jobCreatedOnGroups);
+            deviceSearch.validateJobInstall(app, jobName, jobCreatedOnGroups, testMode);
+
         }
     }
 
@@ -346,34 +352,27 @@ public class CBAAssignGroupPage extends BasePage {
     }
 
     /**
-     * This method use existing group to assign available device user.
+     * This method describe all the actions related to UnAssign of device
+     * <p>
+     * 11/08/2019
      *
-     * @author Prashant Lokahnde
-     * 4/11/2019
+     * @author Prashant Lokhande
      */
 
-    public void assignDeviceToGroup(String groupToSearch, String nameOfTheGroup, String groupDescription, ArrayList<String> listOfApp, ArrayList<String> listOfGroup, ArrayList<String> listOfDevices) throws Exception {
-        testLog.info("<b><u> Search group : </u></b>" + groupToSearch + "-----");
+    public void removeDeviceFromTheGroup() {
 
         scrollToElement(txtSearchGroup);
         click(txtSearchGroup);
-        sendKeys(txtSearchGroup, groupToSearch);
+        //sendKeys(txtSearchGroup, listOfGroup.get(0));
         click(btnSearch);
-        waitForLoader(btnSearch);
+        waitUntilPageLoad(btnSearch);
 
-        List<WebElement> getEle = driver.findElements(btnSettings);
-        System.out.println("Size of User :" + getEle.size());
-        if (getEle.size() == 0) {
-            testLog.info("<b> Group not Found. Create New Group </b> ---- ");
-            createUsersGroup(nameOfTheGroup, groupDescription, listOfApp, listOfGroup);
-        } else {
-            testLog.info("</b> Group Found </b>");
-            hoverAndClickOnElement(btnSettings);
-            scrollToElement(manageUsers);
-            hoverAndClickOnElement(manageUsers);
-        }
-        addDeviceToGroup(listOfGroup.get(0), listOfDevices, "AddUser");
+        hoverAndClickOnElement(btnSettings);
+        scrollToElement(btnManageUsers);
+        hoverAndClickOnElement(btnManageUsers);
+        waitUntilPageLoad(txtAvailableUsers);
 
-        Thread.sleep(4000);
+
     }
+
 }

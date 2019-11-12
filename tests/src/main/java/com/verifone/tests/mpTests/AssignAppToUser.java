@@ -69,7 +69,7 @@ public class AssignAppToUser extends BaseTest {
         vhqDashboard.deviceProfile();
 
         VHQDeviceSearch deviceSearch = PageFactory.getVHQDeviceSearch();
-        deviceSearch.validateJobInstall(getAppName, "INSTALL", CBAAssignPage.jobCreatedOnSubscription);
+        deviceSearch.validateJobInstall(getAppName, "INSTALL", CBAAssignPage.jobCreatedOnSubscription, "positive");
     }
 
     @Test(priority = 4, testName = "LogIn & Unsubscribe an App", description = "Log in to CBA account and Unsubscribe the app.")
@@ -93,6 +93,6 @@ public class AssignAppToUser extends BaseTest {
         vhqDashboard.deviceProfile();
 
         VHQDeviceSearch deviceSearch = PageFactory.getVHQDeviceSearch();
-        deviceSearch.validateJobInstall(getAppName, "UNINSTALL", CBAAccount.jobCreatedOnUnsubscription);
+        deviceSearch.validateJobInstall(getAppName, "UNINSTALL", CBAAccount.jobCreatedOnUnsubscription, "positive");
     }
 }

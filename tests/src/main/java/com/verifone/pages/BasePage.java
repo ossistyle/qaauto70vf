@@ -681,7 +681,7 @@ public abstract class BasePage {
             wait.until((ExpectedCondition<Boolean>) webDriver -> file.exists());
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+           // e.printStackTrace(); ignore case
         }
         return false;
     }

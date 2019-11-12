@@ -61,7 +61,7 @@ public class VHQDeviceSearch extends BasePage {
 
     private int scrollCounter = 1;
 
-    public void validateJobInstall(String packageName, String deviceStatus, String jobCreatedOnSubscription) throws Exception {
+    public void validateJobInstall(String packageName, String deviceStatus, String jobCreatedOnSubscription, String testMode) throws Exception {
         //set the execuation timeout value
         String timeoutVal = updateMinutesInCurrentTime(jobCreatedOnSubscription, dateFormat, 5);
         System.out.println("timeoutVal : " + timeoutVal);
@@ -145,10 +145,25 @@ public class VHQDeviceSearch extends BasePage {
 
         testLog.info("-------- End Time : " + MPUtils.getDownloadScheduleTime() + " -------");
 
-        //Fail the test if value of TestPassFlag is false
-        if (!TestPassFlag) {
-            testLog.info(" -------- VHQ : Verification of job failed. -------- ");
-            Assert.fail("-------- VHQ : Verification of job failed. --------");
+        if (!testMode.equals("negative")) {
+            System.out.println("----- Test Mode : Positive  -------");
+
+            //Fail the test if value of TestPassFlag is false
+            if (!TestPassFlag) {
+                testLog.info(" -------- VHQ Positive Test : Job should be created. -------- ");
+                Assert.fail("-------- VHQ Positive Test : Job should be created. --------");
+            }
+
+            testLog.info(" -------- VHQ Success : Job is created as expected. -------- ");
+
+        } else {
+            System.out.println("----- Test Mode : Negative  -------");
+            if (TestPassFlag) {
+                testLog.info(" -------- VHQ Negative Test : Job should not be created. -------- ");
+                Assert.fail("-------- VHQ Negative Test : Job should not be created. --------");
+            }
+
+            testLog.info(" -------- VHQ Success : Job is not created as expected. -------- ");
         }
     }
 

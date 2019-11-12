@@ -153,15 +153,33 @@
         </classes>
     </test>
 
-    <test name="ReportsUI">
+    <test name="AssignedDeviceToMoreThanOneGroupUI">
         <classes>
-            <class name="com.verifone.tests.mpTests.ReportsUI"/>
+            <class name="com.verifone.tests.mpTests.AssignedDeviceToMoreThanOneGroupUI"/>
         </classes>
     </test>
 
-    <test name="UnsubscribeAppsFromTheGroup">
+    <test name="UploadPackageInProductionCatalogUI">
         <classes>
-            <class name="com.verifone.tests.mpTests.UnsubscribeAppsFromTheGroup"/>
+            <class name="com.verifone.tests.mpTests.UploadPackageInProductionCatalogUI"/>
+        </classes>
+    </test>
+
+    <test name="UploadPackageInStagingCatalogUI">
+        <classes>
+            <class name="com.verifone.tests.mpTests.UploadPackageInStagingCatalogUI"/>
+        </classes>
+    </test>
+
+    <test name="UploadV2SignedPackageUI">
+        <classes>
+            <class name="com.verifone.tests.mpTests.UploadV2SignedPackageUI"/>
+        </classes>
+    </test>
+
+    <test name="UploadV1SignedPackageUI">
+        <classes>
+            <class name="com.verifone.tests.mpTests.UploadV1SignedPackageUI"/>
         </classes>
     </test>
 
