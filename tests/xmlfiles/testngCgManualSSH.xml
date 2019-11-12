@@ -14,9 +14,9 @@
     <!--CPPortal-->
     <!--CGPortal-->
     <!--EOAdmin-->
-    <parameter name="portal" value="CPPortal"/>
+    <parameter name="portal" value="CGPortal"/>
 
-    <test name="Eo Portal">
+    <test name="SSH CG Portal Manual Transaction">
 
         <parameter name="browserType" value="${browser}"/>
 
