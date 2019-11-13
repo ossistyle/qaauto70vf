@@ -30,7 +30,7 @@ public class UnpublishProdPackageUI extends BaseTest {
 
         CBAProducts cbaProducts = PageFactory.getCBAProducts();
         cbaProducts.removeProduct();
-        cbaProducts.unpublishProduct();
+        cbaProducts.unPublishProduct();
         cbaProducts.deleteSatgingProduct();
     }
 }
