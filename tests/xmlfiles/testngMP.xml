@@ -183,4 +183,10 @@
         </classes>
     </test>
 
+    <test name="AssignedDeviceTGroupIndividualAppUI">
+        <classes>
+            <class name="com.verifone.tests.mpTests.AssignedDeviceTGroupIndividualAppUI"/>
+        </classes>
+    </test>
+
 </suite>
