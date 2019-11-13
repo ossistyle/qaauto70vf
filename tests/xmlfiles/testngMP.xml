@@ -183,9 +183,9 @@
         </classes>
     </test>
 
-    <test name="AssignedDeviceTGroupIndividualAppUI">
+    <test name="ReportsUI">
         <classes>
-            <class name="com.verifone.tests.mpTests.AssignedDeviceTGroupIndividualAppUI"/>
+            <class name="com.verifone.tests.mpTests.ReportsUI"/>
         </classes>
     </test>
 
