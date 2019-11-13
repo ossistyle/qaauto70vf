@@ -42,6 +42,7 @@ public class EnvConfig {
     private ArrayList<String> listOfBundles;
     private ArrayList<String> listOfApps;
     private ArrayList<String> listOfGroup;
+    private ArrayList<String> IndividualGroup;
 
 //    private User user;
 
@@ -202,5 +203,12 @@ public class EnvConfig {
         listOfGroup.add(prop.getProperty(env + "." + "MPSecondGroupName"));
         listOfGroup.add(prop.getProperty(env + "." + "MPSecondGroupDescription"));
         return listOfGroup;
+    }
+
+    public ArrayList<String> getIndividualGroup() {
+        IndividualGroup = new ArrayList<>();
+        IndividualGroup.add(prop.getProperty(env + "." + "MPThirdGroupName"));
+        IndividualGroup.add(prop.getProperty(env + "." + "MPThirdGroupDescription"));
+        return IndividualGroup;
     }
 }

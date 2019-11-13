@@ -62,7 +62,7 @@ public class VHQDeviceSearch extends BasePage {
     private int scrollCounter = 1;
 
     public void validateJobInstall(String packageName, String deviceStatus, String jobCreatedOnSubscription, String testMode) throws Exception {
-        //set the execuation timeout value
+        //set the timeout value
         String timeoutVal = updateMinutesInCurrentTime(jobCreatedOnSubscription, dateFormat, 5);
         System.out.println("timeoutVal : " + timeoutVal);
         testLog.info("-------- TimeOut Value : " + timeoutVal + " -------");
@@ -70,11 +70,9 @@ public class VHQDeviceSearch extends BasePage {
         //Initially decrement the minute of current time to 1
         jobCreatedOnSubscription = updateMinutesInCurrentTime(jobCreatedOnSubscription, dateFormat, -1);
         System.out.println("jobCreatedOnSubscription : " + jobCreatedOnSubscription);
-        testLog.info("-------- Search Time Start : " + jobCreatedOnSubscription + " -------");
 
         // scroll down the web page at the bottom of the page.
         scrollToHeight();
-        testLog.info("-------- Start Time : " + MPUtils.getDownloadScheduleTime() + " -------");
 
         // following loop used to get the row value, verify against the date, job name, package name & scroll
         int i = 0;
@@ -83,10 +81,7 @@ public class VHQDeviceSearch extends BasePage {
         boolean TestPassFlag = false;
         for (; i < 50; i++) {
 
-            testLog.info(" ---- Time : Validate time against the job " + jobCreatedOnSubscription + " ------");
-
             if (TestFlagRow.equals("true")) {
-                testLog.info(" ------ Get the details of row index 0 : " + getRowDetails + " -----");
                 System.out.println("if");
                 TestFlagRow = "false";
                 Thread.sleep(1000);
@@ -94,24 +89,24 @@ public class VHQDeviceSearch extends BasePage {
                 System.out.println("Details of row : " + getText(divFirstRow));
             } else if (!getRowDetails.equals(getText(divSecondRow))) {
                 System.out.println("else");
-                testLog.info(" ------ Get the details of row index 1 : " + getRowDetails + " -----");
+                //testLog.info(" ------ Get the details of row index 1 : " + getRowDetails + " -----");
                 getRowDetails = getText(divSecondRow);
                 System.out.println("Details of row : " + getText(divSecondRow));
             }
 
-            testLog.info(" ------ Text expected : " + jobCreatedOnSubscription + " -- Was : " + getRowDetails + " -----");
-            testLog.info(" ------ Text expected : " + packageName + " -- Was : " + getRowDetails + " -----");
-            testLog.info(" ------ Text expected : " + deviceStatus + " -- Was : " + getRowDetails + " -----");
-            System.out.println("updated date inside the loop " + jobCreatedOnSubscription);
+            //System.out.println("updated date inside the loop " + jobCreatedOnSubscription);
+            testLog.info(" ------ <b>Text expected : <u>" + packageName + "</u> , <u>" + deviceStatus + "</u> , <u>" + jobCreatedOnSubscription + "</u> -- Text Actual : " + getRowDetails + " -----</b>");
 
             //Verify the date, package name & job name of the job
             if (assertRowContains(jobCreatedOnSubscription, getRowDetails) & assertRowContains(packageName, getRowDetails)) {
-                testLog.info(" ------ Condition true :  Date & Package name  -----");
+                // testLog.info(" ------ Condition true :  Date & Package name  -----");
                 System.out.println("Condition true :  Date & Package name");
                 Thread.sleep(500);
                 if (isContain(getRowDetails, deviceStatus)) {
                     System.out.println("Job created successfully!");
-                    testLog.info(" -------- VHQ : Package (" + deviceStatus + ") Job created successfully! -------- ");
+                    testLog.info(" -------- <b> VHQ Job Name :(" + packageName + ") created successfully! <b> -------- ");
+                    testLog.info(" -------- <b> VHQ Job Status :(" + deviceStatus + ") created successfully! </b>-------- ");
+                    testLog.info(" -------- <b> VHQ Download Schedule Time :(" + deviceStatus + ") created successfully! </b>-------- ");
                     TestPassFlag = true;
                     click(btnRefresh);
                     waitForLoader(btnRefresh);
@@ -119,7 +114,7 @@ public class VHQDeviceSearch extends BasePage {
                 }
             }
 
-            testLog.info(" ------ Date expected : " + jobCreatedOnSubscription.substring(0, 11) + " -- Was : " + getRowDetails + " -----");
+            //testLog.info(" ------ Date expected : " + jobCreatedOnSubscription.substring(0, 11) + " -- Was : " + getRowDetails + " -----");
             if (assertRowContains(jobCreatedOnSubscription.substring(0, 11), getRowDetails) && i != 49) {
                 System.out.println("true");
                 testLog.info("----- Scroll the Page -----");
@@ -127,7 +122,7 @@ public class VHQDeviceSearch extends BasePage {
                 Thread.sleep(1000);
             } else {
                 System.out.println("false");
-                testLog.info(" ---- Time : Failed to validate the job ------");
+                //testLog.info(" ---- Time : Failed to validate the job ------");
                 System.out.println("jobCreatedOnSubscription : " + jobCreatedOnSubscription + "timeoutVal :" + timeoutVal);
                 if (!jobCreatedOnSubscription.equals(timeoutVal)) {
                     //Increment minute by one if current time is not find in the list of rows.
@@ -143,7 +138,7 @@ public class VHQDeviceSearch extends BasePage {
             }
         }
 
-        testLog.info("-------- End Time : " + MPUtils.getDownloadScheduleTime() + " -------");
+        //testLog.info("-------- End Time : " + MPUtils.getDownloadScheduleTime() + " -------");
 
         if (!testMode.equals("negative")) {
             System.out.println("----- Test Mode : Positive  -------");
@@ -153,8 +148,7 @@ public class VHQDeviceSearch extends BasePage {
                 testLog.info(" -------- VHQ Positive Test : Job should be created. -------- ");
                 Assert.fail("-------- VHQ Positive Test : Job should be created. --------");
             }
-
-            testLog.info(" -------- VHQ Success : Job is created as expected. -------- ");
+            testLog.info(" -------- VHQ Success : Job is created successfully. -------- ");
 
         } else {
             System.out.println("----- Test Mode : Negative  -------");
@@ -162,8 +156,7 @@ public class VHQDeviceSearch extends BasePage {
                 testLog.info(" -------- VHQ Negative Test : Job should not be created. -------- ");
                 Assert.fail("-------- VHQ Negative Test : Job should not be created. --------");
             }
-
-            testLog.info(" -------- VHQ Success : Job is not created as expected. -------- ");
+            testLog.info(" -------- VHQ Success : Job is not created. -------- ");
         }
     }
 
@@ -175,15 +168,15 @@ public class VHQDeviceSearch extends BasePage {
 
         if (jobCreatedOnSubscription.equals(MPUtils.getDownloadScheduleTime())) {
             System.out.println("don't do anything");
-            testLog.info("----- No need to update the time : Expected time == Current time  -----");
+            //testLog.info("----- No need to update the time : Expected time == Current time  -----");
         } else {
             System.out.println("time updated");
-            testLog.info("----- Need to update the time : Expected time != Current time  -----");
+            //testLog.info("----- Need to update the time : Expected time != Current time  -----");
             //cal.add(Calendar.MINUTE, 1);
             jobCreatedOnSubscription = updateMinutesInCurrentTime(jobCreatedOnSubscription, dateFormat, 1);
         }
 
-        testLog.info("----- Date & Time verify : " + jobCreatedOnSubscription + " -----");
+        //testLog.info("----- Date & Time verify : " + jobCreatedOnSubscription + " -----");
         return jobCreatedOnSubscription;
     }
 
