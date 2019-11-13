@@ -183,4 +183,10 @@
         </classes>
     </test>
 
+    <test name="ReportsUI">
+        <classes>
+            <class name="com.verifone.tests.mpTests.ReportsUI"/>
+        </classes>
+    </test>
+
 </suite>
