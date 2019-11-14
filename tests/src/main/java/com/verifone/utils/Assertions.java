@@ -20,6 +20,12 @@ public class Assertions {
         }
     }
 
+    public static void assertTextExclude(String expectedResult, String actual) {
+        if (actual.contains(expectedResult)) {
+            org.testng.Assert.fail("Value should be excluded from : " + actual + " Was: " + expectedResult);
+        }
+    }
+
     public static void assertTextEqual(String expectedResult, String actual) {
         assertEquals(expectedResult, actual);
     }

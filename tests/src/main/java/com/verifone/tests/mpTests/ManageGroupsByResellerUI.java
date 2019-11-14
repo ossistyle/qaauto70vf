@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 
 import static com.verifone.pages.BasePage.testLog;
+import static com.verifone.tests.steps.mpPortal.Steps.loginCBA;
 import static com.verifone.tests.steps.mpPortal.Steps.navigateCBAHome;
 //--------------------------------------------------------------------------
 
@@ -27,15 +28,16 @@ public class ManageGroupsByResellerUI  extends BaseTest {
 
     public void navigator() throws Exception {
         User MPReseller = EntitiesFactory.getEntity("MPReseller");
-        String MPResellerMail = MPReseller.getUserName();
-        String MPResellerPwd = MPReseller.getPassword();
-        navigateCBAHome();
-        Steps.loginMPPortal(MPResellerMail, MPResellerPwd, "");
+//        String MPResellerMail = MPReseller.getUserName();
+//        String MPResellerPwd = MPReseller.getPassword();
+//        navigateCBAHome();
+//        Steps.loginMPPortal(MPResellerMail, MPResellerPwd, "");
+        Steps.loginCBA(MPReseller);
     }
 
     @Test(enabled = true, priority=1, testName = "Reseller Add Group in Merchant Org, Assign and Un-Assign Users", groups = { "MPPhase2" }, alwaysRun = true)
     public void ResellerAddGroupUI() throws Exception {
-        String GroupName = "TestGroup";
+        String GroupName = "ATestGroup";
 
         navigator();
         Steps.ResellerSwitchMerchantCompany();
@@ -49,7 +51,7 @@ public class ManageGroupsByResellerUI  extends BaseTest {
 
     public void ResellerUpdateDeleteGroupUI() throws Exception {
         Boolean TestPassFlag = true;
-        String GroupName = "TestGroup";
+        String GroupName = "ATestGroup";
 
         navigator();
         Steps.ResellerSwitchMerchantCompany();
