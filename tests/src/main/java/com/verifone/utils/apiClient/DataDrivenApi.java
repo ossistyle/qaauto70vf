@@ -19,6 +19,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 import static com.verifone.utils.Assertions.assertTextContains;
+import static com.verifone.utils.Assertions.assertTextExclude;
 import static com.verifone.utils.DataDrivenUtils.getListFrromString;
 import static com.verifone.utils.DataDrivenUtils.getMapFromStr;
 import static com.verifone.utils.apiClient.BaseDDTApi.getRequestWithHeaders;
@@ -71,6 +72,21 @@ public class DataDrivenApi {
         validateResult(expectedResult, verifyList);
     }
 
+    public void startProsess_ValidateExcludeData(String accessToken, String accGrantType, String accSSOURL, String uri,
+                             String requestMethod, String headers, String headersForGetToken, String body,
+                             String expectedStatusCode, String expectedResult, String verifyList, String verifyExcludeList) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, JSONException {
+        headersMap = getMapFromStr(headers);
+        getToken(accessToken, accGrantType, accSSOURL, headersForGetToken);
+        if (confirmationCode != null)
+            body = addConfirmationCode(body);
+        System.out.println(headersMap);
+        response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+        System.out.println("response is: " + response);
+        validateExcludeResult(expectedResult, verifyList, verifyExcludeList);
+
+    }
+
+
     public void startProsessWithGetValue(String accessToken, String accGrantType, String accSSOURL, String uri1, String uri2,
                              String requestMethod, String headers, String headersForGetToken, String body1, String body2,
                              String expectedStatusCode1, String expectedStatusCode2, String expectedResult1, String expectedResult2, String verifyList) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, JSONException {
@@ -118,6 +134,34 @@ public class DataDrivenApi {
             }
         }
     }
+
+    private void validateExcludeResult(String expectedResult, String verifyList, String verifyExcludeList) {
+        if (response != null)
+            testLog.info("Response is:\n" + response.toString());
+        if (verifyList != null) {
+            for (String param : getListFrromString(verifyList)) {
+                assertTextContains(param, response.toString());
+            }
+        }
+        if (expectedResult != null) {
+            expectedResultMap = getMapFromStr(expectedResult);
+            for (String key : expectedResultMap.keySet()) {
+                if (response.has(key)) {
+                    assertTextContains(expectedResultMap.get(key), response.get(key).toString());
+                    testLog.info("Result as expected: " + response.get(key).toString());
+                } else {
+                    org.testng.Assert.fail("Key: '" + key + "'  Is not appear in response");
+                }
+            }
+        }
+        if (verifyExcludeList != null && verifyExcludeList!= ""){
+            for (String param : getListFrromString(verifyExcludeList)) {
+                assertTextExclude(param, response.toString());
+            }
+        }
+
+    }
+
 
     public String getValue(JsonObject response, String key)  {
         String respValue = null;
