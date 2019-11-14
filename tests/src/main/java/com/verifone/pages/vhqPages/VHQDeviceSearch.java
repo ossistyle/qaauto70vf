@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class VHQDeviceSearch extends BasePage {
     private final static String url = "";
@@ -31,6 +32,10 @@ public class VHQDeviceSearch extends BasePage {
     private By btnConfirmState = By.id("btnChangStatusYes");
     private By btnInfo = By.id("infoBtnOk");
     private By btnScroll = By.xpath("//*[@id = 'jqxScrollBtnDownverticalScrollBarjqxgridDownloadJobProfil']");
+
+    private By row0GetDownloadScheduleDate = By.xpath("//*[@id='row0jqxgridDownloadJobProfil']/div[8]/div");
+    private By row1GetDownloadScheduleDate = By.xpath("//*[@id='row1jqxgridDownloadJobProfil']/div[8]/div");
+
 
     private static String getRowDetails = "";
     //private static boolean TestPassFlag = false;
@@ -79,23 +84,33 @@ public class VHQDeviceSearch extends BasePage {
         int scrollCounter = 1;
         String TestFlagRow = "true";
         boolean TestPassFlag = false;
+        String getScheduleDate = "";
         for (; i < 50; i++) {
-
             if (TestFlagRow.equals("true")) {
                 System.out.println("if");
                 TestFlagRow = "false";
                 Thread.sleep(1000);
                 getRowDetails = getText(divFirstRow);
                 System.out.println("Details of row : " + getText(divFirstRow));
+
+                //----------------changes ----------
+                getScheduleDate = getText(row0GetDownloadScheduleDate);
+                //System.out.println("date :" + getScheduleDate);
+
             } else if (!getRowDetails.equals(getText(divSecondRow))) {
                 System.out.println("else");
                 //testLog.info(" ------ Get the details of row index 1 : " + getRowDetails + " -----");
                 getRowDetails = getText(divSecondRow);
                 System.out.println("Details of row : " + getText(divSecondRow));
+
+                //---------------changes ---------------------
+                getScheduleDate = getText(row1GetDownloadScheduleDate);
+                //System.out.println("date :" + getScheduleDate);
             }
 
             //System.out.println("updated date inside the loop " + jobCreatedOnSubscription);
             testLog.info(" ------ <b>Text expected : <u>" + packageName + "</u> , <u>" + deviceStatus + "</u> , <u>" + jobCreatedOnSubscription + "</u> -- Text Actual : " + getRowDetails + " -----</b>");
+            testLog.info(" -------- <b> <u>App Subscription created date & Time </u> :(" + jobCreatedOnSubscription + ") ------- <u>VHQ Download Schedule Time</u> : (" + getScheduleDate + ") -------- </b>");
 
             //Verify the date, package name & job name of the job
             if (assertRowContains(jobCreatedOnSubscription, getRowDetails) & assertRowContains(packageName, getRowDetails)) {
@@ -104,9 +119,9 @@ public class VHQDeviceSearch extends BasePage {
                 Thread.sleep(500);
                 if (isContain(getRowDetails, deviceStatus)) {
                     System.out.println("Job created successfully!");
-                    testLog.info(" -------- <b> VHQ Job Name :(" + packageName + ") created successfully! <b> -------- ");
+                    testLog.info(" -------- <b> VHQ App Name :(" + packageName + ") created successfully! <b> -------- ");
                     testLog.info(" -------- <b> VHQ Job Status :(" + deviceStatus + ") created successfully! </b>-------- ");
-                    testLog.info(" -------- <b> VHQ Download Schedule Time :(" + deviceStatus + ") created successfully! </b>-------- ");
+                    testLog.info(" -------- <b> VHQ Download Schedule Time :(" + jobCreatedOnSubscription + ") created successfully! </b>-------- ");
                     TestPassFlag = true;
                     click(btnRefresh);
                     waitForLoader(btnRefresh);
