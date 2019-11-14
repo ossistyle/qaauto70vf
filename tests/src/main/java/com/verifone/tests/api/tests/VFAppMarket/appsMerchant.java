@@ -34,12 +34,6 @@ public class appsMerchant extends BaseTest {
                                     String expectedResult, String verifyList, String verifyExcludeList, String comments, String rowNum) throws Exception {
         starTestLog(rowNum + ". " + comments, comments);
 
-        if (verifyExcludeList == null || verifyExcludeList.isEmpty()) {
-            verifyExcludeList = "";
-        }
-        if (verifyExcludeList == " ") {
-            verifyExcludeList = "";
-        }
 
         DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false); // 'isBearer' is a flag to define a getToken type(with 'Bearer' or not)
         api.startProsess_ValidateExcludeData(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
