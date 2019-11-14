@@ -68,6 +68,7 @@ public class CBAAssignGroupPage extends BasePage {
     private By txtResult = By.xpath("//*[@class='adb-placeholder--content']/p");
 
     public static String jobCreatedOnGroups;
+    private int timeout = 2000;
 
     public CBAAssignGroupPage() {
         super(url, title);
@@ -81,6 +82,7 @@ public class CBAAssignGroupPage extends BasePage {
 
         //Delete the group if it is present
         waitUntilPageLoad(titleList);
+
         List<WebElement> getList = getWebElements(titleList, 18, ExpectedConditions.presenceOfElementLocated(titleList));
         for (WebElement ele : getList) {
             if (ele.getText().equals(nameOfTheGroup)) {
@@ -199,36 +201,49 @@ public class CBAAssignGroupPage extends BasePage {
         sendKeys(txtSearchGroup, listOfGroup.get(0));
         click(btnSearch);
         waitUntilPageLoad(btnSearch);
-        hoverAndClickOnElement(btnSettings);
-        scrollToElement(deleteGroup);
-        hoverAndClickOnElement(deleteGroup);
-        waitUntilPageLoad(txtModal);
-        System.out.println("Text : Modal Dialog " + getText(txtModal) + "Unable to delete :" + textUnableToDelete);
 
-        if (getText(txtModal).contains(textUnableToDelete)) {
-            System.out.println("in");
-            testLog.info("---- (3). " + getText(txtModal) + " : " + getText(descriptionUnableToDelete) + "----");
+        List<WebElement> getList = getWebElements(titleList, 18, ExpectedConditions.presenceOfElementLocated(titleList));
+        for (int j = 0; j <= getList.size(); ++j) {
+            System.out.println("size of summary :" + getList.size());
+            hoverAndClickOnElement(btnSettings);
+            scrollToElement(deleteGroup);
+            hoverAndClickOnElement(deleteGroup);
+            waitUntilPageLoad(txtModal);
+            System.out.println("Text : Modal Dialog " + getText(txtModal) + "Unable to delete :" + textUnableToDelete);
 
-            click(btnConfirm);
-            waitUntilPageLoad(linkAssignApp);
-            click(linkAssignApp);
-            moveToGroups();
-            CBAAssignPage assignApp = PageFactory.getAssignAppPage();
+            if (getText(txtModal).contains(textUnableToDelete)) {
+                System.out.println("in");
+                testLog.info("---- (3). " + getText(txtModal) + " : " + getText(descriptionUnableToDelete) + "----");
 
-            //Un assign list of apps from the group
-            for (String app : listOfApp) {
-                assignApp.searchAppToAssign(app);
-                assignApp.searchUserToAssign(listOfGroup.get(0));
+                click(btnConfirm);
+                waitUntilPageLoad(linkAssignApp);
+                click(linkAssignApp);
+                moveToGroups();
+                CBAAssignPage assignApp = PageFactory.getAssignAppPage();
+
+                //Un assign list of apps from the group
+                for (String app : listOfApp) {
+                    assignApp.searchAppToAssign(app);
+                    assignApp.searchUserToAssign(listOfGroup.get(0));
+                }
+
+                assignApp.userAssignment();
+                //assignApp.isAssignUpdated();
+                testLog.info("---- (4). " + listOfGroup.get(0) + " is unassigned from the app.-----");
+                deleteGroupTest(listOfGroup.get(0));
+
+            } else {
+                testLog.info("---- (3). " + listOfGroup.get(0) + " is not assigned to any app. -----");
+                click(btnConfirm);
+                waitUntilPageLoad(titleList);
             }
 
-            assignApp.userAssignment();
-            //assignApp.isAssignUpdated();
-            testLog.info("---- (4). " + listOfGroup.get(0) + " is unassigned from the app.-----");
-            deleteGroupTest(listOfGroup.get(0));
+            Thread.sleep(timeout);
+            List<WebElement> isResultDisplay = driver.findElements(txtResult);
+            System.out.println("isResultDisplay :" + isResultDisplay.size());
+            if (isResultDisplay.size() != 0)
+                break;
 
-        } else {
-            testLog.info("---- (3). " + listOfGroup.get(0) + " is not assigned to any app. -----");
-            click(btnConfirm);
         }
 
         waitUntilPageLoad(txtResult);
@@ -236,26 +251,6 @@ public class CBAAssignGroupPage extends BasePage {
         clearTextBoxValue(txtSearchGroup);
         //sendKeys(txtSearchGroup, "");
         click(btnSearch);
-        waitUntilPageLoad(titleList);
-        isGroupDeleted(titleList, listOfGroup.get(0));
-    }
-
-
-    public void isGroupDeleted(By loc, String val) {
-        boolean testPassFlag = true;
-        List<WebElement> getList = getWebElements(loc, 18, ExpectedConditions.presenceOfElementLocated(loc));
-        System.out.println("size of summary :" + getList.size());
-        for (WebElement ele : getList) {
-            System.out.println("print the list :" + ele.getText());
-            if (ele.getText().equals(val)) {
-                testLog.info("----- Group (<b>" + ele.getText() + "</b>) is not deleted. -----");
-                testPassFlag = false;
-                break;
-            }
-            testLog.info("---- Available Group ( " + ele.getText() + " ) -----");
-        }
-        Assert.assertTrue(testPassFlag);
-        testLog.info("---- (4). " + val + " is deleted. -----");
     }
 
     public void displayDetails(By loc, String val) {
@@ -349,30 +344,6 @@ public class CBAAssignGroupPage extends BasePage {
             testLog.info("---- User / Device : " + getText(users) + " is active.");
             click(users);
         }
-    }
-
-    /**
-     * This method describe all the actions related to UnAssign of device
-     * <p>
-     * 11/08/2019
-     *
-     * @author Prashant Lokhande
-     */
-
-    public void removeDeviceFromTheGroup() {
-
-        scrollToElement(txtSearchGroup);
-        click(txtSearchGroup);
-        //sendKeys(txtSearchGroup, listOfGroup.get(0));
-        click(btnSearch);
-        waitUntilPageLoad(btnSearch);
-
-        hoverAndClickOnElement(btnSettings);
-        scrollToElement(btnManageUsers);
-        hoverAndClickOnElement(btnManageUsers);
-        waitUntilPageLoad(txtAvailableUsers);
-
-
     }
 
 }
