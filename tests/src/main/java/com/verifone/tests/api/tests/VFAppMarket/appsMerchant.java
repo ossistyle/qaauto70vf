@@ -39,4 +39,5 @@ public class appsMerchant extends BaseTest {
         api.startProsess_ValidateExcludeData(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
                 expectedStatusCode, expectedResult, verifyList, verifyExcludeList);
     }
+
 }

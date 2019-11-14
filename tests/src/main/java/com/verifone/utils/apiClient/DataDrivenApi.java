@@ -83,6 +83,7 @@ public class DataDrivenApi {
         response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
         System.out.println("response is: " + response);
         validateExcludeResult(expectedResult, verifyList, verifyExcludeList);
+
     }
 
 
@@ -158,6 +159,7 @@ public class DataDrivenApi {
                 assertTextExclude(param, response.toString());
             }
         }
+
     }
 
 

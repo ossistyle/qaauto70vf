@@ -24,6 +24,7 @@ public class Assertions {
         if (actual.contains(expectedResult)) {
             org.testng.Assert.fail("Value should be excluded from : " + actual + " Was: " + expectedResult);
         }
+
     }
 
     public static void assertTextEqual(String expectedResult, String actual) {
