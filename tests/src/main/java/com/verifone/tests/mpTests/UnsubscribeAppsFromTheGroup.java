@@ -14,12 +14,13 @@ import static com.verifone.tests.steps.mpPortal.Steps.*;
 
 
 public class UnsubscribeAppsFromTheGroup extends BaseTest {
-    private ArrayList<String> listOfGroup;
+
     private ArrayList<String> listOfApp;
     private ArrayList<String> listOfDevices;
-    private static String deviceSerialNumber;
 
-    private static String groupToSearch;
+    private static String deviceSerialNumber;
+    private String groupName;
+    private String groupDescription;
 
 
     @Test(priority = 1, testName = "LogIn & Create Group", description = "LogIn in to CBA Marketplace and create group with more than one user.")
@@ -29,7 +30,9 @@ public class UnsubscribeAppsFromTheGroup extends BaseTest {
 
         listOfDevices = new ArrayList<>(BaseTest.envConfig.getListOfDevices().subList(0, 1));
         listOfApp = new ArrayList<>(BaseTest.envConfig.getListOfAppName().subList(0, 1));
-        listOfGroup = BaseTest.envConfig.getList();
+
+        groupName = BaseTest.envConfig.getGroupInfo("MPSecondGroupName");
+        groupDescription = BaseTest.envConfig.getGroupInfo("MPSecondGroupDescription");
 
         System.out.println("listOfDevices :" + listOfDevices);
         System.out.println("listOfApp :" + listOfApp);
@@ -39,9 +42,9 @@ public class UnsubscribeAppsFromTheGroup extends BaseTest {
         assignGroup.moveToUsers();
 
         //Create group
-        System.out.println("listOfGroup 0 :" + listOfGroup.get(0) + " listOfGroup 1" + listOfGroup.get(1));
-        assignGroup.createUsersGroup(listOfGroup.get(0), listOfGroup.get(1), listOfApp, listOfGroup);
-        assignGroup.addDeviceToGroup(listOfGroup.get(0), listOfDevices, "AddUser");
+        System.out.println("groupName :" + groupName + " groupDescription :" + groupDescription);
+        assignGroup.createUsersGroup(groupName, groupDescription, listOfApp, groupName);
+        assignGroup.addDeviceToGroup(groupName, listOfDevices, "AddUser");
     }
 
     @Test(priority = 2, testName = "LogIn & Verify App", description = "LogIn in to CBA MarketPlace & verify availability of the app to assign.")
@@ -73,7 +76,7 @@ public class UnsubscribeAppsFromTheGroup extends BaseTest {
         assignApp.moveToAssignApps();
         assignGroup.moveToGroups();
         assignApp.searchAppToAssign(listOfApp.get(0));
-        assignApp.searchUserToAssign(listOfGroup.get(0));
+        assignApp.searchUserToAssign(groupName);
         assignApp.userAssignment();
         assignApp.isAssignUpdated();
     }
@@ -135,6 +138,6 @@ public class UnsubscribeAppsFromTheGroup extends BaseTest {
         //Delete the group
         CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
         assignGroup.moveToUsers();
-        assignGroup.verifyApplicationAssignment(listOfApp, listOfGroup);
+        assignGroup.verifyApplicationAssignment(listOfApp, groupName);
     }
 }

@@ -13,8 +13,10 @@ import static com.verifone.tests.steps.mpPortal.Steps.*;
 public class AssignedDeviceTGroupIndividualAppUI extends BaseTest {
     private ArrayList<String> listOfApp;
     private ArrayList<String> listOfDevices;
-    private ArrayList<String> listOfGroup;
+
     private static String deviceSerialNumber;
+    private String groupName;
+    private String groupDescription;
 
     //This test describe all the actions which are require to verify the app availability
     @Test(priority = 1, testName = "LogIn & Verify App", description = "Login in to CBA MarketPlace & verify availability of the app")
@@ -24,7 +26,9 @@ public class AssignedDeviceTGroupIndividualAppUI extends BaseTest {
 
         listOfDevices = BaseTest.envConfig.getListOfDevices();
         listOfApp = BaseTest.envConfig.getListOfAppName();
-        listOfGroup = BaseTest.envConfig.getIndividualGroup();
+
+        groupName = BaseTest.envConfig.getGroupInfo("MPFifthGroupName");
+        groupDescription = BaseTest.envConfig.getGroupInfo("MPFifthGroupDescription");
 
         /* Verify the purchased app is present in the My App*/
         CBAAssignPage assignApp = PageFactory.getAssignAppPage();
@@ -72,9 +76,9 @@ public class AssignedDeviceTGroupIndividualAppUI extends BaseTest {
         assignGroup.moveToUsers();
 
         //Create group & assign device
-        System.out.println("listOfGroup 0 :" + listOfGroup.get(0) + " listOfGroup 1" + listOfGroup.get(1));
-        assignGroup.createUsersGroup(listOfGroup.get(0), listOfGroup.get(1), listOfApp, listOfGroup);
-        assignGroup.addDeviceToGroup(listOfGroup.get(0), listOfDevices, "AddUser");
+        System.out.println("groupName :" + groupName + " firstGroupDescription" + groupDescription);
+        assignGroup.createUsersGroup(groupName, groupDescription, listOfApp, groupName);
+        assignGroup.addDeviceToGroup(groupName, listOfDevices, "AddUser");
     }
 
     //This test describe the application assignment to the group
@@ -95,7 +99,7 @@ public class AssignedDeviceTGroupIndividualAppUI extends BaseTest {
         //Assign list of apps to the group
         for (String app : listOfApp) {
             assignApp.searchAppToAssign(app);
-            assignApp.searchUserToAssign(listOfGroup.get(0));
+            assignApp.searchUserToAssign(groupName);
         }
         assignApp.userAssignment();
         assignApp.isAssignUpdated();
@@ -136,7 +140,7 @@ public class AssignedDeviceTGroupIndividualAppUI extends BaseTest {
         //Assign list of apps to the group
         for (String app : listOfApp) {
             assignApp.searchAppToAssign(app);
-            assignApp.searchUserToAssign(listOfGroup.get(0));
+            assignApp.searchUserToAssign(groupName);
         }
         assignApp.userAssignment();
         assignApp.isAssignUpdated();
@@ -168,7 +172,7 @@ public class AssignedDeviceTGroupIndividualAppUI extends BaseTest {
         //Delete the group
         CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
         assignGroup.moveToUsers();
-        assignGroup.verifyApplicationAssignment(listOfApp, listOfGroup);
+        assignGroup.verifyApplicationAssignment(listOfApp, groupName);
     }
 
 
