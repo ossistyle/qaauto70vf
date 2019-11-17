@@ -35,14 +35,12 @@ public class EnvConfig {
     private String cbaProductName;
     private String appsDirectoryPath;
     private String deviceTimeZone;
+    private String groupInfo;
 
-    private ArrayList<String> list;
     private ArrayList<String> listOfAppName;
     private ArrayList<String> listOfDevices;
     private ArrayList<String> listOfBundles;
     private ArrayList<String> listOfApps;
-    private ArrayList<String> listOfGroup;
-    private ArrayList<String> IndividualGroup;
 
 //    private User user;
 
@@ -145,13 +143,6 @@ public class EnvConfig {
 //        return prop.getProperty(env + "." + "MPReseller");
 //    }
 
-    public ArrayList<String> getList() {
-        list = new ArrayList<>();
-        list.add(prop.getProperty(env + "." + "MPFirstGroupName"));
-        list.add(prop.getProperty(env + "." + "MPFirstGroupDescription"));
-        return list;
-    }
-
     public ArrayList<String> getListOfAppName() {
         listOfAppName = new ArrayList<>();
         listOfAppName.add(prop.getProperty(env + "." + "MPPurchaseFreeAppOne"));
@@ -198,17 +189,7 @@ public class EnvConfig {
         return prop.getProperty(env + "." + "CMDeviceTimeZone");
     }
 
-    public ArrayList<String> getListOfGroup() {
-        listOfGroup = new ArrayList<>();
-        listOfGroup.add(prop.getProperty(env + "." + "MPSecondGroupName"));
-        listOfGroup.add(prop.getProperty(env + "." + "MPSecondGroupDescription"));
-        return listOfGroup;
-    }
-
-    public ArrayList<String> getIndividualGroup() {
-        IndividualGroup = new ArrayList<>();
-        IndividualGroup.add(prop.getProperty(env + "." + "MPThirdGroupName"));
-        IndividualGroup.add(prop.getProperty(env + "." + "MPThirdGroupDescription"));
-        return IndividualGroup;
+    public String getGroupInfo(String info) {
+        return prop.getProperty(env + "." + info);
     }
 }

@@ -119,7 +119,11 @@ public class VHQDeviceSearch extends BasePage {
                 Thread.sleep(500);
                 if (isContain(getRowDetails, deviceStatus)) {
                     System.out.println("Job created successfully!");
-                    testLog.info(" -------- <b> VHQ App Name :(" + packageName + ") created successfully! <b> -------- ");
+                    if (deviceStatus.equals("INSTALL")) {
+                        testLog.info(" -------- <b> VHQ App Name :(" + packageName + ") Subscribe  successfully! <b> -------- ");
+                    } else {
+                        testLog.info(" -------- <b> VHQ App Name :(" + packageName + ") Unsubscribe  successfully! <b> -------- ");
+                    }
                     testLog.info(" -------- <b> VHQ Job Status :(" + deviceStatus + ") created successfully! </b>-------- ");
                     testLog.info(" -------- <b> VHQ Download Schedule Time :(" + jobCreatedOnSubscription + ") created successfully! </b>-------- ");
                     TestPassFlag = true;

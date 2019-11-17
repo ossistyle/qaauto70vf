@@ -16,10 +16,13 @@ import static com.verifone.tests.steps.mpPortal.Steps.*;
  * @author : Prashant Lokhande
  */
 public class AssignGroupsToApps extends BaseTest {
-    private ArrayList<String> listOfGroup;
+
     private ArrayList<String> listOfApp;
     private ArrayList<String> listOfDevices;
+
     private static String deviceSerialNumber;
+    private String groupName;
+    private String groupDescription;
 
     @Test(priority = 1, testName = "LogIn & Create Group", description = "LogIn in to CBA Marketplace and create group with more than one user.")
     public void CBACreateDeviceGroupTestUI() throws Exception {
@@ -27,16 +30,18 @@ public class AssignGroupsToApps extends BaseTest {
         loginCBA(createAssignUser());
 
         listOfDevices = BaseTest.envConfig.getListOfDevices();
-        listOfGroup = BaseTest.envConfig.getList();
         listOfApp = BaseTest.envConfig.getListOfAppName();
+
+        groupName = BaseTest.envConfig.getGroupInfo("MPFirstGroupName");
+        groupDescription = BaseTest.envConfig.getGroupInfo("MPFirstGroupDescription");
 
         //Move to user section
         CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
         assignGroup.moveToUsers();
 
         //Create group
-        System.out.println("listOfGroup 0 :" + listOfGroup.get(0) + " listOfGroup 1" + listOfGroup.get(1));
-        assignGroup.createUsersGroup(listOfGroup.get(0), listOfGroup.get(1), listOfApp, listOfGroup);
+        System.out.println("groupName :" + groupName + " groupDescription" + groupDescription);
+        assignGroup.createUsersGroup(groupName, groupDescription, listOfApp, groupName);
     }
 
     @Test(priority = 2, testName = "LogIn & Verify App", description = "LogIn in to CBA MarketPlace & verify availability of the app to assign.")
@@ -74,7 +79,7 @@ public class AssignGroupsToApps extends BaseTest {
         //Assign list of apps to the group
         for (String app : listOfApp) {
             assignApp.searchAppToAssign(app);
-            assignApp.searchUserToAssign(listOfGroup.get(0));
+            assignApp.searchUserToAssign(groupName);
         }
 
         assignApp.userAssignment();
@@ -87,7 +92,7 @@ public class AssignGroupsToApps extends BaseTest {
 
         CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
         assignGroup.moveToUsers();
-        assignGroup.addDeviceToGroup(listOfGroup.get(0), listOfDevices, "AddUser");
+        assignGroup.addDeviceToGroup(groupName, listOfDevices, "AddUser");
     }
 
     @Test(priority = 5, testName = "LogIn & Verify Install Job Status", description = "Log into VHQ portal and verify whether the job is created after Subscribing the Application.")
@@ -123,7 +128,7 @@ public class AssignGroupsToApps extends BaseTest {
 
         CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
         assignGroup.moveToUsers();
-        assignGroup.addDeviceToGroup(listOfGroup.get(0), listOfDevices, "RemoveUser");
+        assignGroup.addDeviceToGroup(groupName, listOfDevices, "RemoveUser");
     }
 
 
@@ -162,6 +167,6 @@ public class AssignGroupsToApps extends BaseTest {
         //Delete the group
         CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
         assignGroup.moveToUsers();
-        assignGroup.verifyApplicationAssignment(listOfApp, listOfGroup);
+        assignGroup.verifyApplicationAssignment(listOfApp, groupName);
     }
 }

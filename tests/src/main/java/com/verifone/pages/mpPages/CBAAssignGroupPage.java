@@ -68,6 +68,7 @@ public class CBAAssignGroupPage extends BasePage {
     private By txtResult = By.xpath("//*[@class='adb-placeholder--content']/p");
 
     public static String jobCreatedOnGroups;
+    private int timeout = 2000;
 
     public CBAAssignGroupPage() {
         super(url, title);
@@ -77,10 +78,42 @@ public class CBAAssignGroupPage extends BasePage {
     /**
      * This method described the creation of group
      */
-    public void createUsersGroup(String nameOfTheGroup, String groupDescription, ArrayList<String> listOfApp, ArrayList<String> listOfGroup) throws Exception {
+    /*public void createUsersGroup(String nameOfTheGroup, String groupDescription, ArrayList<String> listOfApp, ArrayList<String> listOfGroup) throws Exception {
 
         //Delete the group if it is present
         waitUntilPageLoad(titleList);
+
+        List<WebElement> getList = getWebElements(titleList, 18, ExpectedConditions.presenceOfElementLocated(titleList));
+        for (WebElement ele : getList) {
+            if (ele.getText().equals(nameOfTheGroup)) {
+                testLog.info("----- Group (<b>" + ele.getText() + "</b>) is exists. -----");
+                verifyApplicationAssignment(listOfApp, listOfGroup);
+                break;
+            }
+        }
+
+        Thread.sleep(1000);
+        testLog.info("---- (2). Create Group ----");
+        //Move to Users page and create group by providing details
+        click(btnCreateGroup);
+
+        WebElement grpName = driver.findElement(txtGroupName);
+        WebElement grpDescription = driver.findElement(txtGroupDescription);
+        grpName.sendKeys(nameOfTheGroup);
+        grpDescription.sendKeys(groupDescription);
+
+        click(btnAddGroupDetails);
+        waitUntilPageLoad(txtAvailableUsers);
+
+        click(btnGroup);
+        waitForLoader(btnGroup);
+        displayDetails(titleList, nameOfTheGroup);
+    }*/
+    public void createUsersGroup(String nameOfTheGroup, String groupDescription, ArrayList<String> listOfApp, String listOfGroup) throws Exception {
+
+        //Delete the group if it is present
+        waitUntilPageLoad(titleList);
+
         List<WebElement> getList = getWebElements(titleList, 18, ExpectedConditions.presenceOfElementLocated(titleList));
         for (WebElement ele : getList) {
             if (ele.getText().equals(nameOfTheGroup)) {
@@ -189,46 +222,58 @@ public class CBAAssignGroupPage extends BasePage {
         click(btnConfirm);
     }
 
-    public void verifyApplicationAssignment(ArrayList<String> listOfApp, ArrayList<String> listOfGroup) throws Exception {
+    public void verifyApplicationAssignment(ArrayList<String> listOfApp, String listOfGroup) throws Exception {
         String textUnableToDelete = "Unable to Delete Group";
         String searchResult = "Search returned 0 results";
 
-        testLog.info("----- (2). Delete Group :" + listOfGroup.get(0) + "-----");
+        testLog.info("----- (2). Delete Group :" + listOfGroup + "-----");
         scrollToElement(txtSearchGroup);
         click(txtSearchGroup);
-        sendKeys(txtSearchGroup, listOfGroup.get(0));
+        sendKeys(txtSearchGroup, listOfGroup);
         click(btnSearch);
         waitUntilPageLoad(btnSearch);
-        hoverAndClickOnElement(btnSettings);
-        scrollToElement(deleteGroup);
-        hoverAndClickOnElement(deleteGroup);
-        waitUntilPageLoad(txtModal);
-        System.out.println("Text : Modal Dialog " + getText(txtModal) + "Unable to delete :" + textUnableToDelete);
 
-        if (getText(txtModal).contains(textUnableToDelete)) {
-            System.out.println("in");
-            testLog.info("---- (3). " + getText(txtModal) + " : " + getText(descriptionUnableToDelete) + "----");
+        List<WebElement> getList = getWebElements(titleList, 18, ExpectedConditions.presenceOfElementLocated(titleList));
+        for (int j = 0; j <= getList.size(); ++j) {
+            System.out.println("size of summary :" + getList.size());
+            hoverAndClickOnElement(btnSettings);
+            scrollToElement(deleteGroup);
+            hoverAndClickOnElement(deleteGroup);
+            waitUntilPageLoad(txtModal);
+            System.out.println("Text : Modal Dialog " + getText(txtModal) + "Unable to delete :" + textUnableToDelete);
 
-            click(btnConfirm);
-            waitUntilPageLoad(linkAssignApp);
-            click(linkAssignApp);
-            moveToGroups();
-            CBAAssignPage assignApp = PageFactory.getAssignAppPage();
+            if (getText(txtModal).contains(textUnableToDelete)) {
+                System.out.println("in");
+                testLog.info("---- (3). " + getText(txtModal) + " : " + getText(descriptionUnableToDelete) + "----");
 
-            //Un assign list of apps from the group
-            for (String app : listOfApp) {
-                assignApp.searchAppToAssign(app);
-                assignApp.searchUserToAssign(listOfGroup.get(0));
+                click(btnConfirm);
+                waitUntilPageLoad(linkAssignApp);
+                click(linkAssignApp);
+                moveToGroups();
+                CBAAssignPage assignApp = PageFactory.getAssignAppPage();
+
+                //Un assign list of apps from the group
+                for (String app : listOfApp) {
+                    assignApp.searchAppToAssign(app);
+                    assignApp.searchUserToAssign(listOfGroup);
+                }
+
+                assignApp.userAssignment();
+                //assignApp.isAssignUpdated();
+                testLog.info("---- (4). " + listOfGroup + " is unassigned from the app.-----");
+                deleteGroupTest(listOfGroup);
+
+            } else {
+                testLog.info("---- (3). " + listOfGroup + " is not assigned to any app. -----");
+                click(btnConfirm);
             }
+            waitUntilPageLoad(titleList);
+            Thread.sleep(timeout);
+            List<WebElement> isResultDisplay = driver.findElements(txtResult);
+            System.out.println("isResultDisplay :" + isResultDisplay.size());
+            if (isResultDisplay.size() != 0)
+                break;
 
-            assignApp.userAssignment();
-            //assignApp.isAssignUpdated();
-            testLog.info("---- (4). " + listOfGroup.get(0) + " is unassigned from the app.-----");
-            deleteGroupTest(listOfGroup.get(0));
-
-        } else {
-            testLog.info("---- (3). " + listOfGroup.get(0) + " is not assigned to any app. -----");
-            click(btnConfirm);
         }
 
         waitUntilPageLoad(txtResult);
@@ -236,26 +281,6 @@ public class CBAAssignGroupPage extends BasePage {
         clearTextBoxValue(txtSearchGroup);
         //sendKeys(txtSearchGroup, "");
         click(btnSearch);
-        waitUntilPageLoad(titleList);
-        isGroupDeleted(titleList, listOfGroup.get(0));
-    }
-
-
-    public void isGroupDeleted(By loc, String val) {
-        boolean testPassFlag = true;
-        List<WebElement> getList = getWebElements(loc, 18, ExpectedConditions.presenceOfElementLocated(loc));
-        System.out.println("size of summary :" + getList.size());
-        for (WebElement ele : getList) {
-            System.out.println("print the list :" + ele.getText());
-            if (ele.getText().equals(val)) {
-                testLog.info("----- Group (<b>" + ele.getText() + "</b>) is not deleted. -----");
-                testPassFlag = false;
-                break;
-            }
-            testLog.info("---- Available Group ( " + ele.getText() + " ) -----");
-        }
-        Assert.assertTrue(testPassFlag);
-        testLog.info("---- (4). " + val + " is deleted. -----");
     }
 
     public void displayDetails(By loc, String val) {
@@ -288,12 +313,12 @@ public class CBAAssignGroupPage extends BasePage {
 
         waitUntilPageLoad(txtAvailableUsers);
         scrollToElement(txtAvailableUsers);
-        testLog.info("---- (3). Add available users to Group ----");
+        testLog.info("---- (3). Group : " + deviceFlag + " ----");
 
         waitUntilPageLoad(listOfUsers);
         for (int i = 0; i < listOfDevices.size(); i++) {
             System.out.println("list of array :" + listOfDevices.get(i));
-            testLog.info("---- Added Users : " + (i) + ". " + listOfDevices.get(i) + " ----");
+            testLog.info("---- " + deviceFlag + " : " + (i) + ". " + listOfDevices.get(i) + " ----");
 
             //Verify the status of the device (Assigned or Removed) to/from the device.
             if (deviceFlag.equals("AddUser")) {
@@ -349,30 +374,6 @@ public class CBAAssignGroupPage extends BasePage {
             testLog.info("---- User / Device : " + getText(users) + " is active.");
             click(users);
         }
-    }
-
-    /**
-     * This method describe all the actions related to UnAssign of device
-     * <p>
-     * 11/08/2019
-     *
-     * @author Prashant Lokhande
-     */
-
-    public void removeDeviceFromTheGroup() {
-
-        scrollToElement(txtSearchGroup);
-        click(txtSearchGroup);
-        //sendKeys(txtSearchGroup, listOfGroup.get(0));
-        click(btnSearch);
-        waitUntilPageLoad(btnSearch);
-
-        hoverAndClickOnElement(btnSettings);
-        scrollToElement(btnManageUsers);
-        hoverAndClickOnElement(btnManageUsers);
-        waitUntilPageLoad(txtAvailableUsers);
-
-
     }
 
 }
