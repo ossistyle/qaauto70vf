@@ -62,10 +62,11 @@ public class UploadPackageInProductionCatalogUI extends BaseTest {
         cbaProducts.integrationReport();
         cbaProducts.addPlatform();
         cbaProducts.productVersion("appV2Signed : true", productVersionTitle);
-        // cbaProducts.approveProductVersion();
+        cbaProducts.deleteProductVersion();
+        cbaProducts.approveProductVersion();
 
         //temporary code - This code will be deleted once we find the way to sign the package using V2
-        cbaProducts.deleteProductVersion();
+        //cbaProducts.deleteProductVersion();
 
         cbaProducts.publishProduct();
     }
