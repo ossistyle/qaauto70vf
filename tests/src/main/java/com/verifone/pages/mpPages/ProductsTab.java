@@ -2,10 +2,15 @@ package com.verifone.pages.mpPages;
 
 import com.verifone.pages.BasePage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.util.List;
 //--------------------------------------------------------------------------
 
 /**
  * This class described all elements and actions can be executed on EO Home page.
+ *
  * @authors Yana Fridman
  */
 //--------------------------------------------------------------------------
@@ -28,6 +33,7 @@ public class ProductsTab extends BasePage {
     private By msgConfirmationLoc = By.xpath("//*[@class='adb-local_alert--content']");
     private By msgConfirmationLoc1 = By.xpath("//span[@class='feedbackPanelINFO']");
     private By waitToAppear = By.xpath("//a[text()='New Bundle']");
+    private By btnPagination = By.xpath("//nav[@class='Pagination__PaginationWrapper-sc-1qb8wnt-2 hfmVAg']/a");
 
 
     public ProductsTab() {
@@ -108,10 +114,11 @@ public class ProductsTab extends BasePage {
     public String msgConfirmationText() throws InterruptedException {
         return getText(msgConfirmationLoc);
     }
-//--------------------------------------------------------------------------
+
+    //--------------------------------------------------------------------------
     public String msgConfirmationText(By str) throws InterruptedException {
         return getText(str);
-}
+    }
 //--------------------------------------------------------------------------
 
     /**
@@ -137,6 +144,26 @@ public class ProductsTab extends BasePage {
         System.out.println(getRowNumberFromTable(tblSegmentGroupsLoc, name));
         return getRowNumberFromTable(tblSegmentGroupsLoc, name);
     }
+
+    //--------------------------------------------------------------------------
+    public int getTblSegmentPagination(String name) throws Exception {
+        int actualRow = 0;
+        WebElement element = getWebElement(btnPagination, 30, ExpectedConditions.presenceOfElementLocated(btnPagination));
+        List<WebElement> page = element.findElements(btnPagination);
+        for (WebElement w : page) {
+            String text = w.getText();
+            System.out.println("btn text :" + text);
+            if (!(text.equals("") || text.equals("1"))) {
+                w.click();
+                actualRow = getTblRowSegmentGroups(name);
+                if (actualRow != 0) {
+                    return actualRow;
+                }
+            }
+        }
+        return 0;
+    }
+
 //--------------------------------------------------------------------------
 
     /**
@@ -221,19 +248,20 @@ public class ProductsTab extends BasePage {
         click(dlgDeleteSegmentGroupBtnYesLoc);
     }
 
-//--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     public void clickMenuStagingCatalog() {
         waitForLoader(menuStagingCatalog);
         click(menuStagingCatalog);
     }
 
-//--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     public void clickMenuBundle() throws InterruptedException {
         Thread.sleep(4000);
         click(menuBundle);
         waitUntilPageLoad(waitToAppear);
     }
-//--------------------------------------------------------------------------
+
+    //--------------------------------------------------------------------------
     public void clickMenuProductionCatalog() {
         click(menuProductionCatalog);
     }
