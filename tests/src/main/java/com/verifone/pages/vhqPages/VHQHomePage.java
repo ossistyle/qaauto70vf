@@ -154,7 +154,7 @@ public class VHQHomePage extends BasePage {
         if (geek.isReachable(5000)) {
             testLog.info(" ---- Device serial no: " + deviceSerialNo + " with IPAddress: " + deviceIPAddress + " is reachable. ----");
         } else {
-            testLog.info(" ---- Sorry ! Device serial no: " + deviceSerialNo + " with IPAddress: " + deviceIPAddress + " is not reachable. ----");
+            testLog.warning(" ---- Can not connect to the Device serial no: " + deviceSerialNo + "----");
             // throw new SkipException("Skipping this exception");
         }
     }
