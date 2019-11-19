@@ -209,91 +209,25 @@ public class AndroidProjectOperationPage extends BasePage {
 
     public void generateAndroidAPK() {
 
-        String[] cmds = {"gradlew.bat", androidProjectPath};
-
-        Runtime runtime = Runtime.getRuntime();
-        String line = "";
-        BufferedReader bufferedreader = null;
-        StringBuilder ouput = new StringBuilder();
-        InputStream inputstream = null;
-        InputStreamReader inputstreamreader = null;
-        Process proc = null;
-
         File apkFile = new File(androidAPKPath);
         if (isFileExists(apkFile, 10)) {
             apkFile.delete();
         }
 
-
         try {
-            // proc = runtime.exec(cmds, null, new File(batchFilePath));
             ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "gradlew build");
             File dir = new File(androidProjectPath);
             pb.directory(dir);
-            proc = pb.start();
-            boolean isExited = proc.waitFor(10000, TimeUnit.MILLISECONDS);
+            pb.start();
 
-            if (isExited) {
-                int exitValue = proc.exitValue();
-                System.out.println("exitValue " + exitValue);
-//            System.out.println(" String.valueOf(System.in) " + new InputStreamReader(System.in).getEncoding());
-                System.out.println("proc alive ?  " + proc.isAlive());
-                if (exitValue == 0) {
-                    inputstream = proc.getInputStream();
-                    inputstreamreader = new InputStreamReader(inputstream);
-                    bufferedreader = new BufferedReader(inputstreamreader);
-                } else {
-                    inputstream = proc.getErrorStream();
-                    inputstreamreader = new InputStreamReader(inputstream);
-                    bufferedreader = new BufferedReader(inputstreamreader);
-                }
-
-
-                while ((line = bufferedreader.readLine()) != null) {
-                    System.out.println("length " + line.length());
-                    ouput.append(line + "<br>" + "\n");
-                }
-
-                if (isFileExists(apkFile, 180)) {
-                    testLog.info("<b>Info -> </b> APK is generated.");
-                } else {
-                    testLog.info("<b>Info -> </b> Apk takes too much time to generate.");
-                    Assert.fail("<b>Info -> </b> Apk takes too much time to generate.");
-                }
-
+            if (isFileExists(apkFile, 200)) {
+                testLog.info("<b>Info -> </b> APK is generated.");
             } else {
-
-                if (isFileExists(apkFile, 200)) {
-                    testLog.info("<b>Info -> </b> APK is generated.");
-                } else {
-                    testLog.info("<b>Info -> </b> Apk takes too much time to generate.");
-                    Assert.fail("<b>Info -> </b> Apk takes too much time to generate.");
-                }
-
-                if (proc.isAlive()) {
-                    proc.destroy();
-                }
+                testLog.info("<b>Info -> </b> Apk takes too much time to generate.");
+                Assert.fail("<b>Info -> </b> Apk takes too much time to generate.");
             }
-
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-
-                if (inputstream != null) {
-                    inputstream.close();
-                }
-
-                if (inputstreamreader != null) {
-                    inputstreamreader.close();
-                }
-
-                if (bufferedreader != null) {
-                    bufferedreader.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 }

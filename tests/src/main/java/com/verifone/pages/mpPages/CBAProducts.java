@@ -4,6 +4,7 @@ import com.verifone.pages.BasePage;
 import com.verifone.tests.BaseTest;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -12,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -318,25 +320,51 @@ public class CBAProducts extends BasePage {
     public void productVersion(String app2Signed, String productVersionTitle) throws InterruptedException, AWTException {
         testLog.info("<b>Info -> Platforms : <u> Add Product Version </u></b> ");
 
+        WebDriver driver = new CBAProducts().getDriver();
+        ArrayList<String> availableWindows = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
+
         String packagePath = userDir + File.separator + productVersionTitle + "-" + getApplicationVersion + ".zip";
 
         sendKeys(versionTitle, productVersionTitle);
         sendKeys(versionCode, productVersionCode);
         sendKeys(versionName, productVersionName);
-        hoverAndClickOnElement(chooseAsset);
-        fileUpload(packagePath);
-        hoverAndClickOnElement(chooseIcon);
 
+       /* hoverAndClickOnElement(chooseAsset);
+        fileUpload(packagePath);
+
+        hoverAndClickOnElement(chooseIcon);
         fileUpload(imagePath);
+
         hoverAndClickOnElement(chooseImage);
-        fileUpload(imagePath);
+        fileUpload(imagePath);*/
+
+        WebElement choosePackage = driver.findElement(chooseAsset);
+        WebElement choosePackageIcon = driver.findElement(chooseIcon);
+        WebElement choosePackageImage = driver.findElement(chooseImage);
+
+        scrollToElement(chooseAsset);
+        choosePackage.sendKeys(packagePath);
+        waitUntilPageLoad(chooseIcon);
+
+        scrollToElement(chooseIcon);
+        choosePackageIcon.sendKeys(imagePath);
+        waitUntilPageLoad(chooseImage);
+
+        scrollToElement(chooseImage);
+        choosePackageImage.sendKeys(imagePath);
+        waitUntilPageLoad(chooseImage);
 
         click(mobileFamily);
+
+        scrollToElement(saveButton);
         click(saveButton);
+
         WebElement productVersion = getWebElement(productVersionPanel, 500, ExpectedConditions.visibilityOfElementLocated(productVersionPanel));
         testLog.info(productVersion.getText());
 
         waitForLoader(managePlatform);
+        scrollToElement(managePlatform);
         List<WebElement> getElement = driver.findElements(refreshPage);
         System.out.println("size of the element :" + getElement.size());
 
