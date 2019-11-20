@@ -31,7 +31,7 @@ public class AndroidProjectOperationPage extends BasePage {
     public static String androidProjectAppName = "CBATest";
     public static String androidProjectAppId = "";
     private static final String androidManifestPath = File.separator + "src" + File.separator + "main" + File.separator + "AndroidManifest.xml";
-    private static final String androidProjectPath = BaseTest.envConfig.getAppsDirectoryPath() + File.separator + "MyApplication164";
+    private static final String androidProjectPath = BaseTest.envConfig.getAppsDirectoryPath() + File.separator + "apps" + File.separator + "MyApplication164";
     private static final String androidAPKPath = androidProjectPath + File.separator + "app" + File.separator + "build" + File.separator + "outputs" + File.separator + "apk" + File.separator + "debug" + File.separator + "app-debug.apk";
 
     public AndroidProjectOperationPage() {
@@ -46,7 +46,7 @@ public class AndroidProjectOperationPage extends BasePage {
      */
 
     public void updateXMLFileWithAppId() {
-        testLog.info("<b><u>Update androidManifest.xml file</u></b>");
+        testLog.info("------------------------------------- Update androidManifest.xml file -------------------------------------");
         try {
             String manifestAppId = getAndroidAppId();
             System.out.println("copy CopyAppid2AndroidManifestXmlFile" + manifestAppId);
@@ -107,7 +107,7 @@ public class AndroidProjectOperationPage extends BasePage {
 
             }
             FileUtils.writeStringToFile(androidMFTXML, xmlString, Charset.defaultCharset());
-            testLog.info("<b><u>androidManifest.xml :</u></b> file updated with application id " + androidProjectAppId);
+            testLog.info("------------------------------------- androidManifest.xml : File updated with application id " + androidProjectAppId + " -------------------------------------");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -122,7 +122,7 @@ public class AndroidProjectOperationPage extends BasePage {
      */
 
     public void updateXMLFileWithAppName() {
-        testLog.info("<b><u>Update string.xml file</u></b>");
+        testLog.info("------------------------------------- Update string.xml file -------------------------------------");
 
         File project = new File(androidProjectPath);
         String manifestAppName = getAndroidAppName();
@@ -156,7 +156,7 @@ public class AndroidProjectOperationPage extends BasePage {
             writer.close();
 
             FileUtils.writeStringToFile(stringMFTXML, xmlString, Charset.defaultCharset());
-            testLog.info("<b><u>String.xml :</u></b> file updated with application name " + androidProjectAppName);
+            testLog.info("------------------------------------- String.xml : File updated with application name " + androidProjectAppName + " -------------------------------------");
 
         } catch (SAXException e) {
             e.printStackTrace();
@@ -178,12 +178,12 @@ public class AndroidProjectOperationPage extends BasePage {
      * @author : Prashant Lokhande
      */
     public String getAndroidAppName() {
+        testLog.info("------------------------------------- Generate Application Name -------------------------------------");
         UUID uuid = UUID.randomUUID();
         int index = uuid.toString().lastIndexOf("-");
         if (index >= 0) {
             androidProjectAppName = androidProjectAppName + uuid.toString().substring(index + 1, index + 3); //index + 1, index + 10
         }
-        testLog.info("<b>Application Name :<u>" + androidProjectAppName + "<u></b>");
         return androidProjectAppName;
     }
 
@@ -194,9 +194,9 @@ public class AndroidProjectOperationPage extends BasePage {
      * @author : Prashant Lokhande
      */
     public String getAndroidAppId() {
+        testLog.info("------------------------------------- Generate Application ID -------------------------------------");
         System.out.println("App id :" + androidProjectAppName + "-" + RandomStringUtils.randomNumeric(9));
         androidProjectAppId = androidProjectAppName + "-" + RandomStringUtils.randomNumeric(9);
-        testLog.info("<b>AppId :<u>" + androidProjectAppId + "<u></b>");
         return androidProjectAppId;
     }
 
@@ -215,16 +215,16 @@ public class AndroidProjectOperationPage extends BasePage {
         }
 
         try {
+            testLog.info("------------------------------------- Start APK Generation Process -------------------------------------");
             ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "gradlew build");
             File dir = new File(androidProjectPath);
             pb.directory(dir);
             pb.start();
 
-            if (isFileExists(apkFile, 200)) {
-                testLog.info("<b>Info -> </b> APK is generated.");
+            if (isFileExists(apkFile, 300)) {
+                testLog.info("------------------------------------- Test Passed : APK Generated Successfully. -------------------------------------");
             } else {
-                testLog.info("<b>Info -> </b> Apk takes too much time to generate.");
-                Assert.fail("<b>Info -> </b> Apk takes too much time to generate.");
+                Assert.fail("------------------------------------- Test Failed : APK generation process takes too much time to generate.  -------------------------------------");
             }
         } catch (Exception e) {
             e.printStackTrace();
