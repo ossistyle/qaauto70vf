@@ -4,6 +4,7 @@ import com.verifone.pages.BasePage;
 import com.verifone.tests.BaseTest;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.testng.Assert;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
@@ -215,11 +216,28 @@ public class AndroidProjectOperationPage extends BasePage {
         }
 
         try {
+
             testLog.info("------------------------------------- Start APK Generation Process -------------------------------------");
-            ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "gradlew build");
             File dir = new File(androidProjectPath);
-            pb.directory(dir);
-            pb.start();
+
+            //Verify the OS is Windows or Linux
+            if (SystemUtils.IS_OS_WINDOWS) {
+                testLog.info("------------------------------------- OS: Windows -------------------------------------");
+                ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "gradlew build");
+                pb.directory(dir);
+                pb.start();
+            } else {
+                testLog.info("------------------------------------- OS: Linux -------------------------------------");
+                File gradlewFile = new File(dir.getAbsolutePath() + File.separator + "gradlew");
+                dir.setExecutable(true);
+                gradlewFile.setExecutable(true);
+                Runtime.getRuntime().exec("./gradlew build", null, dir);
+            }
+
+            //ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "gradlew build");
+            //File dir = new File(androidProjectPath);
+            //pb.directory(dir);
+            // pb.start();
 
             if (isFileExists(apkFile, 300)) {
                 testLog.info("------------------------------------- Test Passed : APK Generated Successfully. -------------------------------------");
