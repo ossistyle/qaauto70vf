@@ -33,7 +33,7 @@ public class ManageGroupsByResellerUI  extends BaseTest {
 //        navigateCBAHome();
 //        Steps.loginMPPortal(MPResellerMail, MPResellerPwd, "");
         Steps.loginCBA(MPReseller);
-        
+
     }
 
     @Test(enabled = true, priority=1, testName = "Reseller Add Group in Merchant Org, Assign and Un-Assign Users", groups = { "MPPhase2" }, alwaysRun = true)
