@@ -1,6 +1,7 @@
 package com.verifone.pages.vhqPages;
 
 import com.verifone.pages.BasePage;
+import com.verifone.tests.mpTests.AssignGroupsToApps;
 import com.verifone.utils.appUtils.MPUtils;
 import org.openqa.selenium.*;
 import org.testng.Assert;
@@ -67,14 +68,17 @@ public class VHQDeviceSearch extends BasePage {
     private int scrollCounter = 1;
 
     public void validateJobInstall(String packageName, String deviceStatus, String jobCreatedOnSubscription, String testMode) throws Exception {
-        //set the timeout value
-        String timeoutVal = updateMinutesInCurrentTime(jobCreatedOnSubscription, dateFormat, 5);
-        System.out.println("timeoutVal : " + timeoutVal);
-        testLog.info("-------- TimeOut Value : " + timeoutVal + " -------");
 
-        //Initially decrement the minute of current time to 1
+        //set the max timeout value to search
+        String timeoutVal = updateMinutesInCurrentTime(jobCreatedOnSubscription, dateFormat, 5);
+        testLog.info("----------------------------------- Max Timeout to Search :" + timeoutVal + "  ----------------------------------------");
+        System.out.println("timeoutVal : " + timeoutVal);
+
+        //Substract 1 min from the job created time and start the search
         jobCreatedOnSubscription = updateMinutesInCurrentTime(jobCreatedOnSubscription, dateFormat, -1);
+        testLog.info("----------------------------------- Start Search from :" + jobCreatedOnSubscription + "  ----------------------------------------");
         System.out.println("jobCreatedOnSubscription : " + jobCreatedOnSubscription);
+
 
         // scroll down the web page at the bottom of the page.
         scrollToHeight();
@@ -85,6 +89,7 @@ public class VHQDeviceSearch extends BasePage {
         String TestFlagRow = "true";
         boolean TestPassFlag = false;
         String getScheduleDate = "";
+
         for (; i < 50; i++) {
             if (TestFlagRow.equals("true")) {
                 System.out.println("if");
@@ -92,20 +97,14 @@ public class VHQDeviceSearch extends BasePage {
                 Thread.sleep(1000);
                 getRowDetails = getText(divFirstRow);
                 System.out.println("Details of row : " + getText(divFirstRow));
-
-                //----------------changes ----------
                 getScheduleDate = getText(row0GetDownloadScheduleDate);
-                //System.out.println("date :" + getScheduleDate);
 
             } else if (!getRowDetails.equals(getText(divSecondRow))) {
                 System.out.println("else");
                 //testLog.info(" ------ Get the details of row index 1 : " + getRowDetails + " -----");
                 getRowDetails = getText(divSecondRow);
                 System.out.println("Details of row : " + getText(divSecondRow));
-
-                //---------------changes ---------------------
                 getScheduleDate = getText(row1GetDownloadScheduleDate);
-                //System.out.println("date :" + getScheduleDate);
             }
 
             //System.out.println("updated date inside the loop " + jobCreatedOnSubscription);
@@ -136,7 +135,7 @@ public class VHQDeviceSearch extends BasePage {
             //testLog.info(" ------ Date expected : " + jobCreatedOnSubscription.substring(0, 11) + " -- Was : " + getRowDetails + " -----");
             if (assertRowContains(jobCreatedOnSubscription.substring(0, 11), getRowDetails) && i != 49) {
                 System.out.println("true");
-                testLog.info("----- Scroll the Page -----");
+                testLog.info("----------------------------------- Scroll : Go To The Next Row -----------------------------------");
                 click(btnScroll);
                 Thread.sleep(1000);
             } else {
@@ -147,7 +146,7 @@ public class VHQDeviceSearch extends BasePage {
                     //Increment minute by one if current time is not find in the list of rows.
                     jobCreatedOnSubscription = incrementTimeByOneMinute(scrollCounter, dateFormat, jobCreatedOnSubscription);
                     System.out.println("Updated time : " + jobCreatedOnSubscription);
-                    testLog.info(" ---- Time : Updated time : " + jobCreatedOnSubscription + " ------");
+                    testLog.info("----------------------------------- Updated Time By One min :" + jobCreatedOnSubscription + "  ----------------------------------------");
                     i = 0;
                     scrollCounter++;
                     TestFlagRow = "true";
@@ -160,22 +159,40 @@ public class VHQDeviceSearch extends BasePage {
         //testLog.info("-------- End Time : " + MPUtils.getDownloadScheduleTime() + " -------");
 
         if (!testMode.equals("negative")) {
-            System.out.println("----- Test Mode : Positive  -------");
 
-            //Fail the test if value of TestPassFlag is false
+            testLog.info("----------------------------------- Expected Test Result : Job Should Created  ----------------------------------------");
+
+            // TestPassFlag = true
             if (!TestPassFlag) {
-                testLog.info(" -------- VHQ Positive Test : Job should be created. -------- ");
-                Assert.fail("-------- VHQ Positive Test : Job should be created. --------");
+                if (deviceStatus.equals("INSTALL")) {
+                    testLog.info(" -----------------------------------<b> VHQ App Name :(" + packageName + ") <b>----------------------------------- ");
+                } else {
+                    testLog.info(" -----------------------------------<b> VHQ App Name :(" + packageName + ") <b>----------------------------------- ");
+                }
+                testLog.info(" -----------------------------------<b> VHQ Job Status :(" + deviceStatus + ") </b>----------------------------------- ");
+                testLog.info(" -----------------------------------<b> VHQ Download Schedule Time :(" + jobCreatedOnSubscription + ") </b>----------------------------------- ");
+                Assert.fail(" ----------------------------------- Test Failed : Job failed to create. -----------------------------------");
             }
-            testLog.info(" -------- VHQ Success : Job is created successfully. -------- ");
+            testLog.info(" ----------------------------------- Test Passed : Job is created successfully!! ----------------------------------- ");
 
         } else {
-            System.out.println("----- Test Mode : Negative  -------");
+
+            testLog.info("----------------------------------- Expected Test Result : Job Should not be Created  ----------------------------------------");
+
+            // TestPassFlag = true
             if (TestPassFlag) {
-                testLog.info(" -------- VHQ Negative Test : Job should not be created. -------- ");
-                Assert.fail("-------- VHQ Negative Test : Job should not be created. --------");
+                Assert.fail("----------------------------------- Test Failed : Job is created!-----------------------------------");
             }
-            testLog.info(" -------- VHQ Success : Job is not created. -------- ");
+
+            // TestPassFlag = false
+            if (deviceStatus.equals("INSTALL")) {
+                testLog.info(" -----------------------------------<b> VHQ App Name :(" + packageName + ") <b>----------------------------------- ");
+            } else {
+                testLog.info(" -----------------------------------<b> VHQ App Name :(" + packageName + ") <b>----------------------------------- ");
+            }
+            testLog.info(" -----------------------------------<b> VHQ Job Status :(" + deviceStatus + ") </b>----------------------------------- ");
+            testLog.info(" -----------------------------------<b> VHQ Download Schedule Time :(" + jobCreatedOnSubscription + ") </b>----------------------------------- ");
+            testLog.info(" ----------------------------------- Test Passed : Job is not created!! -----------------------------------");
         }
     }
 
