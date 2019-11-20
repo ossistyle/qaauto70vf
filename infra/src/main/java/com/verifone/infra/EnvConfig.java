@@ -182,7 +182,7 @@ public class EnvConfig {
     }
 
     public String getAppsDirectoryPath() {
-        return System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "resources" + File.separator + "apps";
+        return System.getProperty("user.dir") + File.separator + "src" + File.separator + "test" + File.separator + "resources";
     }
 
     public String getDeviceTimeZone() {

@@ -57,10 +57,4 @@ public class MPUtils {
             ex.printStackTrace();
         }
     }
-
-    public static org.openqa.selenium.WebDriver getWindowsHandle(WebDriver driver) {
-        //get windows handle of the current page
-        ArrayList<String> availableWindows = new ArrayList<>(driver.getWindowHandles());
-        return driver.switchTo().window(availableWindows.get(0));
-    }
 }

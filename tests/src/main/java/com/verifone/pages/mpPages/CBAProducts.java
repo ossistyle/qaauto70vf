@@ -196,10 +196,10 @@ public class CBAProducts extends BasePage {
     private static String generatedAppId = AndroidProjectOperationPage.androidProjectAppId;
     private static String userDir = BaseTest.envConfig.getAppsDirectoryPath();
     //private static String packagePath = userDir + File.separator + generatedAppId + "-" + getApplicationVersion + ".zip";
-    private static String imagePath = userDir + File.separator + "image.jpg";
+    private static String imagePath = userDir + File.separator + "apps" + File.separator + "image.jpg";
 
-    public void createStagingProduct() throws Exception {
-        testLog.info("<b>Info -> <u> Create Staging Product </u></b> ");
+    public void createStagingProduct() {
+        testLog.info("------------------------------------- Create Staging Catalog -------------------------------------");
         waitForLoader(appName);
         sendKeys(appName, productName);
         click(modelFree);
@@ -207,7 +207,7 @@ public class CBAProducts extends BasePage {
     }
 
     public void listingInfoProduct() throws Exception {
-        testLog.info("<b>Info -> Profile & Branding : <u> Create Listing Info </u></b> ");
+        testLog.info("------------------------------------- Navigate to Listing Info and Create it-------------------------------------");
         waitForLoader(listingInfo);
         click(listingInfo);
         sendKeys(wordDescription, productDescription);
@@ -228,7 +228,7 @@ public class CBAProducts extends BasePage {
     }
 
     public void profileProduct() {
-        testLog.info("<b>Info -> Profile & Branding : <u> Create Profile </u></b> ");
+        testLog.info("------------------------------------- Navigate to Profile & Branding -------------------------------------");
         click(profile);
         sendKeys(splashTitle, splash);
         sendKeys(splashDescript, splash);
@@ -240,7 +240,7 @@ public class CBAProducts extends BasePage {
     }
 
     public void credentialsOath() {
-        testLog.info("<b>Info -> Integration : <u> Create Credentials </u></b> ");
+        testLog.info("------------------------------------- Navigate to Integration -------------------------------------");
         waitForLoader(credentials);
         click(credentials);
         ExpectedConditions.presenceOfElementLocated(autorizationType);
@@ -259,6 +259,7 @@ public class CBAProducts extends BasePage {
 
     public void editIntegration() {
         testLog.info("<b>Info -> Integration : <u> Edit Integration </u></b> ");
+        testLog.info("------------------------------------- Navigate to Integration -------------------------------------");
         click(integtation);
         sendKeys(subscrCreate, notificationURL);
         sendKeys(subscrChange, notificationURL);
@@ -274,7 +275,7 @@ public class CBAProducts extends BasePage {
     }
 
     public void editAuthentication() {
-        testLog.info("<b>Info -> Integration : <u> Edit Authentication </u></b> ");
+        testLog.info("------------------------------------- Navigate to Authentication -------------------------------------");
         waitForLoader(authentication);
         click(authentication);
         ExpectedConditions.elementToBeClickable(integrationSelect);
@@ -287,7 +288,7 @@ public class CBAProducts extends BasePage {
     }
 
     public void runPingTests() throws InterruptedException {
-        testLog.info("<b>Info -> Integration : <u> Run Ping Tests </u></b> ");
+        testLog.info("------------------------------------- Navigate Integration : Run Ping Tests -------------------------------------");
         waitForLoader(pingTests);
         click(pingTests);
         waitForLoader(runAllTets);
@@ -297,6 +298,7 @@ public class CBAProducts extends BasePage {
 
     public void integrationReport() {
         testLog.info("<b>Info -> Integration : <u> Integration Report </u></b> ");
+        testLog.info("------------------------------------- Navigate Integration Report -------------------------------------");
         waitForLoader(integrationReport);
         click(integrationReport);
 
@@ -307,7 +309,7 @@ public class CBAProducts extends BasePage {
     }
 
     public void addPlatform() {
-        testLog.info("<b>Info -> Platforms & Versions : <u> Platforms </u></b> ");
+        testLog.info("------------------------------------- Platforms & Versions -------------------------------------");
         waitForLoader(platforms);
         click(platforms);
         click(addPlatformBtn);
@@ -318,13 +320,14 @@ public class CBAProducts extends BasePage {
     }
 
     public void productVersion(String app2Signed, String productVersionTitle) throws InterruptedException, AWTException {
-        testLog.info("<b>Info -> Platforms : <u> Add Product Version </u></b> ");
+
+        testLog.info("------------------------------------- Platforms : Add Product Version -------------------------------------");
 
         WebDriver driver = new CBAProducts().getDriver();
         ArrayList<String> availableWindows = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
 
-        String packagePath = userDir + File.separator + productVersionTitle + "-" + getApplicationVersion + ".zip";
+        String packagePath = userDir + File.separator + "downloads" + File.separator + productVersionTitle + "-" + getApplicationVersion + ".zip";
 
         sendKeys(versionTitle, productVersionTitle);
         sendKeys(versionCode, productVersionCode);
@@ -379,6 +382,7 @@ public class CBAProducts extends BasePage {
 
         // Get -> Additional details after package validation
         testLog.info("<b>Info-> <u>Test : </u></b> : Verify signature of the package ");
+        testLog.info("------------------------------------- Navigate to View Additional Details Window and Verify signature of the package -------------------------------------");
         getStatusOfPackageValidation(app2Signed);
         /*List<WebElement> eleAdditionalDetails = driver.findElements(linkAdditionalDetails);
         System.out.println("size of eleAdditionalDetails :" + eleAdditionalDetails.size());
@@ -404,7 +408,8 @@ public class CBAProducts extends BasePage {
     }
 
     public void deleteProductVersion() {
-        testLog.info("<b>Info -> Platforms : <u> Delete Product Version </u></b> ");
+
+        testLog.info("------------------------------------- Platforms : Delete Product Version -------------------------------------");
 
         click(btnDelete);
         waitUntilPageLoad(txtDeleteProductVersion);
@@ -417,7 +422,7 @@ public class CBAProducts extends BasePage {
     }
 
     public void approveProductVersion() {
-        testLog.info("<b>Info -> Platforms : <u> Approved Product Version </u></b> ");
+        testLog.info("------------------------------------- Platforms : Approved Product Version -------------------------------------");
         click(approveButton);
         waitForLoader(approvedPackage);
         testLog.info(driver.findElement(approvedPackage).getText());
@@ -427,7 +432,8 @@ public class CBAProducts extends BasePage {
 
     public void publishProduct() {
         waitForLoader(publishButton);
-        testLog.info("<b>Info -> Product : <u> Publish Product </u></b> ");
+        testLog.info("------------------------------------- Product : Publish Product -------------------------------------");
+
         scrollToElement(publishButton);
         click(publishButton);
         waitForLoader(addToMarket);
@@ -440,7 +446,7 @@ public class CBAProducts extends BasePage {
     }
 
     public void removeProduct() {
-        testLog.info("<b>Info -> <u>Production Catalog </u> :  Remove Product from the production catalog. </b> ");
+        testLog.info("------------------------------------- Navigate to Production Catalog and remove product from it -------------------------------------");
         sendKeys(searchInput, productName);
         click(searchIcon);
         hoverAndClickOnElement(triggerMenu);
@@ -455,7 +461,7 @@ public class CBAProducts extends BasePage {
     }
 
     public void unPublishProduct() {
-        testLog.info("<b>Info -> <u>Staging Catalog </u> : UnPublish Package</b> ");
+        testLog.info("-------------------------------------  Staging Catalog : UnPublish Package -------------------------------------");
         waitForLoader(searchInput);
         sendKeys(searchInput, productName);
         click(searchIcon);
@@ -469,7 +475,7 @@ public class CBAProducts extends BasePage {
     }
 
     public void deleteSatgingProduct() throws Exception {
-        testLog.info("<b>Info -> <u> Delete Staging Product </u></b> " + productName);
+        testLog.info("------------------------------------- Delete Staging Product " + productName + " -------------------------------------");
 
         waitForLoader(searchInput);
         sendKeys(searchInput, productName);
@@ -524,8 +530,9 @@ public class CBAProducts extends BasePage {
      * @author : Prashant Lokhande
      */
     public void deleteV1SignedPackage(String productVersionTitle) {
-        testLog.info("<b>Info -> Package : <u> Delete signed package from the user directory </u></b> ");
-        String packagePath = userDir + File.separator + productVersionTitle + "-" + getApplicationVersion + ".zip";
+        testLog.info("--------------------------------------------- Delete package from the user directory --------------------------------------------------- ");
+
+        String packagePath = userDir + File.separator + "downloads" + File.separator + productVersionTitle + "-" + getApplicationVersion + ".zip";
         File deleteFilePath = new File(packagePath);
         if (isFileExists(deleteFilePath, 10)) {
             deleteFilePath.delete();
@@ -539,7 +546,7 @@ public class CBAProducts extends BasePage {
      * @author : Prashant Lokhande
      */
     public void editStagingCatalogProduct() throws Exception {
-        testLog.info("<b>Info -> <u> Update staging catalog product </u></b> ");
+        testLog.info("---------------------------------------- Update staging catalog product --------------------------------------------- ");
         click(stagingCatalogLink);
 
         waitForLoader(searchInput);
