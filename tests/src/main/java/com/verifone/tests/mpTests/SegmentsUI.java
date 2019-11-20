@@ -35,19 +35,19 @@ public class SegmentsUI extends BaseTest {
 
     private static Integer TimeOut = 2000;
     private static String Env = "https://verifoneausandbox.byappdirect.com/login";
-    private static String MerchantEmail1 = "merchantforautomation01@getnada.com";
+    private static String MerchantEmail1 = "Merchant050619@getnada.com";
     private static String MerchantPassw1 = "Veri1234";
     private static String MerchantEmail2 = "merchant020719@getnada.com";
     private static String MerchantPassw2 = "Veri1234";
-    private static String MerchantCompany1 = "merchantAutomation";
+    private static String MerchantCompany1 = "Merchant050619";
     private static String MerchantCompany2 = "merchant020719";
     private static String SegmentGroupName = "Segment Group 1";
     private static String SegmentName1 = "Seg1";
     private static String SegmentName2 = "Seg2";
     private static String SegmentCode1 = "code1";
     private static String SegmentCode2 = "code2";
-    private static String Product1 = "test product seba";
-    private static String Product2 = "NewBroccoli";
+    private static String Product1 = "CM5 Free DragonBlue";
+    private static String Product2 = "CM5 FREE DragonOrange";
 
 
     // In case segment from old test exist in MP need to delete it before test start
@@ -629,11 +629,12 @@ public class SegmentsUI extends BaseTest {
         testLog.info("------------------------------------------------- Verify Product visible --------------------------------------------------");
         if (!Assertions.compareBoolean(true, MarketplacePage.existsProductByName(Product1), "Product " + Product1 + " found as expected: ", testLog, driver)) {
             int k = 0;
-            while (k < 6) {
+            while (k < 90) {
                 driver.navigate().refresh();
                 MarketplacePage.inputSearchProduct(Product1);
                 Thread.sleep(TimeOut);
                 MarketplacePage.clickBtnSearchProduct();
+                System.out.println(k);
                 if (MarketplacePage.existsProductByName(Product1)) {
                     break;
                 } else {
