@@ -99,7 +99,7 @@ public class SeleniumUtils {
                 options.addArguments("--incognito");
                 options.setExperimentalOption("prefs", chromePrefs);
                 if (!isLinuxMachine.equalsIgnoreCase("FALSE")) {
-                    options.addArguments("headless");
+                    options.addArguments("--headless");
                     options.addArguments("window-size=1743x600");
                 }
                 driver = new ChromeDriver(options);

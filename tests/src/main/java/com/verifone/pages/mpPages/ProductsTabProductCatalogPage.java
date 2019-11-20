@@ -2,6 +2,11 @@ package com.verifone.pages.mpPages;
 
 import com.verifone.pages.BasePage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.util.List;
 //--------------------------------------------------------------------------
 
 /**
@@ -21,7 +26,7 @@ public class ProductsTabProductCatalogPage extends BasePage {
     private By tblProductLoc = By.xpath("//*[@class='adb-styled adb-container']");
     private By approveRemoveBtn = By.xpath("//span[text()='Remove Product']");
     private By btnClickOnLastPage = By.xpath("//*[@class='adb-icon__angle_double_right adb-pagination--button adb-pagination--button__last']");
-
+    private By btnPagination = By.xpath("//*[@class='pagination-links']");
 
     public ProductsTabProductCatalogPage() {
         super(url, title);
@@ -101,9 +106,12 @@ public class ProductsTabProductCatalogPage extends BasePage {
     }
 
     //need to be on page that has the specific bundle
-    public void unpublishBundleIfExist(String bundleName) throws InterruptedException {
+    public void unpublishBundleIfExist(String bundleName) throws Exception {
         int actualRow = getTblRowProduct(bundleName);
-        if(actualRow!=0) {
+        if(actualRow==0){
+            actualRow = getTblPagination(bundleName, btnPagination, tblProductLoc);
+        }
+        if(actualRow>0) {
             while (actualRow != 0) {
                 clickMenuEditProduct(actualRow);
                 clickMenuRemoveProduct(actualRow);
@@ -111,6 +119,8 @@ public class ProductsTabProductCatalogPage extends BasePage {
             }
         }
     }
+
+
 
 }
 
