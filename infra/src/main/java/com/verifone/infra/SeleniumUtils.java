@@ -33,7 +33,8 @@ public class SeleniumUtils {
     private WebDriver driver;
     public static String reportDirectory;
     public static String isLinuxMachine;
-    private String downloadDir = System.getProperty("user.dir") + "\\src\\test\\resources\\downloads";
+    private String downloadDir =  java.nio.file.Paths.get(
+            System.getProperty("user.dir"), "src","test","resources","downloads").toString() + File.separator;
     /**
      * Reads General Parameters from application.properties
      * Sets browser (Chrome, Firefox, IE etc...) and navigates to the class related page
