@@ -67,11 +67,12 @@ public class CBAProducts extends BasePage {
 
     /////Credentials/////
     private By credentials = By.linkText("Credentials");
-    private By autorizationType = By.xpath("//*[@class='sc-hgRTRy jFQzJN'][@name='authorizationType']");
-    private By generateKey = By.xpath("//button[@class='sc-gldTML eVenQv'][@type='submit']");
-    private By doneBtn = By.xpath("//button[@class='sc-gldTML dSzJck'][@type='button']");
+    private By autorizationType = By.xpath("//*[@name='authorizationType']");
+    private By generateKey = By.xpath("//button[@type='submit']/span[contains(text(),'Generate ID and Secret')]");
+    //private By doneBtn = By.xpath("//button[@class='sc-gldTML dSzJck'][@type='button']");
+    private By doneBtn = By.xpath("//button[@type='button']/span[contains(text(),'Done')]");
     // private By oathFeedbackInfo = By.xpath("//*[contains(text(),'A new OAuth 1.0 consumer was successfully created')]");
-    private final By oathFeedbackInfo = By.xpath("//div[@class='sc-dxgOiQ cZsGsY']");
+    private final By oathFeedbackInfo = By.xpath("//div[@class='SimpleFormFeedback']/div/div");
 
     /////Edit Integration/////
     private By integtation = By.linkText("Edit Integration");
@@ -188,7 +189,8 @@ public class CBAProducts extends BasePage {
     String addedInfo = "You have successfully added " + productName + " to your Production Catalog.";
     String removedInfo = "You successfully removed application " + productName + " from the Production Catalog. It is not visible in the marketplace, but it is still present in the Staging Catalog.";
     String unpublishedInfo = "You have successfully unpublished " + productName + ".";
-    String oathKeyInfo = "A new OAuth 1.0 consumer was successfully created for your product.";
+    //String oathKeyInfo = "A new OAuth 1.0 consumer was successfully created for your product.";
+    String oathKeyInfo = "You have successfully saved your send event notification credentials.";
     String deleteVersion = "Delete Product Version";
     String msgDeleteProductVersion = "Product Version " + getApplicationName + "_" + getApplicationVersion + " has successfully been deleted";
     String infoFeedBackPanel = "You have successfully deleted " + productName;
@@ -240,7 +242,7 @@ public class CBAProducts extends BasePage {
     }
 
     public void credentialsOath() {
-        testLog.info("------------------------------------- Navigate to Integration -------------------------------------");
+        testLog.info("------------------------------------- Navigate to Credentials -------------------------------------");
         waitForLoader(credentials);
         click(credentials);
         ExpectedConditions.presenceOfElementLocated(autorizationType);
@@ -258,7 +260,6 @@ public class CBAProducts extends BasePage {
     }
 
     public void editIntegration() {
-        testLog.info("<b>Info -> Integration : <u> Edit Integration </u></b> ");
         testLog.info("------------------------------------- Navigate to Integration -------------------------------------");
         click(integtation);
         sendKeys(subscrCreate, notificationURL);

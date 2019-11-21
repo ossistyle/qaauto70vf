@@ -18,11 +18,11 @@ public class CBAMyApps extends BasePage
 
     private By titleList = By.cssSelector("p[class='js-name-region adb-myapp--content']");
     private By isUpgrade = By.xpath("//*[@class='js-name-region adb-myapp--content']/child::span/child::i");
-    private By success =  By.xpath("//*[contains(text(),'successfully')]");
-    private By moreInfo =  By.xpath("//a[contains(text(),'More Info')]");
+    private By success = By.xpath("//*[contains(text(),'successfully')]");
+    private By moreInfo = By.xpath("//a[contains(text(),'More Info')]");
 
     private List<WebElement> appList;
-    private List<String>names;
+    private List<String> names;
     private WebElement myApp;
 
     public CBAMyApps()
@@ -50,12 +50,12 @@ public class CBAMyApps extends BasePage
     }
 
     public void verifyPurchasedApp(String purchasedAppName) {
-
+        testLog.info("--------------------------- Verify purchased apps ------------------------------");
         appList = getWebElements(titleList, 500, ExpectedConditions.presenceOfElementLocated(titleList));
 
         /*Get the list of application names and stored in the testLog */
         Iterator<WebElement> i = appList.iterator();
-        while (i.hasNext()){
+        while (i.hasNext()) {
             String listOfApps = i.next().getText();
             testLog.info(listOfApps + " app is subscribed.");
         }
@@ -72,7 +72,7 @@ public class CBAMyApps extends BasePage
             }
         }
 
-        if(isAppExistsFlag == 0){
+        if (isAppExistsFlag == 0) {
             testLog.error(String.format(purchasedAppName + "doesn't exists in the MyApp list"));
             Assert.fail(String.format(purchasedAppName + "doesn't exists in the MyApp list"));
         }
@@ -86,7 +86,7 @@ public class CBAMyApps extends BasePage
 
     public void whiteLabelingMyApps()
     {
-        testLog.info(getCSSValue(moreInfo, "color")) ;
+        testLog.info(getCSSValue(moreInfo, "color"));
         testLog.info(getCSSValue(moreInfo, "background-color"));
         testLog.info(getCSSValue(moreInfo, "font-family"));
         testLog.info(getCSSValue(moreInfo, "font-size"));

@@ -62,6 +62,7 @@ public class CBAAssignPage extends BasePage {
      */
 
     public void moveToAssignApps() {
+        testLog.info("--------------------------- Navigate Assign App ------------------------------");
         //verify the visibility of Manage option and perform the operation if it is find
         waitUntilPageLoad(linkMyApps);
         elementManage = driver.findElements(linkManage);
@@ -78,7 +79,7 @@ public class CBAAssignPage extends BasePage {
      */
 
     public void btnSelectAssignAppsToUser() throws InterruptedException {
-
+        testLog.info("--------------------------- Click on Assign Apps to Users ------------------------------");
         /* scroll vertically till the element find and click on Assign App To User button */
         waitForLoader(appToUsers);
         ExpectedConditions.visibilityOfElementLocated(appToUsers);
@@ -92,6 +93,7 @@ public class CBAAssignPage extends BasePage {
      */
 
     public void searchAppToAssign(String getAppName) {
+        testLog.info("--------------------------- Search App ------------------------------");
         scrollToElement(searchAppLoc);
         click(searchAppLoc);
         sendKeys(searchAppLoc, getAppName); /* get application name from the properties */
@@ -105,7 +107,7 @@ public class CBAAssignPage extends BasePage {
      */
 
     public void searchUserToAssign(String assignUserName) {
-
+        testLog.info("--------------------------- Search User ------------------------------");
         click(searchUserLoc);
         //sendKeys(searchUserLoc, createAssignUser().getUserName()); /* get user from the properties */
         sendKeys(searchUserLoc, assignUserName); //To Test on VHQ DeviceID
@@ -115,7 +117,7 @@ public class CBAAssignPage extends BasePage {
     }
 
     public void assignUsersToApps(String getAppName) {
-
+        testLog.info("--------------------------- Assign Users to Apps ------------------------------");
         ExpectedConditions.presenceOfElementLocated(btnAccount);
         click(btnAccount);
         click(linkAssignApp);
@@ -132,6 +134,7 @@ public class CBAAssignPage extends BasePage {
      */
 
     public void userAssignment() throws InterruptedException {
+        testLog.info("--------------------------- App or Apps assignment ------------------------------");
         click(btnNext);
         click(btnSubmit);
     }
@@ -140,14 +143,11 @@ public class CBAAssignPage extends BasePage {
      * This method verifies the assignment of app is successfully done or not.
      */
     public void isAssignUpdated() {
+        testLog.info("--------------------------- Verify App assignment text ------------------------------");
         waitForLoader(txtAssignSuccess);
         String txtResult = getText(txtAssignSuccess);
         assertTextContains("successfully updated", txtResult);
         testLog.info(txtResult);
-        // jobCreatedOnSubscription = dateFormat.format(new Date());
-
-        //dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+03:00"));
-        // jobCreatedOnSubscription = dateFormat.format(new Date());
         jobCreatedOnSubscription = MPUtils.getDownloadScheduleTime();
         System.out.println("GMT time UnSubscription : " + jobCreatedOnSubscription);
         testLog.info("----- App Subscription created date & Time : " + jobCreatedOnSubscription + " -----");
