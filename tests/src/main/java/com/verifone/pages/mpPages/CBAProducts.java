@@ -333,15 +333,6 @@ public class CBAProducts extends BasePage {
         sendKeys(versionCode, productVersionCode);
         sendKeys(versionName, productVersionName);
 
-       /* hoverAndClickOnElement(chooseAsset);
-        fileUpload(packagePath);
-
-        hoverAndClickOnElement(chooseIcon);
-        fileUpload(imagePath);
-
-        hoverAndClickOnElement(chooseImage);
-        fileUpload(imagePath);*/
-
         WebElement choosePackage = driver.findElement(chooseAsset);
         WebElement choosePackageIcon = driver.findElement(chooseIcon);
         WebElement choosePackageImage = driver.findElement(chooseImage);

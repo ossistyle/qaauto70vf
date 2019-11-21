@@ -77,7 +77,7 @@ public class VHQHomePage extends BasePage {
         waitForLoader(ShowHide);
     }
 
-    public void deviceSearch(String deviceSN) throws InterruptedException {
+    public void deviceSearch(String deviceSN) throws Exception {
 
         testLog.info("----------------------------------- Navigate to Device Search ----------------------------------------");
 
@@ -98,19 +98,29 @@ public class VHQHomePage extends BasePage {
         testLog.info("----------------------------------- Navigate to Search Dialog ----------------------------------------");
 
         //hoverAndClickOnElement(selectAttributes);
-        select(selectDeviceAttribute, "SerialNumber");
 
-        ExpectedConditions.visibilityOfElementLocated(selectAttributeName);
-        select(selectAttributeName, "27");
+        //Wait until element found
+        //Add search contents
+        //Apply filter
+        if (isExists(btnAdd, 28)) {
+            testLog.info("-----------------------------------Add Button Element found ----------------------------------------");
 
-        ExpectedConditions.visibilityOfElementLocated(contralValue);
-        sendKeys(contralValue, deviceSN);
-        click(btnAdd);
-        ExpectedConditions.elementToBeClickable(btnApplyFilter);
-        click(btnApplyFilter);
+            select(selectDeviceAttribute, "SerialNumber");
+
+            ExpectedConditions.visibilityOfElementLocated(selectAttributeName);
+            select(selectAttributeName, "27");
+
+            ExpectedConditions.visibilityOfElementLocated(contralValue);
+            sendKeys(contralValue, deviceSN);
+            click(btnAdd);
+
+            ExpectedConditions.elementToBeClickable(btnApplyFilter);
+            scrollToElement(btnApplyFilter);
+            click(btnApplyFilter);
+        }
     }
 
-    public void deviceProfile() throws InterruptedException {
+    public void deviceProfile() {
 
         testLog.info("----------------------------------- Navigate to Device Search ----------------------------------------");
 
