@@ -32,7 +32,6 @@ public class PurchaseBundleUI extends BaseTest {
         ProductsTabProductCatalogPage prodCatalog = (ProductsTabProductCatalogPage) PageFactory.getPage("ProductsTabProductCatalogPage");
         ProductsTabBundlePage productsTabBundlePage = (ProductsTabBundlePage) PageFactory.getPage("ProductsTabBundlePage");
         productsTab.clickMenuProductionCatalog();
-        prodCatalog.clickLastPage();
 
         //Unpublish bundle before deleting if exist
         prodCatalog.unpublishBundleIfExist(bundleName.get(0));
@@ -138,9 +137,8 @@ public class PurchaseBundleUI extends BaseTest {
         //Choose Applications
         productsTabBundlePage.clickApplications();
         productsTabBundlePage.clickNextApp();
+        productsTabBundlePage.clickNextApp();
         productsTabBundlePage.addApp(appName.get(2));
-        productsTabBundlePage.clickNextApp();
-        productsTabBundlePage.clickNextApp();
         productsTabBundlePage.addApp(appName.get(3));
 
         //Choose Cancellation Restriction
@@ -171,6 +169,7 @@ public class PurchaseBundleUI extends BaseTest {
         account.cancelSubscribsion(appName.get(0));
         account.cancelSubscribsion(appName.get(1));
         account.cancelBundleSubsucribsion(appName.get(2));
+
 
      }
 }
