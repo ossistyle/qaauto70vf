@@ -23,6 +23,27 @@ public class BaseDDTApi {
     public static ExtentTest testLog;
 
 
+    public static JsonObject getRequestWithHeadersNoExpected(String url, String method, String body, HashMap<String, String> headers, int expectedCode) throws IOException {
+        HttpClient client = getNewHttpClient();
+        HttpRequestBase request = getRequest(url, method, body);
+        headers.forEach(request::addHeader);
+        Gson gson = new GsonBuilder().create();
+        long startTime = System.currentTimeMillis();
+        HttpResponse response = client.execute(request);
+//        reportRequestData(url, method, headers, startTime, body, entity);
+        int responseCode = response.getStatusLine().getStatusCode();
+        if (response.getEntity() == null) {
+            reportRequestData(url, method, headers, startTime, body, "");
+            return null;
+        }
+        String entity = EntityUtils.toString(response.getEntity());
+        reportRequestData(url, method, headers, startTime, body, entity);
+
+        if (entity.startsWith("\""))
+            entity = convertFromPrimitive(entity);
+        return gson.fromJson(entity, JsonObject.class);
+    }
+
     public static JsonObject getRequestWithHeaders(String url, String method, String body, HashMap<String, String> headers, int expectedCode) throws IOException {
         HttpClient client = getNewHttpClient();
         HttpRequestBase request = getRequest(url, method, body);

@@ -27,9 +27,28 @@ public class appsDevice extends BaseTest {
         return arrayObject;
     }
 
-    @Test(dataProvider = "return Apps per Device", groups = "VFMPapi")
+    @Test(enabled = true, dataProvider = "return Apps per Device", groups = "VFMPapi")
 
     public void cloudApiLocationDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
+                                    String headers, String headersForGetToken, String body, String expectedStatusCode,
+                                    String expectedResult, String verifyList, String verifyExcludeList, String comments, String rowNum) throws Exception {
+        starTestLog(rowNum + ". " + comments, comments);
+
+
+        DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false); // 'isBearer' is a flag to define a getToken type(with 'Bearer' or not)
+        api.startProsess_ValidateExcludeData(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
+                expectedStatusCode, expectedResult, verifyList, verifyExcludeList);
+    }
+
+    @DataProvider(name = "add Apps to Device")
+    public Object[][] location1() throws Exception {
+        Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "postAppsDevice-gvcca-2310");
+        return arrayObject;
+    }
+
+    @Test(enabled = true, dataProvider = "add Apps to Device", groups = "VFMPapi")
+
+    public void cloudApiLocation1DDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
                                     String headers, String headersForGetToken, String body, String expectedStatusCode,
                                     String expectedResult, String verifyList, String verifyExcludeList, String comments, String rowNum) throws Exception {
         starTestLog(rowNum + ". " + comments, comments);
