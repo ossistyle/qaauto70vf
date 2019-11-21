@@ -23,6 +23,7 @@ import static com.verifone.utils.Assertions.assertTextExclude;
 import static com.verifone.utils.DataDrivenUtils.getListFrromString;
 import static com.verifone.utils.DataDrivenUtils.getMapFromStr;
 import static com.verifone.utils.apiClient.BaseDDTApi.getRequestWithHeaders;
+import static com.verifone.utils.apiClient.BaseDDTApi.getRequestWithHeadersNoExpected;
 
 
 public class DataDrivenApi {
@@ -80,7 +81,12 @@ public class DataDrivenApi {
         if (confirmationCode != null)
             body = addConfirmationCode(body);
         System.out.println(headersMap);
-        response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+        if (Integer.parseInt(expectedStatusCode)==0) {     //This case when response code can be different
+            response = getRequestWithHeadersNoExpected(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+        }
+        else {
+            response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+        }
         System.out.println("response is: " + response);
         validateExcludeResult(expectedResult, verifyList, verifyExcludeList);
 
