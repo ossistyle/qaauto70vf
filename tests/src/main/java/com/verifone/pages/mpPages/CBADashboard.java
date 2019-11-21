@@ -27,7 +27,7 @@ public class CBADashboard extends BasePage {
     private By createProductBtn = By.xpath("//button[contains(text(),'Create Product')][@class='go-to-import-link adb-button__small']");
 
     public void manageMarketpace() throws Exception {
-        testLog.info("<b>Info -> <u> Go to the Product sections & create product </u></b>");
+        testLog.info("------------------------------------- Navigate to product and create staging catalog -------------------------------------");
         click(manage);
         click(marketPlace);
         //ExpectedConditions.presenceOfElementLocated(welcomeBack);

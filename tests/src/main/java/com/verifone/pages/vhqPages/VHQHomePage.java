@@ -78,6 +78,9 @@ public class VHQHomePage extends BasePage {
     }
 
     public void deviceSearch(String deviceSN) throws InterruptedException {
+
+        testLog.info("----------------------------------- Navigate to Device Search ----------------------------------------");
+
         //Thread.sleep(10000);
         waitForLoader(devSearch);
         ExpectedConditions.elementToBeClickable(devSearch);
@@ -91,6 +94,8 @@ public class VHQHomePage extends BasePage {
             waitUntilPageLoad(btnSearch);
             click(btnSearch);
         }
+
+        testLog.info("----------------------------------- Navigate to Search Dialog ----------------------------------------");
 
         //hoverAndClickOnElement(selectAttributes);
         select(selectDeviceAttribute, "SerialNumber");
@@ -106,6 +111,9 @@ public class VHQHomePage extends BasePage {
     }
 
     public void deviceProfile() throws InterruptedException {
+
+        testLog.info("----------------------------------- Navigate to Device Search ----------------------------------------");
+
         waitForLoader(linkSerialNumber);
         click(linkSerialNumber);
 
@@ -129,32 +137,15 @@ public class VHQHomePage extends BasePage {
             click(btnRefresh);
         }
         waitForLoader(deviceMode);
-
-        // WebElement firstRow = getWebElement(txtPackages, 500, ExpectedConditions.visibilityOfElementLocated(txtPackages));
-       /* testLog.info(firstRow.getText());
-        assertTextContains(packageName, firstRow.getText());
-        assertTextContains(currentDate, firstRow.getText());
-        assertTextContains(appStatus, firstRow.getText());*/
-
-       /* WebElement firstRow = getWebElement(txtPackages, 500, ExpectedConditions.visibilityOfElementLocated(txtPackages));
-
-        testLog.info(" ----- packageName : " + packageName + " ---- Text Contains in : ---- " + firstRow.getText() + " -----");
-        assertTextContains(packageName, firstRow.getText());
-
-        testLog.info(" ----- Application Status : " + appStatus + "  ---- Text Contains in : ----  " + firstRow.getText() + " -----");
-        assertTextContains(appStatus, firstRow.getText());
-
-        testLog.info(" ----- jobCreatedOn : " + jobCreatedOn + "  ---- Text Contains in : ----  " + firstRow.getText() + " -----");
-        assertTextContains(jobCreatedOn, firstRow.getText());*/
     }
 
     public void getDeviceStatus(String deviceIPAddress, String deviceSerialNo) throws Exception {
         InetAddress geek = InetAddress.getByName(deviceIPAddress);
         System.out.println("Sending Ping Request to " + deviceIPAddress);
         if (geek.isReachable(5000)) {
-            testLog.info(" ---- Device serial no: " + deviceSerialNo + " with IPAddress: " + deviceIPAddress + " is reachable. ----");
+            testLog.info("---------------------- Device serial no: " + deviceSerialNo + " with IPAddress: " + deviceIPAddress + " is reachable. ----------------------");
         } else {
-            testLog.info(" ---- Sorry ! Device serial no: " + deviceSerialNo + " with IPAddress: " + deviceIPAddress + " is not reachable. ----");
+            testLog.warning("---------------------- Can not connect to the Device serial no: " + deviceSerialNo + " ----------------------");
             // throw new SkipException("Skipping this exception");
         }
     }

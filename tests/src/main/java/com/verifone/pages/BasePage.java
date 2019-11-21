@@ -686,4 +686,35 @@ public abstract class BasePage {
         return false;
     }
 
+    public int getTblPagination(String name,By pages, By tableName) throws Exception {
+        int actualRow;
+        WebElement element = getWebElement(pages, 30, ExpectedConditions.presenceOfElementLocated(pages));
+        List<WebElement> page = element.findElements(pages);
+        for (int k = 0; k < page.size(); k ++) {
+            try
+            {
+                String text = page.get(k).getText();
+                System.out.println("btn text :" + text);
+                if (!(text.equals("")) ||(text.equals("1"))) {
+                    page = element.findElements(pages);
+                    page.get(k).click();
+                }
+            }
+            catch(StaleElementReferenceException ex)
+            {
+                WebElement element2 = getWebElement(pages, 30, ExpectedConditions.presenceOfElementLocated(pages));
+                List<WebElement> page2 = element2.findElements(pages);
+                String text = page2.get(k).getText();
+                System.out.println("btn text :" + text);
+                if (!(text.equals("")) ||(text.equals("1"))) {
+                    page2.get(k).click();
+                }
+            }
+            actualRow = getRowNumberFromTable(tableName, name);
+            if (actualRow != 0) {
+                return actualRow;
+            }
+        }
+        return 0;
+    }
 }

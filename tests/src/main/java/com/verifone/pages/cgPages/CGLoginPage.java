@@ -60,11 +60,10 @@ public class CGLoginPage extends BasePage {
 
     private static String userDir = BaseTest.envConfig.getAppsDirectoryPath();
 
-    private static String downloadedZipName = userDir + File.separator + getApplicationID + "-" + getApplicationVersion;
+    private static String downloadedZipName = userDir + File.separator + "apps" + File.separator + getApplicationID + "-" + getApplicationVersion;
     private static String instZipFileName = downloadedZipName + File.separator + "INSTALL" + File.separator + "ANDROID" + File.separator + "cp-" + getApplicationID + "-inst";
 
-
-    private static final String androidProjectPath = BaseTest.envConfig.getAppsDirectoryPath() + File.separator + "MyApplication164";
+    private static final String androidProjectPath = userDir + File.separator + "apps" + File.separator + "MyApplication164";
     private static final String androidAPKPath = androidProjectPath + File.separator + "app" + File.separator + "build" + File.separator + "outputs" + File.separator + "apk" + File.separator + "debug" + File.separator + "app-debug.apk";
 
 
@@ -84,6 +83,7 @@ public class CGLoginPage extends BasePage {
     }
 
     public void doLogin(User user) {
+        testLog.info("-------------------------------------------- Navigate to CG Login Page --------------------------------------------");
         click(toLoginPageBtn);
         sendKeys(username, user.getUserName());
         switchToIframe(iframe);
@@ -153,27 +153,26 @@ public class CGLoginPage extends BasePage {
 
     public void getV1SignedPackage() throws Exception {
 
-        testLog.info("<b>Info -> <u>V1 Signed Package</u></b> : Sign the package on CGateway portal. ");
+        testLog.info("-------------------------------------------- Navigate to V1 Signing --------------------------------------------");
 
         waitForLoader(btnSignAndPackage);
 
         WebElement elementSponsorID = driver.findElement(inputSponsorID);
         WebElement elementBtnBrowse = driver.findElement(btnBrowse);
-
         elementSponsorID.sendKeys(getSponsorID);
         elementBtnBrowse.sendKeys(androidAPKPath);
-
         //elementBtnBrowse.sendKeys(downloadFilePath + File.separator + getApplicationID + ".apk");
 
-
-        testLog.info("<b>Info -> <u>getSponsorID</u></b>  : " + getSponsorID + " " + " <b><u>getApplicationID : </u></b> " + generatedAppId + " " + " <b><u>getApplicationVersion :</u></b> " + getApplicationVersion);
+        testLog.info("-------------------------------------------- Get Sponsor ID (" + getSponsorID + " )--------------------------------------------");
+        testLog.info("-------------------------------------------- Get Application ID (" + getSponsorID + " ) --------------------------------------------");
 
         click(btnSignAndPackage);
 
         //Delete the file if it is exists in the location
-        File downloadDirPath = new File(downloadDirectory + File.separator + generatedAppId + "-" + getApplicationVersion + ".zip");
+        //File downloadDirPath = new File(downloadDirectory + File.separator + generatedAppId + "-" + getApplicationVersion + ".zip");
+        File downloadDirPath = new File(userDir + File.separator + "downloads" + File.separator + generatedAppId + "-" + getApplicationVersion + ".zip");
         if (isFileExists(downloadDirPath, 5)) {
-            testLog.info("<b>Info -> <u>Delete File</b></u> : Delete the file before downloading it.");
+            testLog.info("-------------------------------------------- Fil Exists : Delete file --------------------------------------------");
             downloadDirPath.delete();
         }
 
@@ -183,19 +182,15 @@ public class CGLoginPage extends BasePage {
         //Wait until the zip is downloaded
         //Copy file from download dir to project location
         if (isFileExists(downloadDirPath, 28)) {
-            //System.out.println(" isFileExists :" + isFileExists(downloadDirPath, 20));
-            // File destFile = new File(downloadFilePath + File.separator);
-
-            File destFile = new File(userDir + File.separator);
-            testLog.info("<b>Info -> <u> Download Status</b></u> : Signed package downloaded successfully.");
-            copyfileToTargetLocation(downloadDirPath, destFile);
+            testLog.info("-------------------------------------------- Download Result : Signed package downloaded successfully. --------------------------------------------");
+            //File destFile = new File(userDir + File.separator);
+            //copyfileToTargetLocation(downloadDirPath, destFile);
         } else {
-            System.out.println(" isFileExists :" + isFileExists(downloadDirPath, 20));
-            testLog.info("<b>Info -> <u>Error</b></u> : Failed to download the signed package.");
-            Assert.fail("<b>Info -> <u>Error</b></u> : Failed to download the signed package.");
+            // System.out.println(" isFileExists :" + isFileExists(downloadDirPath, 20));
+            Assert.fail("-------------------------------------------- Error : Failed to download package --------------------------------------------");
         }
 
-        testLog.info(" <b>Info -> <u>V1 Signed Package</b></u> : Package signed successfully on CGateway Portal. ");
+        testLog.info("-------------------------------------------- Download Package : Package signed successfully on CGateway Portal. ");
 
 
         //Thread.sleep(10000);

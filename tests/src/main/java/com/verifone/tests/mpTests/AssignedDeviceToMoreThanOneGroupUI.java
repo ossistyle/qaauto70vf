@@ -27,7 +27,7 @@ public class AssignedDeviceToMoreThanOneGroupUI extends BaseTest {
 
 
     // This test describe all the actions related to creation of group and assign device to it.
-    @Test(priority = 1, testName = "LogIn & Create First Group", description = "LogIn into CBA Marketplace, Create first group and Assign Device to it.")
+    @Test(priority = 1, testName = "LogIn, Create First Group & Assign Device", description = "LogIn into CBA Marketplace, Create first group and Assign Device to it.")
     public void CBACreateDeviceGroupTestUI() throws Exception {
         //Login in to CBA Marketplace.
         loginCBA(createAssignUser());
@@ -38,17 +38,11 @@ public class AssignedDeviceToMoreThanOneGroupUI extends BaseTest {
         firstGroupName = BaseTest.envConfig.getGroupInfo("MPThirdGroupName");
         String firstGroupDescription = BaseTest.envConfig.getGroupInfo("MPThirdGroupDescription");
 
-        // Get windows handle
-        driver = new CBAAssignGroupPage().getDriver();
-        MPUtils.getWindowsHandle(driver);
-
-        CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
-
         //Move to user section
+        CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
         assignGroup.moveToUsers();
 
         //Create group & assign device
-        //assignGroup.createUsersGroup(firstGroupName, firstGroupDescription, listOfApp, listOfGroup);
         assignGroup.createUsersGroup(firstGroupName, firstGroupDescription, listOfApp, firstGroupName);
         assignGroup.addDeviceToGroup(firstGroupName, listOfDevices, "AddUser");
     }
@@ -59,17 +53,10 @@ public class AssignedDeviceToMoreThanOneGroupUI extends BaseTest {
         //Login to CBAMarket Place
         loginCBA(createAssignUser());
 
-        // Get windows handle
-        driver = new CBAAssignPage().getDriver();
-        MPUtils.getWindowsHandle(driver);
-        CBAAssignPage assignApp = PageFactory.getAssignAppPage();
-
         //Move to assign app section
+        CBAAssignPage assignApp = PageFactory.getAssignAppPage();
         assignApp.moveToAssignApps();
 
-        // Get windows handle
-        driver = new CBAAssignGroupPage().getDriver();
-        MPUtils.getWindowsHandle(driver);
         CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
 
         //Move to Groups section
@@ -89,15 +76,9 @@ public class AssignedDeviceToMoreThanOneGroupUI extends BaseTest {
         CBAAssignPage assignApp = PageFactory.getAssignAppPage();
         CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
 
-        // Get windows handle
-        driver = new CBAAssignGroupPage().getDriver();
-        MPUtils.getWindowsHandle(driver);
         assignApp.moveToAssignApps();
         assignGroup.moveToGroups();
 
-        // Get windows handle
-        driver = new CBAAssignPage().getDriver();
-        MPUtils.getWindowsHandle(driver);
         assignApp.searchAppToAssign(listOfApp.get(0));
         assignApp.searchUserToAssign(firstGroupName);
         assignApp.userAssignment();
@@ -105,7 +86,7 @@ public class AssignedDeviceToMoreThanOneGroupUI extends BaseTest {
     }
 
     //This test describe the creation of second group and assignment of the device
-    @Test(priority = 4, testName = "LogIn & Create Second Group", description = "LogIn into CBA MarketPlace, Create second group and Assign same device to it.")
+    @Test(priority = 4, testName = "LogIn, Create Second Group & Assign Device", description = "LogIn into CBA MarketPlace, Create second group and Assign same device to it.")
     public void CBAAssignDeviceToSecondGroupTestUI() throws Exception {
         // Login in to CBA Marketplace.
         loginCBA(createAssignUser());
@@ -113,12 +94,8 @@ public class AssignedDeviceToMoreThanOneGroupUI extends BaseTest {
         secondGroupName = BaseTest.envConfig.getGroupInfo("MPFourthGroupName");
         String secondGroupDescription = BaseTest.envConfig.getGroupInfo("MPFourthGroupDescription");
 
-        // Get windows handle
-        driver = new CBAAssignGroupPage().getDriver();
-        MPUtils.getWindowsHandle(driver);
-        CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
-
         //Move to user section
+        CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
         assignGroup.moveToUsers();
 
         //Create group & assign device
@@ -139,16 +116,10 @@ public class AssignedDeviceToMoreThanOneGroupUI extends BaseTest {
         //search jobName in the second device.
         deviceSerialNumber = listOfDevices.get(0);
 
-        // Get windows handle
-        driver = new VHQHomePage().getDriver();
-        MPUtils.getWindowsHandle(driver);
         VHQHomePage vhqDashboard = PageFactory.getVHQHomePage();
         vhqDashboard.deviceSearch(deviceSerialNumber);
         vhqDashboard.deviceProfile();
 
-        // Get windows handle
-        driver = new CBAAssignGroupPage().getDriver();
-        MPUtils.getWindowsHandle(driver);
         CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
         assignGroup.searchDeviceJob(listOfApp, "INSTALL", CBAAssignGroupPage.jobCreatedOnGroups, deviceSerialNumber, "negative");
     }
@@ -160,9 +131,6 @@ public class AssignedDeviceToMoreThanOneGroupUI extends BaseTest {
         //Login into CBA Marketplace.
         loginCBA(createAssignUser());
 
-        // Get windows handle
-        driver = new CBAAssignGroupPage().getDriver();
-        MPUtils.getWindowsHandle(driver);
         CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
         assignGroup.moveToUsers();
         assignGroup.addDeviceToGroup(secondGroupName, listOfDevices, "RemoveUser");
@@ -178,12 +146,8 @@ public class AssignedDeviceToMoreThanOneGroupUI extends BaseTest {
         listOfApp = new ArrayList<>(BaseTest.envConfig.getListOfAppName().subList(0, 1));
         secondGroupName = BaseTest.envConfig.getGroupInfo("MPFourthGroupName");
 
-        // Get windows handle
-        driver = new CBAAssignGroupPage().getDriver();
-        MPUtils.getWindowsHandle(driver);
-        CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
-
         //Delete the group
+        CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
         assignGroup.moveToUsers();
         assignGroup.verifyApplicationAssignment(listOfApp, secondGroupName);
     }
@@ -195,19 +159,12 @@ public class AssignedDeviceToMoreThanOneGroupUI extends BaseTest {
         loginVHQ(createVHQMumbaiUser());
 
         deviceSerialNumber = listOfDevices.get(0);
-
-        // Get windows handle
-        driver = new VHQHomePage().getDriver();
-        MPUtils.getWindowsHandle(driver);
         VHQHomePage vhqDashboard = PageFactory.getVHQHomePage();
 
         //search jobName in the first device
         vhqDashboard.deviceSearch(deviceSerialNumber);
         vhqDashboard.deviceProfile();
 
-        // Get windows handle
-        driver = new CBAAssignGroupPage().getDriver();
-        MPUtils.getWindowsHandle(driver);
         CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
         assignGroup.searchDeviceJob(listOfApp, "UNINSTALL", CBAAssignGroupPage.jobCreatedOnGroups, deviceSerialNumber, "negative");
     }
@@ -217,9 +174,6 @@ public class AssignedDeviceToMoreThanOneGroupUI extends BaseTest {
         // Login in to CBA Marketplace.
         loginCBA(createAssignUser());
 
-        // Get windows handle
-        driver = new CBAAssignGroupPage().getDriver();
-        MPUtils.getWindowsHandle(driver);
         CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
         assignGroup.moveToUsers();
         assignGroup.addDeviceToGroup(firstGroupName, listOfDevices, "RemoveUser");
@@ -232,12 +186,8 @@ public class AssignedDeviceToMoreThanOneGroupUI extends BaseTest {
         //Login in to CBA Marketplace.
         loginCBA(createAssignUser());
 
-        // Get windows handle
-        driver = new CBAAssignGroupPage().getDriver();
-        MPUtils.getWindowsHandle(driver);
-        CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
-        
         //Delete the group
+        CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
         assignGroup.moveToUsers();
         assignGroup.verifyApplicationAssignment(listOfApp, firstGroupName);
     }

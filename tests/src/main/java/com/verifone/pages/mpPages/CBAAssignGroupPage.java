@@ -7,6 +7,7 @@ import com.verifone.tests.BaseTest;
 import com.verifone.utils.appUtils.MPUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -111,20 +112,21 @@ public class CBAAssignGroupPage extends BasePage {
     }*/
     public void createUsersGroup(String nameOfTheGroup, String groupDescription, ArrayList<String> listOfApp, String listOfGroup) throws Exception {
 
+        testLog.info("------------------------------------------------- Delete Group If Exists " + nameOfTheGroup + " -------------------------------------------------");
         //Delete the group if it is present
         waitUntilPageLoad(titleList);
-
         List<WebElement> getList = getWebElements(titleList, 18, ExpectedConditions.presenceOfElementLocated(titleList));
         for (WebElement ele : getList) {
             if (ele.getText().equals(nameOfTheGroup)) {
-                testLog.info("----- Group (<b>" + ele.getText() + "</b>) is exists. -----");
                 verifyApplicationAssignment(listOfApp, listOfGroup);
                 break;
             }
         }
 
         Thread.sleep(1000);
-        testLog.info("---- (2). Create Group ----");
+
+        testLog.info("------------------------------------------------- Create New Group -------------------------------------------------");
+
         //Move to Users page and create group by providing details
         click(btnCreateGroup);
 
@@ -135,6 +137,7 @@ public class CBAAssignGroupPage extends BasePage {
 
         click(btnAddGroupDetails);
         waitUntilPageLoad(txtAvailableUsers);
+        Thread.sleep(3000);
 
         click(btnGroup);
         waitForLoader(btnGroup);
@@ -191,9 +194,14 @@ public class CBAAssignGroupPage extends BasePage {
         if (elementManage.size() != 0)
             click(linkManage);
 
+        testLog.info("------------------------------------------------- Navigate to Account -------------------------------------------------");
         click(btnAccount);
+
+        testLog.info("------------------------------------------------- Navigate to User -------------------------------------------------");
         click(linkUser);
         waitForLoader(linkUser);
+
+        testLog.info("------------------------------------------------- Navigate to Groups -------------------------------------------------");
         scrollToElement(linkGroups);
         click(linkGroups);
         waitForLoader(linkGroups);
@@ -226,13 +234,14 @@ public class CBAAssignGroupPage extends BasePage {
         String textUnableToDelete = "Unable to Delete Group";
         String searchResult = "Search returned 0 results";
 
-        testLog.info("----- (2). Delete Group :" + listOfGroup + "-----");
+        testLog.info("------------------------------------------------- Search Group -------------------------------------------------");
         scrollToElement(txtSearchGroup);
         click(txtSearchGroup);
         sendKeys(txtSearchGroup, listOfGroup);
         click(btnSearch);
         waitUntilPageLoad(btnSearch);
 
+        testLog.info("------------------------------------------------- Delete Group -------------------------------------------------");
         List<WebElement> getList = getWebElements(titleList, 18, ExpectedConditions.presenceOfElementLocated(titleList));
         for (int j = 0; j <= getList.size(); ++j) {
             System.out.println("size of summary :" + getList.size());
@@ -244,13 +253,17 @@ public class CBAAssignGroupPage extends BasePage {
 
             if (getText(txtModal).contains(textUnableToDelete)) {
                 System.out.println("in");
-                testLog.info("---- (3). " + getText(txtModal) + " : " + getText(descriptionUnableToDelete) + "----");
-
+                testLog.info("------------------------------------------------- Unable To Delete " + getText(txtModal) + " : " + getText(descriptionUnableToDelete) + " -------------------------------------------------");
                 click(btnConfirm);
+
+                testLog.info("------------------------------------------------- Navigate to Assign Apps -------------------------------------------------");
+
                 waitUntilPageLoad(linkAssignApp);
                 click(linkAssignApp);
                 moveToGroups();
                 CBAAssignPage assignApp = PageFactory.getAssignAppPage();
+
+                testLog.info("------------------------------------------------- UnAssign App -------------------------------------------------");
 
                 //Un assign list of apps from the group
                 for (String app : listOfApp) {
@@ -342,20 +355,25 @@ public class CBAAssignGroupPage extends BasePage {
 
         //Get the time of Download Schedule
         jobCreatedOnGroups = MPUtils.getDownloadScheduleTime();
-
         testLog.info("---- (4). " + getText(isMembershipUpdated) + " -----");
-
         System.out.println("GMT time UnSubscription : " + jobCreatedOnGroups);
-        testLog.info("----- App Subscription created date & Time : " + jobCreatedOnGroups + " -----");
+        //get the current date and time
+        if (deviceFlag.equals("AddUser")) {
+            testLog.info("----------------------------------- App Subscription created date & Time : " + jobCreatedOnGroups + " -----------------------------------");
+        } else {
+            testLog.info("----------------------------------- App UnSubscription created date & Time : " + jobCreatedOnGroups + " -----------------------------------");
+        }
     }
 
     public void searchDeviceJob(ArrayList<String> listOfApp, String jobName, String jobCreatedOnGroups, String deviceSerialNumber, String testMode) throws Exception {
         VHQDeviceSearch deviceSearch = PageFactory.getVHQDeviceSearch();
-        testLog.info("-------Device Serial Number : ( " + deviceSerialNumber + " )----------");
+
+        testLog.info("----------------------------------- Navigate to Device Profile ----------------------------------------");
+
         for (String app : listOfApp) {
             System.out.println("List of app name : " + listOfApp);
+            testLog.info("----------------------------------- Device Serial Number : ( " + deviceSerialNumber + " ) ----------------------------------------");
             deviceSearch.validateJobInstall(app, jobName, jobCreatedOnGroups, testMode);
-
         }
     }
 
@@ -368,12 +386,10 @@ public class CBAAssignGroupPage extends BasePage {
         assertTextContains(deviceName, getText(users));
 
         if (getText(isDisabled).equals(disabled)) {
-            testLog.info("---- User / Device : " + getText(users) + " is disabled.");
-            Assert.fail("---- User / Device : " + getText(users) + " is disabled.");
+            testLog.warning("---- User / Device : " + getText(users) + " is disabled.");
         } else {
             testLog.info("---- User / Device : " + getText(users) + " is active.");
-            click(users);
         }
+        click(users);
     }
-
 }
