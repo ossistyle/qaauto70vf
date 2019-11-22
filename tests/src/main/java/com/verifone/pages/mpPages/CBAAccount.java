@@ -49,7 +49,7 @@ public class CBAAccount extends BasePage {
 
     public void cancelSubscribsion(String appName) throws InterruptedException {
         textSuccess = "Your subscription to " + appName + " was successfully removed.";
-
+        testLog.info("--------------------------- Navigate to Applications ------------------------------");
         /* Click is only available when Manage option is visible in menu bar*/
         waitUntilPageLoad(linkMyApps);
         purchasedApps = driver.findElements(linkManage);
@@ -62,6 +62,8 @@ public class CBAAccount extends BasePage {
         click(iconSearch);
         //ExpectedConditions.presenceOfElementLocated(manage);
         hoverAndClickOnElement(manage);
+
+        testLog.info("--------------------------- Cancel Subscription ------------------------------");
         hoverAndClickOnElement(cancelSubscr);
         ExpectedConditions.presenceOfElementLocated(yesBtn);
         click(yesBtn);

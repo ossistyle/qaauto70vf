@@ -50,6 +50,7 @@ public class CBAMarketplace extends BasePage {
     }
 
     public void searchForApp(String appName) {
+        testLog.info("--------------------------- Navigate to Marketplace and Search App ------------------------------");
         System.out.println(appName);
         click(marketPlace);
         sendKeys(findApp, appName);
@@ -57,6 +58,7 @@ public class CBAMarketplace extends BasePage {
     }
 
     public void veryfyListingApps() {
+        testLog.info("--------------------------- Verify App ------------------------------");
         listingApps = getWebElements(listing, 500, ExpectedConditions.presenceOfElementLocated(listing));
         int appsNumber = listingApps.size();
         testLog.info(appsNumber + " apps in listing");
@@ -69,6 +71,7 @@ public class CBAMarketplace extends BasePage {
     }
 
     public void buyFreeApp() {
+        testLog.info("--------------------------- By Free App ------------------------------");
         click(listing);
         ExpectedConditions.visibilityOfElementLocated(tryFree);
         click(tryFree);
@@ -78,7 +81,7 @@ public class CBAMarketplace extends BasePage {
     public void buyFreeBundle() throws Exception {
         hoverAndClickOnElement(tryFree);
         hoverAndClickOnElement(continueBtn);
-        if (isExists(agreeToTermsCheckbox,30))
+        if (isExists(agreeToTermsCheckbox, 30))
             click(agreeToTermsCheckbox);
         hoverAndClickOnElement(placeOrderBtn);
         try {
@@ -96,6 +99,7 @@ public class CBAMarketplace extends BasePage {
      */
 
     public void isAppPurchased(String appName) throws InterruptedException {
+        testLog.info("--------------------------- Navigate to Manage Application ------------------------------");
         click(listing);
         Thread.sleep(2000);
 
@@ -103,16 +107,17 @@ public class CBAMarketplace extends BasePage {
         listingApps = driver.findElements(btnManage);
         System.out.println("size of apps :" + listingApps);
         if (listingApps.size() != 0) {
-            testLog.info(appName + " : " + getText(txtManageApp));
+            testLog.info("--------------------------- Application Purchased ------------------------------");
             click(btnManage);
 
+            testLog.info("--------------------------- Remove Purchased Application ------------------------------");
             ExpectedConditions.visibilityOfElementLocated(btnManage);
             click(btnRemoveApp);
 
             ExpectedConditions.visibilityOfElementLocated(btnManage);
             click(btnYes);
         } else {
-            testLog.info(appName + " : " + "Your company doesn't purchase this application yet.");
+            testLog.info("--------------------------- Application doesn't purchase ------------------------------");
         }
     }
 
@@ -182,7 +187,7 @@ public class CBAMarketplace extends BasePage {
         market.buyFreeBundle();
     }
 
-    public void clickMarketplaceBtn(){
+    public void clickMarketplaceBtn() {
         click(marketPlace);
     }
 
