@@ -6,6 +6,7 @@ import com.verifone.pages.cgPages.CGApplicationPage;
 import com.verifone.pages.cgPages.CGLoginPage;
 import com.verifone.pages.cpPages.*;
 import com.verifone.pages.eoPages.*;
+import com.verifone.pages.vfMpPages.SimpleTestAngular8Page;
 import com.verifone.pages.vhqPages.*;
 import com.verifone.pages.mpPages.*;
 import com.verifone.utils.Mail.InboxGetnada;
@@ -39,6 +40,11 @@ public class PageFactory {
     public static CGLoginPage getCGLoginPage(){return new CGLoginPage();}
     public static DLMLoginPage getDLMLoginPage(){return new DLMLoginPage();}
     public static CBAAssignGroupPage getCBAAssignGroupPage(){return  new CBAAssignGroupPage();}
+
+    ///////////////////Verifone MarketPlace Pages/////////////////////////
+    public static SimpleTestAngular8Page getSimpleTestAngular8Page() {return new SimpleTestAngular8Page();}
+
+
 
     public static BasePage getPage(String page) {
         switch (page) {
@@ -174,6 +180,8 @@ public class PageFactory {
                 return new MPGroupsPage();
             case "MPAccountPage":
                 return new MPAccountPage();
+            case "SimpleTestAngular8Page":
+                return new SimpleTestAngular8Page();
             default:
                 System.out.println("Can not create a Page, missing implementation of class " + page);
         }
