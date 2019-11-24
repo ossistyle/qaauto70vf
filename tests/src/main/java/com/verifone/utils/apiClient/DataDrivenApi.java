@@ -10,6 +10,7 @@ import io.restassured.response.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.testng.Assert;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +25,7 @@ import static com.verifone.utils.DataDrivenUtils.getListFrromString;
 import static com.verifone.utils.DataDrivenUtils.getMapFromStr;
 import static com.verifone.utils.apiClient.BaseDDTApi.getRequestWithHeaders;
 import static com.verifone.utils.apiClient.BaseDDTApi.getRequestWithHeadersNoExpected;
+import static com.verifone.utils.apiClient.BaseDDTApi.getRequestOptions;
 
 
 public class DataDrivenApi {
@@ -76,6 +78,7 @@ public class DataDrivenApi {
     public void startProsess_ValidateExcludeData(String accessToken, String accGrantType, String accSSOURL, String uri,
                              String requestMethod, String headers, String headersForGetToken, String body,
                              String expectedStatusCode, String expectedResult, String verifyList, String verifyExcludeList) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, JSONException {
+        String Headers;
         headersMap = getMapFromStr(headers);
         getToken(accessToken, accGrantType, accSSOURL, headersForGetToken);
         if (confirmationCode != null)
@@ -84,11 +87,17 @@ public class DataDrivenApi {
         if (Integer.parseInt(expectedStatusCode)==0) {     //This case when response code can be different
             response = getRequestWithHeadersNoExpected(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
         }
-        else {
+        else if (requestMethod.contains("options")) {
+            Headers = getRequestOptions(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+            System.out.println("allow header data is: " + Headers);
+            testLog.info("allow header data is: " + Headers);
+            Assert.assertEquals(Headers, verifyList);
             response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+        } else {
+            response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+            validateExcludeResult(expectedResult, verifyList, verifyExcludeList);
         }
         System.out.println("response is: " + response);
-        validateExcludeResult(expectedResult, verifyList, verifyExcludeList);
 
     }
 
