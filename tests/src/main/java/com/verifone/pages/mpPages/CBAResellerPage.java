@@ -41,7 +41,7 @@ public class CBAResellerPage extends BasePage {
      * @author : Prashant Lokhande
      */
     public void selectCompanies() {
-        testLog.info("<b>Info -> Reseller : <b> Go to the Reseller - User page.");
+        testLog.info("--------------------------- Navigate to Reseller ------------------------------");
         click(linkManage);
         click(selectReseller);
     }
@@ -53,12 +53,11 @@ public class CBAResellerPage extends BasePage {
      * @author : Prashant Lokhande
      */
     public void searchCompaniesToManage() {
-        testLog.info("<b>Info -> Companies :<b> Select Companies option from the Home");
-
+        testLog.info("--------------------------- Navigate to Companies ------------------------------");
         waitForLoader(selectCompanies);
         click(selectCompanies);
 
-        testLog.info("<b>Info -> Searched company :<b> Select company from the list of companies");
+        testLog.info("--------------------------- Select Searched Companies ------------------------------");
         waitForLoader(searchBox);
         scrollToElement(selectSearchedCompanies);
         click(selectSearchedCompanies);
@@ -71,19 +70,19 @@ public class CBAResellerPage extends BasePage {
      * @author : Prashant Lokhande
      */
     public void manageCompanyOperations() {
-        testLog.info("<b>Info -> Join or Leave company :<b> Select operation regarding company.");
+        testLog.info("--------------------------- Manage Companies ------------------------------");
         waitForLoader(manageApplicationBtn);
         click(manageApplicationBtn);
 
         //Do the operation depend on the text present in the manage application dropdown list.
         String txtOption = getText(selectOption);
         if (txtOption.contains(txtJoinCompany)) {
-            testLog.info("<b>Info -> Join company <b> ");
+            testLog.info("--------------------------- Join Company ------------------------------");
             click(selectOption);
             assertTextContains(getText(txtResult), msgJoinCompany);
             testLog.info("<b>Info -> Message</b> : " + getText(txtResult));
         } else {
-            testLog.info("<b>Info -> Leave company <b> ");
+            testLog.info("--------------------------- Leave Company ------------------------------");
             click(selectOption);
             testLog.info("<b>Info -> Message</b> : " + msgLeaveCompany);
         }
@@ -96,7 +95,7 @@ public class CBAResellerPage extends BasePage {
      * @author: Prashant Lokhande
      */
     public void selectMerchantFromTheList() throws Exception {
-        testLog.info("<b>Info -> <b> Login as a Reseller and select the merchant from the lists.");
+        testLog.info("--------------------------- Select Merchant ------------------------------");
         click(listOfMerchants);
         click(selectMerchant);
         Thread.sleep(4000);
@@ -109,6 +108,7 @@ public class CBAResellerPage extends BasePage {
      * @author : Prashant Lokhande
      */
     public void selectMyAppsOption() {
+        testLog.info("--------------------------- Navigate to My Apps  ------------------------------");
         click(linkMyApps);
         waitForLoader(linkMyApps);
     }

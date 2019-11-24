@@ -4,26 +4,19 @@ import com.verifone.pages.PageFactory;
 import com.verifone.pages.mpPages.*;
 import com.verifone.pages.vhqPages.VHQHomePage;
 import com.verifone.tests.BaseTest;
-import com.verifone.utils.appUtils.MPUtils;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
+import static com.verifone.tests.steps.mpPortal.Steps.*;
 
 import java.util.ArrayList;
 
-import static com.verifone.tests.steps.mpPortal.Steps.*;
-import static com.verifone.tests.steps.mpPortal.Steps.createVHQMumbaiUser;
 
 public class AssignedDeviceToMoreThanOneGroupUI extends BaseTest {
-
-
     private ArrayList<String> listOfApp;
     private ArrayList<String> listOfDevices;
 
     private static String deviceSerialNumber;
     private String firstGroupName;
     private String secondGroupName;
-
-    WebDriver driver;
 
 
     // This test describe all the actions related to creation of group and assign device to it.
