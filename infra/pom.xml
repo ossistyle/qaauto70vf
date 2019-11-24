@@ -20,6 +20,12 @@
     </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.paulhammant/ngwebdriver -->
+        <dependency>
+            <groupId>com.paulhammant</groupId>
+            <artifactId>ngwebdriver</artifactId>
+            <version>1.0</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.relevantcodes/extentreports -->
         <dependency>
             <groupId>com.relevantcodes</groupId>
