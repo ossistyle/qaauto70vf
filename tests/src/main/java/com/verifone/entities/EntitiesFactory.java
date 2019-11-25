@@ -1,6 +1,5 @@
 package com.verifone.entities;
 
-import com.relevantcodes.extentreports.LogStatus;
 import com.verifone.infra.Company;
 import com.verifone.infra.User;
 import com.verifone.pages.BasePage;
@@ -78,6 +77,10 @@ public class EntitiesFactory {
 
             case "MPReseller":
                 user = BaseTest.envConfig.getCredentials().getMPReseller();
+                break;
+
+            case "VFMP":
+                user = BaseTest.envConfig.getCredentials().getVFMP();
                 break;
         }
 
