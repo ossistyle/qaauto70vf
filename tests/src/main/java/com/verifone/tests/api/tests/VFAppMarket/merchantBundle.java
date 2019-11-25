@@ -8,10 +8,9 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-
 import static com.verifone.utils.apiClient.DataDrivenApi.setFilePath;
 
-public class merchantDevice extends BaseTest {
+public class merchantBundle extends BaseTest {
 
 
     private String file;
@@ -19,23 +18,23 @@ public class merchantDevice extends BaseTest {
     @BeforeSuite
     private void getFile()
     {
-        file = setFilePath("merchant-deviceVFMPQA.xls", "noFilehere.xls");
+        file = setFilePath("noFilehere.xls", "merchant-bundleVFMP.xls");
     }
 
-    @DataProvider(name = "return Devices")
+    @DataProvider(name = "bundles list")
     public Object[][] location() throws Exception {
-        Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "returnDevices-gvcca2303");
+        Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "returnBundles-gvcca2319");
         return arrayObject;
     }
 
-    @Test(dataProvider = "return Devices", groups = "cloudApi1")
+    @Test(dataProvider = "bundles list", groups = "cloudApi1")
 
     public void cloudApiLocationDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
                                     String headers, String headersForGetToken, String body, String expectedStatusCode,
                                     String expectedResult, String verifyList, String comments, String rowNum) throws Exception {
         starTestLog(rowNum + ". " + comments, comments);
 
-        DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false); // 'isBearer' is a flag to define a getToken type(with 'Bearer' or not)
+        DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false);
         api.startProsess(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
                 expectedStatusCode, expectedResult, verifyList);
     }
