@@ -22,13 +22,15 @@ public class AssignAppToUser extends BaseTest {
     private static String getAppName;
     private static String getCmFiveDeviceSerialNo01;
     private static String deviceUserName;
+    private static String searchAppNameOnVHQ;
 
     @Test(priority = 1, testName = "LogIn & Verify App", description = "Login in to CBA MarketPlace & verify availability of the app")
     public void CBAVerifyAvailabilityOfAppTestUI() throws Exception {
         /*Login to CBAMarket Place*/
         loginCBA(createAssignUser());
 
-        getAppName = BaseTest.envConfig.getAppName();
+        //getAppName = BaseTest.envConfig.getAppName();
+        getAppName = BaseTest.envConfig.getGroupInfo("MPPurchaseFreeAppTwo");
 
         /* Verify the purchased app is present in the My App*/
         CBAAssignPage assignApp = PageFactory.getAssignAppPage();
@@ -36,12 +38,12 @@ public class AssignAppToUser extends BaseTest {
     }
 
     @Test(priority = 2, testName = "Login & Assign App to user", description = "Login in to CBA MarketPlace and assign application to the user")
-    public void CBAAssignToUserAppUI() throws InterruptedException {
+    public void CBAAssignToUserAppUI() throws Exception {
 
         /* Login to CBAMarket Place */
         loginCBA(createAssignUser());
 
-        getAppName = BaseTest.envConfig.getAppName();
+        //getAppName = BaseTest.envConfig.getAppName();
         deviceUserName = BaseTest.envConfig.getDeviceUserName();
 
         System.out.println("get App name :" + getAppName);
@@ -62,6 +64,7 @@ public class AssignAppToUser extends BaseTest {
         loginVHQ(createVHQMumbaiUser());
 
         getCmFiveDeviceSerialNo01 = BaseTest.envConfig.getCmFiveDeviceSerialNo01();
+        searchAppNameOnVHQ = BaseTest.envConfig.getGroupInfo("VHQSearchApp01");
 
         /* Get VHQ Home Page*/
         VHQHomePage vhqDashboard = PageFactory.getVHQHomePage();
@@ -69,7 +72,7 @@ public class AssignAppToUser extends BaseTest {
         vhqDashboard.deviceProfile();
 
         VHQDeviceSearch deviceSearch = PageFactory.getVHQDeviceSearch();
-        deviceSearch.validateJobInstall(getAppName, "INSTALL", CBAAssignPage.jobCreatedOnSubscription, "positive");
+        deviceSearch.validateJobInstall(searchAppNameOnVHQ, "INSTALL", CBAAssignPage.jobCreatedOnSubscription, "positive");
     }
 
     @Test(priority = 4, testName = "LogIn & Unsubscribe an App", description = "Log in to CBA account and Unsubscribe the app.")
@@ -93,6 +96,6 @@ public class AssignAppToUser extends BaseTest {
         vhqDashboard.deviceProfile();
 
         VHQDeviceSearch deviceSearch = PageFactory.getVHQDeviceSearch();
-        deviceSearch.validateJobInstall(getAppName, "UNINSTALL", CBAAccount.jobCreatedOnUnsubscription, "positive");
+        deviceSearch.validateJobInstall(searchAppNameOnVHQ, "UNINSTALL", CBAAccount.jobCreatedOnUnsubscription, "positive");
     }
 }

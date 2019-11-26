@@ -133,8 +133,9 @@ public class CBAAssignPage extends BasePage {
      * This method described user assignments, confirmation & submission.
      */
 
-    public void userAssignment() throws InterruptedException {
+    public void userAssignment() throws Exception {
         testLog.info("--------------------------- App or Apps assignment ------------------------------");
+        waitUntilPageLoad(btnNext);
         click(btnNext);
         click(btnSubmit);
     }
@@ -166,16 +167,13 @@ public class CBAAssignPage extends BasePage {
         sendKeys(searchAppLoc, appName);
         click(btnAppSearch);
 
-        Thread.sleep(2000);
-
-        List<WebElement> appList;
-        appList = driver.findElements(titleList);
+        Thread.sleep(3000);
+        List<WebElement> appList = driver.findElements(titleList);
         System.out.println("list of app :" + appList.size());
 
         if (appList.size() != 0) {
             testLog.info(appName + " exists in the MyApps list");
         } else {
-
             testLog.info(String.format(appName + " doesn't exists in the MyApp list"));
             click(browseMarketPlace);
 

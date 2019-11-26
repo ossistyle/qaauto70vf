@@ -37,10 +37,12 @@ public class EnvConfig {
     private String deviceTimeZone;
     private String groupInfo;
 
-    private ArrayList<String> listOfAppName;
+    private ArrayList<String> listOfAssignAppsToGroup;
     private ArrayList<String> listOfDevices;
     private ArrayList<String> listOfBundles;
     private ArrayList<String> listOfApps;
+    private ArrayList<String> listOfCommonApp;
+    private ArrayList<String> listOfIndividualApp;
 
 //    private User user;
 
@@ -143,11 +145,18 @@ public class EnvConfig {
 //        return prop.getProperty(env + "." + "MPReseller");
 //    }
 
-    public ArrayList<String> getListOfAppName() {
-        listOfAppName = new ArrayList<>();
-        listOfAppName.add(prop.getProperty(env + "." + "MPPurchaseFreeAppOne"));
-        listOfAppName.add(prop.getProperty(env + "." + "MPPurchaseFreeAppFour"));
-        return listOfAppName;
+    public ArrayList<String> getListOfAssignAppsToGroup() {
+        listOfAssignAppsToGroup = new ArrayList<>();
+        listOfAssignAppsToGroup.add(prop.getProperty(env + "." + "MPPurchaseFreeAppOne"));
+        listOfAssignAppsToGroup.add(prop.getProperty(env + "." + "MPPurchaseFreeAppFour"));
+        return listOfAssignAppsToGroup;
+    }
+
+    public ArrayList<String> getListOfIndividualApp() {
+        listOfIndividualApp = new ArrayList<>();
+        listOfIndividualApp.add(prop.getProperty(env + "." + "MPMonthlyRecurringApp"));
+        listOfIndividualApp.add(prop.getProperty(env + "." + "MPPurchaseOneTimeApp"));
+        return listOfIndividualApp;
     }
 
     public ArrayList<String> getListOfDevices() {
@@ -192,4 +201,11 @@ public class EnvConfig {
     public String getGroupInfo(String info) {
         return prop.getProperty(env + "." + info);
     }
+
+    public ArrayList<String> getListOfCommonApp(String info) {
+        listOfCommonApp = new ArrayList<>();
+        listOfCommonApp.add(prop.getProperty(env + "." + info));
+        return listOfCommonApp;
+    }
+
 }

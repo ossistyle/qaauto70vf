@@ -57,6 +57,7 @@ public class VHQHomePage extends BasePage {
     private By btnInfo = By.id("infoBtnOk");
     private By btnDeviceSearchReset = By.xpath("//*[@id='resetBtnForAdSearch']");
     private By btnSearch = By.xpath("//*[@id='resultsection']//a[1]");
+    private By deviceSearchPopup = By.xpath("//*[@id='AdvanceSearchModal' and @class='modal bs-example-modal-lg']");
 
 
     private DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy ");
@@ -85,11 +86,13 @@ public class VHQHomePage extends BasePage {
         waitForLoader(devSearch);
         ExpectedConditions.elementToBeClickable(devSearch);
         click(devSearch);
+        Thread.sleep(1000);
 
         //reset the search result and search new device
-        List<WebElement> btnReset = driver.findElements(btnDeviceSearchReset);
-        System.out.println("reset btn size : " + btnReset.size());
-        if (btnReset.size() != 0) {
+        List<WebElement> popup = driver.findElements(deviceSearchPopup);
+        System.out.println("reset btn size : " + popup.size());
+        if (popup.size() != 0) {
+            testLog.info("----------------------------------- Reset Search ----------------------------------------");
             click(btnDeviceSearchReset);
             waitUntilPageLoad(btnSearch);
             click(btnSearch);

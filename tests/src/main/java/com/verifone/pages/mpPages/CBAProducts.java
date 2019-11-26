@@ -241,14 +241,17 @@ public class CBAProducts extends BasePage {
         click(addFeatureswBtn);
     }
 
-    public void credentialsOath() {
+    public void credentialsOath() throws Exception {
         testLog.info("------------------------------------- Navigate to Credentials -------------------------------------");
         waitForLoader(credentials);
         click(credentials);
         ExpectedConditions.presenceOfElementLocated(autorizationType);
         select(autorizationType, "shared");
-        ExpectedConditions.elementToBeClickable(generateKey);
+
+        isExists(generateKey, 10);
+        scrollToElement(generateKey);
         click(generateKey);
+
         ExpectedConditions.elementToBeClickable(doneBtn);
         click(doneBtn);
 
