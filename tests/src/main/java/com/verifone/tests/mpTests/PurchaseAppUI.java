@@ -25,7 +25,7 @@ public class PurchaseAppUI extends BaseTest {
     }
 
     @Test(priority = 2, testName = "Assign User to app", description = "assign user to subscribed application")
-    public void CBAAssignToUserAppUI() throws InterruptedException {
+    public void CBAAssignToUserAppUI() throws Exception {
         loginCBA(createMerchantUser());
 
         CBAMarketplace market = PageFactory.getCBAMarketplace();

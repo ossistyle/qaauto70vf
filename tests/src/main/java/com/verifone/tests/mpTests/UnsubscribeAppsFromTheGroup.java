@@ -17,6 +17,7 @@ public class UnsubscribeAppsFromTheGroup extends BaseTest {
 
     private ArrayList<String> listOfApp;
     private ArrayList<String> listOfDevices;
+    private ArrayList<String> searchAppNameOnVHQ;
 
     private static String deviceSerialNumber;
     private String groupName;
@@ -29,8 +30,7 @@ public class UnsubscribeAppsFromTheGroup extends BaseTest {
         loginCBA(createAssignUser());
 
         listOfDevices = new ArrayList<>(BaseTest.envConfig.getListOfDevices().subList(0, 1));
-        listOfApp = new ArrayList<>(BaseTest.envConfig.getListOfAppName().subList(0, 1));
-
+        listOfApp = BaseTest.envConfig.getListOfCommonApp("MPPurchaseFreeAppThree");
         groupName = BaseTest.envConfig.getGroupInfo("MPSecondGroupName");
         groupDescription = BaseTest.envConfig.getGroupInfo("MPSecondGroupDescription");
 
@@ -86,9 +86,8 @@ public class UnsubscribeAppsFromTheGroup extends BaseTest {
         //LogIn into VHQ Portal
         loginVHQ(createVHQMumbaiUser());
 
-        //getCmFiveDeviceSerialNo01 = BaseTest.envConfig.getCmFiveDeviceSerialNo01();
-        //listOfDevices = BaseTest.envConfig.getListOfDevices();
-        //listOfApp = BaseTest.envConfig.getListOfAppName();
+        searchAppNameOnVHQ = BaseTest.envConfig.getListOfCommonApp("VHQSearchApp02");
+        listOfDevices = new ArrayList<>(BaseTest.envConfig.getListOfDevices().subList(0, 1));
 
         System.out.println("listOfDevices - INSTALL :" + listOfDevices);
         System.out.println("listOfApp - INSTALL :" + listOfApp);
@@ -100,7 +99,7 @@ public class UnsubscribeAppsFromTheGroup extends BaseTest {
         deviceSerialNumber = listOfDevices.get(0);
         vhqDashboard.deviceSearch(deviceSerialNumber);
         vhqDashboard.deviceProfile();
-        assignGroup.searchDeviceJob(listOfApp, "INSTALL", CBAAssignPage.jobCreatedOnSubscription, deviceSerialNumber, "positive");
+        assignGroup.searchDeviceJob(searchAppNameOnVHQ, "INSTALL", CBAAssignPage.jobCreatedOnSubscription, deviceSerialNumber, "positive");
     }
 
     @Test(priority = 5, testName = "LogIn & Cancel (UnSubscribe) an app", description = "log in to CBA account and remove/cancel app from apps list")
@@ -126,7 +125,7 @@ public class UnsubscribeAppsFromTheGroup extends BaseTest {
         deviceSerialNumber = listOfDevices.get(0);
         vhqDashboard.deviceSearch(deviceSerialNumber);
         vhqDashboard.deviceProfile();
-        assignGroup.searchDeviceJob(listOfApp, "UNINSTALL", CBAAccount.jobCreatedOnUnsubscription, deviceSerialNumber, "positive");
+        assignGroup.searchDeviceJob(searchAppNameOnVHQ, "UNINSTALL", CBAAccount.jobCreatedOnUnsubscription, deviceSerialNumber, "positive");
     }
 
     @Test(priority = 8, testName = "LogIn & Delete Group", description = "LogIn to CBA Marketplace and delete the group.")

@@ -26,7 +26,8 @@ public class AssignedDeviceToMoreThanOneGroupUI extends BaseTest {
         loginCBA(createAssignUser());
 
         listOfDevices = new ArrayList<>(BaseTest.envConfig.getListOfDevices().subList(0, 1));
-        listOfApp = new ArrayList<>(BaseTest.envConfig.getListOfAppName().subList(0, 1));
+        listOfApp = BaseTest.envConfig.getListOfCommonApp("app4");
+        //listOfApp = new ArrayList<>(BaseTest.envConfig.getListOfAppName().subList(0, 1));
 
         firstGroupName = BaseTest.envConfig.getGroupInfo("MPThirdGroupName");
         String firstGroupDescription = BaseTest.envConfig.getGroupInfo("MPThirdGroupDescription");
@@ -136,7 +137,7 @@ public class AssignedDeviceToMoreThanOneGroupUI extends BaseTest {
         //Login in to CBA Marketplace.
         loginCBA(createAssignUser());
 
-        listOfApp = new ArrayList<>(BaseTest.envConfig.getListOfAppName().subList(0, 1));
+        //listOfApp = new ArrayList<>(BaseTest.envConfig.getListOfAppName().subList(0, 1));
         secondGroupName = BaseTest.envConfig.getGroupInfo("MPFourthGroupName");
 
         //Delete the group

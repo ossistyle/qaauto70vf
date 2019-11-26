@@ -30,7 +30,7 @@ public class AssignGroupsToApps extends BaseTest {
         loginCBA(createAssignUser());
 
         listOfDevices = BaseTest.envConfig.getListOfDevices();
-        listOfApp = BaseTest.envConfig.getListOfAppName();
+        listOfApp = BaseTest.envConfig.getListOfAssignAppsToGroup();
 
         groupName = BaseTest.envConfig.getGroupInfo("MPFirstGroupName");
         groupDescription = BaseTest.envConfig.getGroupInfo("MPFirstGroupDescription");
@@ -102,7 +102,7 @@ public class AssignGroupsToApps extends BaseTest {
 
         //getCmFiveDeviceSerialNo01 = BaseTest.envConfig.getCmFiveDeviceSerialNo01();
         listOfDevices = BaseTest.envConfig.getListOfDevices();
-        listOfApp = BaseTest.envConfig.getListOfAppName();
+        listOfApp = BaseTest.envConfig.getListOfAssignAppsToGroup();
 
         CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
         VHQHomePage vhqDashboard = PageFactory.getVHQHomePage();
@@ -139,7 +139,7 @@ public class AssignGroupsToApps extends BaseTest {
 
         //getCmFiveDeviceSerialNo01 = BaseTest.envConfig.getCmFiveDeviceSerialNo01();
         listOfDevices = BaseTest.envConfig.getListOfDevices();
-        listOfApp = BaseTest.envConfig.getListOfAppName();
+        listOfApp = BaseTest.envConfig.getListOfAssignAppsToGroup();
 
         CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
         VHQHomePage vhqDashboard = PageFactory.getVHQHomePage();
