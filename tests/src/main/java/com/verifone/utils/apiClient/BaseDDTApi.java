@@ -53,7 +53,7 @@ public class BaseDDTApi {
         HttpResponse response = client.execute(request);
 //        reportRequestData(url, method, headers, startTime, body, entity);
         int responseCode = response.getStatusLine().getStatusCode();
-        if (response.getEntity() == null) {
+        if (response.getEntity() == null && !method.contains("options")) {
             Assert.assertEquals(responseCode, expectedCode);
             reportRequestData(url, method, headers, startTime, body, "");
             return null;
@@ -68,6 +68,20 @@ public class BaseDDTApi {
         if (entity.startsWith("\""))
             entity = convertFromPrimitive(entity);
         return gson.fromJson(entity, JsonObject.class);
+    }
+
+    public static String getRequestOptions(String url, String method, String body, HashMap<String, String> headers, int expectedCode) throws IOException {
+        String entity;
+        HttpClient client = getNewHttpClient();
+        HttpRequestBase request = getRequest(url, method, body);
+        headers.forEach(request::addHeader);
+        long startTime = System.currentTimeMillis();
+        HttpResponse response = client.execute(request);
+//        reportRequestData(url, method, headers, startTime, body, entity);
+        int responseCode = response.getStatusLine().getStatusCode();
+        Assert.assertEquals(responseCode, expectedCode);
+        entity = (response.getHeaders("Allow")[0].getValue().toString());
+        return entity;
     }
 
 
