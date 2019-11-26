@@ -18,7 +18,7 @@ public class merchantGroup extends BaseTest {
     @BeforeSuite
     private void getFile()
     {
-        file = setFilePath("merchant-groupVFMPQA.xls", "noFilehere.xls");
+        file = setFilePath("merchant-groupVFMPQA.xls", "merchant-groupVFMPDEV.xls");
     }
 
     @DataProvider(name = "return_Group")
@@ -33,7 +33,13 @@ public class merchantGroup extends BaseTest {
         return arrayObject;
     }
 
-    @Test(dataProvider = "return_Group", groups = "cloudApi1")
+    @DataProvider(name = "get Group Details")
+    public Object[][] location() throws Exception {
+        Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "getDeviceGroupDetails-gvcca2308");
+        return arrayObject;
+    }
+
+    @Test(enabled = true, dataProvider = "return_Group", groups = "cloudApi1")
 
     public void getGroupDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
                                     String headers, String headersForGetToken, String body, String expectedStatusCode,
@@ -45,7 +51,7 @@ public class merchantGroup extends BaseTest {
                 expectedStatusCode, expectedResult, verifyList);
     }
 
-    @Test(dataProvider = "create_and_edit_group", groups = "cloudApi1")
+    @Test(enabled = true, dataProvider = "create_and_edit_group", groups = "cloudApi1")
 
     public void postGetGroupDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
                                     String headers, String headersForGetToken, String body, String expectedStatusCode,
@@ -55,6 +61,19 @@ public class merchantGroup extends BaseTest {
         DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false); // 'isBearer' is a flag to define a getToken type(with 'Bearer' or not)
         api.startProsess(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
                 expectedStatusCode, expectedResult, verifyList);
+    }
+
+    @Test(enabled = true, dataProvider = "get Group Details", groups = "VFMPapi")
+
+    public void cloudApiLocationDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
+                                    String headers, String headersForGetToken, String body, String expectedStatusCode,
+                                    String expectedResult, String verifyList, String verifyExcludeList, String comments, String rowNum) throws Exception {
+        starTestLog(rowNum + ". " + comments, comments);
+
+
+        DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(), false); // 'isBearer' is a flag to define a getToken type(with 'Bearer' or not)
+        api.startProsess_ValidateExcludeData(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
+                expectedStatusCode, expectedResult, verifyList, verifyExcludeList);
     }
 
 }
