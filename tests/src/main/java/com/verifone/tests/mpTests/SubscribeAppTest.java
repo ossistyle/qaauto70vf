@@ -35,7 +35,7 @@ public class SubscribeAppTest extends BaseTest {
     }
 
     @Test(priority = 2, testName = "Login & Assign App to user", description = "Login in to CBA MarketPlace and assign application to the user")
-    public void CBAAssignToUserAppUI() throws InterruptedException {
+    public void CBAAssignToUserAppUI() throws Exception {
 
         /* Login to CBAMarket Place */
         loginCBA(createAssignUser());

@@ -25,7 +25,8 @@ public class AssignedDeviceTGroupIndividualAppUI extends BaseTest {
         loginCBA(createAssignUser());
 
         listOfDevices = BaseTest.envConfig.getListOfDevices();
-        listOfApp = BaseTest.envConfig.getListOfAppName();
+        //listOfApp = BaseTest.envConfig.getListOfAppName();
+        listOfApp = BaseTest.envConfig.getListOfIndividualApp();
 
         groupName = BaseTest.envConfig.getGroupInfo("MPFifthGroupName");
         groupDescription = BaseTest.envConfig.getGroupInfo("MPFifthGroupDescription");
@@ -66,7 +67,8 @@ public class AssignedDeviceTGroupIndividualAppUI extends BaseTest {
         loginCBA(createAssignUser());
 
         listOfDevices = new ArrayList<>(BaseTest.envConfig.getListOfDevices().subList(0, 1));
-        listOfApp = new ArrayList<>(BaseTest.envConfig.getListOfAppName().subList(0, 1));
+        listOfApp = new ArrayList<>(BaseTest.envConfig.getListOfAssignAppsToGroup());
+        //listOfApp = new ArrayList<>(BaseTest.envConfig.getListOfAppName().subList(0, 1));
 
         System.out.println("listOfDevices :" + listOfDevices);
         System.out.println("listOfApp :" + listOfApp);
@@ -87,7 +89,7 @@ public class AssignedDeviceTGroupIndividualAppUI extends BaseTest {
         // Login in to CBA Marketplace.
         loginCBA(createAssignUser());
 
-        listOfApp = BaseTest.envConfig.getListOfAppName();
+        //listOfApp = BaseTest.envConfig.getListOfAppName();
 
         //Move to Assign Apps section and assign app to Groups.
         CBAAssignPage assignApp = PageFactory.getAssignAppPage();

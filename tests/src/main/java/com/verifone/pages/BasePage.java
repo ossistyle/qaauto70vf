@@ -616,9 +616,11 @@ public abstract class BasePage {
      * @method : Method describe wait for 20 sec to visible the element
      */
     protected void waitUntilPageLoad(By loc) {
-        WebDriverWait element = new WebDriverWait(driver, 20);
+        WebDriverWait element = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         try {
             element.until(ExpectedConditions.visibilityOfElementLocated(loc));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(loc));
         } catch (Exception e) {
             //ignore
         }
@@ -681,32 +683,29 @@ public abstract class BasePage {
             wait.until((ExpectedCondition<Boolean>) webDriver -> file.exists());
             return true;
         } catch (Exception e) {
-           // e.printStackTrace(); ignore case
+            // e.printStackTrace(); ignore case
         }
         return false;
     }
 
-    public int getTblPagination(String name,By pages, By tableName) throws Exception {
+    public int getTblPagination(String name, By pages, By tableName) throws Exception {
         int actualRow;
         WebElement element = getWebElement(pages, 30, ExpectedConditions.presenceOfElementLocated(pages));
         List<WebElement> page = element.findElements(pages);
-        for (int k = 0; k < page.size(); k ++) {
-            try
-            {
+        for (int k = 0; k < page.size(); k++) {
+            try {
                 String text = page.get(k).getText();
                 System.out.println("btn text :" + text);
-                if (!(text.equals("")) ||(text.equals("1"))) {
+                if (!(text.equals("")) || (text.equals("1"))) {
                     page = element.findElements(pages);
                     page.get(k).click();
                 }
-            }
-            catch(StaleElementReferenceException ex)
-            {
+            } catch (StaleElementReferenceException ex) {
                 WebElement element2 = getWebElement(pages, 30, ExpectedConditions.presenceOfElementLocated(pages));
                 List<WebElement> page2 = element2.findElements(pages);
                 String text = page2.get(k).getText();
                 System.out.println("btn text :" + text);
-                if (!(text.equals("")) ||(text.equals("1"))) {
+                if (!(text.equals("")) || (text.equals("1"))) {
                     page2.get(k).click();
                 }
             }
