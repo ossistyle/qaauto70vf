@@ -86,7 +86,7 @@ public class VHQHomePage extends BasePage {
         waitForLoader(devSearch);
         ExpectedConditions.elementToBeClickable(devSearch);
         click(devSearch);
-        Thread.sleep(1000);
+        Thread.sleep(3000);
 
         //reset the search result and search new device
         List<WebElement> popup = driver.findElements(deviceSearchPopup);

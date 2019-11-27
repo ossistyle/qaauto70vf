@@ -3,7 +3,10 @@ package com.verifone.pages.mpPages;
 import com.verifone.pages.BasePage;
 import com.verifone.pages.PageFactory;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.util.ArrayList;
 
 public class CBADashboard extends BasePage {
 
@@ -27,24 +30,41 @@ public class CBADashboard extends BasePage {
     private By createProductBtn = By.xpath("//button[contains(text(),'Create Product')][@class='go-to-import-link adb-button__small']");
 
     public void manageMarketpace() throws Exception {
-        testLog.info("------------------------------------- Navigate to product and create staging catalog -------------------------------------");
+        testLog.info("------------------------------------- Navigate to MarketPlace -------------------------------------");
+
+        WebDriver driver = new CBADashboard().getDriver();
+        ArrayList<String> availableWindows = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
+
         click(manage);
         click(marketPlace);
-        //ExpectedConditions.presenceOfElementLocated(welcomeBack);
-        //click(productTour);
-        //click(welcomeBack);
-        //click(welcomeBack);
+
+        availableWindows = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
+
+        testLog.info("------------------------------------- Navigate to Products -------------------------------------");
         ExpectedConditions.presenceOfElementLocated(products);
         click(products);
+
+        testLog.info("------------------------------------- Navigate to Staging Catalog -------------------------------------");
+        availableWindows = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
         ExpectedConditions.presenceOfElementLocated(stagingCatalog);
         click(stagingCatalog);
 
+        testLog.info("------------------------------------- Delete Product If Exists -------------------------------------");
+        availableWindows = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
         //delete product if it is already exists.
         CBAProducts isProductExist = PageFactory.getCBAProducts();
         isProductExist.deleteSatgingProduct();
 
+        testLog.info("------------------------------------- Create new Product -------------------------------------");
+        availableWindows = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
         ExpectedConditions.elementToBeClickable(createProductBtn);
         click(createProductBtn);
+
     }
 
     public void manageMarketPlaceProducts() {

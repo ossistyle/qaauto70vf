@@ -7,6 +7,7 @@ import com.verifone.pages.mpPages.AndroidProjectOperationPage;
 import com.verifone.pages.mpPages.CBADashboard;
 import com.verifone.pages.mpPages.CBAProducts;
 import com.verifone.tests.BaseTest;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static com.verifone.tests.steps.cgPortal.Steps.loginAndCheck;
@@ -42,6 +43,23 @@ public class UploadPackageInProductionCatalogUI extends BaseTest {
     public static void CBASignAPKOnOrdlxwolfPortalTestUI() throws Exception {
         loginDLMPortal();
     }*/
+    @Test(priority = 2, testName = "LogIn & Delete Package if Exists ", description = "Log in to CBA MarketPlace and Delete Package if it exists in the Production Catalog.")
+    public void CBADeletePackageTestUI() throws Exception {
+        loginMPPortalAsEOAdmin();
+
+        CBADashboard cbaDashboard = PageFactory.getCBADashboard();
+        cbaDashboard.manageMarketPlaceProducts();
+
+        //Remove product from the production catalog only if it is present
+        CBAProducts cbaProducts = PageFactory.getCBAProducts();
+        if (cbaProducts.isProductAvailable()) {
+            System.out.println("App present");
+            cbaProducts.removeProduct();
+            cbaProducts.unPublishProduct();
+            cbaProducts.deleteSatgingProduct();
+        }
+    }
+
     @Test(priority = 3, testName = "LogIn & Upload Package - CBA MarketPlace", description = "LogIn into CBA Portal & upload package on Marketplace.")
     public static void CBAUploadPackageOnMarketPlaceTestUI() throws Exception {
 

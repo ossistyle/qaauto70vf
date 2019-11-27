@@ -137,29 +137,36 @@ public class CBAMarketplace extends BasePage {
         /* Select Buy Now button. */
         click(tryFree);
 
+        Thread.sleep(2000);
         /* verify the flow of app purchase */
         List<WebElement> btnVal = driver.findElements(continueBtn);
         System.out.println("continue btn" + btnVal.size());
         if (btnVal.size() == 0) {
             System.out.println("Go to My Apps...");
+            testLog.info("--------------------------- Go to My Apps  ------------------------------");
             click(goToMyAppsBtn);
         } else {
             System.out.println(" continue button ...");
 
+            testLog.info("--------------------------- Create Order  ------------------------------");
             /* Locate the Continue button and click on it. */
             element.until(ExpectedConditions.visibilityOfElementLocated(continueBtn));
             scrollToElement(continueBtn);
             click(continueBtn);
 
+            testLog.info("--------------------------- Confirm Order  ------------------------------");
             /* Locate the Place Order button and click on it. */
             element.until(ExpectedConditions.visibilityOfElementLocated(placeOrderBtn));
             scrollToElement(placeOrderBtn);
 
             /* Select checkbox if present to accept the terms */
             listingApps = driver.findElements(agreeToTermsCheckbox);
-            if (listingApps.size() != 0)
+            if (listingApps.size() != 0) {
+                testLog.info("--------------------------- Select Agreement Checkbox  ------------------------------");
                 click(agreeToTermsCheckbox);
+            }
 
+            testLog.info("--------------------------- Place Order  ------------------------------");
             click(placeOrderBtn);
 
             //ExpectedConditions.visibilityOfElementLocated(feedBack);

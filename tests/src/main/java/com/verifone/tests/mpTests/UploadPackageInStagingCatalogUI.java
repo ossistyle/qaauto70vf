@@ -14,8 +14,25 @@ public class UploadPackageInStagingCatalogUI extends BaseTest {
 
     private static String productVersionTitle;
 
+    @Test(priority = 0, testName = "LogIn & Delete Package if Exists in Production Catalog ", description = "Log in to CBA MarketPlace and Delete Package if it exists in the Production Catalog.")
+    public void CBADeleteProductionPackageTestUI() throws Exception {
+        loginMPPortalAsEOAdmin();
+
+        CBADashboard cbaDashboard = PageFactory.getCBADashboard();
+        cbaDashboard.manageMarketPlaceProducts();
+
+        //Remove product from the production catalog only if it is present
+        CBAProducts cbaProducts = PageFactory.getCBAProducts();
+        if (cbaProducts.isProductAvailable()) {
+            System.out.println("App present");
+            cbaProducts.removeProduct();
+            cbaProducts.unPublishProduct();
+            cbaProducts.deleteSatgingProduct();
+        }
+    }
+
     //This test describe all the action related to package upload on CBA Market place but not publish.
-    @Test(priority = 0, testName = "LogIn & Upload Package - CBA MarketPlace", description = "Log in to CBA MarketPlace and upload a package in staging catalog")
+    @Test(priority = 1, testName = "LogIn & Upload Package - CBA MarketPlace", description = "Log in to CBA MarketPlace and upload a package in staging catalog")
     public void CBAUploadAppTestUI() throws Exception {
 
         loginMPPortalAsEOAdmin();
@@ -44,7 +61,7 @@ public class UploadPackageInStagingCatalogUI extends BaseTest {
     }
 
     //This test describe all the actions to delete the package from the marketplace - Staging Catalog.
-    @Test(priority = 1, testName = "LogIn & Delete Package - CBA MarketPlace", description = "Log in to CBA MarketPlace and delete package from Staging Catalog")
+    @Test(priority = 2, testName = "LogIn & Delete Package - CBA MarketPlace", description = "Log in to CBA MarketPlace and delete package from Staging Catalog")
     public void CBADeletePackageTestUI() throws Exception {
         loginMPPortalAsEOAdmin();
 
