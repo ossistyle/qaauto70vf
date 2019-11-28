@@ -179,7 +179,8 @@ public class CBAAssignPage extends BasePage {
 
             CBAMarketplace market = PageFactory.getCBAMarketplace();
             market.searchForApp(appName);
-            market.buyFreeApp();
+            market.buyOneTimeApp();
+            //market.buyFreeApp();
         }
 
     }

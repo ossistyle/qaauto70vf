@@ -21,7 +21,7 @@ public class PurchaseOneTimeFreeTrialAppUI extends BaseTest {
     private static String getOneTimePayFreeTrialApp;
 
     @Test(priority = 1,testName = "Log In & Search One Time Pay Free Trial App", description = "Login in to CBA Marketplace & search One Time Pay Free Trial App.")
-    public void CBASearchOneTimePayFreeTrialAppTestUI() throws InterruptedException{
+    public void CBASearchOneTimePayFreeTrialAppTestUI() throws Exception{
 
         /*Login in to CBA Marketplace*/
         loginCBA(createAssignUser());

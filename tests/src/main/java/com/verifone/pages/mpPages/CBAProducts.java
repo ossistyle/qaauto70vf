@@ -168,6 +168,7 @@ public class CBAProducts extends BasePage {
     private By txtInfoFeedBackPanel = By.xpath("//li[@class='feedbackPanelINFO']/span");
     private By btnEditStagingProduct = By.xpath("//*[@class='adb-button adb-button__neutral adb-button__small']");
     private By txtVerifoneDevice = By.xpath("//span[contains(text(),'Verifone Device')]");
+    private By tblDetails = By.xpath("//table[@id='channelCatalog']/tbody/tr");
     // private By txtVerifoneDevice = By.cssSelector("a[class ='adb-link__nav adb-stack--item_content adb-is-selected']");
 
     ////Data/////
@@ -248,9 +249,9 @@ public class CBAProducts extends BasePage {
         ExpectedConditions.presenceOfElementLocated(autorizationType);
         select(autorizationType, "shared");
 
-        isExists(generateKey, 10);
-        scrollToElement(generateKey);
-        click(generateKey);
+        waitUntilPageLoad(generateKey);
+        WebElement getKey = driver.findElement(generateKey);
+        getKey.click();
 
         ExpectedConditions.elementToBeClickable(doneBtn);
         click(doneBtn);
@@ -438,6 +439,20 @@ public class CBAProducts extends BasePage {
         waitForLoader(addedFeedbackInfo);
         ExpectedConditions.textToBe(addedFeedbackInfo, addedInfo);
         testLog.info("<b>" + driver.findElement(addedFeedbackInfo).getText() + "/<b>");
+    }
+
+    /**
+     * @author Prashant Lokhande
+     * This methdd verify the availablability of the app in production catalog
+     */
+    public boolean isProductAvailable() {
+        testLog.info("---------------------------------- Check Presence Of App in Production Catalog  -----------------");
+        sendKeys(searchInput, productName);
+        click(searchIcon);
+        waitUntilPageLoad(searchIcon);
+
+        List<WebElement> element = driver.findElements(tblDetails);
+        return element.size() != 0;
     }
 
     public void removeProduct() {

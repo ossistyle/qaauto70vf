@@ -18,7 +18,7 @@ public class PurchaseMonthlyRecurringAppUI extends BaseTest {
     private static String mothlyRecurringApp;
 
     @Test(priority = 1,testName = "Log In & Search Merchant Recurring App",description = "Login in to CBA Marketplace & search Monthly Recurring App.")
-    public void CBASearchMonthlyRecurringAppTestUI() throws InterruptedException{
+    public void CBASearchMonthlyRecurringAppTestUI() throws Exception{
 
         /* Login in to CBA Marketplace*/
         loginCBA(createAssignUser());

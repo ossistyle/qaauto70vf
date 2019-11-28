@@ -14,7 +14,7 @@ public class PurchaseAppUI extends BaseTest {
     private static String getAppName;
 
     @Test(priority = 1, testName = "LogIn & subscribe Free app", description = "log in to CBA marketPlace and purchase Free application")
-    public void CBASubscribeAppTestUI() throws InterruptedException {
+    public void CBASubscribeAppTestUI() throws Exception {
         loginCBA(createMerchantUser());
         getAppName = BaseTest.envConfig.getAppName();
         CBAMarketplace market = PageFactory.getCBAMarketplace();

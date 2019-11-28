@@ -19,7 +19,7 @@ public class PurchaseYearlyRecurringFreeTrialAppUI extends BaseTest {
     private static String getYearlyRecurringFreeTrialApp;
 
     @Test(priority = 1,testName = "LogIn & Search Yearly Recurring Free Trial App",description = "LogIn in to CBA Marketplace & search Yearly Recurring Free Trial App.")
-    public void CBASearchYearlyRecurringFreeTrialAppTestUI() throws InterruptedException{
+    public void CBASearchYearlyRecurringFreeTrialAppTestUI() throws Exception{
 
         /*Login in to CBA Marketplace*/
         loginCBA(createAssignUser());
