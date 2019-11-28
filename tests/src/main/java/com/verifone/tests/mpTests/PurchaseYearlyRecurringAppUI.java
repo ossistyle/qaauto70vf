@@ -7,21 +7,23 @@ import com.verifone.pages.mpPages.CBAMarketplace;
 import com.verifone.pages.mpPages.CBAMyApps;
 import com.verifone.tests.BaseTest;
 import org.testng.annotations.Test;
+
 import static com.verifone.tests.steps.mpPortal.Steps.*;
 
 public class PurchaseYearlyRecurringAppUI extends BaseTest {
 
     /**
      * This test case described the yearly recurring free app purchase on market place
+     *
      * @author : Prashant Lokhande
      */
 
     private static String getYearlyRecurringApp;
 
-    @Test(priority = 1,testName = "LogIn & Search Yearly Recurring App", description = "Login in to CBA Marketplace & search Yearly Recurring App.")
-    public void CBASearchYearlyRecurringAppTestUI() throws InterruptedException{
+    @Test(priority = 1, testName = "LogIn & Search Yearly Recurring App", description = "Login in to CBA Marketplace & search Yearly Recurring App.")
+    public void CBASearchYearlyRecurringAppTestUI() throws Exception {
 
-         /*Login in to CBA Marketplace*/
+        /*Login in to CBA Marketplace*/
         loginCBA(createAssignUser());
 
         getYearlyRecurringApp = BaseTest.envConfig.getYearlyRecurringApp();
@@ -37,7 +39,7 @@ public class PurchaseYearlyRecurringAppUI extends BaseTest {
     public void CBAPurchaseYearlyRecurringAppTestUI() throws Exception {
         loginCBA(createAssignUser());
 
-       /* Search & Purchase app from the marketplace*/
+        /* Search & Purchase app from the marketplace*/
         CBAMarketplace market = PageFactory.getCBAMarketplace();
         market.searchForApp(getYearlyRecurringApp);
         market.buyOneTimeApp();

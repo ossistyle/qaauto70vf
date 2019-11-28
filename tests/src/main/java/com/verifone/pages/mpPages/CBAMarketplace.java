@@ -41,7 +41,7 @@ public class CBAMarketplace extends BasePage {
     private By appToUsers = By.xpath("//*[contains(@aria-label,'appToUsers')]");
     private By feedBack = By.xpath("//*[@id='orderReceipt']/child::div/child::p");
     private By agreeToTermsCheckbox = By.xpath("//*[@id='agreeToTermsCheckbox']");
-
+    private By clickOnSettingsIcon = By.xpath("//button[@class='adb-button adb-button__neutral adb-context_menu--trigger adb-js-context_menu--trigger']");
 
     private List<WebElement> listingApps;
 
@@ -98,7 +98,7 @@ public class CBAMarketplace extends BasePage {
      * @author: Prashant Lokhande
      */
 
-    public void isAppPurchased(String appName) throws InterruptedException {
+    public void isAppPurchased(String appName) throws Exception {
         testLog.info("--------------------------- Navigate to Manage Application ------------------------------");
         click(listing);
         Thread.sleep(2000);
@@ -111,11 +111,15 @@ public class CBAMarketplace extends BasePage {
             click(btnManage);
 
             testLog.info("--------------------------- Remove Purchased Application ------------------------------");
-            ExpectedConditions.visibilityOfElementLocated(btnManage);
+            Thread.sleep(2000);
+            listingApps = driver.findElements(clickOnSettingsIcon);
+            System.out.println("remove button size :" + listingApps.size());
+            if (listingApps.size() != 0) {
+                hoverAndClickOnElement(clickOnSettingsIcon);
+            }
             click(btnRemoveApp);
-
-            ExpectedConditions.visibilityOfElementLocated(btnManage);
             click(btnYes);
+
         } else {
             testLog.info("--------------------------- Application doesn't purchase ------------------------------");
         }
