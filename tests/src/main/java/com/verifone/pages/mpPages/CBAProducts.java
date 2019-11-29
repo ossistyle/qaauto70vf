@@ -68,7 +68,7 @@ public class CBAProducts extends BasePage {
     /////Credentials/////
     private By credentials = By.linkText("Credentials");
     private By autorizationType = By.xpath("//*[@name='authorizationType']");
-    private By generateKey = By.xpath("//button[@type='submit']/span[contains(text(),'Generate ID and Secret')]");
+    private By generateKey = By.xpath("//button[@type='submit']/span[contains(text(),'Generate Key and Secret')]");
     //private By doneBtn = By.xpath("//button[@class='sc-gldTML dSzJck'][@type='button']");
     private By doneBtn = By.xpath("//button[@type='button']/span[contains(text(),'Done')]");
     // private By oathFeedbackInfo = By.xpath("//*[contains(text(),'A new OAuth 1.0 consumer was successfully created')]");
@@ -246,10 +246,15 @@ public class CBAProducts extends BasePage {
         testLog.info("------------------------------------- Navigate to Credentials -------------------------------------");
         waitForLoader(credentials);
         click(credentials);
+
+        testLog.info("------------------------------------- Authorization type : Shared Credentials (legacy) -------------------------------------");
+        waitUntilPageLoad(autorizationType);
+        scrollToElement(autorizationType);
         ExpectedConditions.presenceOfElementLocated(autorizationType);
         select(autorizationType, "shared");
 
-        waitUntilPageLoad(generateKey);
+        testLog.info("------------------------------------- Generate Key and Secret -------------------------------------");
+        Thread.sleep(2000);
         WebElement getKey = driver.findElement(generateKey);
         getKey.click();
 
@@ -590,7 +595,7 @@ public class CBAProducts extends BasePage {
         }
     }
 
-    public void clickStagingProduct() {
+    public void clickStagingProduct() throws Exception {
         click(stagingCatalogLink);
     }
 }
