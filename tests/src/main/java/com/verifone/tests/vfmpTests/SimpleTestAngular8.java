@@ -15,7 +15,9 @@ public class SimpleTestAngular8 extends BaseTest {
         User dev = EntitiesFactory.getEntity("VFMP");
         SimpleTestAngular8Page verifoneMp = (SimpleTestAngular8Page) PageFactory.getPage("SimpleTestAngular8Page");
 
+        
         verifoneMp.openChrome();
+        verifoneMp.loginVFMP(dev);
         verifoneMp.testAngular();
 
 
