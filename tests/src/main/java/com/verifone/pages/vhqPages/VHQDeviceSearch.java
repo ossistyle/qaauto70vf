@@ -152,6 +152,8 @@ public class VHQDeviceSearch extends BasePage {
                     TestFlagRow = "true";
                     click(btnRefresh);
                     waitForLoader(btnRefresh);
+                } else {
+                    break;
                 }
             }
         }

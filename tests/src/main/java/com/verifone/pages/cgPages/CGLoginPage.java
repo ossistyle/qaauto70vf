@@ -63,7 +63,7 @@ public class CGLoginPage extends BasePage {
     private static String downloadedZipName = userDir + File.separator + "apps" + File.separator + getApplicationID + "-" + getApplicationVersion;
     private static String instZipFileName = downloadedZipName + File.separator + "INSTALL" + File.separator + "ANDROID" + File.separator + "cp-" + getApplicationID + "-inst";
 
-    private static final String androidProjectPath = userDir + File.separator + "apps" + File.separator + "MyApplication164";
+    private static final String androidProjectPath = userDir + File.separator + "apps" + File.separator + "TestAPK";
     private static final String androidAPKPath = androidProjectPath + File.separator + "app" + File.separator + "build" + File.separator + "outputs" + File.separator + "apk" + File.separator + "debug" + File.separator + "app-debug.apk";
 
 
