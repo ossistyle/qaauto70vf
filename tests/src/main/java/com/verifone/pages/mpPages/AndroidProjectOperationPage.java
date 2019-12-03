@@ -32,7 +32,7 @@ public class AndroidProjectOperationPage extends BasePage {
     public static String androidProjectAppName = "CBATest";
     public static String androidProjectAppId = "";
     private static final String androidManifestPath = File.separator + "src" + File.separator + "main" + File.separator + "AndroidManifest.xml";
-    private static final String androidProjectPath = BaseTest.envConfig.getAppsDirectoryPath() + File.separator + "apps" + File.separator + "MyApplication164";
+    private static final String androidProjectPath = BaseTest.envConfig.getAppsDirectoryPath() + File.separator + "apps" + File.separator + "TestAPK";
     private static final String androidAPKPath = androidProjectPath + File.separator + "app" + File.separator + "build" + File.separator + "outputs" + File.separator + "apk" + File.separator + "debug" + File.separator + "app-debug.apk";
 
     public AndroidProjectOperationPage() {

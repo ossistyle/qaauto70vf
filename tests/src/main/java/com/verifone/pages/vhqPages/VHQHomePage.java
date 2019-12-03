@@ -45,7 +45,7 @@ public class VHQHomePage extends BasePage {
     private By btnAdd = By.xpath("//a[@id='btnAddAttr']");
     private By btnApplyFilter = By.xpath("//button[@id='btnApplyFilter']");
 
-    private By linkSerialNumber = By.xpath("//*[@id='row0Devicejqxgrid']/child::div[2]//div[1]");
+    private By linkSerialNumber = By.xpath("//*[@id='row0Devicejqxgrid']/child::div[2]//div[1]/a");
     private By btnDownload = By.xpath("//li[@id='Download_HistroytabLi']");
     private By txtPackages = By.xpath("//div[@id='row0jqxgridDownloadJobProfil']");
     private By btnRefresh = By.xpath("//*[@id='btnRefresh']");
