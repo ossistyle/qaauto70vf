@@ -10,6 +10,7 @@ import com.verifone.tests.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static com.verifone.pages.BasePage.testLog;
 import static com.verifone.tests.steps.cgPortal.Steps.loginAndCheck;
 import static com.verifone.tests.steps.mpPortal.Steps.*;
 
@@ -43,8 +44,8 @@ public class UploadPackageInProductionCatalogUI extends BaseTest {
     public static void CBASignAPKOnOrdlxwolfPortalTestUI() throws Exception {
         loginDLMPortal();
     }*/
-    @Test(priority = 2, testName = "LogIn & Delete Package if Exists ", description = "Log in to CBA MarketPlace and Delete Package if it exists in the Production Catalog.")
-    public void CBADeletePackageTestUI() throws Exception {
+    @Test(priority = 2, testName = "LogIn & Delete Package - Production Catalog ", description = "Log in to CBA MarketPlace and Delete Package if it exists in the Production Catalog.")
+    public void CBADeletePackageFromProductionCatalogTestUI() throws Exception {
         loginMPPortalAsEOAdmin();
 
         CBADashboard cbaDashboard = PageFactory.getCBADashboard();
@@ -54,9 +55,12 @@ public class UploadPackageInProductionCatalogUI extends BaseTest {
         CBAProducts cbaProducts = PageFactory.getCBAProducts();
         if (cbaProducts.isProductAvailable()) {
             System.out.println("App present");
+            testLog.info("------------------------ Remove Product from Production Catalog --------------------------");
             cbaProducts.removeProduct();
             cbaProducts.unPublishProduct();
             cbaProducts.deleteSatgingProduct();
+        } else {
+            testLog.info("------------------------- Product is not available ---------------------------------");
         }
     }
 
