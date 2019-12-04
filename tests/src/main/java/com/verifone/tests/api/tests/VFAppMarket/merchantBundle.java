@@ -14,6 +14,8 @@ public class merchantBundle extends BaseTest {
 
 
     private String file;
+    protected String offerId;
+
 
     @BeforeSuite
     private void getFile()
@@ -31,11 +33,11 @@ public class merchantBundle extends BaseTest {
 
     public void cloudApiLocationDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
                                     String headers, String headersForGetToken, String body, String expectedStatusCode,
-                                    String expectedResult, String verifyList, String comments, String rowNum) throws Exception {
+                                    String expectedResult, String verifyList,String verifyExcludeList, String comments, String rowNum) throws Exception {
         starTestLog(rowNum + ". " + comments, comments);
 
         DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false);
-        api.startProsess(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
-                expectedStatusCode, expectedResult, verifyList);
+        offerId = api.startProsess_ValidateExcludeDataEvaluaet(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
+                expectedStatusCode, expectedResult, verifyList,verifyExcludeList, offerId, rowNum );
     }
 }

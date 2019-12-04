@@ -109,8 +109,8 @@ public class DataDrivenApi {
             }
             catch (AssertionError e) {
                 if (raw.equals("2")) {
-                    testLog.warning("App wasn't exist from previouse testing");
-                    System.out.println("App wasn't exist from previouse testing");
+                    testLog.warning("Data wasn't exist from previouse testing");
+                    System.out.println("Data wasn't exist from previouse testing");
                     testLog.info("response is: " + response);
                 }
                 else {
@@ -133,7 +133,7 @@ public class DataDrivenApi {
             response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
             validateExcludeResult(expectedResult, verifyList, verifyExcludeList);
             System.out.println("response is: " + response);
-            offerId = "";
+            offerId = null;
         }
 
         //other cases
