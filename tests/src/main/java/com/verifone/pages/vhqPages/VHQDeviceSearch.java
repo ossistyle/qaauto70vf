@@ -23,7 +23,7 @@ public class VHQDeviceSearch extends BasePage {
     }
 
     //private By serialNum = By.linkText("401-686-709");
-    private By linkSerialNumber = By.xpath("//*[@id='row0Devicejqxgrid']/child::div[2]//div[1]");
+    private By linkSerialNumber = By.xpath("//*[@id='row0Devicejqxgrid']/child::div[2]//div[1]/a");
     private By download = By.id("Download_HistroytabLi");
     private By divFirstRow = By.id("row0jqxgridDownloadJobProfil");
     private By divSecondRow = By.id("row1jqxgridDownloadJobProfil");
@@ -152,6 +152,8 @@ public class VHQDeviceSearch extends BasePage {
                     TestFlagRow = "true";
                     click(btnRefresh);
                     waitForLoader(btnRefresh);
+                } else {
+                    break;
                 }
             }
         }

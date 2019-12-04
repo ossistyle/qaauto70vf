@@ -451,7 +451,7 @@ public class CBAProducts extends BasePage {
      * This methdd verify the availablability of the app in production catalog
      */
     public boolean isProductAvailable() {
-        testLog.info("---------------------------------- Check Presence Of App in Production Catalog  -----------------");
+        testLog.info("---------------------------------- Check Presence Of App in Catalog  -----------------");
         sendKeys(searchInput, productName);
         click(searchIcon);
         waitUntilPageLoad(searchIcon);
@@ -475,18 +475,25 @@ public class CBAProducts extends BasePage {
         hoverAndClickOnElement(stagingCatalogLink);
     }
 
-    public void unPublishProduct() {
+    public void unPublishProduct() throws Exception {
         testLog.info("-------------------------------------  Staging Catalog : UnPublish Package -------------------------------------");
         waitForLoader(searchInput);
         sendKeys(searchInput, productName);
         click(searchIcon);
-        hoverAndClickOnElement(unpublish);
 
-        waitForLoader(confirmUnpublish);
-        click(confirmUnpublish);
-        waitForLoader(unpublishedFeedbackInfo);
-        ExpectedConditions.textToBe(unpublishedFeedbackInfo, unpublishedInfo);
-        testLog.info("<b>Info -> <u>UnPublish Product</u> : " + driver.findElement(unpublishedFeedbackInfo).getText() + "</b>");
+        Thread.sleep(2000);
+        List<WebElement> unPublishElement = driver.findElements(unpublish);
+        System.out.println("unPublishElement" + unPublishElement.size());
+        if (unPublishElement.size() != 0) {
+            testLog.info("----------------------- UnPublish App -------------------------------------");
+            hoverAndClickOnElement(unpublish);
+
+            waitForLoader(confirmUnpublish);
+            click(confirmUnpublish);
+            waitForLoader(unpublishedFeedbackInfo);
+            ExpectedConditions.textToBe(unpublishedFeedbackInfo, unpublishedInfo);
+            testLog.info("<b>Info -> <u>UnPublish Product</u> : " + driver.findElement(unpublishedFeedbackInfo).getText() + "</b>");
+        }
     }
 
     public void deleteSatgingProduct() throws Exception {
@@ -575,14 +582,15 @@ public class CBAProducts extends BasePage {
         System.out.println(" isAppPresent : " + isAppPresent.size());
 
         if (isAppPresent.size() == 0) {
-            testLog.info("<b> Create Product </b>");
+            testLog.info("---------------------- Create Product --------------------------");
             click(btnCreateProduct);
             createStagingProduct();
             addPlatform();
         } else {
-            testLog.info("<b> Edit Product </b>");
+            testLog.info("------------------------ Edit Product ---------------------------");
             click(btnEditStagingProduct);
             waitForLoader(platforms);
+            Thread.sleep(2000);
 
             scrollToElement(platforms);
             click(platforms);

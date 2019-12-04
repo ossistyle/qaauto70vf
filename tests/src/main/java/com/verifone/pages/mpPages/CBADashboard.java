@@ -57,6 +57,7 @@ public class CBADashboard extends BasePage {
         driver.switchTo().window(availableWindows.get(0));
         //delete product if it is already exists.
         CBAProducts isProductExist = PageFactory.getCBAProducts();
+        isProductExist.unPublishProduct();
         isProductExist.deleteSatgingProduct();
 
         testLog.info("------------------------------------- Create new Product -------------------------------------");
@@ -71,5 +72,41 @@ public class CBADashboard extends BasePage {
         click(manage);
         click(marketPlace);
         click(products);
+    }
+
+    /**
+     * Click on Manage Menu
+     *
+     * @author : Prashant Lokhande
+     */
+    public void clickOnManageMenu() {
+        click(manage);
+    }
+
+    /**
+     * Click on MarketPlace option
+     *
+     * @author : Prashant Lokhande
+     */
+    public void clickOnMarketPlaceOption() {
+        click(marketPlace);
+    }
+
+    /**
+     * Click on Products
+     *
+     * @author : Prashant Lokhande
+     */
+    public void clickOnProductTab() {
+        click(products);
+    }
+
+    /**
+     * Click on Create Product option
+     *
+     * @author : Prashant Lokhande
+     */
+    public void clickOnCreateProduct() {
+        click(createProductBtn);
     }
 }

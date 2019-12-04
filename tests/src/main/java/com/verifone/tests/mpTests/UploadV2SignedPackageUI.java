@@ -87,6 +87,7 @@ public class UploadV2SignedPackageUI extends BaseTest {
 
         CBAProducts cbaProducts = PageFactory.getCBAProducts();
         cbaProducts.clickStagingProduct();
+        cbaProducts.unPublishProduct();
         cbaProducts.deleteSatgingProduct();
     }
 }
