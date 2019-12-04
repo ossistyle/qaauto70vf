@@ -19,7 +19,7 @@ public class appsDevice extends BaseTest {
     @BeforeSuite
     private void getFile()
     {
-        file = setFilePath("noFilehere.xls", "appsVFMPevaluate.xls");
+        file = setFilePath("noFilehere.xls", "appsVFMP.xls");
     }
 
     @DataProvider(name = "return Apps per Device")
