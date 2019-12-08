@@ -1,23 +1,30 @@
 package com.verifone.infra;
 //import static org.junit.Assert.assertTrue;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.relevantcodes.extentreports.ExtentTest;
-import junit.runner.BaseTestRunner;
 import org.apache.commons.io.FileUtils;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.openqa.selenium.NoSuchSessionException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 //import com.gargoylesoftware.htmlunit.javascript.host.URL;
 //import org.testng.annotations.Test;
@@ -96,15 +103,33 @@ public class SeleniumUtils {
                 chromePrefs.put("profile.default_content_settings.popups", 0);
                 chromePrefs.put("download.default_directory", downloadDir);
                 ChromeOptions options = new ChromeOptions();
-                options.addArguments("test-type");
+                options.addArguments("--test-type");
                 options.addArguments("--incognito");
                 options.setExperimentalOption("prefs", chromePrefs);
                 if (!isLinuxMachine.equalsIgnoreCase("FALSE")) {
                     options.addArguments("--headless");
                     options.addArguments("window-size=1743x600");
+                    ChromeDriverService driverService = ChromeDriverService.createDefaultService();
+                    driver = new ChromeDriver(driverService, options);
+                    Map<String, Object> commandParams = new HashMap<>();
+                    commandParams.put("cmd", "Page.setDownloadBehavior");
+                    Map<String, String> params = new HashMap<>();
+                    params.put("behavior", "allow");
+                    params.put("downloadPath", downloadDir);
+                    commandParams.put("params", params);
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    HttpClient httpClient = HttpClientBuilder.create().build();
+                    String command = objectMapper.writeValueAsString(commandParams);
+                    String u = driverService.getUrl().toString() + "/session/" + ((RemoteWebDriver) driver).getSessionId() + "/chromium/send_command";
+                    HttpPost request = new HttpPost(u);
+                    request.addHeader("content-type", "application/json");
+                    request.setEntity(new StringEntity(command));
+                    httpClient.execute(request);
+                    System.out.println("CHROME web driver started successfully");
                 }
+                else if (isLinuxMachine.equalsIgnoreCase("FALSE")){
                 driver = new ChromeDriver(options);
-                System.out.println("CHROME web driver started successfully");
+                System.out.println("CHROME web driver started successfully");}
                 break;
             case "EDGE":
                 System.out.println("Starting EDGE web driver");
