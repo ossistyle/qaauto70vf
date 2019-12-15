@@ -72,7 +72,7 @@ public class Credentials {
     public User getMPReseller() {
         return new User(prop.getProperty(env + "MPResellerEmail"), prop.getProperty(env + "MPResellerPwd"));
     }
-    public User getVFMP() {
-        return new User(prop.getProperty(env + "VFMPEmail"), prop.getProperty(env + "VFMPPwd"));
+    public User getVFMPMer() {
+        return new User(prop.getProperty(env + "VFMPMerEmail"), prop.getProperty(env + "VFMPMerPwd"));
     }
 }

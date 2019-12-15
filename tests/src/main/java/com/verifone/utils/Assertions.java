@@ -2,11 +2,7 @@ package com.verifone.utils;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.verifone.infra.SeleniumUtils;
-import com.verifone.tests.BaseTest;
 import org.openqa.selenium.WebDriver;
-
-import java.awt.*;
-import java.io.IOException;
 
 import static org.testng.AssertJUnit.assertEquals;
 
