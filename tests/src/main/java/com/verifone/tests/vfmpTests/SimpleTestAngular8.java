@@ -10,14 +10,14 @@ import org.testng.annotations.Test;
 public class SimpleTestAngular8 extends BaseTest {
 
     @Test(priority = 0,testName = "selection option", description = "POC for testing new Verifone MP")
-    public void merchantPortal(){
+    public void merchantPortal() throws Exception {
 
-        User dev = EntitiesFactory.getEntity("VFMP");
+        User mer = EntitiesFactory.getEntity("VFMPMer");
         SimpleTestAngular8Page verifoneMp = (SimpleTestAngular8Page) PageFactory.getPage("SimpleTestAngular8Page");
 
         
         verifoneMp.openChrome();
-        verifoneMp.loginVFMP(dev);
+        verifoneMp.loginVFMP(mer);
         verifoneMp.testAngular();
 
 

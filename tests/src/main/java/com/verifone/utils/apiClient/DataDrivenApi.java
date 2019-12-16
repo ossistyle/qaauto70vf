@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLOutput;
 import java.util.HashMap;
 
 import static com.verifone.utils.Assertions.assertTextContains;
@@ -36,6 +37,7 @@ public class DataDrivenApi {
     private ExtentTest testLog;
     private String confirmationCode;
     private String user;
+    private String generalOfferID;
     private boolean isBearer = true; //flag to define getToken type (with 'Bearer' or not)
     public static String merchantId;
 
@@ -73,6 +75,83 @@ public class DataDrivenApi {
         response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
         System.out.println("response is: " + response);
         validateResult(expectedResult, verifyList);
+    }
+
+
+    public String startProsess_ValidateExcludeDataEvaluaet(String accessToken, String accGrantType, String accSSOURL, String uri,
+                                                 String requestMethod, String headers, String headersForGetToken, String body,
+                                                 String expectedStatusCode, String expectedResult, String verifyList, String verifyExcludeList, String offerId,String raw) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, JSONException {
+        String Headers;
+        headersMap = getMapFromStr(headers);
+        getToken(accessToken, accGrantType, accSSOURL, headersForGetToken);
+
+        if (confirmationCode != null)
+            body = addConfirmationCode(body);
+        System.out.println(headersMap);
+        if (Integer.parseInt(expectedStatusCode) == 0) {     //This case when response code can be different
+            response = getRequestWithHeadersNoExpected(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+        }
+        else if (requestMethod.contains("options")) {
+            Headers = getRequestOptions(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+            System.out.println("allow header data is: " + Headers);
+            testLog.info("allow header data is: " + Headers);
+            Assert.assertEquals(Headers, verifyList);
+            response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+        }
+
+        //Get offerId
+        //--------------------------------------------------------------------------------
+        else if (uri.contains("evaluate")) {
+
+            try {
+                response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+                System.out.println("response is: " + response);
+            }
+            catch (AssertionError e) {
+                if (raw.equals("2")) {
+                    testLog.warning("Data wasn't exist from previouse testing");
+                    System.out.println("Data wasn't exist from previouse testing");
+                    testLog.info("response is: " + response);
+                }
+                else {
+                    throw new AssertionError();
+                }
+            }
+            try {
+                offerId = response.get("offerId").toString();
+                System.out.println(offerId);
+            }
+            catch (NullPointerException e) {
+                System.out.println("offerId is missing in row number " + raw);
+            }
+        }
+
+        //Assign/unAssign
+        //--------------------------------------------------------------------------------
+        else if (offerId != null ){
+            body = addOfferId(body, offerId);
+            response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+            validateExcludeResult(expectedResult, verifyList, verifyExcludeList);
+            System.out.println("response is: " + response);
+            offerId = null;
+        }
+
+        //other cases
+        //--------------------------------------------------------------------------------
+        else {
+            try{
+                response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+                validateExcludeResult(expectedResult, verifyList, verifyExcludeList);
+                System.out.println("response is: " + response);}
+                catch(AssertionError e){
+                if(raw.equals("3")){
+                    System.out.println("response is: " + response);
+                    testLog.debug("Probably fail because of first test fail");
+                }
+                else throw new NullPointerException();
+            }
+        }
+        return offerId;
     }
 
     public void startProsess_ValidateExcludeData(String accessToken, String accGrantType, String accSSOURL, String uri,
@@ -214,6 +293,15 @@ public class DataDrivenApi {
         body = body.substring(0, body.length() - 2);
         body = body + "\"code\":\"" + confirmationCode + "\",\"username\":\"" + user + "\"}";
         testLog.info("Confirmation Code: " + confirmationCode);
+        System.out.println(body);
+        return body;
+    }
+
+    private String addOfferId(String body,String offerId) {
+
+        body = body.substring(0, body.length() - 2);
+        body = body + ",\"offerId\": " + offerId + "}}" ;
+        testLog.info("Body: " + body);
         System.out.println(body);
         return body;
     }

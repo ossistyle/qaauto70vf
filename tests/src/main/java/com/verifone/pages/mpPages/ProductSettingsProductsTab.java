@@ -39,7 +39,7 @@ public class ProductSettingsProductsTab extends BasePage {
 //--------------------------------------------------------------------------
     public void getTblGroupSegmentsRowByText(String SearchStr) throws InterruptedException {
         String a = "//span[text()='"+SearchStr+"']";
-        click(By.xpath(a));
+        hoverAndClickOnElement(By.xpath(a));
     }
 //--------------------------------------------------------------------------
 //--------------------------------------------------------------------------

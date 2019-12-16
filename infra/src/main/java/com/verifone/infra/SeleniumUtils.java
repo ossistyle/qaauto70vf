@@ -2,7 +2,6 @@ package com.verifone.infra;
 //import static org.junit.Assert.assertTrue;
 
 import com.relevantcodes.extentreports.ExtentTest;
-import junit.runner.BaseTestRunner;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.NoSuchSessionException;
 import org.openqa.selenium.OutputType;

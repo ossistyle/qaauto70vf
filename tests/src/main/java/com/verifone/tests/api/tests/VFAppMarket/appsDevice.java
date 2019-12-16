@@ -14,6 +14,7 @@ public class appsDevice extends BaseTest {
 
 
     private String file;
+    protected String offerId;
 
     @BeforeSuite
     private void getFile()
@@ -55,8 +56,8 @@ public class appsDevice extends BaseTest {
 
 
         DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false); // 'isBearer' is a flag to define a getToken type(with 'Bearer' or not)
-        api.startProsess_ValidateExcludeData(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
-                expectedStatusCode, expectedResult, verifyList, verifyExcludeList);
+        offerId = api.startProsess_ValidateExcludeDataEvaluaet(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
+                expectedStatusCode, expectedResult, verifyList, verifyExcludeList, offerId, rowNum);
     }
 
 }
