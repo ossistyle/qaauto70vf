@@ -18,26 +18,22 @@ public abstract class TestBase {
     protected static EnvConfig envConfig;
     private static WDProvider wdProvider;
 
-    @Parameters({"env", "portal", "browserType"})
+    @Parameters({"env", "portal"})
     @BeforeSuite
-    public void beforeSuite(String env, String portal, String browserType) throws IOException {
+    public void beforeSuite(String env, String portal) throws IOException {
         envConfig = new EnvConfig(env, portal);
         wdProvider = new WDProvider();
-        WDManager.downloadDriver();
-
-        Configuration.browser = browserType;
         Configuration.baseUrl = envConfig.getWebUrl();
-        Configuration.browserSize = "1920x1080";
-        Configuration.timeout = 15000;
+        WDManager.downloadDriver();
     }
 
     @Parameters({"browserType"})
     @BeforeMethod
     public void startBrowser(Method method, String browserType) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setBrowserName(browserType);
         WebDriver driver = wdProvider.createDriver(capabilities);
         WebDriverRunner.setWebDriver(driver);
-
         open("");
     }
 

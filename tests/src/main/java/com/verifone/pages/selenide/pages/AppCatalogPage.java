@@ -2,11 +2,9 @@ package com.verifone.pages.selenide.pages;
 
 import com.codeborne.selenide.SelenideElement;
 import com.verifone.pages.selenide.components.MainMenu;
-
 import java.util.List;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
