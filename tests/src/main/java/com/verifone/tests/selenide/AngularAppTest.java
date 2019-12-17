@@ -37,7 +37,6 @@ public class AngularAppTest extends TestBase {
         appCatalogPage.clickAppPageButton(1);
         appCatalogPage.mainMenu.clickSettings();
         appCatalogPage.mainMenu.clickUsers();
-        appCatalogPage.mainMenu.clickLogOut();
 
         Thread.sleep(10000);
     }
