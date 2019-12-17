@@ -1,5 +1,5 @@
 package com.verifone.tests.selenide.utils.wd;
-
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverProvider;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -19,7 +19,7 @@ public class WDProvider implements WebDriverProvider {
     @Override
     public WebDriver createDriver(DesiredCapabilities capabilities) {
 
-        switch (capabilities.getBrowserName()) {
+        switch (Configuration.browser) {
             case FIREFOX:
                 return createFirefoxDriver(capabilities);
             default:
@@ -31,6 +31,7 @@ public class WDProvider implements WebDriverProvider {
         Path profile = Paths.get("/feqaautomation/tests/src/main/java/com/verifone/tests/selenide/utils/chrome_profile");
         ChromeOptions options = new ChromeOptions()
                 .addArguments(String.format("user-data-dri=%s", profile))
+                .addArguments("--incognito")
                 .merge(capabilities);
 
         return new ChromeDriver(options);
