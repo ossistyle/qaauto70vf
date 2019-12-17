@@ -2,13 +2,16 @@ package com.verifone.utils.appUtils;
 
 import com.verifone.tests.BaseTest;
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import static com.verifone.pages.BasePage.testLog;
@@ -56,5 +59,12 @@ public class MPUtils {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    //This method describe to get the size of the element depending on visibility.
+    public static int isElementExists(WebDriver driver, By loc, int timeout) throws Exception {
+        Thread.sleep(timeout);
+        List<WebElement> val = driver.findElements(loc);
+        return val.size();
     }
 }
