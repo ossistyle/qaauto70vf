@@ -40,6 +40,7 @@ public class PageFactory {
     public static CGLoginPage getCGLoginPage(){return new CGLoginPage();}
     public static DLMLoginPage getDLMLoginPage(){return new DLMLoginPage();}
     public static CBAAssignGroupPage getCBAAssignGroupPage(){return  new CBAAssignGroupPage();}
+    public static MPProductsPage getMPProductsPage(){return new MPProductsPage();}
 
     ///////////////////Verifone MarketPlace Pages/////////////////////////
     public static SimpleTestAngular8Page getSimpleTestAngular8Page() {return new SimpleTestAngular8Page();}
