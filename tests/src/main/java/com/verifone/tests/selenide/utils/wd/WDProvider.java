@@ -6,9 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -40,11 +38,8 @@ public class WDProvider implements WebDriverProvider {
     }
 
     private static WebDriver createFirefoxDriver(DesiredCapabilities capabilities) {
-        Path pathToProfile = Paths.get("/feqaautomation/tests/src/main/java/com/verifone/tests/selenide/utils/firefox_profile");
-        FirefoxProfile profile = new FirefoxProfile(new File(String.valueOf(pathToProfile)));
         FirefoxOptions options = new FirefoxOptions()
-                .setProfile(profile)
-                .addCapabilities(capabilities);
+                .merge(capabilities);
 
         return new FirefoxDriver(options);
     }

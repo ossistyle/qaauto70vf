@@ -18,13 +18,13 @@ public abstract class TestBase {
     protected static EnvConfig envConfig;
     private static WDProvider wdProvider;
 
-    @Parameters({"env", "portal"})
+    @Parameters({"env", "portal", "browserType"})
     @BeforeSuite
-    public void beforeSuite(String env, String portal) throws IOException {
+    public void beforeSuite(String env, String portal, String browserType) throws IOException {
         envConfig = new EnvConfig(env, portal);
         wdProvider = new WDProvider();
         Configuration.baseUrl = envConfig.getWebUrl();
-        WDManager.downloadDriver();
+        WDManager.downloadDriver(browserType);
     }
 
     @Parameters({"browserType"})
