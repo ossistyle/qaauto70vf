@@ -19,7 +19,9 @@ public class WDProvider implements WebDriverProvider {
     @Override
     public WebDriver createDriver(DesiredCapabilities capabilities) {
 
-        switch (Configuration.browser) {
+        Configuration.timeout = 20000;
+
+        switch (capabilities.getBrowserName()) {
             case FIREFOX:
                 return createFirefoxDriver(capabilities);
             default:
