@@ -88,6 +88,36 @@ public class CBAAssignPage extends BasePage {
         scrollToElement(appToUsers);
     }
 
+    public int checkVisibilityOfApp(String getAppName) throws Exception {
+        scrollToElement(searchAppLoc);
+        click(searchAppLoc);
+        sendKeys(searchAppLoc, getAppName); /* get application name from the properties */
+        click(btnAppSearch);
+
+        Thread.sleep(2000);
+        List<WebElement> getEle = driver.findElements(findAppLoc);
+        return getEle.size();
+    }
+
+    public void clickOnAssignApp() {
+        click(findAppLoc);
+    }
+
+    public int checkVisibilityOfUser(String getAppName) throws Exception {
+        scrollToElement(searchAppLoc);
+        click(searchAppLoc);
+        sendKeys(searchAppLoc, getAppName); /* get application name from the properties */
+        click(btnAppSearch);
+
+        Thread.sleep(2000);
+        List<WebElement> getEle = driver.findElements(findUserLoc);
+        return getEle.size();
+    }
+
+    public void clickOnAssignUser() {
+        click(findUserLoc);
+    }
+
     /**
      * This method described all actions and elements can be executed to search the app.
      */

@@ -39,6 +39,9 @@ public class CBAProducts extends BasePage {
     /////Product Info/////
     private By appName = By.id("appNameField");
     private By modelFree = By.cssSelector("input[id='free'][type='radio']");
+    private By modelOnetime = By.cssSelector("input[id='one_time'][type='radio']");
+    private By modelRecurring = By.cssSelector("input[id='recurring'][type='radio']");
+    private By modelTiered = By.cssSelector("input[id='tiered'][type='radio']");
     private By createProductBtn = By.cssSelector("button[name='createButton'][type='submit']");
     private By btnCreateProduct = By.xpath("//button[contains(text(),'Create Product')][@class='go-to-import-link adb-button__small']");
 
@@ -207,6 +210,51 @@ public class CBAProducts extends BasePage {
         sendKeys(appName, productName);
         click(modelFree);
         click(createProductBtn);
+    }
+
+    public void selectRevenueModel(String rModel) {
+        testLog.info("------------------------------------- Select Revenue Model" + rModel + "-------------------------------------");
+        waitForLoader(appName);
+        sendKeys(appName, productName);
+
+        switch (rModel) {
+            case "One time":
+                click(modelOnetime);
+                break;
+            case "Recurring":
+                click(modelRecurring);
+                break;
+            case "Tiered":
+                click(modelTiered);
+                break;
+
+            default:
+                click(modelFree);
+        }
+
+        click(createProductBtn);
+    }
+
+    public void listingInfoAgreementDetails() throws Exception {
+        testLog.info("------------------------------------- Navigate to Listing Info, Create & Preview -------------------------------------");
+        sendKeys(wordDescription, productDescription);
+        sendKeys(description, productDescription);
+
+        testLog.info("------------------------------------- Add Legal Details -------------------------------------");
+        //add legal details
+        sendKeys(linkPP, privacyPolicy);
+        sendKeys(linkTC, termsAndConditions);
+
+        sendKeys(listingLogo, imagePath);
+        sendKeys(profileLogo, imagePath);
+        click(saveBtn);
+
+        if (isExists(feedBackPanel, 18)) {
+            ExpectedConditions.textToBe(feedBackPanel, feedBack);
+            testLog.info("<b>" + driver.findElement(feedBackPanel).getText() + "</b>");
+        }
+
+        click(savePreviewBtn);
     }
 
     public void listingInfoProduct() throws Exception {
@@ -605,5 +653,41 @@ public class CBAProducts extends BasePage {
 
     public void clickStagingProduct() throws Exception {
         click(stagingCatalogLink);
+    }
+
+    public boolean searchAppInCatalog() throws Exception {
+        testLog.info("---------------------- Search App In Catalog --------------------------");
+        waitForLoader(searchInput);
+        sendKeys(searchInput, productName);
+        click(searchIcon);
+        waitUntilPageLoad(searchIcon);
+
+        //verify app is available to edit. if not then create new product
+        Thread.sleep(2000);
+        List<WebElement> isAppPresent = driver.findElements(btnEditStagingProduct);
+        if (isAppPresent.size() != 0) {
+            return true;
+        }
+        return false;
+    }
+
+    //Click on edit option to update the product details
+    public void clickOnEditButton() {
+        click(btnEditStagingProduct);
+    }
+
+    //Click on Listing info option
+    public void clickOnListingInfo() {
+        waitForLoader(listingInfo);
+        click(listingInfo);
+    }
+
+    //Remove Legal information from the Listing info tab
+    public void removeLegalDetails() {
+        testLog.info("------------------------------------- Remove Legal Details -------------------------------------");
+        //add legal details
+        sendKeys(linkPP, "");
+        sendKeys(linkTC, "");
+        click(savePreviewBtn);
     }
 }

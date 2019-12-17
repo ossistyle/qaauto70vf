@@ -202,4 +202,41 @@ public class CBAMarketplace extends BasePage {
         click(marketPlace);
     }
 
+    /* Select Buy Now button. */
+    public void clickOnBuyProductBtn() {
+        testLog.info("--------------------------- Click on Buy option  ------------------------------");
+        waitUntilPageLoad(tryFree);
+        click(tryFree);
+    }
+
+    /* Locate the Continue button and click on it. */
+    public void clickOnContinueBtn() {
+        testLog.info("--------------------------- Click on Continue option  ------------------------------");
+        waitUntilPageLoad(continueBtn);
+        scrollToElement(continueBtn);
+        click(continueBtn);
+    }
+
+    // Agreement info should be visible
+    public boolean checkAgreementInfoVisible() {
+        waitUntilPageLoad(placeOrderBtn);
+        listingApps = driver.findElements(agreeToTermsCheckbox);
+        if (listingApps.size() != 0) {
+            testLog.info("--------------------------- Agreement details available  ------------------------------");
+            return true;
+        }
+        return false;
+    }
+
+    // Agreement info should not be visible
+    public boolean checkAgreementInfoInvisible() {
+        waitUntilPageLoad(placeOrderBtn);
+        listingApps = driver.findElements(agreeToTermsCheckbox);
+        if (listingApps.size() == 0) {
+            testLog.info("--------------------------- Agreement details not available  ------------------------------");
+            return true;
+        }
+        return false;
+    }
+
 }
