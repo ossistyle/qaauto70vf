@@ -23,12 +23,12 @@ public class merchantBundle extends BaseTest {
         file = setFilePath("noFilehere.xls", "merchant-bundleVFMP.xls");
     }
 
-/*  @DataProvider(name = "bundles list")
+  @DataProvider(name = "bundles list")
     public Object[][] location() throws Exception {
         Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "returnBundles-gvcca2319");
         return arrayObject;
     }
-
+/*
     @DataProvider(name = "negative_test")
     public Object[][] negative_test() throws Exception {
         Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "NegativeTest");
@@ -39,15 +39,15 @@ public class merchantBundle extends BaseTest {
     public Object[][] location() throws Exception {
         Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "freeapps");
         return arrayObject;
-    }   */
+    }
 
     @DataProvider(name = "existing_assignment")
     public Object[][] location() throws Exception {
         Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "existing_assignment");
         return arrayObject;
-    }
+    }*/
 
-/*
+
     @Test(dataProvider = "bundles list", groups = "cloudApi1")
 
     public void cloudApiLocationDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
@@ -59,7 +59,7 @@ public class merchantBundle extends BaseTest {
         offerId = api.startProsess_ValidateExcludeDataEvaluaet(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
                 expectedStatusCode, expectedResult, verifyList,verifyExcludeList, offerId, rowNum );
     }
-
+/*
 
     @Test(dataProvider = "negative_test", groups = "cloudApi1")
 
@@ -83,7 +83,7 @@ public class merchantBundle extends BaseTest {
         DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false);
         offerId = api.startProsess_ValidateExcludeDataEvaluaet(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
                 expectedStatusCode, expectedResult, verifyList,verifyExcludeList, offerId, rowNum );
-    }   */
+    }
 @Test(dataProvider = "existing_assignment", groups = "cloudApi1")
 
 public void existingAssignmentDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
@@ -96,5 +96,5 @@ public void existingAssignmentDDT(String accessToken, String accGrantType, Strin
             expectedStatusCode, expectedResult, verifyList,verifyExcludeList, offerId, rowNum );
 }
 
-
+*/
 }

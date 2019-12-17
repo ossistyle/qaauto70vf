@@ -36,7 +36,7 @@ public class appsMerchant extends BaseTest {
     }
 
     @Test(dataProvider = "return_Apps_per_Merchant", groups = "VFMPapi")
-    public void cloudApiLocationDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
+    public void returnAppsMerchantDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
                                     String headers, String headersForGetToken, String body, String expectedStatusCode,
                                     String expectedResult, String verifyList, String verifyExcludeList, String comments, String rowNum) throws Exception {
         starTestLog(rowNum + ". " + comments, comments);
