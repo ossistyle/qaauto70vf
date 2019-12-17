@@ -26,7 +26,6 @@
         <parameter name="browserType" value="${browser}"/>
 
         <classes>
-            <class name="com.verifone.tests.api.tests.VFAppMarket.merchantDevice"/>
             <class name="com.verifone.tests.api.tests.VFAppMarket.merchantBundle"/>
             <class name="com.verifone.tests.api.tests.VFAppMarket.merchantGroup"/>
             <!--<class name="com.verifone.tests.api.tests.cloud_api_ddt.ShiftApiDdt"/>-->

@@ -120,9 +120,11 @@ public class DataDrivenApi {
             try {
                 offerId = response.get("offerId").toString();
                 System.out.println(offerId);
+                testLog.info("offerID: "+ offerId);
             }
             catch (NullPointerException e) {
                 System.out.println("offerId is missing in row number " + raw);
+                testLog.info("offerId is missing in row number " + raw);
             }
         }
 
