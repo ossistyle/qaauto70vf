@@ -13,6 +13,10 @@ public class MPProductsPage extends BasePage {
     private final static String url = BaseTest.envConfig.getWebUrl() + "home";
     private final static String title = "Verifone Australia Sandbox | Verifone Australia";
 
+    private static String getApplicationVersion = BaseTest.envConfig.getApplicationVersion();
+    private static String getApplicationVersionCode = BaseTest.envConfig.getApplicationVersionCode();
+    private static String productVersionTitle = "Missing Data";
+
     private By createProductBtn = By.xpath("//button[contains(text(),'Create Product')][@class='go-to-import-link adb-button__small']");
     private By listingInfo = By.linkText("Listing Info");
     private By linkPP = By.cssSelector("input[type='url'][name='privacyUrlBorder:privacyUrlBorder_body:privacyUrlField']");
@@ -38,6 +42,19 @@ public class MPProductsPage extends BasePage {
     private By integrationSelect = By.xpath("//select[@aria-label='select'][@name='authenticationMethod'][@class='adb-js-dropdown-select ']");
     private By saveAuth = By.xpath("//button[@class='adb-button adb-toolbar--item adb-button__primary'][@aria-label='save']");
     private By errorAuth = By.xpath("//span[@class='adb-label--error js-error-message']");
+    private By platforms = By.xpath("//a[contains(text(),'Platforms')]");
+    private By addPlatformBtn = By.cssSelector("a[class ='add adb-button adb-button__neutral adb-button__small'][href='#product-platforms']");
+    private By deviceRadio = By.cssSelector("input[type='radio'][value='[object Object]']");
+    private By selectBtn = By.cssSelector("button[type='button'][class='adb-button adb-toolbar--item adb-button__primary']");
+    private By headerItem = By.cssSelector("h1[class='adb-header--item']");
+    private By addProductVersion = By.cssSelector("button[type='button'][class='adb-button']");
+
+    private By saveButton = By.cssSelector("button[type='button'][class ='adb-button js-save-button adb-toolbar--item adb-button__primary'][name='save']");
+    private By mobileFamily = By.cssSelector("input[type='checkbox'][value='CarbonMobile']");
+    private By versionTitle = By.cssSelector("input[type='text'][name='title']");
+    private By versionCode = By.cssSelector("input[type='text'][name='versionCode']");
+    private By versionName = By.cssSelector("input[type='text'][name='versionName']");
+    private By errorProductVersion = By.xpath("//*[@class='js-content']/p");
 
     public MPProductsPage() {
         super(url, title);
@@ -216,7 +233,89 @@ public class MPProductsPage extends BasePage {
     public boolean authenticationErrorMessage(String errorMsg) {
         waitUntilPageLoad(errorAuth);
         String feedBackError = getText(errorAuth);
-        testLog.info("------ Authentication - Error Msg : " + feedBackError + " ------------------------------");
+        testLog.info("---------------------- Authentication - Error Msg : " + feedBackError + " ------------------------------");
         return assertRowContains(errorMsg, feedBackError);
     }
+
+    /**
+     * Click on Platforms option
+     *
+     * @author Prashant Lokhande
+     */
+
+    public void clickOnPlatforms() {
+        click(platforms);
+    }
+
+    /**
+     * Click on Add Platform option
+     *
+     * @author Prashant Lokhande
+     */
+
+    public void clickOnAddPlatform() {
+        click(addPlatformBtn);
+    }
+
+    /**
+     * Select Verifone Device option
+     *
+     * @author Prashant Lokhande
+     */
+    public void selectVerifoneDevice() {
+        click(deviceRadio);
+    }
+
+    /**
+     * Click on Select button
+     *
+     * @author Prashant Lokande
+     */
+    public void clickOnSelectBtn() {
+        click(selectBtn);
+    }
+
+    /**
+     * Click on Add Product Version
+     *
+     * @author Prashant Lokhande
+     */
+    public void clickOnAddProductVersion() {
+        ExpectedConditions.textToBe(headerItem, headerInfo);
+        click(addProductVersion);
+    }
+
+    /**
+     * Add product related details in the platform
+     *
+     * @author Prashant Lokhande
+     */
+    public void setDetailsInPlatform() {
+        sendKeys(versionTitle, productVersionTitle);
+        sendKeys(versionCode, getApplicationVersionCode);
+        sendKeys(versionName, getApplicationVersion);
+        click(mobileFamily);
+    }
+
+    /**
+     * Click on button to save platfrom details
+     *
+     * @author Prashant Lokhande
+     */
+
+    public void clickOnSavePlatformBtn() {
+        click(saveButton);
+    }
+
+    /**
+     * @param errorMsg compare error message in authentication
+     * @author : Prashant Lokhande
+     */
+    public boolean productVersionErrorMessage(String errorMsg) {
+        waitUntilPageLoad(errorProductVersion);
+        String feedBackError = getText(errorProductVersion);
+        testLog.info("---------------------- Product Version - Error Msg : " + feedBackError + " ------------------------------");
+        return assertRowContains(errorMsg, feedBackError);
+    }
+
 }

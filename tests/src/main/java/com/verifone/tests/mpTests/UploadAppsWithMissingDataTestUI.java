@@ -160,5 +160,30 @@ public class UploadAppsWithMissingDataTestUI extends BaseTest {
             TestPassFlag = false;
         }
         Assert.assertTrue(TestPassFlag);
+
+        testLog.info("------------------------------------- Platform -----------------------------------");
+        mpProductsPage.clickOnPlatforms();
+        mpProductsPage.clickOnLeaveThisPage();
+        availableWindows = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
+
+        mpProductsPage.clickOnAddPlatform();
+        mpProductsPage.selectVerifoneDevice();
+        mpProductsPage.clickOnSelectBtn();
+
+        availableWindows = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
+        mpProductsPage.clickOnAddProductVersion();
+
+        availableWindows = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
+        mpProductsPage.setDetailsInPlatform();
+        mpProductsPage.clickOnSavePlatformBtn();
+
+        if (!Assertions.compareBoolean(true, mpProductsPage.productVersionErrorMessage("There were some errors in your product version details. Please correct them below"), "Product Version - Error message is display :", testLog, driver)) {
+            testLog.info("---------------------------------------- Error Message is not display as expected. ----------------------------------------------");
+            TestPassFlag = false;
+        }
+        Assert.assertTrue(TestPassFlag);
     }
 }

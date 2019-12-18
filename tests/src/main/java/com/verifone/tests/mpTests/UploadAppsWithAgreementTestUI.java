@@ -4,6 +4,7 @@ import com.verifone.pages.PageFactory;
 import com.verifone.pages.mpPages.CBADashboard;
 import com.verifone.pages.mpPages.CBAMarketplace;
 import com.verifone.pages.mpPages.CBAProducts;
+import com.verifone.pages.mpPages.MPProductsPage;
 import com.verifone.tests.BaseTest;
 import com.verifone.utils.Assertions;
 import org.openqa.selenium.WebDriver;
@@ -69,6 +70,7 @@ public class UploadAppsWithAgreementTestUI extends BaseTest {
         //Move to Product section, delete product if exists, create new product
         CBADashboard cbaDashboard = PageFactory.getCBADashboard();
         CBAProducts cbaProducts = PageFactory.getCBAProducts();
+        MPProductsPage mpProductsPage = PageFactory.getMPProductsPage();
 
         WebDriver driver = new CBADashboard().getDriver();
         ArrayList<String> availableWindows = new ArrayList<>(driver.getWindowHandles());
@@ -91,7 +93,7 @@ public class UploadAppsWithAgreementTestUI extends BaseTest {
         testLog.info("------------------------------------- Create new Product -------------------------------------");
         availableWindows = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
-        cbaDashboard.clickOnCreateProduct();
+        mpProductsPage.clickOnCreateProduct();
 
         driver = new CBADashboard().getDriver();
         availableWindows = new ArrayList<>(driver.getWindowHandles());
