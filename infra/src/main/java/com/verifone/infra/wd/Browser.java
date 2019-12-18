@@ -1,4 +1,4 @@
-package com.verifone.tests.selenide.utils.wd;
+package com.verifone.infra.wd;
 
 public abstract class Browser {
     

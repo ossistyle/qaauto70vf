@@ -21,18 +21,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.codeborne</groupId>
-            <artifactId>selenide</artifactId>
-            <version>5.5.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
-            <version>3.7.1</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.verifone.infra</groupId>
             <artifactId>infra</artifactId>
             <version>3</version>

@@ -5,11 +5,10 @@ import com.verifone.pages.PageFactory;
 import com.verifone.pages.vhqPages.VHQDeviceSearch;
 import com.verifone.tests.BaseTest;
 import com.verifone.utils.appUtils.MPUtils;
-import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
 import java.util.*;
 

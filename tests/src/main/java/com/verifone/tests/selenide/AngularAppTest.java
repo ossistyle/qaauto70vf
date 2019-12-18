@@ -4,10 +4,13 @@ import com.verifone.infra.User;
 import com.verifone.pages.selenide.pages.AppCatalogPage;
 import com.verifone.pages.selenide.pages.HomePage;
 import com.verifone.pages.selenide.pages.LoginPage;
+import com.verifone.tests.BaseTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class AngularAppTest extends TestBase {
+import static com.codeborne.selenide.Selenide.open;
+
+public class AngularAppTest extends BaseTest {
 
     private AppCatalogPage appCatalogPage;
     private HomePage homePage;
@@ -21,7 +24,9 @@ public class AngularAppTest extends TestBase {
     }
 
     @Test(priority=1, testName = "Angular8 Test")
-    public void test() throws InterruptedException {
+    public void testAngularUI() throws InterruptedException {
+        open("");
+
         User merchant = envConfig.getCredentials().getVFMPMer();
 
         loginPage.enterLogin(merchant.getUserName());

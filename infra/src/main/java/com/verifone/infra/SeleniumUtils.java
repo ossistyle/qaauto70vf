@@ -1,6 +1,6 @@
 package com.verifone.infra;
-//import static org.junit.Assert.assertTrue;
 
+import com.codeborne.selenide.WebDriverRunner;
 import com.relevantcodes.extentreports.ExtentTest;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.NoSuchSessionException;
@@ -29,30 +29,10 @@ import java.util.HashMap;
 
 @SuppressWarnings("unused")
 public class SeleniumUtils {
-    private WebDriver driver;
     public static String reportDirectory;
     public static String isLinuxMachine;
-    private String downloadDir =  java.nio.file.Paths.get(
+    private static String downloadDir = java.nio.file.Paths.get(
             System.getProperty("user.dir"), "src","test","resources","downloads").toString() + File.separator;
-    /**
-     * Reads General Parameters from application.properties
-     * Sets browser (Chrome, Firefox, IE etc...) and navigates to the class related page
-     */
-    public WebDriver getDriver(String browserType) throws Exception {
-        driver = setBrowser(browserType);
-        if (isLinuxMachine.equalsIgnoreCase("FALSE"))
-            driver.manage().window().maximize();
-        driver.manage().deleteAllCookies();
-        return driver;
-    }
-
-    public void closeRuntimeBrowserInstance() {
-        if (driver != null) {
-//            driver.close();
-            driver.quit();
-        }
-    }
-
 
     /**
      * This method set browser
@@ -67,10 +47,8 @@ public class SeleniumUtils {
      * @author Giora Tovim
      */
     @SuppressWarnings("deprecation")
-    public WebDriver setBrowser(String browserType) throws Exception
-
-    {
-
+    public static void setBrowser(String browserType) {
+        WebDriver driver;
         System.out.println("Starting web browser switch: " + browserType);
         switch (browserType) {
             case "FF":
@@ -115,7 +93,7 @@ public class SeleniumUtils {
             case "IE":
                 System.out.println("Starting IE web driver");
                 System.setProperty("webdriver.ie.driver", pathToDrivers("IEDriverServer.exe"));
-                WebDriver Driver = new InternetExplorerDriver();
+                driver = new InternetExplorerDriver();
                 //				DesiredCapabilities desiredCapabilities1 = new DesiredCapabilities();
                 //		    	desiredCapabilities1.setAcceptInsecureCerts(true);
                 //				driver = new InternetExplorerDriver(desiredCapabilities1);
@@ -124,10 +102,13 @@ public class SeleniumUtils {
 
             default:
                 System.out.println("Browser name is not exist!!!");
+                return;
 
         }
-        return driver;
-
+        if (isLinuxMachine.equalsIgnoreCase("FALSE"))
+            driver.manage().window().maximize();
+        driver.manage().deleteAllCookies();
+        WebDriverRunner.setWebDriver(driver);
     }
 
 
@@ -143,7 +124,7 @@ public class SeleniumUtils {
         //The below method will save the screen shot in d drive with folder "screenshot" + filenameDate + ".png "
         String screeshootPath = reportDirectory + dateFormat.format(date) + ".png";
         try {
-            File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            File scrFile = ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(scrFile, new File(screeshootPath));
         } catch (NoSuchSessionException e) {
             e.printStackTrace();

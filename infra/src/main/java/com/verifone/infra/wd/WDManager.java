@@ -1,9 +1,9 @@
-package com.verifone.tests.selenide.utils.wd;
+package com.verifone.infra.wd;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 
-import static com.verifone.tests.selenide.utils.wd.Browser.FIREFOX;
+import static com.verifone.infra.wd.Browser.*;
 
 public abstract class WDManager {
 
