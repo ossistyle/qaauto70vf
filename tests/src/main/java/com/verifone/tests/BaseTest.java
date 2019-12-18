@@ -5,6 +5,8 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.WebDriverRunner;
 import com.verifone.infra.EnvConfig;
 import com.verifone.infra.SeleniumUtils;
 import com.verifone.pages.BasePage;
@@ -12,20 +14,16 @@ import com.verifone.utils.apiClient.BaseApi;
 import com.verifone.utils.apiClient.BaseDDTApi;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
-import org.openqa.selenium.WebDriver;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 
 import static com.verifone.tests.steps.Steps.getVersions;
 
 
 public abstract class BaseTest {
-
 
     public static EnvConfig envConfig;
     private static ExtentReports extent;
@@ -40,8 +38,6 @@ public abstract class BaseTest {
             System.getProperty("user.dir"), "reports").toString() + File.separator;
     public String reportLocation = reportDirectory + "index.html";
     protected SeleniumUtils seleniumUtils;
-    public static HashMap<Long, WebDriver> webDrivers = new HashMap<>();
-
 
     @Parameters({"env", "portal", "getVersions"})
     @BeforeSuite
@@ -52,16 +48,18 @@ public abstract class BaseTest {
         extent.attachReporter(htmlReporter);
         setEnv(env, portal);
 
+        Configuration.baseUrl = envConfig.getWebUrl();
+        Configuration.timeout = 30000;
+
         if (getVersions.equalsIgnoreCase("true")) {
             ExtentTest parent = extent.createTest("Get Versions");
             parentTest.set(parent);
             starTestLog("Get Versions", "");
             SeleniumUtils.reportDirectory = reportDirectory;
             SeleniumUtils.isLinuxMachine = "FALSE";
-            seleniumUtils = new SeleniumUtils();
-            webDrivers.put(Thread.currentThread().getId(), seleniumUtils.getDriver("CHROME"));
+            SeleniumUtils.setBrowser("CHROME");
             parent.info("Versions: " + getVersions());
-            seleniumUtils.closeRuntimeBrowserInstance();
+            WebDriverRunner.closeWebDriver();
         }
 
     }
@@ -89,8 +87,7 @@ public abstract class BaseTest {
         SeleniumUtils.reportDirectory = reportDirectory;
         SeleniumUtils.isLinuxMachine = isLinuxMachine;
         if (method.getName().contains("UI")) {
-            seleniumUtils = new SeleniumUtils();
-            webDrivers.put(Thread.currentThread().getId(), seleniumUtils.getDriver(browserType));
+            SeleniumUtils.setBrowser(browserType);
         }
         if (method.getName().contains("DDT")) {
             return;
@@ -130,7 +127,7 @@ public abstract class BaseTest {
 
         if (method.getName().contains("UI") & !method.getName().contains("UI_Cont")) {
             child.info("Closing Web Page");
-            seleniumUtils.closeRuntimeBrowserInstance();
+            WebDriverRunner.closeWebDriver();
         }
         extent.flush();
     }

@@ -2,11 +2,11 @@ package com.verifone.pages.mpPages;
 
 import com.verifone.pages.BasePage;
 import com.verifone.tests.BaseTest;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
 import java.awt.*;
 import java.io.BufferedReader;
