@@ -99,12 +99,10 @@ public class VHQHomePage extends BasePage {
             click(btnSearch);
         }*/
 
-        //Search element in the page and return result
-        int popup = MPUtils.isElementExists(driver, deviceSearchPopup, 4000);
         //reset the search result and search new device
-        //List<WebElement> popup = driver.findElements(deviceSearchPopup);
-        System.out.println("reset btn size : " + popup);
-        if (popup != 0) {
+        List<WebElement> popup = driver.findElements(deviceSearchPopup);
+        System.out.println("reset btn size : " + popup.size());
+        if (popup.size() != 0) {
             testLog.info("----------------------------------- Reset Search ----------------------------------------");
             click(btnDeviceSearchReset);
             waitUntilPageLoad(btnSearch);

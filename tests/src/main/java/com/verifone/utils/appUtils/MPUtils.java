@@ -70,15 +70,4 @@ public class MPUtils {
             ex.printStackTrace();
         }
     }
-
-    /**
-     * This method describe to get the size of the element depending on visibility.
-     *
-     * @author : Prashant Lokhande
-     */
-    public static int isElementExists(WebDriver driver, By loc, int timeout) throws Exception {
-        Thread.sleep(timeout);
-        List<WebElement> val = driver.findElements(loc);
-        return val.size();
-    }
 }
