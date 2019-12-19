@@ -122,15 +122,15 @@ public class SeleniumUtils {
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
         //The below method will save the screen shot in d drive with folder "screenshot" + filenameDate + ".png "
-        String screeshootPath = reportDirectory + dateFormat.format(date) + ".png";
+        String screenshotPath = reportDirectory + dateFormat.format(date) + ".png";
         try {
             File scrFile = ((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(scrFile, new File(screeshootPath));
+            FileUtils.copyFile(scrFile, new File(screenshotPath));
         } catch (NoSuchSessionException e) {
             e.printStackTrace();
             return "";
         }
-        return screeshootPath;
+        return screenshotPath;
     }
 
 
@@ -138,15 +138,15 @@ public class SeleniumUtils {
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
         //The below method will save the screen shot in d drive with folder "screenshot" + filenameDate + ".png "
-        String screeshootPath = reportDirectory + dateFormat.format(date) + ".png";
+        String screenshotPath = reportDirectory + dateFormat.format(date) + ".png";
         try {
             File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(scrFile, new File(screeshootPath));
+            FileUtils.copyFile(scrFile, new File(screenshotPath));
         } catch (NoSuchSessionException e) {
             e.printStackTrace();
             return "";
         }
-        return screeshootPath;
+        return screenshotPath;
     }
 
 
