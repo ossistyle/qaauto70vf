@@ -1,6 +1,7 @@
 package com.verifone.pages.mpPages;
 
 import com.verifone.pages.BasePage;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 
 import static com.verifone.utils.Assertions.assertTextContains;

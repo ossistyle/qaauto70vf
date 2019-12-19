@@ -5,6 +5,7 @@ import com.verifone.pages.BasePage;
 import com.verifone.tests.BaseTest;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.record.formula.functions.T;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -16,7 +17,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
 import java.nio.file.Files;
 import java.util.zip.ZipEntry;

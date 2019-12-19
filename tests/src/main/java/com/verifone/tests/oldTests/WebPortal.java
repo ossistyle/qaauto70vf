@@ -9,7 +9,6 @@ import java.util.Properties;
 import com.verifone.pages.eoPages.HomePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
@@ -22,6 +21,7 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import com.verifone.infra.SeleniumUtils;
 
+import junit.framework.Assert;
 
 
 public class WebPortal{
