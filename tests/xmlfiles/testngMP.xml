@@ -201,10 +201,10 @@
         </classes>
     </test>
 
-    <!--<test name="UploadAppsWithMissingDataTestUI">
+    <test name="UploadAppsWithMissingDataTestUI">
         <classes>
             <class name="com.verifone.tests.mpTests.UploadAppsWithMissingDataTestUI"/>
         </classes>
-    </test>-->
+    </test>
 
 </suite>
