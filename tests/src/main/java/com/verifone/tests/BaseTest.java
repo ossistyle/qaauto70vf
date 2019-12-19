@@ -117,7 +117,7 @@ public abstract class BaseTest {
                 break;
             case ITestResult.FAILURE:
                 if (method.getName().contains("UI")) {
-                    String capScreenShootPath = seleniumUtils.getScreenshot();
+                    String capScreenShootPath = SeleniumUtils.getScreenshot(WebDriverRunner.getWebDriver());
                     child.info("Snapshot path: " + (capScreenShootPath));
                     child.info("Snapshot below: " + child.addScreenCaptureFromPath(capScreenShootPath));
                 }
