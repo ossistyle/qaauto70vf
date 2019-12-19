@@ -100,13 +100,4 @@ public class CBADashboard extends BasePage {
     public void clickOnProductTab() {
         click(products);
     }
-
-    /**
-     * Click on Create Product option
-     *
-     * @author : Prashant Lokhande
-     */
-    public void clickOnCreateProduct() {
-        click(createProductBtn);
-    }
 }

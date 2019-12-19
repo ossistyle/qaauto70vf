@@ -2,13 +2,16 @@ package com.verifone.utils.appUtils;
 
 import com.verifone.tests.BaseTest;
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import static com.verifone.pages.BasePage.testLog;
@@ -20,6 +23,16 @@ public class MPUtils {
      */
 
     private static String timeZone = BaseTest.envConfig.getDeviceTimeZone();
+    private static String userDir = BaseTest.envConfig.getAppsDirectoryPath();
+    public static String imagePath = userDir + File.separator + "apps" + File.separator + "image.jpg";
+
+    public static String privacyPolicy = "https://www.commbank.com.au/security-privacy/general-security/privacy.html";
+    public static String termsAndConditions = "https://www.samplestore.com/legal/terms_of_use_mobile";
+    public static String missingMandatoryErrorMsg = "Please check your form values and try submitting again.";
+    public static String splash = "A Test App for CBA";
+    public static String videoURL = "https://www.youtube.com/watch?v=jWFcGoGgnu4";
+    public static String documentLink = "https://help.appdirect.com/appmarket/Default.htm#GettingStarted/gsg-intro.htm%3FTocPath%3DGetting%2520Started%7C_____0/?location%20=%20appmarket";
+    public static String headerInfo = "Manage Platform";
 
     public static String getDownloadScheduleTime() {
         DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy hh:mm");
