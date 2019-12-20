@@ -39,7 +39,6 @@ public class AppCatalogPage extends BasePage {
      */
     public void clickSearch() {
         searchButton.should(exist).click();
-        WebDriver driver = getDriver();
     }
 
     /**
@@ -47,7 +46,6 @@ public class AppCatalogPage extends BasePage {
      */
     public void clickCardsView() {
         cardsViewTrigger.should(exist).click();
-        hoverAndClickOnElement(cardsViewTrigger);
     }
 
     /**
