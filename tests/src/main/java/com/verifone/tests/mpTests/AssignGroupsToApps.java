@@ -4,10 +4,14 @@ import com.verifone.pages.PageFactory;
 import com.verifone.pages.mpPages.*;
 import com.verifone.pages.vhqPages.VHQHomePage;
 import com.verifone.tests.BaseTest;
+import com.verifone.utils.Assertions;
+import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 
+import static com.verifone.pages.BasePage.testLog;
 import static com.verifone.tests.steps.mpPortal.Steps.*;
 
 /**
@@ -23,6 +27,84 @@ public class AssignGroupsToApps extends BaseTest {
     private static String deviceSerialNumber;
     private String groupName;
     private String groupDescription;
+
+    @Test(priority = 0, testName = "LogIn & Delete Group If Exists", description = "LogIn in to CBA Marketplace and delete group if it exists.")
+    public void CBADeleteGroupIfExistsTestUI() throws Exception {
+        //Login in to CBA Marketplace.
+        loginCBA(createAssignUser());
+
+        //get the list of devices and apps
+        listOfDevices = BaseTest.envConfig.getListOfDevices();
+        listOfApp = BaseTest.envConfig.getListOfAssignAppsToGroup();
+
+        //get the group name and description
+        groupName = BaseTest.envConfig.getGroupInfo("MPFirstGroupName");
+        groupDescription = BaseTest.envConfig.getGroupInfo("MPFirstGroupDescription");
+
+        WebDriver driver = new CBAHomePage().getDriver();
+        ArrayList<String> availableWindows = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
+
+        testLog.info("-------------------------------- Navigate to Assign App ------------------------------");
+
+        //Move to assign app section
+        CBAAssignPage assignApp = PageFactory.getAssignAppPage();
+        assignApp.moveToAssignApps();
+
+        availableWindows = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
+
+        testLog.info("-------------------------------- Navigate to Groups ------------------------------");
+        //Move to Groups section
+        CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
+        assignGroup.clickOnGroupsTab();
+
+        availableWindows = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
+
+        //check visibility of group name.
+        //click on group if it's visible
+        testLog.info("-------------------------------- Search Group " + groupName + " ------------------------------");
+        if (assignApp.checkVisibilityOfApp(groupName) == 1) {
+            testLog.info("--------------- Is group name available : true  ------------");
+            assignApp.clickOnAssignApp();
+        }
+
+        //check visibility of app
+        //click on app name only if it's checked
+        testLog.info("-------------------------------- Search App " + listOfApp.get(0) + " ------------------------------");
+        if (assignApp.checkVisibilityOfRightPanel(listOfApp.get(0)) == 1) {
+            if (assignApp.checkAssignmentOfRightPanel() == 1) {
+                testLog.info("------------------ Is app selected  : true -------------------");
+                assignApp.clickOnAssignUser();
+            }
+        }
+
+        //check visibility of app
+        //click on app name only if it's checked
+        testLog.info("-------------------------------- Search App " + listOfApp.get(1) + " ------------------------------");
+        if (assignApp.checkVisibilityOfRightPanel(listOfApp.get(1)) == 1) {
+            if (assignApp.checkAssignmentOfRightPanel() == 1) {
+                testLog.info("------------------ Is app selected  : true -------------------");
+                assignApp.clickOnAssignUser();
+            }
+        }
+
+        //check if next button is disabled
+        //click on this button only if it's disabled
+        testLog.info("-------------------------------- Check Next button state ------------------------------");
+        if (assignApp.checkStateOfNextBtn() != 1) {
+            testLog.info("-------------------------------- Is next button enabled : true ------------------------------");
+            assignApp.userAssignment();
+        }
+
+        availableWindows = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
+
+        //delete group
+        assignGroup.deleteGroupTest(groupName);
+    }
+
 
     @Test(priority = 1, testName = "LogIn & Create Group", description = "LogIn in to CBA Marketplace and create group with more than one user.")
     public void CBACreateDeviceGroupTestUI() throws Exception {

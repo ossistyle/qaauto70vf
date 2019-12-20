@@ -716,4 +716,18 @@ public abstract class BasePage {
         }
         return 0;
     }
+
+    /**
+     * @param errorMsg compare error message and return result in boolean
+     * @author : Prashant Lokhande
+     */
+    protected boolean compareErrorMessageText(String errorMsg, By loc) {
+        waitUntilPageLoad(loc);
+        String feedBackError = getText(loc);
+        testLog.info("---------------------- Actual Error Msg : " + feedBackError + " ------------------------------");
+        testLog.info("---------------------- Expected Error Msg : " + errorMsg + " ------------------------------");
+        return assertRowContains(errorMsg, feedBackError);
+    }
+
+
 }

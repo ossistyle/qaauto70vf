@@ -7,7 +7,6 @@ import com.verifone.tests.BaseTest;
 import com.verifone.utils.appUtils.MPUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -171,7 +170,7 @@ public class CBAAssignGroupPage extends BasePage {
             testLog.info(String.format("---- (2). " + appName + " doesn't exists in the MyApp list"));
             click(browseMarketPlace);
 
-            CBAMarketplace market = PageFactory.getCBAMarketplace();
+            CBAMarketplacePage market = PageFactory.getCBAMarketplace();
             market.searchForApp(appName);
             //market.buyFreeApp();
             market.buyOneTimeApp();
@@ -222,12 +221,20 @@ public class CBAAssignGroupPage extends BasePage {
         click(btnSearch);
         waitUntilPageLoad(btnSearch);
 
-        hoverAndClickOnElement(btnSettings);
 
-        scrollToElement(deleteGroup);
-        hoverAndClickOnElement(deleteGroup);
-        waitUntilPageLoad(txtModal);
-        click(btnConfirm);
+        List<WebElement> getEle = driver.findElements(btnSettings);
+        System.out.println("isGroupVisible : " + getEle.size());
+
+        //delete group only if it present
+        if (getEle.size() != 0) {
+
+            hoverAndClickOnElement(btnSettings);
+
+            scrollToElement(deleteGroup);
+            hoverAndClickOnElement(deleteGroup);
+            waitUntilPageLoad(txtModal);
+            click(btnConfirm);
+        }
     }
 
     public void verifyApplicationAssignment(ArrayList<String> listOfApp, String listOfGroup) throws Exception {
@@ -260,18 +267,49 @@ public class CBAAssignGroupPage extends BasePage {
 
                 waitUntilPageLoad(linkAssignApp);
                 click(linkAssignApp);
-                moveToGroups();
+                //moveToGroups();
+
+                waitForLoader(tabGroups);
+                clickOnGroupsTab();
+
                 CBAAssignPage assignApp = PageFactory.getAssignAppPage();
 
-                testLog.info("------------------------------------------------- UnAssign App -------------------------------------------------");
-
-                //Un assign list of apps from the group
-                for (String app : listOfApp) {
-                    assignApp.searchAppToAssign(app);
-                    assignApp.searchUserToAssign(listOfGroup);
+                //check visibility of group name.
+                //click on group if it's visible
+                testLog.info("-------------------------------- Search Group " + listOfGroup + " ------------------------------");
+                if (assignApp.checkVisibilityOfApp(listOfGroup) == 1) {
+                    testLog.info("--------------- Is group name available : true  ------------");
+                    assignApp.clickOnAssignApp();
                 }
 
-                assignApp.userAssignment();
+                //check visibility of app
+                //click on app name only if it's checked
+                testLog.info("-------------------------------- UnAssign apps from the group  ------------------------------");
+                for (String app : listOfApp) {
+                    if (assignApp.checkVisibilityOfRightPanel(app) == 1) {
+                        if (assignApp.checkAssignmentOfRightPanel() == 1) {
+                            testLog.info("------------------ Is app selected  : true -------------------");
+                            assignApp.clickOnAssignUser();
+                        }
+                    }
+                }
+
+                //check if next button is disabled
+                //click on this button only if it's enabled
+                testLog.info("-------------------------------- Check Next button state ------------------------------");
+                if (assignApp.checkStateOfNextBtn() != 1) {
+                    testLog.info("-------------------------------- Is next button enabled : true ------------------------------");
+                    assignApp.userAssignment();
+                }
+
+                //Un assign list of apps from the group
+               /* for (String app : listOfApp) {
+                    assignApp.searchAppToAssign(app);
+                    assignApp.searchUserToAssign(listOfGroup);
+                    Thread.sleep(1000);
+                }*/
+
+                // assignApp.userAssignment();
                 //assignApp.isAssignUpdated();
                 testLog.info("---- (4). " + listOfGroup + " is unassigned from the app.-----");
                 deleteGroupTest(listOfGroup);
@@ -392,4 +430,15 @@ public class CBAAssignGroupPage extends BasePage {
         }
         click(users);
     }
+
+    /**
+     * Method : Click on Groups tabs under Assign App
+     *
+     * @author Prashant Lokhande
+     */
+    public void clickOnGroupsTab() {
+        click(tabGroups);
+    }
+
+
 }

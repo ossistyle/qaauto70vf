@@ -47,6 +47,8 @@ public class CBAAssignPage extends BasePage {
     private By selectApp = By.xpath("//*[@class='adb-summary--title']");
     private By linkApplication = By.xpath("//ul[@class='adb-secondary_nav--items']//li[3]//a");
     private By browseMarketPlace = By.xpath("//a[@class='adb-button adb-button__primary']");
+    private By selectCheckBoxRightPanel = By.xpath("//*[@class='js-right-panel']//*[@class='adb-js-radio adb-is-selected']");
+    private By disabledNextBtn = By.xpath("//button[@class='adb-button adb-button__primary adb-is-disabled']");
 
     //private final DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy hh:mm");
     public static String jobCreatedOnSubscription;
@@ -88,6 +90,14 @@ public class CBAAssignPage extends BasePage {
         scrollToElement(appToUsers);
     }
 
+    /**
+     * Method : This method search user or group in left panel of the Assign App
+     *
+     * @param getAppName
+     * @return
+     * @throws Exception
+     * @author : Prashant Lokhande
+     */
     public int checkVisibilityOfApp(String getAppName) throws Exception {
         scrollToElement(searchAppLoc);
         click(searchAppLoc);
@@ -96,9 +106,15 @@ public class CBAAssignPage extends BasePage {
 
         Thread.sleep(2000);
         List<WebElement> getEle = driver.findElements(findAppLoc);
+        System.out.println(getAppName + " : " + getEle.size());
         return getEle.size();
     }
 
+    /**
+     * Method : Click on searched groups or users from the left panel
+     *
+     * @author : Prashant Lokhande
+     */
     public void clickOnAssignApp() {
         click(findAppLoc);
     }
@@ -111,12 +127,10 @@ public class CBAAssignPage extends BasePage {
 
         Thread.sleep(2000);
         List<WebElement> getEle = driver.findElements(findUserLoc);
+        System.out.println(getAppName + " : " + getEle.size());
         return getEle.size();
     }
 
-    public void clickOnAssignUser() {
-        click(findUserLoc);
-    }
 
     /**
      * This method described all actions and elements can be executed to search the app.
@@ -207,12 +221,61 @@ public class CBAAssignPage extends BasePage {
             testLog.info(String.format(appName + " doesn't exists in the MyApp list"));
             click(browseMarketPlace);
 
-            CBAMarketplace market = PageFactory.getCBAMarketplace();
+            CBAMarketplacePage market = PageFactory.getCBAMarketplace();
             market.searchForApp(appName);
             market.buyOneTimeApp();
             //market.buyFreeApp();
         }
 
+    }
+
+    /**
+     * Method : UnAssign app if it is already assigned
+     *
+     * @author : Prashant Lokhande
+     */
+    public int checkAssignmentOfRightPanel() throws Exception {
+        List<WebElement> isCheckboxSelected = driver.findElements(selectCheckBoxRightPanel);
+        System.out.println("isCheckboxSelected :" + isCheckboxSelected.size());
+        return isCheckboxSelected.size();
+    }
+
+    /**
+     * Method : Check the Next button state (disabled or enabled)
+     *
+     * @author : Prashant Lokhande
+     */
+    public int checkStateOfNextBtn() throws Exception {
+        List<WebElement> getNextBtnEle = driver.findElements(disabledNextBtn);
+        System.out.println(" Size of Next Btn :" + getNextBtnEle.size());
+        return getNextBtnEle.size();
+    }
+
+    /**
+     * Method : Check visibility of App in right panel of Assign App
+     *
+     * @author : Prashant Lokhande
+     */
+
+    public int checkVisibilityOfRightPanel(String getAppName) throws Exception {
+        scrollToElement(searchUserLoc);
+        click(searchUserLoc);
+        sendKeys(searchUserLoc, getAppName); /* get application name from the properties */
+        click(btnUserSearch);
+
+        Thread.sleep(2000);
+        List<WebElement> getEle = driver.findElements(findUserLoc);
+        System.out.println(getAppName + " : " + getEle.size());
+        return getEle.size();
+    }
+
+    /**
+     * Method : Click on searched element in the right side of the panel
+     *
+     * @author : Prashant Lokhande
+     */
+    public void clickOnAssignUser() {
+        click(findUserLoc);
     }
 
 }
