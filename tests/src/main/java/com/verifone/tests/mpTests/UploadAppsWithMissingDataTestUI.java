@@ -1,9 +1,8 @@
 package com.verifone.tests.mpTests;
 
-import com.verifone.pages.BasePage;
 import com.verifone.pages.PageFactory;
-import com.verifone.pages.mpPages.CBADashboard;
-import com.verifone.pages.mpPages.CBAProducts;
+import com.verifone.pages.mpPages.CBADashboardPage;
+import com.verifone.pages.mpPages.CBAProductsPage;
 import com.verifone.pages.mpPages.MPProductsPage;
 import com.verifone.tests.BaseTest;
 import com.verifone.utils.Assertions;
@@ -14,7 +13,6 @@ import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 
-import static com.verifone.pages.BasePage.convertFileToBase64String;
 import static com.verifone.pages.BasePage.testLog;
 import static com.verifone.tests.steps.mpPortal.Steps.loginMPPortalAsEOAdmin;
 
@@ -26,11 +24,11 @@ public class UploadAppsWithMissingDataTestUI extends BaseTest {
     public void VerifyAppInProductionCatalogTestUI() throws Exception {
         loginMPPortalAsEOAdmin();
 
-        WebDriver driver = new CBADashboard().getDriver();
+        WebDriver driver = new CBADashboardPage().getDriver();
         ArrayList<String> availableWindows = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
 
-        CBADashboard cbaDashboard = PageFactory.getCBADashboard();
+        CBADashboardPage cbaDashboard = PageFactory.getCBADashboard();
 
         testLog.info("------------------------------- Navigate to MarketPlace -----------------------------------");
         cbaDashboard.clickOnManageMenu();
@@ -44,7 +42,7 @@ public class UploadAppsWithMissingDataTestUI extends BaseTest {
 
         testLog.info("------------------------------- Navigate to Production Catalog -----------------------------------");
 
-        CBAProducts cbaProducts = PageFactory.getCBAProducts();
+        CBAProductsPage cbaProducts = PageFactory.getCBAProducts();
 
         //Remove product from the production catalog only if it is present
         if (cbaProducts.isProductAvailable()) {
@@ -69,12 +67,12 @@ public class UploadAppsWithMissingDataTestUI extends BaseTest {
     public void VerifyAppWithMissingMandatoryDataTestUI() throws Exception {
         loginMPPortalAsEOAdmin();
 
-        WebDriver driver = new CBADashboard().getDriver();
+        WebDriver driver = new CBADashboardPage().getDriver();
         ArrayList<String> availableWindows = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
 
-        CBADashboard cbaDashboard = PageFactory.getCBADashboard();
-        CBAProducts cbaProducts = PageFactory.getCBAProducts();
+        CBADashboardPage cbaDashboard = PageFactory.getCBADashboard();
+        CBAProductsPage cbaProducts = PageFactory.getCBAProducts();
         MPProductsPage mpProductsPage = PageFactory.getMPProductsPage();
 
         testLog.info("------------------------------- Navigate to MarketPlace -----------------------------------");

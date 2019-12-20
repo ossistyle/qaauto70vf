@@ -38,7 +38,7 @@ public class CarbonFamilyVerificationUI extends BaseTest {
         MPHomePage.clickMarketplaceSubMenu();
         ManageMarketplacePage manageMarketplacePage = (ManageMarketplacePage) PageFactory.getPage("ManageMarketplacePage");
         manageMarketplacePage.clickTabProduct();
-        ProductsTab productsTab = (ProductsTab) PageFactory.getPage("ProductsTab");
+        ProductsTabPage productsTab = (ProductsTabPage) PageFactory.getPage("ProductsTab");
         productsTab.clickMenuStagingCatalog();
 
 

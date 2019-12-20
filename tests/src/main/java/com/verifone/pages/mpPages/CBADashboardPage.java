@@ -8,12 +8,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 
-public class CBADashboard extends BasePage {
+public class CBADashboardPage extends BasePage {
 
     private final static String url = "";
     private final static String title = "";
 
-    public CBADashboard() {
+    public CBADashboardPage() {
         super(url, title);
     }
 
@@ -32,7 +32,7 @@ public class CBADashboard extends BasePage {
     public void manageMarketpace() throws Exception {
         testLog.info("------------------------------------- Navigate to MarketPlace -------------------------------------");
 
-        WebDriver driver = new CBADashboard().getDriver();
+        WebDriver driver = new CBADashboardPage().getDriver();
         ArrayList<String> availableWindows = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
 
@@ -56,7 +56,7 @@ public class CBADashboard extends BasePage {
         availableWindows = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
         //delete product if it is already exists.
-        CBAProducts isProductExist = PageFactory.getCBAProducts();
+        CBAProductsPage isProductExist = PageFactory.getCBAProducts();
         isProductExist.unPublishProduct();
         isProductExist.deleteSatgingProduct();
 

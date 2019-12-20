@@ -2,8 +2,8 @@ package com.verifone.tests.mpTests;
 
 import com.verifone.pages.PageFactory;
 import com.verifone.pages.mpPages.AndroidProjectOperationPage;
-import com.verifone.pages.mpPages.CBADashboard;
-import com.verifone.pages.mpPages.CBAProducts;
+import com.verifone.pages.mpPages.CBADashboardPage;
+import com.verifone.pages.mpPages.CBAProductsPage;
 import com.verifone.tests.BaseTest;
 import org.testng.annotations.Test;
 
@@ -42,10 +42,10 @@ public class UploadV1SignedPackageUI extends BaseTest {
 
         productVersionTitle = AndroidProjectOperationPage.androidProjectAppId;
 
-        CBADashboard cbaDashboard = PageFactory.getCBADashboard();
+        CBADashboardPage cbaDashboard = PageFactory.getCBADashboard();
         cbaDashboard.manageMarketpace();
 
-        CBAProducts cbaProducts = PageFactory.getCBAProducts();
+        CBAProductsPage cbaProducts = PageFactory.getCBAProducts();
         cbaProducts.createStagingProduct();
         cbaProducts.addPlatform();
         cbaProducts.productVersion("appV2Signed : false", productVersionTitle);

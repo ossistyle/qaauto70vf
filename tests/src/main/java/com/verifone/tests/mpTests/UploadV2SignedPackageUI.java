@@ -2,7 +2,6 @@ package com.verifone.tests.mpTests;
 
 import com.verifone.pages.*;
 
-import com.verifone.pages.cgPages.*;
 import com.verifone.pages.mpPages.*;
 import com.verifone.tests.BaseTest;
 import org.testng.annotations.Test;
@@ -64,11 +63,11 @@ public class UploadV2SignedPackageUI extends BaseTest {
 
         productVersionTitle = BaseTest.envConfig.getApplicationID();
 
-        CBADashboard cbaDashboard = PageFactory.getCBADashboard();
+        CBADashboardPage cbaDashboard = PageFactory.getCBADashboard();
         cbaDashboard.manageMarketPlaceProducts();
 
         //Edit product details from the staging catalog and update platform
-        CBAProducts cbaProducts = PageFactory.getCBAProducts();
+        CBAProductsPage cbaProducts = PageFactory.getCBAProducts();
         cbaProducts.editStagingCatalogProduct();
         cbaProducts.productVersion("appV2Signed : true", productVersionTitle);
         cbaProducts.deleteProductVersion();
@@ -82,10 +81,10 @@ public class UploadV2SignedPackageUI extends BaseTest {
     public void CBADeletePackageTestUI() throws Exception {
         loginMPPortalAsEOAdmin();
 
-        CBADashboard cbaDashboard = PageFactory.getCBADashboard();
+        CBADashboardPage cbaDashboard = PageFactory.getCBADashboard();
         cbaDashboard.manageMarketPlaceProducts();
 
-        CBAProducts cbaProducts = PageFactory.getCBAProducts();
+        CBAProductsPage cbaProducts = PageFactory.getCBAProducts();
         cbaProducts.clickStagingProduct();
         cbaProducts.unPublishProduct();
         cbaProducts.deleteSatgingProduct();

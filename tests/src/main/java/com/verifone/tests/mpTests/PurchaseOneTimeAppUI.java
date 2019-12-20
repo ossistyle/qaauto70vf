@@ -1,10 +1,10 @@
 package com.verifone.tests.mpTests;
 
 import com.verifone.pages.PageFactory;
-import com.verifone.pages.mpPages.CBAAccount;
+import com.verifone.pages.mpPages.CBAAccountPage;
 import com.verifone.pages.mpPages.CBAAssignPage;
-import com.verifone.pages.mpPages.CBAMarketplace;
-import com.verifone.pages.mpPages.CBAMyApps;
+import com.verifone.pages.mpPages.CBAMarketplacePage;
+import com.verifone.pages.mpPages.CBAMyAppsPage;
 import com.verifone.tests.BaseTest;
 import org.testng.annotations.Test;
 
@@ -28,7 +28,7 @@ public class PurchaseOneTimeAppUI extends BaseTest {
         oneTimeAppName = BaseTest.envConfig.getOneTimeAppName();
 
         /*Move to the Marketplace and Purchase (subscribe) an app - edition One Time Pay app*/
-        CBAMarketplace market = PageFactory.getCBAMarketplace();
+        CBAMarketplacePage market = PageFactory.getCBAMarketplace();
         market.searchForApp(oneTimeAppName);
         market.veryfyListingApps();
         market.isAppPurchased(oneTimeAppName);
@@ -39,7 +39,7 @@ public class PurchaseOneTimeAppUI extends BaseTest {
         loginCBA(createAssignUser());
 
          /*Search & Purchase app from the marketplace*/
-        CBAMarketplace market = PageFactory.getCBAMarketplace();
+        CBAMarketplacePage market = PageFactory.getCBAMarketplace();
         market.searchForApp(oneTimeAppName);
         market.buyOneTimeApp();
 
@@ -55,7 +55,7 @@ public class PurchaseOneTimeAppUI extends BaseTest {
         loginCBA(createAssignUser());
 
         /* Verify the purchased app is present in the My App */
-        CBAMyApps myApps = PageFactory.getCBAMyApps();
+        CBAMyAppsPage myApps = PageFactory.getCBAMyApps();
         myApps.verifyPurchasedApp(oneTimeAppName);
     }
 
@@ -65,7 +65,7 @@ public class PurchaseOneTimeAppUI extends BaseTest {
         loginCBA(createAssignUser());
 
         /*Remove purchased app */
-        CBAAccount account = PageFactory.getCBAAccount();
+        CBAAccountPage account = PageFactory.getCBAAccount();
         account.cancelSubscribsion(oneTimeAppName);
     }
 

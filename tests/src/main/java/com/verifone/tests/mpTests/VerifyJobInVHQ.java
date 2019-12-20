@@ -1,19 +1,13 @@
 package com.verifone.tests.mpTests;
 
 import com.verifone.pages.PageFactory;
-import com.verifone.pages.mpPages.CBAAccount;
+import com.verifone.pages.mpPages.CBAAccountPage;
 import com.verifone.pages.mpPages.CBAAssignPage;
 import com.verifone.pages.vhqPages.VHQDeviceSearch;
-import com.verifone.pages.vhqPages.VHQDownloadLibrary;
 import com.verifone.pages.vhqPages.VHQHomePage;
 import com.verifone.tests.BaseTest;
 import org.testng.annotations.Test;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import static com.verifone.tests.steps.mpPortal.Steps.createVHQMumbaiUser;
 import static com.verifone.tests.steps.mpPortal.Steps.createVHQMumbaiUser;
 import static com.verifone.tests.steps.mpPortal.Steps.loginVHQ;
 
@@ -57,6 +51,6 @@ public class VerifyJobInVHQ extends BaseTest {
 
         VHQDeviceSearch deviceSearch = PageFactory.getVHQDeviceSearch();
         deviceSearch.deviceProfile();
-        deviceSearch.validateJobInstall(getAppName, "UNINSTALL", CBAAccount.jobCreatedOnUnsubscription,"positive");
+        deviceSearch.validateJobInstall(getAppName, "UNINSTALL", CBAAccountPage.jobCreatedOnUnsubscription,"positive");
     }
 }

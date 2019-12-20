@@ -1,9 +1,9 @@
 package com.verifone.tests.mpTests;
 
 import com.verifone.pages.PageFactory;
-import com.verifone.pages.mpPages.CBADashboard;
-import com.verifone.pages.mpPages.CBAMarketplace;
-import com.verifone.pages.mpPages.CBAProducts;
+import com.verifone.pages.mpPages.CBADashboardPage;
+import com.verifone.pages.mpPages.CBAMarketplacePage;
+import com.verifone.pages.mpPages.CBAProductsPage;
 import com.verifone.pages.mpPages.MPProductsPage;
 import com.verifone.tests.BaseTest;
 import com.verifone.utils.Assertions;
@@ -24,11 +24,11 @@ public class UploadAppsWithAgreementTestUI extends BaseTest {
     public void VerifyAppInProductionCatalogTestUI() throws Exception {
         loginMPPortalAsEOAdmin();
 
-        WebDriver driver = new CBADashboard().getDriver();
+        WebDriver driver = new CBADashboardPage().getDriver();
         ArrayList<String> availableWindows = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
 
-        CBADashboard cbaDashboard = PageFactory.getCBADashboard();
+        CBADashboardPage cbaDashboard = PageFactory.getCBADashboard();
 
         testLog.info("------------------------------- Navigate to MarketPlace -----------------------------------");
         cbaDashboard.clickOnManageMenu();
@@ -42,7 +42,7 @@ public class UploadAppsWithAgreementTestUI extends BaseTest {
 
         testLog.info("------------------------------- Navigate to Production Catalog -----------------------------------");
 
-        CBAProducts cbaProducts = PageFactory.getCBAProducts();
+        CBAProductsPage cbaProducts = PageFactory.getCBAProducts();
 
         //Remove product from the production catalog only if it is present
         if (cbaProducts.isProductAvailable()) {
@@ -68,11 +68,11 @@ public class UploadAppsWithAgreementTestUI extends BaseTest {
         loginMPPortalAsEOAdmin();
 
         //Move to Product section, delete product if exists, create new product
-        CBADashboard cbaDashboard = PageFactory.getCBADashboard();
-        CBAProducts cbaProducts = PageFactory.getCBAProducts();
+        CBADashboardPage cbaDashboard = PageFactory.getCBADashboard();
+        CBAProductsPage cbaProducts = PageFactory.getCBAProducts();
         MPProductsPage mpProductsPage = PageFactory.getMPProductsPage();
 
-        WebDriver driver = new CBADashboard().getDriver();
+        WebDriver driver = new CBADashboardPage().getDriver();
         ArrayList<String> availableWindows = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
 
@@ -95,7 +95,7 @@ public class UploadAppsWithAgreementTestUI extends BaseTest {
         driver.switchTo().window(availableWindows.get(0));
         mpProductsPage.clickOnCreateProduct();
 
-        driver = new CBADashboard().getDriver();
+        driver = new CBADashboardPage().getDriver();
         availableWindows = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
 
@@ -108,7 +108,7 @@ public class UploadAppsWithAgreementTestUI extends BaseTest {
         availableWindows = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
 
-        CBAMarketplace marketplace = PageFactory.getCBAMarketplace();
+        CBAMarketplacePage marketplace = PageFactory.getCBAMarketplace();
         marketplace.clickOnBuyProductBtn();
         marketplace.clickOnContinueBtn();
 
@@ -125,10 +125,10 @@ public class UploadAppsWithAgreementTestUI extends BaseTest {
         loginMPPortalAsEOAdmin();
 
         //Move to Product section, delete product if exists, create new product
-        CBADashboard cbaDashboard = PageFactory.getCBADashboard();
-        CBAProducts cbaProducts = PageFactory.getCBAProducts();
+        CBADashboardPage cbaDashboard = PageFactory.getCBADashboard();
+        CBAProductsPage cbaProducts = PageFactory.getCBAProducts();
 
-        WebDriver driver = new CBADashboard().getDriver();
+        WebDriver driver = new CBADashboardPage().getDriver();
         ArrayList<String> availableWindows = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
 
@@ -166,7 +166,7 @@ public class UploadAppsWithAgreementTestUI extends BaseTest {
         driver.switchTo().window(availableWindows.get(0));
         cbaProducts.removeLegalDetails();
 
-        CBAMarketplace marketplace = PageFactory.getCBAMarketplace();
+        CBAMarketplacePage marketplace = PageFactory.getCBAMarketplace();
         marketplace.clickOnBuyProductBtn();
         marketplace.clickOnContinueBtn();
 

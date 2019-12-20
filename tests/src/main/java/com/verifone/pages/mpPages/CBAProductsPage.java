@@ -9,17 +9,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.awt.*;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static com.verifone.utils.Assertions.assertTextContains;
 
-public class CBAProducts extends BasePage {
+public class CBAProductsPage extends BasePage {
     private final static String url = "";
     private final static String title = "";
     private static String getApplicationName = BaseTest.envConfig.getApplicationName();
@@ -28,7 +24,7 @@ public class CBAProducts extends BasePage {
     private static String getApplicationVersionCode = BaseTest.envConfig.getApplicationVersionCode();
 
 
-    public CBAProducts() {
+    public CBAProductsPage() {
         super(url, title);
     }
 
@@ -381,7 +377,7 @@ public class CBAProducts extends BasePage {
 
         testLog.info("------------------------------------- Platforms : Add Product Version -------------------------------------");
 
-        WebDriver driver = new CBAProducts().getDriver();
+        WebDriver driver = new CBAProductsPage().getDriver();
         ArrayList<String> availableWindows = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
 

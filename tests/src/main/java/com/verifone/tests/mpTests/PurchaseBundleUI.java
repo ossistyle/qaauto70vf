@@ -28,7 +28,7 @@ public class PurchaseBundleUI extends BaseTest {
         ManageMarketplacePage ManageMarketplacePage = (ManageMarketplacePage) PageFactory.getPage("ManageMarketplacePage");
         ManageMarketplacePage.clickTabProduct();
 
-        ProductsTab productsTab = (ProductsTab) PageFactory.getPage("ProductsTab");
+        ProductsTabPage productsTab = (ProductsTabPage) PageFactory.getPage("ProductsTab");
         ProductsTabProductCatalogPage prodCatalog = (ProductsTabProductCatalogPage) PageFactory.getPage("ProductsTabProductCatalogPage");
         ProductsTabBundlePage productsTabBundlePage = (ProductsTabBundlePage) PageFactory.getPage("ProductsTabBundlePage");
         productsTab.clickMenuProductionCatalog();
@@ -50,7 +50,7 @@ public class PurchaseBundleUI extends BaseTest {
         appName =  BaseTest.envConfig.getListOfAppforBundle();
         loginCBA(createMerchantUser());
 
-        CBAAccount account = PageFactory.getCBAAccount();
+        CBAAccountPage account = PageFactory.getCBAAccount();
         try{
         account.cancelSubscribsion(appName.get(0));}
         catch(Exception e){
@@ -88,7 +88,7 @@ public class PurchaseBundleUI extends BaseTest {
         ManageMarketplacePage ManageMarketplacePage = (ManageMarketplacePage) PageFactory.getPage("ManageMarketplacePage");
         ManageMarketplacePage.clickTabProduct();
 
-        ProductsTab productsTab = (ProductsTab) PageFactory.getPage("ProductsTab");
+        ProductsTabPage productsTab = (ProductsTabPage) PageFactory.getPage("ProductsTab");
         ProductsTabBundlePage productsTabBundlePage = (ProductsTabBundlePage) PageFactory.getPage("ProductsTabBundlePage");
         productsTab.clickMenuBundle();
 
@@ -125,7 +125,7 @@ public class PurchaseBundleUI extends BaseTest {
         ManageMarketplacePage ManageMarketplacePage = (ManageMarketplacePage) PageFactory.getPage("ManageMarketplacePage");
         ManageMarketplacePage.clickTabProduct();
 
-        ProductsTab productsTab = (ProductsTab) PageFactory.getPage("ProductsTab");
+        ProductsTabPage productsTab = (ProductsTabPage) PageFactory.getPage("ProductsTab");
         ProductsTabBundlePage productsTabBundlePage = (ProductsTabBundlePage) PageFactory.getPage("ProductsTabBundlePage");
         productsTab.clickMenuBundle();
 
@@ -154,7 +154,7 @@ public class PurchaseBundleUI extends BaseTest {
 
         bundleName = BaseTest.envConfig.getListOfBundle();
         loginCBA(createMerchantUser());
-        CBAMarketplace market = PageFactory.getCBAMarketplace();
+        CBAMarketplacePage market = PageFactory.getCBAMarketplace();
         market.buyBundle(bundleName.get(0));
         market.clickMarketplaceBtn();
         market.buyBundle(bundleName.get(1));
@@ -165,7 +165,7 @@ public class PurchaseBundleUI extends BaseTest {
      public void CancelSubscriptionToAppUI() throws Exception {
         appName = BaseTest.envConfig.getListOfAppforBundle();
         loginCBA(createMerchantUser());
-        CBAAccount account = PageFactory.getCBAAccount();
+        CBAAccountPage account = PageFactory.getCBAAccount();
         account.cancelSubscribsion(appName.get(0));
         account.cancelSubscribsion(appName.get(1));
         account.cancelBundleSubsucribsion(appName.get(2));

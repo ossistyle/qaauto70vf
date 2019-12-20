@@ -14,7 +14,7 @@ import java.util.List;
  * @authors Yana Fridman
  */
 //--------------------------------------------------------------------------
-public class ProductsTab extends BasePage {
+public class ProductsTabPage extends BasePage {
 
     private final static String url = "";
     private final static String title = "Segment Groups";
@@ -36,7 +36,7 @@ public class ProductsTab extends BasePage {
     private By btnPagination = By.xpath("//nav[@class='Pagination__PaginationWrapper-sc-1qb8wnt-2 hfmVAg']/a");
 
 
-    public ProductsTab() {
+    public ProductsTabPage() {
         super(url, title);
     }
 

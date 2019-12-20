@@ -1,9 +1,9 @@
 package com.verifone.tests.mpTests;
 import com.verifone.pages.PageFactory;
-import com.verifone.pages.mpPages.CBAAccount;
+import com.verifone.pages.mpPages.CBAAccountPage;
 import com.verifone.pages.mpPages.CBAAssignPage;
-import com.verifone.pages.mpPages.CBAMarketplace;
-import com.verifone.pages.mpPages.CBAMyApps;
+import com.verifone.pages.mpPages.CBAMarketplacePage;
+import com.verifone.pages.mpPages.CBAMyAppsPage;
 import com.verifone.tests.BaseTest;
 import org.testng.annotations.Test;
 
@@ -27,7 +27,7 @@ public class PurchaseYearlyRecurringFreeTrialAppUI extends BaseTest {
         getYearlyRecurringFreeTrialApp = BaseTest.envConfig.getYearlyRecurringFreeTrialApp();
 
         /*Move to the Marketplace and Purchase (subscribe) an app - edition Yearly Recurring Pay Free Trial app*/
-        CBAMarketplace market = PageFactory.getCBAMarketplace();
+        CBAMarketplacePage market = PageFactory.getCBAMarketplace();
         market.searchForApp(getYearlyRecurringFreeTrialApp);
         market.veryfyListingApps();
         market.isAppPurchased(getYearlyRecurringFreeTrialApp);
@@ -38,7 +38,7 @@ public class PurchaseYearlyRecurringFreeTrialAppUI extends BaseTest {
         loginCBA(createAssignUser());
 
         /* Search & Purchase app from the marketplace*/
-        CBAMarketplace market = PageFactory.getCBAMarketplace();
+        CBAMarketplacePage market = PageFactory.getCBAMarketplace();
         market.searchForApp(getYearlyRecurringFreeTrialApp);
         market.buyOneTimeApp();
 
@@ -54,7 +54,7 @@ public class PurchaseYearlyRecurringFreeTrialAppUI extends BaseTest {
         loginCBA(createAssignUser());
 
         /*Verify the purchased app is present in the My App*/
-        CBAMyApps myApps = PageFactory.getCBAMyApps();
+        CBAMyAppsPage myApps = PageFactory.getCBAMyApps();
         myApps.verifyPurchasedApp(getYearlyRecurringFreeTrialApp);
     }
 
@@ -64,7 +64,7 @@ public class PurchaseYearlyRecurringFreeTrialAppUI extends BaseTest {
         loginCBA(createAssignUser());
 
         /*Cancel Subscription of purchased app*/
-        CBAAccount account = PageFactory.getCBAAccount();
+        CBAAccountPage account = PageFactory.getCBAAccount();
         account.cancelSubscribsion(getYearlyRecurringFreeTrialApp);
     }
 
