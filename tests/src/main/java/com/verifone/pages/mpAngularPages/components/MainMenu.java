@@ -1,4 +1,4 @@
-package com.verifone.pages.selenide.components;
+package com.verifone.pages.mpAngularPages.components;
 
 import com.codeborne.selenide.SelenideElement;
 
@@ -16,30 +16,51 @@ public class MainMenu {
     private SelenideElement users = $(byXpath("//a[contains(text(),'Users')]"));
     private SelenideElement logOutButton = $(byCssSelector("svg[class*='sign-out']"));
 
+    /**
+     * Click 'Applications' dropdown
+     */
     public void clickApplications() {
         applications.should(exist).click();
     }
 
+    /**
+     * Click 'App Catalogue' item
+     */
     public void clickAppCatalogue() {
         appCatalogue.should(exist).click();
     }
 
+    /**
+     * Click 'My Apps' item
+     */
     public void clickMyApps() {
         myApps.should(exist).click();
     }
 
+    /**
+     * Click 'Devices' dropdown
+     */
     public void clickDevices() {
         devices.should(exist).click();
     }
 
+    /**
+     * Click 'Settings' dropdown
+     */
     public void clickSettings() {
         settings.should(exist).click();
     }
 
+    /**
+     * Click 'Settings' item
+     */
     public void clickUsers() {
         users.should(exist).click();
     }
 
+    /**
+     * Click 'Log Out' button
+     */
     public void clickLogOut() {
         logOutButton.should(exist).click();
     }

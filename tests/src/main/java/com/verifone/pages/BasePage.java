@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.codeborne.selenide.Selenide.open;
+
 
 public abstract class BasePage {
 
@@ -46,7 +48,7 @@ public abstract class BasePage {
 
 
     public void navigate() {
-        driver.get(this.url);
+        open(this.url);
     }
 
     protected void validateTitle() {

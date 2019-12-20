@@ -1,11 +1,12 @@
-package com.verifone.tests.selenide;
+package com.verifone.tests.mpAngularTests;
 
 import com.verifone.infra.User;
-import com.verifone.pages.selenide.pages.AppCatalogPage;
-import com.verifone.pages.selenide.pages.HomePage;
-import com.verifone.pages.selenide.pages.LoginPage;
+import com.verifone.pages.mpAngularPages.pages.AppCatalogPage;
+import com.verifone.pages.mpAngularPages.pages.HomePage;
+import com.verifone.pages.mpAngularPages.pages.LoginPage;
 import com.verifone.tests.BaseTest;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.open;
@@ -16,7 +17,7 @@ public class AngularAppTest extends BaseTest {
     private HomePage homePage;
     private LoginPage loginPage;
 
-    @BeforeClass
+    @BeforeMethod
     public void initPages() {
         appCatalogPage = new AppCatalogPage();
         homePage = new HomePage();
@@ -25,10 +26,9 @@ public class AngularAppTest extends BaseTest {
 
     @Test(priority=1, testName = "Angular8 Test")
     public void testAngularUI() throws InterruptedException {
-        open("");
-
         User merchant = envConfig.getCredentials().getVFMPMer();
 
+        loginPage.navigate();
         loginPage.enterLogin(merchant.getUserName());
         loginPage.enterPassword(merchant.getPassword());
         loginPage.clickLogin();

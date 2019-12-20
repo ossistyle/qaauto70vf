@@ -26,7 +26,7 @@
 
         <classes>
             <!--Verfone MP-->
-            <class name="com.verifone.tests.selenide.AngularAppTest"/>
+            <class name="com.verifone.tests.mpAngularTests.AngularAppTest"/>
         </classes>
     </test>
 </suite>
