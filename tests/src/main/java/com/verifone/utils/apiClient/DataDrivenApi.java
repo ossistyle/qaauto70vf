@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.aventstack.extentreports.ExtentTest;
 import com.verifone.tests.BaseTest;
+import com.verifone.tests.api.tests.VFAppMarket.merchantGroup;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -89,7 +90,7 @@ public class DataDrivenApi {
             body = addConfirmationCode(body);
         System.out.println(headersMap);
         if (Integer.parseInt(expectedStatusCode) == 0) {     //This case when response code can be different
-            response = getRequestWithHeadersNoExpected(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+            response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
         }
         else if (requestMethod.contains("options")) {
             Headers = getRequestOptions(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
@@ -210,6 +211,36 @@ public class DataDrivenApi {
     }
 
 
+    public String startProsessGetId(String accessToken, String accGrantType, String accSSOURL, String uri,
+                             String requestMethod, String headers, String headersForGetToken, String body,
+                             String expectedStatusCode, String expectedResult, String verifyList, String param) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, JSONException {
+        String id=null;
+        headersMap = getMapFromStr(headers);
+        getToken(accessToken, accGrantType, accSSOURL, headersForGetToken);
+
+        if (param.equals("set")){
+        response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+        id = getValue(response, "id");
+        System.out.println("response is: " + response);
+            System.out.println("id is: " + id);
+        validateResult(expectedResult, verifyList);
+        }
+
+        else if(param.equals("get")){
+            String id1 = merchantGroup.getId();
+            uri = addParamToURI(uri,"deviceGroup",id1);
+            response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+            System.out.println("response is: " + response);
+            validateResult(expectedResult, verifyList);
+        }
+
+        else {
+            response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+            validateResult(expectedResult, verifyList);
+        }
+        return id;
+    }
+
     private void validateResult(String expectedResult, String verifyList) {
         if (response != null)
             testLog.info("Response is:\n" + response.toString());
@@ -306,6 +337,11 @@ public class DataDrivenApi {
         testLog.info("Body: " + body);
         System.out.println(body);
         return body;
+    }
+
+    private String addParamToURI(String uri, String paramName, String Id){
+        uri = uri+ "/" + paramName + "/" + Id;
+        return uri;
     }
 
     public void setConfirmationCode(String confirmationCode) {
