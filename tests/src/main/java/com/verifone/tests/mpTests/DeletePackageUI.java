@@ -18,7 +18,6 @@ public class DeletePackageUI extends BaseTest
     public void CBADeletePackageTestUI() throws Exception
     {
         User EOAdminSupport = EntitiesFactory.getEntity("EOAdminSupport");
-
         String EOAdminSupportMail = EOAdminSupport.getUserName();
         String EOAdminSupportPwd = EOAdminSupport.getPassword();
         String EOAdminSupportAnsw = EOAdminSupport.getSecurityAnswer();
