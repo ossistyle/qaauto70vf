@@ -26,7 +26,7 @@ public class ResellerPurchaseFreeAppUI extends BaseTest {
         freeEditionApp = BaseTest.envConfig.getFreeEditionApp();
 
         // Move to the Marketplace and Purchase (subscribe) an app - edition One Time Pay app
-        CBAMarketplace market = PageFactory.getCBAMarketplace();
+        CBAMarketplacePage market = PageFactory.getCBAMarketplace();
         CBAResellerPage resellerPage = PageFactory.getCBAResellerPage();
         resellerPage.selectMerchantFromTheList();
         market.searchForApp(freeEditionApp);
@@ -39,7 +39,7 @@ public class ResellerPurchaseFreeAppUI extends BaseTest {
         loginCBA(createVHQMumbaiUser());
 
         // Search & Purchase app from the marketplace
-        CBAMarketplace market = PageFactory.getCBAMarketplace();
+        CBAMarketplacePage market = PageFactory.getCBAMarketplace();
         CBAResellerPage resellerPage = PageFactory.getCBAResellerPage();
         resellerPage.selectMerchantFromTheList();
         market.searchForApp(freeEditionApp);
@@ -65,7 +65,7 @@ public class ResellerPurchaseFreeAppUI extends BaseTest {
         resellerPage.selectMyAppsOption();
 
         //Verify the purchased app is present in the My App
-        CBAMyApps myApps = PageFactory.getCBAMyApps();
+        CBAMyAppsPage myApps = PageFactory.getCBAMyApps();
         myApps.verifyPurchasedApp(freeEditionApp);
     }
 
@@ -79,7 +79,7 @@ public class ResellerPurchaseFreeAppUI extends BaseTest {
         resellerPage.selectMerchantFromTheList();
 
         //Remove purchased app
-        CBAAccount account = PageFactory.getCBAAccount();
+        CBAAccountPage account = PageFactory.getCBAAccount();
         account.cancelSubscribsion(freeEditionApp);
     }
 }

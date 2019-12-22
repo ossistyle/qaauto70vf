@@ -3,8 +3,8 @@ package com.verifone.tests.mpTests;
 import com.verifone.entities.EntitiesFactory;
 import com.verifone.infra.User;
 import com.verifone.pages.PageFactory;
-import com.verifone.pages.mpPages.CBADashboard;
-import com.verifone.pages.mpPages.CBAProducts;
+import com.verifone.pages.mpPages.CBADashboardPage;
+import com.verifone.pages.mpPages.CBAProductsPage;
 import com.verifone.tests.BaseTest;
 import org.testng.annotations.Test;
 
@@ -18,7 +18,6 @@ public class DeletePackageUI extends BaseTest
     public void CBADeletePackageTestUI() throws Exception
     {
         User EOAdminSupport = EntitiesFactory.getEntity("EOAdminSupport");
-
         String EOAdminSupportMail = EOAdminSupport.getUserName();
         String EOAdminSupportPwd = EOAdminSupport.getPassword();
         String EOAdminSupportAnsw = EOAdminSupport.getSecurityAnswer();
@@ -26,10 +25,10 @@ public class DeletePackageUI extends BaseTest
         navigateCBAHome();
 
         loginMPPortal(EOAdminSupportMail, EOAdminSupportPwd, EOAdminSupportAnsw);
-        CBADashboard cbaDashboard = PageFactory.getCBADashboard();
+        CBADashboardPage cbaDashboard = PageFactory.getCBADashboard();
         cbaDashboard.manageMarketpace();
 
-        CBAProducts cbaProducts = PageFactory.getCBAProducts();
+        CBAProductsPage cbaProducts = PageFactory.getCBAProducts();
         cbaProducts.deleteSatgingProduct();
     }
 }

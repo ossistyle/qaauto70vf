@@ -20,7 +20,7 @@ import org.testng.Assert;
      */
 //--------------------------------------------------------------------------
 
-    public class LoginMPPortal extends BasePage {
+    public class LoginMPPortalPage extends BasePage {
 
         private final static String url = "";
         private final static String title = "Forgot your password?";
@@ -45,7 +45,7 @@ import org.testng.Assert;
 
 
 
-        public LoginMPPortal() {
+        public LoginMPPortalPage() {
             super(url, title);
         }
 

@@ -1,16 +1,9 @@
 package com.verifone.utils.apiClient;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.aventstack.extentreports.ExtentTest;
+import com.google.gson.JsonObject;
 import com.verifone.tests.BaseTest;
-import com.verifone.tests.api.tests.VFAppMarket.merchantGroup;
-import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.testng.Assert;
 
 import java.io.File;
@@ -18,16 +11,13 @@ import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLOutput;
 import java.util.HashMap;
 
 import static com.verifone.utils.Assertions.assertTextContains;
 import static com.verifone.utils.Assertions.assertTextExclude;
 import static com.verifone.utils.DataDrivenUtils.getListFrromString;
 import static com.verifone.utils.DataDrivenUtils.getMapFromStr;
-import static com.verifone.utils.apiClient.BaseDDTApi.getRequestWithHeaders;
-import static com.verifone.utils.apiClient.BaseDDTApi.getRequestWithHeadersNoExpected;
-import static com.verifone.utils.apiClient.BaseDDTApi.getRequestOptions;
+import static com.verifone.utils.apiClient.BaseDDTApi.*;
 
 
 public class DataDrivenApi {
@@ -66,8 +56,8 @@ public class DataDrivenApi {
     }
 
     public void startProsess(String accessToken, String accGrantType, String accSSOURL, String uri,
-                              String requestMethod, String headers, String headersForGetToken, String body,
-                              String expectedStatusCode, String expectedResult, String verifyList) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, JSONException {
+                             String requestMethod, String headers, String headersForGetToken, String body,
+                             String expectedStatusCode, String expectedResult, String verifyList) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, JSONException {
         headersMap = getMapFromStr(headers);
         getToken(accessToken, accGrantType, accSSOURL, headersForGetToken);
         if (confirmationCode != null)
@@ -80,8 +70,8 @@ public class DataDrivenApi {
 
 
     public String startProsess_ValidateExcludeDataEvaluaet(String accessToken, String accGrantType, String accSSOURL, String uri,
-                                                 String requestMethod, String headers, String headersForGetToken, String body,
-                                                 String expectedStatusCode, String expectedResult, String verifyList, String verifyExcludeList, String offerId,String raw) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, JSONException {
+                                                           String requestMethod, String headers, String headersForGetToken, String body,
+                                                           String expectedStatusCode, String expectedResult, String verifyList, String verifyExcludeList, String offerId, String raw) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, JSONException {
         String Headers;
         headersMap = getMapFromStr(headers);
         getToken(accessToken, accGrantType, accSSOURL, headersForGetToken);
@@ -90,9 +80,8 @@ public class DataDrivenApi {
             body = addConfirmationCode(body);
         System.out.println(headersMap);
         if (Integer.parseInt(expectedStatusCode) == 0) {     //This case when response code can be different
-            response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
-        }
-        else if (requestMethod.contains("options")) {
+            response = getRequestWithHeadersNoExpected(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+        } else if (requestMethod.contains("options")) {
             Headers = getRequestOptions(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
             System.out.println("allow header data is: " + Headers);
             testLog.info("allow header data is: " + Headers);
@@ -105,16 +94,14 @@ public class DataDrivenApi {
         else if (uri.contains("evaluate")) {
 
             try {
-                response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+                response = getRequestWithHeadersNoExpected(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
                 System.out.println("response is: " + response);
-            }
-            catch (AssertionError e) {
+            } catch (AssertionError e) {
                 if (raw.equals("2")) {
                     testLog.warning("Data wasn't exist from previouse testing");
                     System.out.println("Data wasn't exist from previouse testing");
                     testLog.info("response is: " + response);
-                }
-                else {
+                } else {
                     throw new AssertionError();
                 }
             }
@@ -122,8 +109,7 @@ public class DataDrivenApi {
                 offerId = response.get("offerId").toString();
                 System.out.println(offerId);
                 testLog.info("offerID: "+ offerId);
-            }
-            catch (NullPointerException e) {
+            } catch (NullPointerException e) {
                 System.out.println("offerId is missing in row number " + raw);
                 testLog.info("offerId is missing in row number " + raw);
             }
@@ -131,9 +117,9 @@ public class DataDrivenApi {
 
         //Assign/unAssign
         //--------------------------------------------------------------------------------
-        else if (offerId != null ){
+        else if (offerId != null) {
             body = addOfferId(body, offerId);
-            response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+            response = getRequestWithHeadersNoExpected(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
             validateExcludeResult(expectedResult, verifyList, verifyExcludeList);
             System.out.println("response is: " + response);
             offerId = null;
@@ -142,34 +128,37 @@ public class DataDrivenApi {
         //other cases
         //--------------------------------------------------------------------------------
         else {
-            try{
-                response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+            try {
+                if (raw.equals("3")) {
+                    response = getRequestWithHeadersNoExpected(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+                    testLog.debug("Probably fail because of first test fail");
+                } else {
+                    response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+                }
                 validateExcludeResult(expectedResult, verifyList, verifyExcludeList);
-                System.out.println("response is: " + response);}
-                catch(AssertionError e){
-                if(raw.equals("3")){
+                System.out.println("response is: " + response);
+            } catch (AssertionError e) {
+                if (raw.equals("3")) {
                     System.out.println("response is: " + response);
                     testLog.debug("Probably fail because of first test fail");
-                }
-                else throw new NullPointerException();
+                } else throw new NullPointerException();
             }
         }
         return offerId;
     }
 
     public void startProsess_ValidateExcludeData(String accessToken, String accGrantType, String accSSOURL, String uri,
-                             String requestMethod, String headers, String headersForGetToken, String body,
-                             String expectedStatusCode, String expectedResult, String verifyList, String verifyExcludeList) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, JSONException {
+                                                 String requestMethod, String headers, String headersForGetToken, String body,
+                                                 String expectedStatusCode, String expectedResult, String verifyList, String verifyExcludeList) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, JSONException {
         String Headers;
         headersMap = getMapFromStr(headers);
         getToken(accessToken, accGrantType, accSSOURL, headersForGetToken);
         if (confirmationCode != null)
             body = addConfirmationCode(body);
         System.out.println(headersMap);
-        if (Integer.parseInt(expectedStatusCode)==0) {     //This case when response code can be different
+        if (Integer.parseInt(expectedStatusCode) == 0) {     //This case when response code can be different
             response = getRequestWithHeadersNoExpected(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
-        }
-        else if (requestMethod.contains("options")) {
+        } else if (requestMethod.contains("options")) {
             Headers = getRequestOptions(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
             System.out.println("allow header data is: " + Headers);
             testLog.info("allow header data is: " + Headers);
@@ -185,8 +174,8 @@ public class DataDrivenApi {
 
 
     public void startProsessWithGetValue(String accessToken, String accGrantType, String accSSOURL, String uri1, String uri2,
-                             String requestMethod, String headers, String headersForGetToken, String body1, String body2,
-                             String expectedStatusCode1, String expectedStatusCode2, String expectedResult1, String expectedResult2, String verifyList) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, JSONException {
+                                         String requestMethod, String headers, String headersForGetToken, String body1, String body2,
+                                         String expectedStatusCode1, String expectedStatusCode2, String expectedResult1, String expectedResult2, String verifyList) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, JSONException {
         headersMap = getMapFromStr(headers);
         getToken(accessToken, accGrantType, accSSOURL, headersForGetToken);
         if (confirmationCode != null)
@@ -281,7 +270,7 @@ public class DataDrivenApi {
                 }
             }
         }
-        if (verifyExcludeList != null && verifyExcludeList!= ""){
+        if (verifyExcludeList != null && verifyExcludeList != "") {
             for (String param : getListFrromString(verifyExcludeList)) {
                 assertTextExclude(param, response.toString());
             }
@@ -290,7 +279,7 @@ public class DataDrivenApi {
     }
 
 
-    public String getValue(JsonObject response, String key)  {
+    public String getValue(JsonObject response, String key) {
         String respValue = null;
         if (response != null) {
 
@@ -301,7 +290,7 @@ public class DataDrivenApi {
             org.testng.Assert.fail("Key: '" + key + "'  Is not appear in response");
         }
 
-        return respValue.substring(1,37);
+        return respValue.substring(1, 37);
 
     }
 
@@ -330,10 +319,10 @@ public class DataDrivenApi {
         return body;
     }
 
-    private String addOfferId(String body,String offerId) {
+    private String addOfferId(String body, String offerId) {
 
         body = body.substring(0, body.length() - 2);
-        body = body + ",\"offerId\": " + offerId + "}}" ;
+        body = body + ",\"offerId\": " + offerId + "}}";
         testLog.info("Body: " + body);
         System.out.println(body);
         return body;

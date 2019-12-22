@@ -10,7 +10,7 @@ import org.testng.Assert;
 import java.util.Iterator;
 import java.util.List;
 
-public class CBAMyApps extends BasePage
+public class CBAMyAppsPage extends BasePage
 {
     private final static String url = BaseTest.envConfig.getWebUrl() + "myapps";
     //private final static String title = "MyApps | Verifone Australia";
@@ -25,7 +25,7 @@ public class CBAMyApps extends BasePage
     private List<String> names;
     private WebElement myApp;
 
-    public CBAMyApps()
+    public CBAMyAppsPage()
     {
         super(url, title);
         validateTitle();

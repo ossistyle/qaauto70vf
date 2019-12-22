@@ -25,7 +25,7 @@ public class Steps {
         testLog.info("-------------------------------------------------Navigate to MP Portal-------------------------------------------------");
 
         driver.navigate().to(Env);
-        LoginMPPortal LoginMPPortal = (LoginMPPortal) PageFactory.getPage("LoginMPPortal");
+        LoginMPPortalPage LoginMPPortal = (LoginMPPortalPage) PageFactory.getPage("LoginMPPortal");
         //LoginMPPortal.clickLoginBtn();
         String Name;
         Name = Email.substring(0, Email.indexOf("@"));
@@ -69,7 +69,7 @@ public class Steps {
 
         WebDriver driver = new MPHomePage().getDriver();
 
-        LoginMPPortal LoginMPPortal = PageFactory.getLoginMPPortal();
+        LoginMPPortalPage LoginMPPortal = PageFactory.getLoginMPPortal();
 
         String Name = Email.substring(0, Email.indexOf("@"));
         String Domain = Email.substring(Email.indexOf("@") + 1);
@@ -150,7 +150,7 @@ public class Steps {
     }
 
     public static void verifyMyAppsCBA(String appName) {
-        CBAMyApps myApps = PageFactory.getCBAMyApps();
+        CBAMyAppsPage myApps = PageFactory.getCBAMyApps();
         myApps.verifyAppSubcribed(appName);
     }
 

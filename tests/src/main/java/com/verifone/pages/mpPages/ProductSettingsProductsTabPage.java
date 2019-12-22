@@ -9,7 +9,7 @@ import org.openqa.selenium.By;
  * @authors Yana Fridman
  */
 //--------------------------------------------------------------------------
-public class ProductSettingsProductsTab extends BasePage {
+public class ProductSettingsProductsTabPage extends BasePage {
 
     private final static String url = "";
     private final static String title = "Segment Groups";
@@ -17,7 +17,7 @@ public class ProductSettingsProductsTab extends BasePage {
     private By menuProductsLoc = By.xpath("//a[text()='Product']");
     private By btnSaveLoc = By.xpath("//span[text()='Save']");
 
-    public ProductSettingsProductsTab() {
+    public ProductSettingsProductsTabPage() {
         super(url, title);
     }
 

@@ -200,4 +200,10 @@
             <class name="com.verifone.tests.mpTests.UploadAppsWithAgreementTestUI"/>
         </classes>
     </test>
+    <test name="UploadAppsWithMissingDataTestUI">
+        <classes>
+            <class name="com.verifone.tests.mpTests.UploadAppsWithMissingDataTestUI"/>
+        </classes>
+    </test>
+
 </suite>

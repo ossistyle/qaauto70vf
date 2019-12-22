@@ -1,9 +1,9 @@
 package com.verifone.tests.mpTests;
 
 import com.verifone.pages.PageFactory;
-import com.verifone.pages.mpPages.CBAAccount;
+import com.verifone.pages.mpPages.CBAAccountPage;
 import com.verifone.pages.mpPages.CBAAssignPage;
-import com.verifone.pages.mpPages.CBAMarketplace;
+import com.verifone.pages.mpPages.CBAMarketplacePage;
 import com.verifone.tests.BaseTest;
 import org.testng.annotations.Test;
 
@@ -17,7 +17,7 @@ public class PurchaseAppUI extends BaseTest {
     public void CBASubscribeAppTestUI() throws Exception {
         loginCBA(createMerchantUser());
         getAppName = BaseTest.envConfig.getAppName();
-        CBAMarketplace market = PageFactory.getCBAMarketplace();
+        CBAMarketplacePage market = PageFactory.getCBAMarketplace();
         market.searchForApp(getAppName);
         market.veryfyListingApps();
         market.isAppPurchased(getAppName);
@@ -28,7 +28,7 @@ public class PurchaseAppUI extends BaseTest {
     public void CBAAssignToUserAppUI() throws Exception {
         loginCBA(createMerchantUser());
 
-        CBAMarketplace market = PageFactory.getCBAMarketplace();
+        CBAMarketplacePage market = PageFactory.getCBAMarketplace();
         market.searchForApp(getAppName);
         market.buyFreeApp();
 
@@ -47,7 +47,7 @@ public class PurchaseAppUI extends BaseTest {
     public void CBAUnsubscribeAppTestUI() throws InterruptedException {
 
         loginCBA(createMerchantUser());
-        CBAAccount account = PageFactory.getCBAAccount();
+        CBAAccountPage account = PageFactory.getCBAAccount();
         account.cancelSubscribsion(getAppName);
     }
 

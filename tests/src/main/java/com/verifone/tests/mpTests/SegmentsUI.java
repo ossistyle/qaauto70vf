@@ -1,7 +1,5 @@
 package com.verifone.tests.mpTests;
 
-import com.verifone.entities.EntitiesFactory;
-import com.verifone.infra.User;
 import com.verifone.pages.PageFactory;
 import com.verifone.pages.mpPages.*;
 import com.verifone.tests.BaseTest;
@@ -15,7 +13,6 @@ import java.util.ArrayList;
 
 import static com.verifone.pages.BasePage.testLog;
 import static com.verifone.tests.steps.mpPortal.Steps.mpEoNavigator;
-import static com.verifone.tests.steps.mpPortal.Steps.navigateCBAHome;
 //--------------------------------------------------------------------------
 
 /**
@@ -83,7 +80,7 @@ public class SegmentsUI extends BaseTest {
         Thread.sleep(TimeOut);
         availableWindows = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
-        ProductsTab ProductsTab = (ProductsTab) PageFactory.getPage("ProductsTab");
+        ProductsTabPage ProductsTab = (ProductsTabPage) PageFactory.getPage("ProductsTab");
         ProductsTab.clickMenuSegmentGroups();
 
         Thread.sleep(TimeOut + 1000);
@@ -150,7 +147,7 @@ public class SegmentsUI extends BaseTest {
         Thread.sleep(TimeOut);
         availableWindows = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
-        ProductsTab ProductsTab = (ProductsTab) PageFactory.getPage("ProductsTab");
+        ProductsTabPage ProductsTab = (ProductsTabPage) PageFactory.getPage("ProductsTab");
         ProductsTab.clickMenuSegmentGroups();
 
         //		Validation
@@ -252,7 +249,7 @@ public class SegmentsUI extends BaseTest {
         Thread.sleep(TimeOut);
         availableWindows = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
-        ProductsTab ProductsTab = (ProductsTab) PageFactory.getPage("ProductsTab");
+        ProductsTabPage ProductsTab = (ProductsTabPage) PageFactory.getPage("ProductsTab");
         ProductsTab.clickMenuSegmentGroups();
 
         Thread.sleep(TimeOut + 1000);
@@ -376,7 +373,7 @@ public class SegmentsUI extends BaseTest {
         Thread.sleep(TimeOut);
         availableWindows = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
-        ProductsTab ProductsTab = (ProductsTab) PageFactory.getPage("ProductsTab");
+        ProductsTabPage ProductsTab = (ProductsTabPage) PageFactory.getPage("ProductsTab");
         ProductsTab.clickMenuSegmentGroups();
 
         Thread.sleep(TimeOut + 1000);
@@ -528,7 +525,7 @@ public class SegmentsUI extends BaseTest {
         testLog.info("------------------------------------------------- Open Product tab ------------------------------------------------------------");
         availableWindows = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
-        ProductSettingsProductsTab ProductSettingsProductsTab = (ProductSettingsProductsTab) PageFactory.getPage("ProductSettingsProductsTab");
+        ProductSettingsProductsTabPage ProductSettingsProductsTab = (ProductSettingsProductsTabPage) PageFactory.getPage("ProductSettingsProductsTab");
 
         Thread.sleep(TimeOut);
         ProductSettingsProductsTab.clickMenuProducts();
@@ -545,7 +542,7 @@ public class SegmentsUI extends BaseTest {
         testLog.info("------------------------------------------------- Verify Confirmation message ------- -------------------------------------------");
         availableWindows = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
-        ProductsTab ProductsTab = (ProductsTab) PageFactory.getPage("ProductsTab");
+        ProductsTabPage ProductsTab = (ProductsTabPage) PageFactory.getPage("ProductsTab");
         if (!Assertions.compareBoolean(true, ProductsTab.msgConfirmationText1().contains("Your changes have been saved"), "Confirmation message displayed as expected: ", testLog, driver)) {
             TestPassFlag = false;
         }
@@ -576,7 +573,7 @@ public class SegmentsUI extends BaseTest {
         testLog.info("------------------------------------------------- Open Product tab ------------------------------------------------------------");
         availableWindows = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
-        ProductSettingsProductsTab = (ProductSettingsProductsTab) PageFactory.getPage("ProductSettingsProductsTab");
+        ProductSettingsProductsTab = (ProductSettingsProductsTabPage) PageFactory.getPage("ProductSettingsProductsTab");
 
         Thread.sleep(TimeOut);
         ProductSettingsProductsTab.clickMenuProducts();
@@ -593,7 +590,7 @@ public class SegmentsUI extends BaseTest {
         testLog.info("------------------------------------------------- Verify Confirmation message ------- -------------------------------------------");
         availableWindows = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
-        ProductsTab = (ProductsTab) PageFactory.getPage("ProductsTab");
+        ProductsTab = (ProductsTabPage) PageFactory.getPage("ProductsTab");
         if (!Assertions.compareBoolean(true, ProductsTab.msgConfirmationText1().contains("Your changes have been saved"), "Confirmation message displayed as expected: ", testLog, driver)) {
             TestPassFlag = false;
         }
@@ -742,7 +739,7 @@ public class SegmentsUI extends BaseTest {
         Thread.sleep(TimeOut);
         availableWindows = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(availableWindows.get(0));
-        ProductsTab ProductsTab = (ProductsTab) PageFactory.getPage("ProductsTab");
+        ProductsTabPage ProductsTab = (ProductsTabPage) PageFactory.getPage("ProductsTab");
         ProductsTab.clickMenuSegmentGroups();
 
         Thread.sleep(TimeOut + 1000);

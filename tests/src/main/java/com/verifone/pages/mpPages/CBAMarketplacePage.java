@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class CBAMarketplace extends BasePage {
+public class CBAMarketplacePage extends BasePage {
     private final static String url = BaseTest.envConfig.getWebUrl() + "home";
     private final static String title = "Verifone Australia Sandbox | Verifone Australia";
 
@@ -45,7 +45,7 @@ public class CBAMarketplace extends BasePage {
 
     private List<WebElement> listingApps;
 
-    public CBAMarketplace() {
+    public CBAMarketplacePage() {
         super(url, title);
     }
 
@@ -191,7 +191,7 @@ public class CBAMarketplace extends BasePage {
     }
 
     public static void buyBundle(String appName) throws Exception {
-        CBAMarketplace market = PageFactory.getCBAMarketplace();
+        CBAMarketplacePage market = PageFactory.getCBAMarketplace();
         market.searchForApp(appName);
         market.veryfyListingApps();
         market.isAppPurchased(appName);
