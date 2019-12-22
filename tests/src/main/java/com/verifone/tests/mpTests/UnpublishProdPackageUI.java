@@ -17,7 +17,6 @@ public class UnpublishProdPackageUI extends BaseTest {
     public void CBAUnpublishPackageTestUI() throws Exception
     {
         User EOAdminSupport = EntitiesFactory.getEntity("EOAdminSupport");
-
         String EOAdminSupportMail = EOAdminSupport.getUserName();
         String EOAdminSupportPwd = EOAdminSupport.getPassword();
         String EOAdminSupportAnsw = EOAdminSupport.getSecurityAnswer();
