@@ -1,11 +1,6 @@
 package com.verifone.tests.mpTests;
 
-import com.verifone.entities.EntitiesFactory;
-import com.verifone.infra.User;
-import com.verifone.pages.PageFactory;
-import com.verifone.pages.mpPages.CBAMyApps;
 import com.verifone.tests.BaseTest;
-import com.verifone.tests.steps.mpPortal.Steps;
 import org.testng.annotations.Test;
 
 import static com.verifone.tests.steps.mpPortal.Steps.*;

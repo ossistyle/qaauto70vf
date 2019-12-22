@@ -1,9 +1,8 @@
 package com.verifone.tests.mpTests;
 
 import com.verifone.pages.PageFactory;
-import com.verifone.pages.mpPages.CBAAccount;
+import com.verifone.pages.mpPages.CBAAccountPage;
 import com.verifone.pages.mpPages.CBAAssignPage;
-import com.verifone.pages.mpPages.CBAMyApps;
 import com.verifone.pages.vhqPages.VHQDeviceSearch;
 import com.verifone.pages.vhqPages.VHQHomePage;
 import com.verifone.tests.BaseTest;
@@ -81,7 +80,7 @@ public class AssignAppToUser extends BaseTest {
         loginCBA(createAssignUser());
 
         /*Cancel Subscription of purchased app*/
-        CBAAccount account = PageFactory.getCBAAccount();
+        CBAAccountPage account = PageFactory.getCBAAccount();
         account.cancelSubscribsion(getAppName);
     }
 
@@ -96,6 +95,6 @@ public class AssignAppToUser extends BaseTest {
         vhqDashboard.deviceProfile();
 
         VHQDeviceSearch deviceSearch = PageFactory.getVHQDeviceSearch();
-        deviceSearch.validateJobInstall(searchAppNameOnVHQ, "UNINSTALL", CBAAccount.jobCreatedOnUnsubscription, "positive");
+        deviceSearch.validateJobInstall(searchAppNameOnVHQ, "UNINSTALL", CBAAccountPage.jobCreatedOnUnsubscription, "positive");
     }
 }

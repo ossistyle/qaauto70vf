@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.testng.AssertJUnit.assertEquals;
 
-public class CBAAccount extends BasePage {
+public class CBAAccountPage extends BasePage {
 
     private final static String url = BaseTest.envConfig.getWebUrl() + "home";
     private final static String title = "Dashboard | Verifone Australia";
@@ -40,7 +40,7 @@ public class CBAAccount extends BasePage {
 
     String textSuccess;
 
-    public CBAAccount() {
+    public CBAAccountPage() {
         super(url, title);
     }
 

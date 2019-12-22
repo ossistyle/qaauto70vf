@@ -1,15 +1,16 @@
 package com.verifone.tests.mpTests;
 
-import com.verifone.infra.User;
-import com.verifone.pages.BasePage;
 import com.verifone.pages.PageFactory;
 import com.verifone.pages.mpPages.*;
 import com.verifone.pages.vhqPages.*;
 import com.verifone.tests.BaseTest;
+import com.verifone.utils.Assertions;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 
+import static com.verifone.pages.BasePage.testLog;
 import static com.verifone.tests.steps.mpPortal.Steps.*;
 
 
@@ -23,6 +24,68 @@ public class UnsubscribeAppsFromTheGroup extends BaseTest {
     private String groupName;
     private String groupDescription;
 
+    @Test(priority = 0, testName = "LogIn & Delete Group If Exists", description = "LogIn in to CBA Marketplace and delete group if it exists.")
+    public void CBADeleteGroupIfExistsTestUI() throws Exception {
+        loginCBA(createAssignUser());
+
+        listOfDevices = new ArrayList<>(BaseTest.envConfig.getListOfDevices().subList(0, 1));
+        listOfApp = BaseTest.envConfig.getListOfCommonApp("MPPurchaseFreeAppThree");
+        groupName = BaseTest.envConfig.getGroupInfo("MPSecondGroupName");
+        groupDescription = BaseTest.envConfig.getGroupInfo("MPSecondGroupDescription");
+
+        WebDriver driver = new CBAHomePage().getDriver();
+        ArrayList<String> availableWindows = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
+
+        testLog.info("-------------------------------- Navigate to Assign App ------------------------------");
+
+        //Move to assign app section
+        CBAAssignPage assignApp = PageFactory.getAssignAppPage();
+        assignApp.moveToAssignApps();
+
+        availableWindows = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
+
+        testLog.info("-------------------------------- Navigate to Groups ------------------------------");
+        //Move to Groups section
+        CBAAssignGroupPage assignGroup = PageFactory.getCBAAssignGroupPage();
+        assignGroup.clickOnGroupsTab();
+
+        availableWindows = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
+
+        //check visibility of group name.
+        //click on group if it's visible
+        testLog.info("-------------------------------- Search Group " + groupName + " ------------------------------");
+        if (assignApp.checkVisibilityOfApp(groupName) == 1) {
+            testLog.info("--------------- Is group name available : true  ------------");
+            assignApp.clickOnAssignApp();
+        }
+
+        //check visibility of app
+        //click on app name only if it's checked
+        testLog.info("-------------------------------- Search App " + listOfApp.get(0) + " ------------------------------");
+        if (assignApp.checkVisibilityOfRightPanel(listOfApp.get(0)) == 1) {
+            if (assignApp.checkAssignmentOfRightPanel() == 1) {
+                testLog.info("------------------ Is app selected  : true -------------------");
+                assignApp.clickOnAssignUser();
+            }
+        }
+
+        //check if next button is disabled
+        //click on this button only if it's enabled
+        testLog.info("-------------------------------- Check Next button state ------------------------------");
+        if (assignApp.checkStateOfNextBtn() != 1) {
+            testLog.info("-------------------------------- Is next button enabled : true ------------------------------");
+            assignApp.userAssignment();
+        }
+
+        availableWindows = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(availableWindows.get(0));
+
+        //delete group
+        assignGroup.deleteGroupTest(groupName);
+    }
 
     @Test(priority = 1, testName = "LogIn & Create Group", description = "LogIn in to CBA Marketplace and create group with more than one user.")
     public void CBACreateDeviceGroupTestUI() throws Exception {
@@ -109,7 +172,7 @@ public class UnsubscribeAppsFromTheGroup extends BaseTest {
         loginCBA(createAssignUser());
 
         //Cancel apps subscription
-        CBAAccount account = PageFactory.getCBAAccount();
+        CBAAccountPage account = PageFactory.getCBAAccount();
         account.cancelSubscribsion(listOfApp.get(0));
     }
 
@@ -125,7 +188,7 @@ public class UnsubscribeAppsFromTheGroup extends BaseTest {
         deviceSerialNumber = listOfDevices.get(0);
         vhqDashboard.deviceSearch(deviceSerialNumber);
         vhqDashboard.deviceProfile();
-        assignGroup.searchDeviceJob(searchAppNameOnVHQ, "UNINSTALL", CBAAccount.jobCreatedOnUnsubscription, deviceSerialNumber, "positive");
+        assignGroup.searchDeviceJob(searchAppNameOnVHQ, "UNINSTALL", CBAAccountPage.jobCreatedOnUnsubscription, deviceSerialNumber, "positive");
     }
 
     @Test(priority = 8, testName = "LogIn & Delete Group", description = "LogIn to CBA Marketplace and delete the group.")

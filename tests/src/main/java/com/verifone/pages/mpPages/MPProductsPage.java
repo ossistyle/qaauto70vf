@@ -107,9 +107,7 @@ public class MPProductsPage extends BasePage {
      * @return
      */
     public boolean compareErrorMessage(String errorMsg) {
-        String feedBackError = getText(feedBackPanelError);
-        testLog.info("------ Listing info - ErrorMsg : " + feedBackError + " ------------------------------");
-        return assertRowContains(errorMsg, feedBackError);
+        return compareErrorMessageText(errorMsg, feedBackPanelError);
     }
 
     /**
@@ -147,9 +145,7 @@ public class MPProductsPage extends BasePage {
      * @return
      */
     public boolean profileErrorMessage(String errorMsg) {
-        String feedBackError = getText(feedBackPanelErrorProfile);
-        testLog.info("------ Profile - Error Msg : " + feedBackError + " ------------------------------");
-        return assertRowContains(errorMsg, feedBackError);
+        return compareErrorMessageText(errorMsg, feedBackPanelErrorProfile);
     }
 
     /**
@@ -184,9 +180,7 @@ public class MPProductsPage extends BasePage {
      * @return
      */
     public boolean editionErrorMessage(String errorMsg) {
-        String feedBackError = getText(feedBackPanelErrorEdition);
-        testLog.info("------ Edition - Error Msg : " + feedBackError + " ------------------------------");
-        return assertRowContains(errorMsg, feedBackError);
+        return compareErrorMessageText(errorMsg, feedBackPanelErrorEdition);
     }
 
     /**
@@ -231,10 +225,7 @@ public class MPProductsPage extends BasePage {
      * @author : Prashant Lokhande
      */
     public boolean authenticationErrorMessage(String errorMsg) {
-        waitUntilPageLoad(errorAuth);
-        String feedBackError = getText(errorAuth);
-        testLog.info("---------------------- Authentication - Error Msg : " + feedBackError + " ------------------------------");
-        return assertRowContains(errorMsg, feedBackError);
+        return compareErrorMessageText(errorMsg, errorAuth);
     }
 
     /**
@@ -312,10 +303,7 @@ public class MPProductsPage extends BasePage {
      * @author : Prashant Lokhande
      */
     public boolean productVersionErrorMessage(String errorMsg) {
-        waitUntilPageLoad(errorProductVersion);
-        String feedBackError = getText(errorProductVersion);
-        testLog.info("---------------------- Product Version - Error Msg : " + feedBackError + " ------------------------------");
-        return assertRowContains(errorMsg, feedBackError);
+        return compareErrorMessageText(errorMsg, errorProductVersion);
     }
 
 }

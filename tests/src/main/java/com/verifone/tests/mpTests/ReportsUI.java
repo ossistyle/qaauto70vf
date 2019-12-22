@@ -24,7 +24,7 @@ public class ReportsUI extends BaseTest {
     @Test(enabled = true, priority = 1, testName = "Download reports", groups = {"MPRegression"}, alwaysRun = true)
     public void downloadReportsUI() throws Exception {
         File folder = new File(dir);
-        String backupDir = dir+"\\old";
+        String backupDir = dir + "\\old";
         mpEoNavigator();
 
         MPHomePage MPHomePage = (MPHomePage) PageFactory.getPage("MPHomePage");
@@ -45,13 +45,13 @@ public class ReportsUI extends BaseTest {
         testLog.info(response3);
 
 //move to backup file
-        boolean found = MPUtils.validateFile(folder, reportName1, backupDir,true);
+        boolean found = MPUtils.validateFile(folder, reportName1, backupDir, true);
         Assert.assertTrue(found, "Downloaded document is not found: " + reportName1);
 
-        boolean found2 = MPUtils.validateFile(folder, reportName2, backupDir,true);
+        boolean found2 = MPUtils.validateFile(folder, reportName2, backupDir, true);
         Assert.assertTrue(found2, "Downloaded document is not found: " + reportName2);
 
-        boolean found3 = MPUtils.validateFile(folder, reportName3, backupDir,true);
+        boolean found3 = MPUtils.validateFile(folder, reportName3, backupDir, true);
         Assert.assertTrue(found3, "Downloaded document is not found: " + reportName3);
     }
 }

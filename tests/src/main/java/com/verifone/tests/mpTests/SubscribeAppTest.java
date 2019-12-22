@@ -1,13 +1,9 @@
 package com.verifone.tests.mpTests;
 
-import com.verifone.entities.EntitiesFactory;
-import com.verifone.infra.User;
 import com.verifone.pages.PageFactory;
 import com.verifone.pages.mpPages.CBAAssignPage;
-import com.verifone.pages.mpPages.CBAMarketplace;
-import com.verifone.pages.mpPages.CBAMyApps;
+import com.verifone.pages.mpPages.CBAMarketplacePage;
 import com.verifone.tests.BaseTest;
-import com.verifone.tests.steps.mpPortal.Steps;
 import org.testng.annotations.Test;
 
 import static com.verifone.tests.steps.mpPortal.Steps.*;
@@ -28,7 +24,7 @@ public class SubscribeAppTest extends BaseTest {
         freeEditionApp = BaseTest.envConfig.getFreeEditionApp();
         getAppName = BaseTest.envConfig.getAppName();
 
-        CBAMarketplace market = PageFactory.getCBAMarketplace();
+        CBAMarketplacePage market = PageFactory.getCBAMarketplace();
         market.searchForApp(getAppName);
         market.veryfyListingApps();
         market.isAppPurchased(freeEditionApp);
@@ -45,7 +41,7 @@ public class SubscribeAppTest extends BaseTest {
 
         System.out.println("get App name :" + getAppName);
 
-        CBAMarketplace market = PageFactory.getCBAMarketplace();
+        CBAMarketplacePage market = PageFactory.getCBAMarketplace();
         market.searchForApp(getAppName);
         market.veryfyListingApps();
         market.buyFreeApp();

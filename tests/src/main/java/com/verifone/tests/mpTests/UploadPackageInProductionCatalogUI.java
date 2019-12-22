@@ -1,17 +1,12 @@
 package com.verifone.tests.mpTests;
 
-import com.verifone.entities.EntitiesFactory;
-import com.verifone.infra.User;
 import com.verifone.pages.PageFactory;
-import com.verifone.pages.mpPages.AndroidProjectOperationPage;
-import com.verifone.pages.mpPages.CBADashboard;
-import com.verifone.pages.mpPages.CBAProducts;
+import com.verifone.pages.mpPages.CBADashboardPage;
+import com.verifone.pages.mpPages.CBAProductsPage;
 import com.verifone.tests.BaseTest;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static com.verifone.pages.BasePage.testLog;
-import static com.verifone.tests.steps.cgPortal.Steps.loginAndCheck;
 import static com.verifone.tests.steps.mpPortal.Steps.*;
 
 
@@ -48,11 +43,11 @@ public class UploadPackageInProductionCatalogUI extends BaseTest {
     public void CBADeletePackageFromProductionCatalogTestUI() throws Exception {
         loginMPPortalAsEOAdmin();
 
-        CBADashboard cbaDashboard = PageFactory.getCBADashboard();
+        CBADashboardPage cbaDashboard = PageFactory.getCBADashboard();
         cbaDashboard.manageMarketPlaceProducts();
 
         //Remove product from the production catalog only if it is present
-        CBAProducts cbaProducts = PageFactory.getCBAProducts();
+        CBAProductsPage cbaProducts = PageFactory.getCBAProducts();
         if (cbaProducts.isProductAvailable()) {
             System.out.println("App present");
             testLog.info("------------------------ Remove Product from Production Catalog --------------------------");
@@ -70,10 +65,10 @@ public class UploadPackageInProductionCatalogUI extends BaseTest {
         loginMPPortalAsEOAdmin();
         productVersionTitle = BaseTest.envConfig.getApplicationID();
 
-        CBADashboard cbaDashboard = PageFactory.getCBADashboard();
+        CBADashboardPage cbaDashboard = PageFactory.getCBADashboard();
         cbaDashboard.manageMarketpace();
 
-        CBAProducts cbaProducts = PageFactory.getCBAProducts();
+        CBAProductsPage cbaProducts = PageFactory.getCBAProducts();
         cbaProducts.createStagingProduct();
         cbaProducts.listingInfoProduct();
         cbaProducts.profileProduct();
@@ -96,10 +91,10 @@ public class UploadPackageInProductionCatalogUI extends BaseTest {
     public void CBAUnPublishPackageTestUI() throws Exception {
         loginMPPortalAsEOAdmin();
 
-        CBADashboard cbaDashboard = PageFactory.getCBADashboard();
+        CBADashboardPage cbaDashboard = PageFactory.getCBADashboard();
         cbaDashboard.manageMarketPlaceProducts();
 
-        CBAProducts cbaProducts = PageFactory.getCBAProducts();
+        CBAProductsPage cbaProducts = PageFactory.getCBAProducts();
         cbaProducts.removeProduct();
         cbaProducts.unPublishProduct();
         cbaProducts.deleteSatgingProduct();

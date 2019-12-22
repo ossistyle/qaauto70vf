@@ -16,13 +16,13 @@ public class PageFactory {
     ///////////////////MarketPlace Pages/////////////////////////
     public static CBAHomePage getCBAHomePage() {return new CBAHomePage();}
     public static CBALoginPage getCBALoginPage() {return new CBALoginPage();}
-    public static CBAMyApps getCBAMyApps() {return new CBAMyApps();}
-    public static CBAMarketplace getCBAMarketplace() {return new CBAMarketplace();}
-    public static CBAAccount getCBAAccount() {return new CBAAccount();}
+    public static CBAMyAppsPage getCBAMyApps() {return new CBAMyAppsPage();}
+    public static CBAMarketplacePage getCBAMarketplace() {return new CBAMarketplacePage();}
+    public static CBAAccountPage getCBAAccount() {return new CBAAccountPage();}
 
-    public static CBAProducts getCBAProducts() {return new CBAProducts();}
-    public static CBADashboard getCBADashboard () {return new CBADashboard ();}
-    public static LoginMPPortal getLoginMPPortal() {return new LoginMPPortal();}
+    public static CBAProductsPage getCBAProducts() {return new CBAProductsPage();}
+    public static CBADashboardPage getCBADashboard () {return new CBADashboardPage();}
+    public static LoginMPPortalPage getLoginMPPortal() {return new LoginMPPortalPage();}
     public static AndroidProjectOperationPage getAndroidProjectOperationPage() {return new AndroidProjectOperationPage();}
     public static CBAResellerPage getCBAResellerPage(){return new CBAResellerPage();}
 
@@ -156,7 +156,7 @@ public class PageFactory {
             case "ManageMarketplacePage":
                 return new ManageMarketplacePage();
             case "ProductsTab":
-                return new ProductsTab();
+                return new ProductsTabPage();
             case "CreateSegmentGroupPage":
                 return new CreateSegmentGroupPage();
             case "EditSegmentGroupPage":
@@ -168,11 +168,11 @@ public class PageFactory {
             case "ProductsTabProductCatalogPage":
                 return new ProductsTabProductCatalogPage();
             case "ProductSettingsProductsTab":
-                return new ProductSettingsProductsTab();
+                return new ProductSettingsProductsTabPage();
             case "MarketplacePage":
                 return new MarketplacePage();
             case "LoginMPPortal":
-                return new LoginMPPortal();
+                return new LoginMPPortalPage();
             case "ProductsTabBundlePage":
                 return new ProductsTabBundlePage();
             case "MPUsersPage":
