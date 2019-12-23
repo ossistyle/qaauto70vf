@@ -3,6 +3,7 @@ package com.verifone.utils.apiClient;
 import com.aventstack.extentreports.ExtentTest;
 import com.google.gson.JsonObject;
 import com.verifone.tests.BaseTest;
+import com.verifone.tests.api.tests.VFAppMarket.merchantGroup;
 import org.json.JSONException;
 import org.testng.Assert;
 
