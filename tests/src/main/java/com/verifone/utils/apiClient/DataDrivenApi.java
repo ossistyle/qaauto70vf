@@ -200,6 +200,36 @@ public class DataDrivenApi {
     }
 
 
+    public String startProsessGetId(String accessToken, String accGrantType, String accSSOURL, String uri,
+                             String requestMethod, String headers, String headersForGetToken, String body,
+                             String expectedStatusCode, String expectedResult, String verifyList, String param) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, JSONException {
+        String id=null;
+        headersMap = getMapFromStr(headers);
+        getToken(accessToken, accGrantType, accSSOURL, headersForGetToken);
+
+        if (param.equals("set")){
+        response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+        id = getValue(response, "id");
+        System.out.println("response is: " + response);
+            System.out.println("id is: " + id);
+        validateResult(expectedResult, verifyList);
+        }
+
+        else if(param.equals("get")){
+            String id1 = merchantGroup.getId();
+            uri = addParamToURI(uri,"deviceGroup",id1);
+            response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+            System.out.println("response is: " + response);
+            validateResult(expectedResult, verifyList);
+        }
+
+        else {
+            response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+            validateResult(expectedResult, verifyList);
+        }
+        return id;
+    }
+
     private void validateResult(String expectedResult, String verifyList) {
         if (response != null)
             testLog.info("Response is:\n" + response.toString());
@@ -296,6 +326,11 @@ public class DataDrivenApi {
         testLog.info("Body: " + body);
         System.out.println(body);
         return body;
+    }
+
+    private String addParamToURI(String uri, String paramName, String Id){
+        uri = uri+ "/" + paramName + "/" + Id;
+        return uri;
     }
 
     public void setConfirmationCode(String confirmationCode) {
