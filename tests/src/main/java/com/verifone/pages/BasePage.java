@@ -36,7 +36,7 @@ public abstract class BasePage {
 
 
     public BasePage(String url, String title) {
-        this.driver = WebDriverRunner.getWebDriver();
+        this.driver = WebDriverRunner.getAndCheckWebDriver();
         this.url = url;
         this.title = title;
     }
