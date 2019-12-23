@@ -87,17 +87,7 @@ public class VHQHomePage extends BasePage {
         waitForLoader(devSearch);
         ExpectedConditions.elementToBeClickable(devSearch);
         click(devSearch);
-        // Thread.sleep(3000);
-
-      /*  //reset the search result and search new device
-        List<WebElement> popup = driver.findElements(deviceSearchPopup);
-        System.out.println("reset btn size : " + popup.size());
-        if (popup.size() != 0) {
-            testLog.info("----------------------------------- Reset Search ----------------------------------------");
-            click(btnDeviceSearchReset);
-            waitUntilPageLoad(btnSearch);
-            click(btnSearch);
-        }*/
+        Thread.sleep(4000);
 
         //reset the search result and search new device
         List<WebElement> popup = driver.findElements(deviceSearchPopup);
