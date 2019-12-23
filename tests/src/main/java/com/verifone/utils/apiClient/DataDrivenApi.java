@@ -228,6 +228,8 @@ public class DataDrivenApi {
 
         else {
             response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+            System.out.println("response is: " + response);
+            testLog.info("response is: " + response);
             validateResult(expectedResult, verifyList);
         }
         return id;
