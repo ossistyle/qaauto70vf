@@ -1,5 +1,6 @@
 package com.verifone.tests.cpTests;
 
+import com.codeborne.selenide.WebDriverRunner;
 import com.verifone.pages.eoPages.HomePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -19,7 +20,8 @@ public class MerchantGetCongMailUI {
 	public void MerchantGetCongMailUI() throws Exception {
 		//      Navigate to Getnada
 
-		driver = new SeleniumUtils().getDriver("CHROME");
+		SeleniumUtils.setBrowser("CHROME");
+		driver = WebDriverRunner.getWebDriver();
 		driver.navigate().to("https://getnada.com/#");
 		addNewEmail("aeb90709d6164809a56447843ab87ac5");
 
