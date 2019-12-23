@@ -3,6 +3,7 @@ package com.verifone.utils.apiClient;
 import com.aventstack.extentreports.ExtentTest;
 import com.google.gson.JsonObject;
 import com.verifone.tests.BaseTest;
+import com.verifone.tests.api.tests.VFAppMarket.merchantGroup;
 import org.json.JSONException;
 import org.testng.Assert;
 
@@ -199,7 +200,7 @@ public class DataDrivenApi {
 
     }
 
-
+//If param = set:id of new created group will be saved on the side. If "get" will add new created id to the url of the request
     public String startProsessGetId(String accessToken, String accGrantType, String accSSOURL, String uri,
                              String requestMethod, String headers, String headersForGetToken, String body,
                              String expectedStatusCode, String expectedResult, String verifyList, String param) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, JSONException {
@@ -212,6 +213,7 @@ public class DataDrivenApi {
         id = getValue(response, "id");
         System.out.println("response is: " + response);
             System.out.println("id is: " + id);
+            testLog.info("New group id is: " + id);
         validateResult(expectedResult, verifyList);
         }
 
@@ -220,6 +222,7 @@ public class DataDrivenApi {
             uri = addParamToURI(uri,"deviceGroup",id1);
             response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
             System.out.println("response is: " + response);
+            testLog.info("response is: " + response);
             validateResult(expectedResult, verifyList);
         }
 
