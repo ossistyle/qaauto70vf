@@ -3,6 +3,7 @@ package com.verifone.utils.apiClient;
 import com.aventstack.extentreports.ExtentTest;
 import com.google.gson.JsonObject;
 import com.verifone.tests.BaseTest;
+import com.verifone.tests.api.tests.VFAppMarket.merchantGroup;
 import org.json.JSONException;
 import org.testng.Assert;
 
@@ -230,6 +231,7 @@ public class DataDrivenApi {
         return id;
     }
 
+    
     private void validateResult(String expectedResult, String verifyList) {
         if (response != null)
             testLog.info("Response is:\n" + response.toString());
