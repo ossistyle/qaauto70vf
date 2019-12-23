@@ -1,6 +1,7 @@
 package com.verifone.pages.mpAngularPages.pages;
 
 import com.codeborne.selenide.*;
+import com.verifone.infra.User;
 import com.verifone.pages.BasePage;
 
 import static com.codeborne.selenide.Condition.*;
@@ -35,8 +36,21 @@ public class LoginPage extends BasePage {
         WebDriverRunner.getWebDriver().switchTo().defaultContent();
     }
 
+    /**
+     * Click 'Log In' button
+     */
     public void clickLogin() {
         loginButton.should(exist).click();
+    }
+
+    /**
+     * Perform log in into app
+     * @param user User
+     */
+    public void doLogin(User user) {
+        enterLogin(user.getUserName());
+        enterPassword(user.getPassword());
+        clickLogin();
     }
 
     public LoginPage() {

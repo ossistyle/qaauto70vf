@@ -50,7 +50,7 @@ public class SeleniumUtils {
     public static void setBrowser(String browserType) {
         WebDriver driver;
         System.out.println("Starting web browser switch: " + browserType);
-        switch (browserType) {
+        switch (browserType.toUpperCase()) {
             case "FF":
                 System.setProperty("webdriver.gecko.driver", pathToDrivers("geckodriver.exe"));
 //			DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
