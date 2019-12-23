@@ -16,7 +16,7 @@ public class SimpleTestAngular8 extends BaseTest {
         SimpleTestAngular8Page verifoneMp = (SimpleTestAngular8Page) PageFactory.getPage("SimpleTestAngular8Page");
 
         
-        verifoneMp.navigate();
+        verifoneMp.openChrome();
         verifoneMp.loginVFMP(mer);
         verifoneMp.testAngular();
 

@@ -36,7 +36,7 @@ public abstract class BasePage {
 
 
     public BasePage(String url, String title) {
-        this.driver = WebDriverRunner.getAndCheckWebDriver();
+        this.driver = WebDriverRunner.hasWebDriverStarted() ? WebDriverRunner.getAndCheckWebDriver() : null;
         this.url = url;
         this.title = title;
     }
@@ -48,6 +48,7 @@ public abstract class BasePage {
 
 
     public void navigate() {
+        WebDriverRunner.setWebDriver(this.driver);
         open(this.url);
     }
 
