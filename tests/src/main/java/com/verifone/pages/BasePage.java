@@ -724,8 +724,8 @@ public abstract class BasePage {
     protected boolean compareErrorMessageText(String errorMsg, By loc) {
         waitUntilPageLoad(loc);
         String feedBackError = getText(loc);
-        testLog.info("---------------------- Actual Error Msg : " + feedBackError + " ------------------------------");
-        testLog.info("---------------------- Expected Error Msg : " + errorMsg + " ------------------------------");
+        testLog.info("---------------------- Actual Msg : " + feedBackError + " ------------------------------");
+        testLog.info("---------------------- Expected Msg : " + errorMsg + " ------------------------------");
         return assertRowContains(errorMsg, feedBackError);
     }
 

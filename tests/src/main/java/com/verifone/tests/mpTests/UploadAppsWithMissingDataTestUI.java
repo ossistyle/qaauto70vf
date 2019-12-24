@@ -19,10 +19,14 @@ import static com.verifone.tests.steps.mpPortal.Steps.loginMPPortalAsEOAdmin;
 public class UploadAppsWithMissingDataTestUI extends BaseTest {
 
     private boolean TestPassFlag = true;
+    private String productName;
 
     @Test(enabled = true, priority = 0, testName = "Check App Presence in Production/Staging Catalog", description = "LogIn into CBA MarketPlace and Remove Product from the Catalog if it is present", groups = {"MPPhase2"})
     public void VerifyAppInProductionCatalogTestUI() throws Exception {
         loginMPPortalAsEOAdmin();
+
+        //get the product name from the properties files
+        productName = BaseTest.envConfig.getCbaProductName();
 
         WebDriver driver = new CBADashboardPage().getDriver();
         ArrayList<String> availableWindows = new ArrayList<>(driver.getWindowHandles());
@@ -45,7 +49,7 @@ public class UploadAppsWithMissingDataTestUI extends BaseTest {
         CBAProductsPage cbaProducts = PageFactory.getCBAProducts();
 
         //Remove product from the production catalog only if it is present
-        if (cbaProducts.isProductAvailable()) {
+        if (cbaProducts.isProductAvailable(productName)) {
             testLog.info("------------------Remove Product Details From Production Catalog -----------------");
             cbaProducts.removeProduct();
             cbaProducts.unPublishProduct();

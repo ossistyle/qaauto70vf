@@ -80,6 +80,7 @@ public class CBADashboardPage extends BasePage {
      * @author : Prashant Lokhande
      */
     public void clickOnManageMenu() {
+        testLog.info("------------------------------- >> Manage -----------------------------------");
         click(manage);
     }
 
@@ -89,6 +90,7 @@ public class CBADashboardPage extends BasePage {
      * @author : Prashant Lokhande
      */
     public void clickOnMarketPlaceOption() {
+        testLog.info("------------------------------- >> MarketPlace -----------------------------------");
         click(marketPlace);
     }
 
@@ -98,6 +100,7 @@ public class CBADashboardPage extends BasePage {
      * @author : Prashant Lokhande
      */
     public void clickOnProductTab() {
+        testLog.info("------------------------------- >> Products -----------------------------------");
         click(products);
     }
 }

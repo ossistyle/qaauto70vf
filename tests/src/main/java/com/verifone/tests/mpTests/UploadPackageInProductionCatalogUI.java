@@ -12,6 +12,7 @@ import static com.verifone.tests.steps.mpPortal.Steps.*;
 
 public class UploadPackageInProductionCatalogUI extends BaseTest {
     private static String productVersionTitle;
+    private String productName;
 
     /**
      * This test case described package upload on CBA market place, package signing using V1 & V2
@@ -43,12 +44,15 @@ public class UploadPackageInProductionCatalogUI extends BaseTest {
     public void CBADeletePackageFromProductionCatalogTestUI() throws Exception {
         loginMPPortalAsEOAdmin();
 
+        //get the product name from the properties files
+        productName = BaseTest.envConfig.getCbaProductName();
+
         CBADashboardPage cbaDashboard = PageFactory.getCBADashboard();
         cbaDashboard.manageMarketPlaceProducts();
 
         //Remove product from the production catalog only if it is present
         CBAProductsPage cbaProducts = PageFactory.getCBAProducts();
-        if (cbaProducts.isProductAvailable()) {
+        if (cbaProducts.isProductAvailable(productName)) {
             System.out.println("App present");
             testLog.info("------------------------ Remove Product from Production Catalog --------------------------");
             cbaProducts.removeProduct();
