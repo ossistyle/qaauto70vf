@@ -1,6 +1,7 @@
 package com.verifone.pages;
 
 import com.aventstack.extentreports.ExtentTest;
+import com.codeborne.selenide.WebDriverRunner;
 import com.verifone.tests.BaseTest;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -22,10 +23,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.codeborne.selenide.Selenide.open;
+
 
 public abstract class BasePage {
 
-    public WebDriver driver = BaseTest.webDrivers.get(Thread.currentThread().getId());
+    public WebDriver driver;
     private String url;
     private String title;
     public static ExtentTest testLog;
@@ -33,6 +36,7 @@ public abstract class BasePage {
 
 
     public BasePage(String url, String title) {
+        this.driver = WebDriverRunner.hasWebDriverStarted() ? WebDriverRunner.getAndCheckWebDriver() : null;
         this.url = url;
         this.title = title;
     }
@@ -44,7 +48,8 @@ public abstract class BasePage {
 
 
     public void navigate() {
-        driver.get(this.url);
+        WebDriverRunner.setWebDriver(this.driver);
+        open(this.url);
     }
 
     protected void validateTitle() {
