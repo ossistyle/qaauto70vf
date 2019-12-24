@@ -29,7 +29,7 @@ public class devicesApps extends BaseTest {
 
     @Test(enabled = true, dataProvider = "return Devices with Apps assigned", groups = "VFMPapi")
 
-    public void cloudApiLocationDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
+    public void return_Devices_with_AppsDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
                                     String headers, String headersForGetToken, String body, String expectedStatusCode,
                                     String expectedResult, String verifyList, String verifyExcludeList, String comments, String rowNum) throws Exception {
         starTestLog(rowNum + ". " + comments, "Return devices with apps assigned");
