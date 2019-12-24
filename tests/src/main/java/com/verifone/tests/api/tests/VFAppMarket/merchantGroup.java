@@ -41,7 +41,7 @@ public class merchantGroup extends BaseTest {
                                     String headers, String headersForGetToken, String body, String expectedStatusCode,
                                     String expectedResult, String verifyList, String comments, String rowNum, String param) throws Exception {
 
-        starTestLog(rowNum + ". " + comments, comments);
+        starTestLog(rowNum + ". " + comments, "add/get/remove device from a group");
 
         DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false); // 'isBearer' is a flag to define a getToken type(with 'Bearer' or not)
         String responseParam = api.startProsessGetId(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
@@ -54,7 +54,7 @@ public class merchantGroup extends BaseTest {
     public void postGroupDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
                                     String headers, String headersForGetToken, String body, String expectedStatusCode,
                                     String expectedResult, String verifyList, String comments, String rowNum, String param) throws Exception {
-        starTestLog(rowNum + ". " + comments, comments);
+        starTestLog(rowNum + ". " + comments, "create/get//edit group for merchant");
 
         DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false); // 'isBearer' is a flag to define a getToken type(with 'Bearer' or not)
         String responseParam = api.startProsessGetId(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,

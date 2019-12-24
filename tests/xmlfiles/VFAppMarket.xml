@@ -27,9 +27,9 @@
 
         <classes>
             <class name="com.verifone.tests.api.tests.VFAppMarket.appsDevice"/>
-            <class name="com.verifone.tests.api.tests.VFAppMarket.merchantDevice"/>
             <class name="com.verifone.tests.api.tests.VFAppMarket.merchantBundle"/>
             <class name="com.verifone.tests.api.tests.VFAppMarket.devicesApps"/>
+            <class name="com.verifone.tests.api.tests.VFAppMarket.appsMerchant"/>
             <!--<class name="com.verifone.tests.api.tests.cloud_api_ddt.ShiftApiDdt"/>-->
             <!--<class name="com.verifone.tests.api.tests.cloud_api_ddt.MerchantApiDdt"/>-->
             <!--<class name="com.verifone.tests.api.tests.cloud_api_ddt.EmployeeApiDdt"/>-->

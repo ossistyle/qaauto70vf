@@ -32,7 +32,7 @@ public class devicesApps extends BaseTest {
     public void cloudApiLocationDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
                                     String headers, String headersForGetToken, String body, String expectedStatusCode,
                                     String expectedResult, String verifyList, String verifyExcludeList, String comments, String rowNum) throws Exception {
-        starTestLog(rowNum + ". " + comments, comments);
+        starTestLog(rowNum + ". " + comments, "Return devices with apps assigned");
 
 
         DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false); // 'isBearer' is a flag to define a getToken type(with 'Bearer' or not)
