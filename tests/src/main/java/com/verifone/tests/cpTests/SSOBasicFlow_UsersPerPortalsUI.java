@@ -202,7 +202,7 @@ public class SSOBasicFlow_UsersPerPortalsUI extends BaseTest {
 
 		switch(Role) {
 			case "EO Admin":
-				Thread.sleep(timeOut + 2000);
+				Thread.sleep(timeOut + 4000);
 				availableWindows = new ArrayList<String>(driver.getWindowHandles());
 				driver.switchTo().window(availableWindows.get(0));
 //    	Search for Header
@@ -217,7 +217,7 @@ public class SSOBasicFlow_UsersPerPortalsUI extends BaseTest {
 				Assert.assertTrue(HomePage.menuLogoutExists());
 				break;
 			case "EO Device and App Manager":
-				Thread.sleep(timeOut + 2000);
+				Thread.sleep(timeOut + 4000);
 				availableWindows = new ArrayList<String>(driver.getWindowHandles());
 				driver.switchTo().window(availableWindows.get(0));
 //    	Search for Header
