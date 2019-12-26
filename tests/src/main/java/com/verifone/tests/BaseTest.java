@@ -99,7 +99,7 @@ public abstract class BaseTest {
         } else if (methodName.contains("Mobile")) {
             AppiumDriverSetup driverSetup = new AppiumDriverSetup();
             DesiredCapabilities caps = driverSetup.getCapabilities();
-            androidDriver = (AndroidDriver<SelenideElement>) driverSetup.createDriver(caps);
+            driverSetup.createDriver(caps);
 
             Configuration.startMaximized = false;
             Configuration.browserSize = null;
@@ -107,6 +107,7 @@ public abstract class BaseTest {
             Configuration.browser = AppiumDriverSetup.class.getName();
             Configuration.proxyHost = APPIUM_SERVER_URL;
             open();
+            androidDriver = (AndroidDriver<SelenideElement>) WebDriverRunner.getAndCheckWebDriver();
         } else if (methodName.contains("DDT")) {
             return;
         }
