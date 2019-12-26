@@ -1,7 +1,10 @@
 package com.verifone.pages.mpMobilePages.pages;
 
-import com.verifone.pages.AndroidBasePage;
+import com.verifone.pages.mpMobilePages.MobilePage;
 
-public class HomePage extends AndroidBasePage {
+public class HomePage extends MobilePage {
 
+    public HomePage() {
+        super();
+    }
 }

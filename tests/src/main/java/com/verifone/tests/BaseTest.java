@@ -6,12 +6,16 @@ import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import com.verifone.infra.EnvConfig;
 import com.verifone.infra.SeleniumUtils;
 import com.verifone.pages.BasePage;
 import com.verifone.utils.apiClient.BaseApi;
 import com.verifone.utils.apiClient.BaseDDTApi;
+import com.verifone.infra.AppiumDriverSetup;
+import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import java.io.File;
@@ -20,16 +24,19 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.codeborne.selenide.Selenide.open;
 import static com.verifone.tests.steps.Steps.getVersions;
 
 
 public abstract class BaseTest {
 
+    protected AndroidDriver<SelenideElement> androidDriver;
     public static EnvConfig envConfig;
     private static ExtentReports extent;
     private static ThreadLocal parentTest = new ThreadLocal();
     protected static ThreadLocal test = new ThreadLocal();
     public Date date = new Date();
+    private static String APPIUM_SERVER_URL = "http://localhost:4723/wd/hub";
     public SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
     //    public String reportDirectory = java.nio.file.Paths.get(
 //            System.getProperty("user.dir"), "reports", dateFormat.format(date)).toString() + File.separator;
@@ -49,7 +56,7 @@ public abstract class BaseTest {
         setEnv(env, portal);
 
         Configuration.baseUrl = envConfig.getWebUrl();
-        Configuration.timeout = 30000;
+        Configuration.timeout = 40000;
 
         if (getVersions.equalsIgnoreCase("true")) {
             ExtentTest parent = extent.createTest("Get Versions");
@@ -86,10 +93,21 @@ public abstract class BaseTest {
     public void startBrowser(Method method, String browserType, String isLinuxMachine) throws Exception {
         SeleniumUtils.reportDirectory = reportDirectory;
         SeleniumUtils.isLinuxMachine = isLinuxMachine;
-        if (method.getName().contains("UI")) {
+        String methodName = method.getName();
+        if (methodName.contains("UI")) {
             SeleniumUtils.setBrowser(browserType);
-        }
-        if (method.getName().contains("DDT")) {
+        } else if (methodName.contains("Mobile")) {
+            AppiumDriverSetup driverSetup = new AppiumDriverSetup();
+            DesiredCapabilities caps = driverSetup.getCapabilities();
+            androidDriver = (AndroidDriver<SelenideElement>) driverSetup.createDriver(caps);
+
+            Configuration.startMaximized = false;
+            Configuration.browserSize = null;
+            Configuration.browserCapabilities = caps;
+            Configuration.browser = AppiumDriverSetup.class.getName();
+            Configuration.proxyHost = APPIUM_SERVER_URL;
+            open();
+        } else if (methodName.contains("DDT")) {
             return;
         }
         Test test = method.getAnnotation(Test.class);
@@ -125,9 +143,11 @@ public abstract class BaseTest {
                 break;
         }
 
-        if (method.getName().contains("UI") & !method.getName().contains("UI_Cont")) {
+        String methodName = method.getName();
+        if ((methodName.contains("UI") & !methodName.contains("UI_Cont")) || methodName.contains("Mobile")) {
             child.info("Closing Web Page");
-            WebDriverRunner.closeWebDriver();
+            if (WebDriverRunner.hasWebDriverStarted())
+                WebDriverRunner.closeWebDriver();
         }
         extent.flush();
     }

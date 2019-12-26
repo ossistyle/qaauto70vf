@@ -1,11 +1,16 @@
 package com.verifone.pages.mpMobilePages.components;
 
+import com.aventstack.extentreports.ExtentTest;
 import com.codeborne.selenide.SelenideElement;
+import com.verifone.pages.BasePage;
+
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class MainMenu {
+
+    private ExtentTest testLog;
 
     private SelenideElement logo = $(byId("logo"));
     private SelenideElement applicationsItem = $(byXpath("//li[@class='menu-group']//span[contains(text(), 'App')]"));
@@ -19,6 +24,7 @@ public class MainMenu {
      * Click 'Applications' menu item
      */
     public void clickApplications() {
+        testLog.info("Click 'Applications' menu item");
         applicationsItem.should(exist).click();
     }
 
@@ -26,6 +32,7 @@ public class MainMenu {
      * Click 'App Catalog' menu item
      */
     public void clickAppCatalog() {
+        testLog.info("Click 'App Catalog' menu item");
         appCatalogItem.should(exist).click();
     }
 
@@ -33,6 +40,7 @@ public class MainMenu {
      * Click 'Devices' menu item
      */
     public void clickDevices() {
+        testLog.info("Click 'Devices' menu item");
         devicesItem.should(exist).click();
     }
 
@@ -40,6 +48,7 @@ public class MainMenu {
      * Click 'Reports' menu item
      */
     public void clickReports() {
+        testLog.info("Click 'Reports' menu item");
         reportsItem.should(exist).click();
     }
 
@@ -47,6 +56,7 @@ public class MainMenu {
      * Click 'Settings' menu item
      */
     public void clickSettings() {
+        testLog.info("Click 'Settings' menu item");
         settingsItem.should(exist).click();
     }
 
@@ -54,6 +64,7 @@ public class MainMenu {
      * Click 'Users' menu item
      */
     public void clickUsers() {
+        testLog.info("Click 'Users' menu item");
         usersItem.should(exist).click();
     }
 
@@ -63,5 +74,9 @@ public class MainMenu {
      */
     public SelenideElement getLogo() {
         return logo;
+    }
+
+    public MainMenu() {
+        this.testLog = BasePage.testLog;
     }
 }
