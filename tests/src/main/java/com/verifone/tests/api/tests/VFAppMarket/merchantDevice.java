@@ -28,12 +28,12 @@ public class merchantDevice extends BaseTest {
         return arrayObject;
     }
 
-    @Test(dataProvider = "return Devices", groups = "cloudApi1")
+    @Test(dataProvider = "return Devices", groups = "VFMPapi")
 
     public void returnDevicesDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
                                     String headers, String headersForGetToken, String body, String expectedStatusCode,
                                     String expectedResult, String verifyList, String comments, String rowNum) throws Exception {
-        starTestLog(rowNum + ". " + comments, comments);
+        starTestLog(rowNum + ". " + comments, "Return merchant devices");
 
         DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false); // 'isBearer' is a flag to define a getToken type(with 'Bearer' or not)
         api.startProsess(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
