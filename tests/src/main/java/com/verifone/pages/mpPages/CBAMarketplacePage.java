@@ -42,7 +42,7 @@ public class CBAMarketplacePage extends BasePage {
     private By feedBack = By.xpath("//*[@id='orderReceipt']/child::div/child::p");
     private By agreeToTermsCheckbox = By.xpath("//*[@id='agreeToTermsCheckbox']");
     private By clickOnSettingsIcon = By.xpath("//button[@class='adb-button adb-button__neutral adb-context_menu--trigger adb-js-context_menu--trigger']");
-
+    private By existenceOfApp = By.xpath("//*[@class='listing-row-content-title js-title--link' and text()='CM5 OneTime Pay ShiftTotals']");
     private List<WebElement> listingApps;
 
     public CBAMarketplacePage() {
@@ -239,4 +239,19 @@ public class CBAMarketplacePage extends BasePage {
         return false;
     }
 
+    /**
+     * Method : Verify application existence in the market place
+     *
+     * @author Prashant Lokhande
+     */
+    public boolean isAppExistInMarketPlace() {
+        waitUntilPageLoad(searchBtn);
+        List<WebElement> listElement = driver.findElements(existenceOfApp);
+        System.out.println("listElement :" + listElement.size());
+
+        if (listElement.size() != 0) {
+            return true;
+        }
+        return false;
+    }
 }

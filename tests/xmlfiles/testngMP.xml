@@ -206,4 +206,10 @@
         </classes>
     </test>
 
+    <test name="UploadAppWithInvisibleEdition">
+        <classes>
+            <class name="com.verifone.tests.mpTests.UploadAppWithInvisibleEdition"/>
+        </classes>
+    </test>
+
 </suite>
