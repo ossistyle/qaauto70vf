@@ -3,9 +3,11 @@ package com.verifone.utils.apiClient;
 import com.aventstack.extentreports.ExtentTest;
 import com.google.gson.JsonObject;
 import com.verifone.tests.BaseTest;
+import org.apache.commons.lang3.StringUtils;
 import com.verifone.tests.api.tests.VFAppMarket.merchantGroup;
 import org.json.JSONException;
 import org.testng.Assert;
+import org.testng.SkipException;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,6 +57,76 @@ public class DataDrivenApi {
         this.testLog = child;
         this.isBearer = isBearer;
     }
+
+    /**
+     * Verified APi endpoints for create, get, update and delete bundles are working correctly
+     * Gets the endpoint and other input data from xls spreadsheet by Data provider.
+     *
+     * @param accessToken
+     * @param accGrantType
+     * @param accSSOURL
+     * @param uri
+     * @param requestMethod
+     * @param headers
+     * @param headersForGetToken
+     * @param body
+     * @param expectedStatusCode
+     * @param expectedResult
+     * @param verifyList
+     * @param verifyExcludeList
+     * @param rowNum
+     * @param bundleId
+     * @return bundle id if a new bundle was created
+     * @throws Exception
+     */
+
+    public String bundlesCrudVerification(String accessToken, String accGrantType, String accSSOURL, String uri,
+                                          String requestMethod, String headers, String headersForGetToken, String body,
+                                          String expectedStatusCode, String expectedResult, String verifyList, String verifyExcludeList, String rowNum, String comments, String bundleId) throws Exception {
+
+        headersMap = getMapFromStr(headers);
+        getToken(accessToken, accGrantType, accSSOURL, headersForGetToken);
+
+        //if bundleId is empty need step need to create bundle or verify there are no such bundle by name in EO's list of bundles,
+        if (StringUtils.isBlank(bundleId)) {
+            if (StringUtils.containsIgnoreCase(comments, "Get EO list of bundles")) {
+                response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+
+                //need to verify there are no bundle we are going to create in the list of bundle for EO
+                //if exclude list is empty throw exception - it need to be filled in the xls file
+                if (StringUtils.isNotBlank(verifyExcludeList)) {
+                    validateExcludeResult(expectedResult, verifyList, verifyExcludeList);
+                } else {
+                    throw new SkipException("verifyExcludeList column should be filled in the xsl sheet for step that verify there are no bundle with the name that will be created in the next steps");
+                }
+
+            } else {
+                //
+                response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+                validateResult(expectedResult, verifyList);
+                bundleId = response.get("id").toString();
+
+            }
+
+        } else {        //BundleId is filled, need to verify bundle
+
+            //if uri has keyword '/bundle/', id of created bundle should be add to the end
+            if (StringUtils.containsIgnoreCase(uri, "/bundle/")) {
+                uri += bundleId.replace("\"", "");
+            }
+
+            response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+            if (StringUtils.isNoneBlank(verifyList)) {
+                validateResult(expectedResult, verifyList);
+            }
+            if (StringUtils.isNoneBlank(verifyExcludeList)) {
+                validateExcludeResult(expectedResult, verifyList, verifyExcludeList);
+            }
+        }
+
+        return bundleId;
+    }
+
 
     public void startProsess(String accessToken, String accGrantType, String accSSOURL, String uri,
                              String requestMethod, String headers, String headersForGetToken, String body,
@@ -109,7 +181,7 @@ public class DataDrivenApi {
             try {
                 offerId = response.get("offerId").toString();
                 System.out.println(offerId);
-                testLog.info("offerID: "+ offerId);
+                testLog.info("offerID: " + offerId);
             } catch (NullPointerException e) {
                 System.out.println("offerId is missing in row number " + raw);
                 testLog.info("offerId is missing in row number " + raw);
@@ -235,7 +307,7 @@ public class DataDrivenApi {
         return id;
     }
 
-    
+
     private void validateResult(String expectedResult, String verifyList) {
         if (response != null)
             testLog.info("Response is:\n" + response.toString());

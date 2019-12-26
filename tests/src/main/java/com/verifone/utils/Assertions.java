@@ -2,6 +2,7 @@ package com.verifone.utils;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.verifone.infra.SeleniumUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 
 import static org.testng.AssertJUnit.assertEquals;
@@ -11,7 +12,7 @@ public class Assertions {
     public static ExtentTest testLog;
 
     public static void assertTextContains(String expectedResult, String actual) {
-        if (!actual.contains(expectedResult)) {
+        if (!StringUtils.containsIgnoreCase(actual, expectedResult.trim())) {
             org.testng.Assert.fail("Text expected: " + expectedResult + " Was: " + actual);
         }
     }
@@ -32,9 +33,6 @@ public class Assertions {
     }
 
 
-
-
-
     public static boolean compareValue(String ExpectedRes, String ActualRes, String Desc, ExtentTest testLog, WebDriver driver) throws Exception {
         boolean TestPassFlag;
         String capScreenShootPath;
@@ -51,7 +49,8 @@ public class Assertions {
         }
         return TestPassFlag;
     }
-    public static boolean compareNumber(int ExpectedRes, int ActualRes, String Desc, ExtentTest testLog, WebDriver driver) throws  Exception {
+
+    public static boolean compareNumber(int ExpectedRes, int ActualRes, String Desc, ExtentTest testLog, WebDriver driver) throws Exception {
         boolean TestPassFlag;
         String capScreenShootPath;
 
@@ -67,6 +66,7 @@ public class Assertions {
         }
         return TestPassFlag;
     }
+
     public static boolean compareBoolean(Boolean ExpectedRes, Boolean ActualRes, String Desc, ExtentTest testLog, WebDriver driver) throws Exception {
         boolean TestPassFlag;
         String capScreenShootPath;
