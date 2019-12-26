@@ -359,7 +359,7 @@ public class SSOBasicFlow_ResetPasswordStatusUI extends BaseTest {
         String url = driver.getCurrentUrl();
         System.out.println("URL :" + url);
         //verifonecp.com/#home
-        if (!Assertions.compareValue("qa.merchant.verifonecp.com/#home", url, "User redirected to:", testLog, driver)) {
+        if (!Assertions.compareValue("https://qa.merchant.verifonecp.com/home", url, "User redirected to:", testLog, driver)) {
             TestPassFlag = false;
             testLog.info("21. ---------- HomePage : Compare page text with expected---------- :" + tText);
         }
