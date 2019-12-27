@@ -9,6 +9,9 @@
     <parameter name="env" value="DEV"/>
     <parameter name="getVersions" value="false"/>
     <parameter name="isLinuxMachine" value="${isLinux}"/>
+    <parameter name="udid" value="${udid}"/>
+    <parameter name="deviceName" value="${deviceName}"/>
+    <parameter name="app" value="${app}"/>
 
     <!--Set Portal Variable: -->
     <!--CPPortal-->

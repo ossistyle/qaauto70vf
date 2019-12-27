@@ -16,8 +16,10 @@ import com.verifone.utils.apiClient.BaseDDTApi;
 import com.verifone.infra.AppiumDriverSetup;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
+import org.testng.xml.XmlTest;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -31,6 +33,7 @@ import static com.verifone.tests.steps.Steps.getVersions;
 public abstract class BaseTest {
 
     protected AndroidDriver<SelenideElement> androidDriver;
+    private XmlTest testngXml;
     public static EnvConfig envConfig;
     private static ExtentReports extent;
     private static ThreadLocal parentTest = new ThreadLocal();
@@ -48,7 +51,8 @@ public abstract class BaseTest {
 
     @Parameters({"env", "portal", "getVersions"})
     @BeforeSuite
-    public void beforeSuite(String env, String portal, String getVersions) throws Exception {
+    public void beforeSuite(ITestContext context, String env, String portal, String getVersions) throws Exception {
+        testngXml = context.getCurrentXmlTest();
 //        new File(reportDirectory).mkdir();
         extent = ExtentManager.createInstance(reportLocation);
         ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(reportLocation);
@@ -98,7 +102,7 @@ public abstract class BaseTest {
             SeleniumUtils.setBrowser(browserType);
         } else if (methodName.contains("Mobile")) {
             AppiumDriverSetup driverSetup = new AppiumDriverSetup();
-            DesiredCapabilities caps = driverSetup.getCapabilities();
+            DesiredCapabilities caps = driverSetup.getCapabilities(testngXml.getAllParameters());
             driverSetup.createDriver(caps);
 
             Configuration.startMaximized = false;
