@@ -19,66 +19,49 @@ public class merchantGroup extends BaseTest {
     @BeforeSuite
     private void getFile()
     {
-        file = setFilePath("merchant-groupVFMPQA.xls", "merchant-groupVFMPDEV.xls");
+        file = setFilePath("merchant-groupVFMPQA.xls", "noFileHere.xls");
     }
 
-/*    @DataProvider(name = "return_Group")
-    public Object[][] returnGroup() throws Exception {
-        Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "returnGroup-gvcca2307");
-        return arrayObject;
-    }*/
 
-    @DataProvider(name = "create_and_edit_group")
+    @DataProvider(name = "create_get_and_edit_group")
     public Object[][] createEditGroup() throws Exception {
-        Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "createEditGroup-gvcca2305");
+        Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "createGetEditGroup-gvcca2305");
         return arrayObject;
     }
-/*
-    @DataProvider(name = "get Group Details")
+
+    @DataProvider(name = "add_get_remove")
     public Object[][] location() throws Exception {
-        Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "getDeviceGroupDetails-gvcca2308");
+        Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "DeviceToGroupGVCCA2308");
         return arrayObject;
-    }*/
-/*
-    @Test(enabled = true, dataProvider = "return_Group", groups = "cloudApi1")
+    }
 
-    public void getGroupDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
+    @Test(enabled = true, dataProvider = "add_get_remove", groups = "VFMPapi",description = "add get remove group")
+
+    public void add_get_removeDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
                                     String headers, String headersForGetToken, String body, String expectedStatusCode,
-                                    String expectedResult, String verifyList, String comments, String rowNum) throws Exception {
-        starTestLog(rowNum + ". " + comments, comments);
+                                    String expectedResult, String verifyList, String comments, String rowNum, String param) throws Exception {
 
-        DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false); // 'isBearer' is a flag to define a getToken type(with 'Bearer' or not)
-        api.startProsess(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
-                expectedStatusCode, expectedResult, verifyList);
-    }*/
-
-    @Test(enabled = true, dataProvider = "create_and_edit_group", groups = "cloudApi1")
-
-    public void postGroupDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
-                                    String headers, String headersForGetToken, String body, String expectedStatusCode,
-                                    String expectedResult, String verifyList, String comments, String rowNum,String param) throws Exception {
-        starTestLog(rowNum + ". " + comments, comments);
+        starTestLog(rowNum + ". " + comments, "add/get/remove device from a group");
 
         DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false); // 'isBearer' is a flag to define a getToken type(with 'Bearer' or not)
         String responseParam = api.startProsessGetId(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
-                expectedStatusCode, expectedResult, verifyList,param);
+                expectedStatusCode, expectedResult, verifyList, param);
         if(responseParam !=null)setId(responseParam);
     }
 
+    @Test(enabled = true, dataProvider = "create_get_and_edit_group", groups = "VFMPapi")
 
-
-/*    @Test(enabled = true, dataProvider = "get Group Details", groups = "VFMPapi")
-
-    public void getGroupDetailDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
+    public void postGroupDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
                                     String headers, String headersForGetToken, String body, String expectedStatusCode,
-                                    String expectedResult, String verifyList, String verifyExcludeList, String comments, String rowNum) throws Exception {
-        starTestLog(rowNum + ". " + comments, comments);
+                                    String expectedResult, String verifyList, String comments, String rowNum, String param) throws Exception {
+        starTestLog(rowNum + ". " + comments, "create/get/edit group for merchant");
 
+        DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false); // 'isBearer' is a flag to define a getToken type(with 'Bearer' or not)
+        String responseParam = api.startProsessGetId(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
+                expectedStatusCode, expectedResult, verifyList, param);
+        if(responseParam !=null)setId(responseParam);
+    }
 
-        DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(), false); // 'isBearer' is a flag to define a getToken type(with 'Bearer' or not)
-        api.startProsess_ValidateExcludeData(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
-                expectedStatusCode, expectedResult, verifyList, verifyExcludeList);
-    }*/
 
 
     private void setId(String responseParam){

@@ -16,7 +16,7 @@ public class appsMerchant extends BaseTest {
     private String file;
     protected String offerId;
 
-
+//appsVFMP in use also with appsDevice class
     @BeforeSuite
     private void getFile()
     {
@@ -39,7 +39,7 @@ public class appsMerchant extends BaseTest {
     public void returnAppsMerchantDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
                                     String headers, String headersForGetToken, String body, String expectedStatusCode,
                                     String expectedResult, String verifyList, String verifyExcludeList, String comments, String rowNum) throws Exception {
-        starTestLog(rowNum + ". " + comments, comments);
+        starTestLog(rowNum + ". " + comments, "Return apps per merchant");
 
 
         DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false); // 'isBearer' is a flag to define a getToken type(with 'Bearer' or not)
@@ -51,12 +51,15 @@ public class appsMerchant extends BaseTest {
     public void returnOwnedAppsMerchantDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
                                     String headers, String headersForGetToken, String body, String expectedStatusCode,
                                     String expectedResult, String verifyList, String verifyExcludeList, String comments, String rowNum) throws Exception {
-        starTestLog(rowNum + ". " + comments, comments);
+        starTestLog(rowNum + ". " + comments, "Return owned merchant apps");
 
 
         DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false); // 'isBearer' is a flag to define a getToken type(with 'Bearer' or not)
         offerId = api.startProsess_ValidateExcludeDataEvaluaet(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
                 expectedStatusCode, expectedResult, verifyList, verifyExcludeList,offerId,rowNum);
     }
+
+
+
 
 }
