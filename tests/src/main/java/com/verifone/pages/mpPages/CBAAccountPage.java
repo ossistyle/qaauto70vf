@@ -35,6 +35,8 @@ public class CBAAccountPage extends BasePage {
     private By yesBtn = By.xpath("//button[@class='adb-button__primary buttonResponse']");
     private By linkManage = By.xpath("//*[text()='Manage']");
     private By linkMyApps = By.xpath("//a[@id = 'myapps']");
+    private By subscriptionsEditUpdate = By.xpath("//button[@data-auto='subscriptionsEditUpdate']");
+    private By otpApp = By.xpath("//label[text()='One Time Pay - Custom']");
     //private By linkManage = By.xpath("//*[@class='custom-primary__nav--items']//li[1]//a[1]");
     public static String jobCreatedOnUnsubscription;
 
@@ -118,4 +120,60 @@ public class CBAAccountPage extends BasePage {
         testLog.info(getText(feedBack));
 
     }
+
+    /**
+     * Click on Account option
+     *
+     * @author Prashant Lokhande
+     */
+    public void clickOnAccountOption() {
+        testLog.info("------------------------------ Navigate to Account ------------------------------");
+        click(account);
+    }
+
+    /**
+     * Method : Click on Manage Apps option
+     *
+     * @author Prashant Lokhande
+     */
+    public void clickOnManageApps() {
+        testLog.info("------------------------------ Navigate to Manage Apps ------------------------------");
+        click(manageApps);
+    }
+
+    /**
+     * Method : Click on search app in Manage App section
+     * Manage App
+     *
+     * @author Prashant Lokhande
+     */
+    public void searchAppInManageApps(String appName) {
+        sendKeys(mySearch, appName);
+        click(iconSearch);
+    }
+
+    /**
+     * Method: Click on Update Subscription
+     *
+     * @author Prashant Lokhande
+     */
+    public void clickOnUpdateSubscriptionBtn() {
+        testLog.info("------------------------------ Navigate to Update Subscription ------------------------------");
+        waitUntilPageLoad(subscriptionsEditUpdate);
+        click(subscriptionsEditUpdate);
+    }
+
+    /**
+     * Method : Check edition added in update subscription section
+     * Update Subscription
+     *
+     * @author Prashant Lokhande
+     */
+    public boolean checkAddedEditionInManageApps() {
+        waitUntilPageLoad(otpApp);
+        List<WebElement> editionApp = driver.findElements(otpApp);
+        System.out.println("edition app size" + editionApp.size());
+        return editionApp.size() != 0;
+    }
+
 }

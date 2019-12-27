@@ -18,7 +18,7 @@ public class ApiUrls {
     private String resendInvitation;
     private String createDcOrg;
     private String getVersions;
-    
+
     public ApiUrls(String env, Properties prop) throws IOException {
         env = env + ".";
         getVersions = prop.getProperty(env + "getVersions");

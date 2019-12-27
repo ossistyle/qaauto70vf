@@ -205,10 +205,15 @@
             <class name="com.verifone.tests.mpTests.UploadAppsWithMissingDataTestUI"/>
         </classes>
     </test>
-
     <test name="UploadAppWithInvisibleEdition">
         <classes>
             <class name="com.verifone.tests.mpTests.UploadAppWithInvisibleEdition"/>
+        </classes>
+    </test>
+
+    <test name="UpdateEditionAfterPurchase">
+        <classes>
+            <class name="com.verifone.tests.mpTests.UpdateEditionAfterPurchase"/>
         </classes>
     </test>
 
