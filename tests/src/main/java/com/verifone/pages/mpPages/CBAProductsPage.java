@@ -646,6 +646,7 @@ public class CBAProductsPage extends BasePage {
             waitForLoader(headerItem);
             ExpectedConditions.textToBe(headerItem, headerInfo);
             click(addProductVersion);
+            waitForLoader(versionTitle);
         }
     }
 
