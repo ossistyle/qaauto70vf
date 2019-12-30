@@ -25,8 +25,7 @@ public class CBAMyAppsPage extends BasePage
     private List<String> names;
     private WebElement myApp;
 
-    public CBAMyAppsPage()
-    {
+    public CBAMyAppsPage() {
         super(url, title);
         validateTitle();
     }
@@ -84,13 +83,34 @@ public class CBAMyAppsPage extends BasePage
         testLog.info(getText(success));
     }
 
-    public void whiteLabelingMyApps()
-    {
+    public void whiteLabelingMyApps() {
         testLog.info(getCSSValue(moreInfo, "color"));
         testLog.info(getCSSValue(moreInfo, "background-color"));
         testLog.info(getCSSValue(moreInfo, "font-family"));
         testLog.info(getCSSValue(moreInfo, "font-size"));
     }
 
+    /**
+     * Check app exists in the MyApps
+     *
+     * @return
+     * @author : Prashant Lokhande
+     */
+    public boolean isAppExistsInMyAppsList(String purchasedAppName) {
 
+        List<WebElement> appElement = getWebElements(titleList, 500, ExpectedConditions.presenceOfElementLocated(titleList));
+        int isAppExistsFlag = 0;
+
+        //check the existence of app in My Apps List
+        for (WebElement name : appElement) {
+            String getText = name.getText();
+
+            if (getText.contains(purchasedAppName)) {
+                testLog.info("------------------------------ " + purchasedAppName + " exists in the MyApps list ------------------------------");
+                isAppExistsFlag = 1;
+                break;
+            }
+        }
+        return isAppExistsFlag != 0;
+    }
 }
