@@ -22,7 +22,7 @@ public class merchantBundle extends BaseTest {
     {
         file = setFilePath("merchant-bundleVFMPQA.xls", "merchant-bundleVFMP.xls");
     }
-/*
+
   @DataProvider(name = "bundles list")
     public Object[][] location() throws Exception {
         Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "returnBundles-gvcca2319");
@@ -55,7 +55,7 @@ public class merchantBundle extends BaseTest {
     }
 
     @DataProvider(name = "1time_existing")
-    public Object[][] one_time_payment() throws Exception {
+    public Object[][] OneTime_existing() throws Exception {
         Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "1time_existing");
         return arrayObject;
     }
@@ -66,16 +66,30 @@ public class merchantBundle extends BaseTest {
         return arrayObject;
     }
 
-    */
+
     @DataProvider(name = "recurring_existing")
     public Object[][] recurring_existing() throws Exception {
         Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "recurring_existing");
         return arrayObject;
     }
-    /*
+
+
+    @DataProvider(name = "mixed")
+    public Object[][] mixed() throws Exception {
+        Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "mixed");
+        return arrayObject;
+    }
+
+
+    @DataProvider(name = "mixed_existing")
+    public Object[][] mixed_existing() throws Exception {
+        Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "mixed_existing");
+        return arrayObject;
+    }
+
        @Test(dataProvider = "bundles list", groups = "VFMPapi")
 
-       public void cloudApiLocationDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
+       public void bundlesListDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
                                        String headers, String headersForGetToken, String body, String expectedStatusCode,
                                        String expectedResult, String verifyList,String verifyExcludeList, String comments, String rowNum) throws Exception {
            starTestLog(rowNum + ". " + comments, comments);
@@ -90,6 +104,7 @@ public class merchantBundle extends BaseTest {
 
        public void negativeTestDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
                                        String headers, String headersForGetToken, String body, String expectedStatusCode,
+
                                        String expectedResult, String verifyList,String verifyExcludeList, String comments, String rowNum) throws Exception {
            starTestLog(rowNum + ". " + comments, comments);
 
@@ -109,9 +124,11 @@ public class merchantBundle extends BaseTest {
         offerId = api.startProsess_ValidateExcludeDataEvaluaet(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
                 expectedStatusCode, expectedResult, verifyList,verifyExcludeList, offerId, rowNum );
     }
-@Test(dataProvider = "existing_assignment", groups = "VFMPapi")
 
-public void existingAssignmentDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
+
+    @Test(dataProvider = "existing_assignment", groups = "VFMPapi")
+
+    public void existingAssignmentDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
                           String headers, String headersForGetToken, String body, String expectedStatusCode,
                           String expectedResult, String verifyList,String verifyExcludeList, String comments, String rowNum) throws Exception {
     starTestLog(rowNum + ". " + comments, comments);
@@ -119,7 +136,7 @@ public void existingAssignmentDDT(String accessToken, String accGrantType, Strin
     DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false);
     offerId = api.startProsess_ValidateExcludeDataEvaluaet(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
             expectedStatusCode, expectedResult, verifyList,verifyExcludeList, offerId, rowNum );
-}
+    }
 
 
     @Test(dataProvider = "one_time_payment", groups = "VFMPapi")
@@ -158,13 +175,40 @@ public void existingAssignmentDDT(String accessToken, String accGrantType, Strin
         DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false);
         offerId = api.startProsess_ValidateExcludeDataEvaluaet(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
                 expectedStatusCode, expectedResult, verifyList,verifyExcludeList, offerId, rowNum );
-    }*/
+    }
 
     @Test(dataProvider = "recurring_existing", groups = "VFMPapi")
 
     public void recurring_existingDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
                              String headers, String headersForGetToken, String body, String expectedStatusCode,
                              String expectedResult, String verifyList,String verifyExcludeList, String comments, String rowNum) throws Exception {
+        starTestLog(rowNum + ". " + comments, comments);
+
+        DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false);
+        offerId = api.startProsess_ValidateExcludeDataEvaluaet(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
+                expectedStatusCode, expectedResult, verifyList,verifyExcludeList, offerId, rowNum );
+    }
+
+
+
+    @Test(dataProvider = "mixed", groups = "VFMPapi")
+
+    public void mixedDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
+                                      String headers, String headersForGetToken, String body, String expectedStatusCode,
+                                      String expectedResult, String verifyList,String verifyExcludeList, String comments, String rowNum) throws Exception {
+        starTestLog(rowNum + ". " + comments, comments);
+
+        DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false);
+        offerId = api.startProsess_ValidateExcludeDataEvaluaet(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
+                expectedStatusCode, expectedResult, verifyList,verifyExcludeList, offerId, rowNum );
+    }
+
+
+    @Test(dataProvider = "mixed_existing", groups = "VFMPapi")
+
+    public void mixed_existingDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
+                         String headers, String headersForGetToken, String body, String expectedStatusCode,
+                         String expectedResult, String verifyList,String verifyExcludeList, String comments, String rowNum) throws Exception {
         starTestLog(rowNum + ". " + comments, comments);
 
         DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false);

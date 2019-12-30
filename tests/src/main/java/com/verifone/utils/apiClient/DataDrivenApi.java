@@ -168,6 +168,7 @@ public class DataDrivenApi {
 
             try {
                 response = getRequestWithHeadersNoExpected(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+                validateExcludeResult(expectedResult, verifyList, verifyExcludeList);
                 System.out.println("response is: " + response);
             } catch (AssertionError e) {
                 if (raw.equals("2")) {
