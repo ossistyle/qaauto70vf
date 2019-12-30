@@ -1,0 +1,36 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Verifone">
+
+    <!--Set Env Variable: -->
+    <!--QA-->
+    <!--DEV-->
+    <parameter name="env" value="DEV"/>
+    <parameter name="getVersions" value="false"/>
+    <parameter name="isLinuxMachine" value="${isLinux}"/>
+    <parameter name="udid" value="${udid}"/>
+    <parameter name="deviceName" value="${deviceName}"/>
+    <parameter name="app" value="${app}"/>
+
+    <!--Set Portal Variable: -->
+    <!--CPPortal-->
+    <!--CGPortal-->
+    <!--EOAdmin-->
+    <parameter name="portal" value="VFMPPortal"/>
+
+
+    <!--Set Browser Variable:-->
+    <!--CHROME-->
+    <!--FF-->
+    <!--EDGE-->
+    <!--IE-->
+    <!--test-->
+
+    <test name="AndroidMobile">
+        <classes>
+            <class name="com.verifone.tests.appiumTests.CM5_IonicAppTest"/>
+        </classes>
+    </test>
+
+</suite>
