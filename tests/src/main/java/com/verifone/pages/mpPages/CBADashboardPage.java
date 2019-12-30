@@ -28,6 +28,7 @@ public class CBADashboardPage extends BasePage {
     //private By products = By.xpath("//a[contains(text(),'Create Product')][@href='./products']");
     private By stagingCatalog = By.xpath("//a[@class='adb-link__nav adb-stack--item_content'][@href='#staging-products']");
     private By createProductBtn = By.xpath("//button[contains(text(),'Create Product')][@class='go-to-import-link adb-button__small']");
+    private By myAppID = By.id("myapps");
 
     public void manageMarketpace() throws Exception {
         testLog.info("------------------------------------- Navigate to MarketPlace -------------------------------------");
@@ -102,5 +103,15 @@ public class CBADashboardPage extends BasePage {
     public void clickOnProductTab() {
         testLog.info("------------------------------- >> Products -----------------------------------");
         click(products);
+    }
+
+    /**
+     * Method :click on My Apps option
+     *
+     * @author : Prashant Lokhande
+     */
+    public void clickOnMyApps() {
+        testLog.info("------------------------------- >> My Apps -----------------------------------");
+        click(myAppID);
     }
 }

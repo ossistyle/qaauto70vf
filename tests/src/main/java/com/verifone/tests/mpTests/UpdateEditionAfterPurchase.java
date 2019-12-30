@@ -44,7 +44,7 @@ public class UpdateEditionAfterPurchase extends BaseTest {
         }
     }
 
-    @Test(enabled = true, priority = 2, testName = "Delete Edition If Exist", description = "As a EO Admin, login into CBA MarketPlace, delete edition if it already exit.")
+    @Test(enabled = true, priority = 2, testName = "Delete Edition If Exist", description = "As a MP Manager, login into CBA MarketPlace, delete edition if it already exit.")
     public void DeleteEditionIfAlreadyExitTestUI() throws Exception {
 
         loginMPPortalAsEOAdmin();
@@ -98,7 +98,7 @@ public class UpdateEditionAfterPurchase extends BaseTest {
         }
     }
 
-    @Test(enabled = true, priority = 3, testName = "Add One Time Pay edition in the published app", description = "As a EO Admin, login into CBA MarketPlace, check availability of published app and add new edition as a one time.", dependsOnMethods = "DeleteEditionIfAlreadyExitTestUI")
+    @Test(enabled = true, priority = 3, testName = "Add One Time Pay edition in the published app", description = "As a MP Manager, login into CBA MarketPlace, check availability of published app and add new edition as a one time.", dependsOnMethods = "DeleteEditionIfAlreadyExitTestUI")
     public void AddNewEditionInPublishedAppTestUI() throws Exception {
         loginMPPortalAsEOAdmin();
 
@@ -169,7 +169,7 @@ public class UpdateEditionAfterPurchase extends BaseTest {
         testLog.info("------------------------------ Edition is display as expected !! ------------------------------");
     }
 
-    @Test(enabled = true, priority = 5, testName = "Delete Edition & Published App", description = "As a EO Admin, login into CBA MarketPlace and delete edition.", dependsOnMethods = "DeleteEditionIfAlreadyExitTestUI")
+    @Test(enabled = true, priority = 5, testName = "Delete Edition & Published App", description = "As a MP Manager, login into CBA MarketPlace and delete edition.", dependsOnMethods = "DeleteEditionIfAlreadyExitTestUI")
     public void DeleteEditionTestUI() throws Exception {
 
         loginMPPortalAsEOAdmin();
