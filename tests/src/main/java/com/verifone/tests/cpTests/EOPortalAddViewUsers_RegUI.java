@@ -601,6 +601,7 @@ public void EOAdminAddUserSubmitUI() throws Exception {
 
         testLog.info("------------------------------------------------- Navigate to Users page -------------------------------------------------");
 
+        Thread.sleep(TimeOut);
         HomePage.clickHeaderMenu();
         HomePage.clickUserMenu();
 

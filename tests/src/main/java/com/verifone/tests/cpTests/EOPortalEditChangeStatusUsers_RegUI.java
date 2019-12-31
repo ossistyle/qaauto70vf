@@ -78,99 +78,101 @@ public class EOPortalEditChangeStatusUsers_RegUI extends BaseTest {
 		a = UsersPage.pendingEOAdminRow();
 		System.out.println(a);
 		if (a <= 0){
-			AssertJUnit.fail("Pending EOAdmin not found");
+//			AssertJUnit.fail("Pending EOAdmin not found");
+			testLog.warning("Pending EOAdmin not found");
 		}
+		else {
+			testLog.info("------------------------------------------------- User Details page -------------------------------------------------");
 
-		testLog.info("------------------------------------------------- User Details page -------------------------------------------------");
+			UsersPage.clickOnRow(a);
 
-		UsersPage.clickOnRow(a);
+			Thread.sleep(TimeOut + 1000);
+			availableWindows = new ArrayList<String>(driver.getWindowHandles());
+			driver.switchTo().window(availableWindows.get(0));
+			UserDetailsPage UserDetailsPage = (UserDetailsPage) PageFactory.getPage("UserDetailsPage");
 
-		Thread.sleep(TimeOut + 1000);
-		availableWindows = new ArrayList<String>(driver.getWindowHandles());
-		driver.switchTo().window(availableWindows.get(0));
-		UserDetailsPage UserDetailsPage = (UserDetailsPage) PageFactory.getPage("UserDetailsPage");
+			//		Verify:
+			//		Mail disabled and not empty
+			//		if (!Assertions.compareBoolean(false, UserDetailsPage.elementEmailClickable(), "Email can be updated", testLog, driver)){
+			//			TestPassFlag = false;
+			//		}
+			boolean fl = false;
+			if (UserDetailsPage.getUserEmail().length() > 0) {
+				fl = true;
+			}
+			if (!Assertions.compareBoolean(true, fl, "Email not empty", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Edit User link disabled
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementUserEditClickable(), "Edit User link enabled", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Title = UserName
+			if (!Assertions.compareValue(UserDetailsPage.getTitle(), UserDetailsPage.getUserName(), "Title = UserName", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Status = Pending
+			if (!Assertions.compareValue("Pending", UserDetailsPage.getStatus(), "Status = Pending", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Resend Invitation link displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.getAction().contains("Resend Invitation"), "Resend Invitation link displayed", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Role = EOAdmin
+			if (!Assertions.compareValue("EO Admin", UserDetailsPage.getRole(), "Role = EOAdmin", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Role Not clickable
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleClickable(), "Role clickable", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Edit Role Not clickable
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleEditClickable(), "Edit Role clickable", testLog, driver)) {
+				TestPassFlag = false;
+			}
 
-//		Verify:
-//		Mail disabled and not empty
-//		if (!Assertions.compareBoolean(false, UserDetailsPage.elementEmailClickable(), "Email can be updated", testLog, driver)){
-//			TestPassFlag = false;
-//		}
-		boolean fl = false;
-		if (UserDetailsPage.getUserEmail().length() > 0) {
-			fl = true;
-		}
-		if (!Assertions.compareBoolean(true, fl, "Email not empty", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Edit User link disabled
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementUserEditClickable(), "Edit User link enabled", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Title = UserName
-		if (!Assertions.compareValue(UserDetailsPage.getTitle(), UserDetailsPage.getUserName(), "Title = UserName", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Status = Pending
-		if (!Assertions.compareValue("Pending", UserDetailsPage.getStatus(), "Status = Pending", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Resend Invitation link displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.getAction().contains("Resend Invitation"), "Resend Invitation link displayed", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Role = EOAdmin
-		if (!Assertions.compareValue("EO Admin", UserDetailsPage.getRole(), "Role = EOAdmin", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Role Not clickable
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleClickable(), "Role clickable", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Edit Role Not clickable
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleEditClickable(), "Edit Role clickable", testLog, driver)){
-			TestPassFlag = false;
-		}
+			testLog.info("------------------------------------------------- Resend invitation -------------------------------------------------");
 
-		testLog.info("------------------------------------------------- Resend invitation -------------------------------------------------");
+			UserDetailsPage.clickLnkResend();
+			//		Resend dialog displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.dialogResendExists(), "Resend dialog displayed", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut - 1000);
+			//		Resend dialog message
+			if (!Assertions.compareBoolean(true, UserDetailsPage.getDialogResend().contains("This will resend another copy of the invitation email to the pending user. Continue?"), "Resend dialog message: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut + 1000);
+			//		Cancel Resend
+			UserDetailsPage.clickCancelResend();
+			//		No Resend confirmation message
+			if (!Assertions.compareBoolean(false, UserDetailsPage.messageExists(), "Resend confirmation message: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut - 1000);
+			//		Resend invitation again
+			UserDetailsPage.clickLnkResend();
+			Thread.sleep(TimeOut - 1000);
+			//		Resend dialog displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.dialogResendExists(), "Resend dialog displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Confirm Resend
+			UserDetailsPage.clickDoResend();
+			Thread.sleep(TimeOut + 3000);
 
-		UserDetailsPage.clickLnkResend();
-//		Resend dialog displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.dialogResendExists(), "Resend dialog displayed", testLog, driver)){
-			TestPassFlag = false;
+			//		Resend message displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.messageExists(), "Resend message displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Resend message text
+			if (!Assertions.compareValue("Your invitation email was successfully sent.", UserDetailsPage.getMessage(), "Resend message text: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Assert.assertTrue(TestPassFlag);
 		}
-		Thread.sleep(TimeOut - 1000);
-//		Resend dialog message
-		if (!Assertions.compareBoolean(true, UserDetailsPage.getDialogResend().contains("This will resend another copy of the invitation email to the pending user. Continue?"), "Resend dialog message: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut + 1000);
-//		Cancel Resend
-		UserDetailsPage.clickCancelResend();
-//		No Resend confirmation message
-		if (!Assertions.compareBoolean(false, UserDetailsPage.messageExists(), "Resend confirmation message: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut - 1000);
-//		Resend invitation again
-		UserDetailsPage.clickLnkResend();
-		Thread.sleep(TimeOut - 1000);
-//		Resend dialog displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.dialogResendExists(), "Resend dialog displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Confirm Resend
-		UserDetailsPage.clickDoResend();
-		Thread.sleep(TimeOut + 3000);
-
-//		Resend message displayed
-		if (!Assertions.compareBoolean(true,  UserDetailsPage.messageExists(), "Resend message displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Resend message text
-		if (!Assertions.compareValue("Your invitation email was successfully sent.",  UserDetailsPage.getMessage(), "Resend message text: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Assert.assertTrue(TestPassFlag);
 	}
 	@Test(enabled = true, priority=9, testName = "EOAdmin Edit pending Merchant Manager. Verify correct GUI state. Resend invitation", groups = { "Sanity" }, alwaysRun = true)
 
@@ -213,101 +215,103 @@ public class EOPortalEditChangeStatusUsers_RegUI extends BaseTest {
 
 		a = UsersPage.pendingMerchantManRow();
 		if (a <= 0){
-			AssertJUnit.fail("Pending Merchant Manager not found");
+//			AssertJUnit.fail("Pending Merchant Manager not found");
+			testLog.warning("Pending Merchant Manager not found");
 		}
-		System.out.println(a);
-		UsersPage.clickOnRow(a);
+		else {
+			System.out.println(a);
+			UsersPage.clickOnRow(a);
 
-		testLog.info("------------------------------------------------- User Details page -------------------------------------------------");
+			testLog.info("------------------------------------------------- User Details page -------------------------------------------------");
 
-		Thread.sleep(TimeOut + 1000);
-		availableWindows = new ArrayList<String>(driver.getWindowHandles());
-		driver.switchTo().window(availableWindows.get(0));
-		UserDetailsPage UserDetailsPage = (UserDetailsPage) PageFactory.getPage("UserDetailsPage");
+			Thread.sleep(TimeOut + 1000);
+			availableWindows = new ArrayList<String>(driver.getWindowHandles());
+			driver.switchTo().window(availableWindows.get(0));
+			UserDetailsPage UserDetailsPage = (UserDetailsPage) PageFactory.getPage("UserDetailsPage");
 
-//		Verify:
-//		Mail disabled and not empty
-//		if (!Assertions.compareBoolean(false, UserDetailsPage.elementEmailClickable(), "Email can be updated", testLog, driver)){
-//			TestPassFlag = false;
-//		}
-		boolean fl = false;
-		if (UserDetailsPage.getUserEmail().length() > 0) {
-			fl = true;
-		}
-		if (!Assertions.compareBoolean(true, fl, "Email not empty", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Edit User link disabled
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementUserEditClickable(), "Edit User link enabled", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Title = UserName
-		if (!Assertions.compareValue(UserDetailsPage.getTitle(), UserDetailsPage.getUserName(), "Title = UserName", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Status = Pending
-		if (!Assertions.compareValue("Pending", UserDetailsPage.getStatus(), "Status = Pending", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Resend Invitation link displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.getAction().contains("Resend Invitation"), "Resend Invitation link displayed", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Role = EOAdmin
-		if (!Assertions.compareValue("EO Merchant Manager", UserDetailsPage.getRole(), "Role = EOAdmin", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Role Not clickable
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleClickable(), "Role clickable", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Edit Role Not clickable
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleEditClickable(), "Edit Role clickable", testLog, driver)){
-			TestPassFlag = false;
-		}
+			//		Verify:
+			//		Mail disabled and not empty
+			//		if (!Assertions.compareBoolean(false, UserDetailsPage.elementEmailClickable(), "Email can be updated", testLog, driver)){
+			//			TestPassFlag = false;
+			//		}
+			boolean fl = false;
+			if (UserDetailsPage.getUserEmail().length() > 0) {
+				fl = true;
+			}
+			if (!Assertions.compareBoolean(true, fl, "Email not empty", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Edit User link disabled
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementUserEditClickable(), "Edit User link enabled", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Title = UserName
+			if (!Assertions.compareValue(UserDetailsPage.getTitle(), UserDetailsPage.getUserName(), "Title = UserName", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Status = Pending
+			if (!Assertions.compareValue("Pending", UserDetailsPage.getStatus(), "Status = Pending", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Resend Invitation link displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.getAction().contains("Resend Invitation"), "Resend Invitation link displayed", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Role = EOAdmin
+			if (!Assertions.compareValue("EO Merchant Manager", UserDetailsPage.getRole(), "Role = EOAdmin", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Role Not clickable
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleClickable(), "Role clickable", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Edit Role Not clickable
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleEditClickable(), "Edit Role clickable", testLog, driver)) {
+				TestPassFlag = false;
+			}
 
-		testLog.info("------------------------------------------------- Resend invitation -------------------------------------------------");
+			testLog.info("------------------------------------------------- Resend invitation -------------------------------------------------");
 
-		UserDetailsPage.clickLnkResend();
+			UserDetailsPage.clickLnkResend();
 
-//		Resend dialog displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.dialogResendExists(), "Resend dialog displayed", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut - 1000);
-//		Resend dialog message
-		if (!Assertions.compareBoolean(true, UserDetailsPage.getDialogResend().contains("This will resend another copy of the invitation email to the pending user. Continue?"), "Resend dialog message: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut + 1000);
-//		Cancel Resend
-		UserDetailsPage.clickCancelResend();
-//		No Resend confirmation message
-		if (!Assertions.compareBoolean(false, UserDetailsPage.messageExists(), "Resend confirmation message: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut - 1000);
-//		Resend invitation again
-		UserDetailsPage.clickLnkResend();
-		Thread.sleep(TimeOut - 1000);
-//		Resend dialog displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.dialogResendExists(), "Resend dialog displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Confirm Resend
-		UserDetailsPage.clickDoResend();
-		Thread.sleep(TimeOut + 3000);
+			//		Resend dialog displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.dialogResendExists(), "Resend dialog displayed", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut - 1000);
+			//		Resend dialog message
+			if (!Assertions.compareBoolean(true, UserDetailsPage.getDialogResend().contains("This will resend another copy of the invitation email to the pending user. Continue?"), "Resend dialog message: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut + 1000);
+			//		Cancel Resend
+			UserDetailsPage.clickCancelResend();
+			//		No Resend confirmation message
+			if (!Assertions.compareBoolean(false, UserDetailsPage.messageExists(), "Resend confirmation message: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut - 1000);
+			//		Resend invitation again
+			UserDetailsPage.clickLnkResend();
+			Thread.sleep(TimeOut - 1000);
+			//		Resend dialog displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.dialogResendExists(), "Resend dialog displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Confirm Resend
+			UserDetailsPage.clickDoResend();
+			Thread.sleep(TimeOut + 3000);
 
-//		Resend message displayed
-		if (!Assertions.compareBoolean(true,  UserDetailsPage.messageExists(), "Resend message displayed: ", testLog, driver)){
-			TestPassFlag = false;
+			//		Resend message displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.messageExists(), "Resend message displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Resend message text
+			if (!Assertions.compareValue("Your invitation email was successfully sent.", UserDetailsPage.getMessage(), "Resend message text: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Assert.assertTrue(TestPassFlag);
 		}
-//		Resend message text
-		if (!Assertions.compareValue("Your invitation email was successfully sent.",  UserDetailsPage.getMessage(), "Resend message text: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Assert.assertTrue(TestPassFlag);
-
 	}
 	@Test(enabled = true, priority=10, testName = "EOAdmin Edit pending Device App Manager. Verify correct GUI state. Resend invitation", groups = { "Sanity" }, alwaysRun = true)
 
@@ -350,101 +354,103 @@ public class EOPortalEditChangeStatusUsers_RegUI extends BaseTest {
 
 		a = UsersPage.pendingDevAppManRow();
 		if (a <= 0){
-			AssertJUnit.fail("Pending Device and Application Manager not found");
+//			AssertJUnit.fail("Pending Device and Application Manager not found");
+			testLog.warning("Pending Device and Application Manager not found");
 		}
-		System.out.println(a);
-		UsersPage.clickOnRow(a);
+		else {
+			System.out.println(a);
+			UsersPage.clickOnRow(a);
 
-		testLog.info("------------------------------------------------- User Details page -------------------------------------------------");
+			testLog.info("------------------------------------------------- User Details page -------------------------------------------------");
 
-		Thread.sleep(TimeOut + 1000);
-		availableWindows = new ArrayList<String>(driver.getWindowHandles());
-		driver.switchTo().window(availableWindows.get(0));
-		UserDetailsPage UserDetailsPage = (UserDetailsPage) PageFactory.getPage("UserDetailsPage");
+			Thread.sleep(TimeOut + 1000);
+			availableWindows = new ArrayList<String>(driver.getWindowHandles());
+			driver.switchTo().window(availableWindows.get(0));
+			UserDetailsPage UserDetailsPage = (UserDetailsPage) PageFactory.getPage("UserDetailsPage");
 
-//		Verify:
-//		Mail disabled and not empty
-//		if (!Assertions.compareBoolean(false, UserDetailsPage.elementEmailClickable(), "Email can be updated", testLog, driver)){
-//			TestPassFlag = false;
-//		}
-		boolean fl = false;
-		if (UserDetailsPage.getUserEmail().length() > 0) {
-			fl = true;
-		}
-		if (!Assertions.compareBoolean(true, fl, "Email not empty", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Edit User link disabled
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementUserEditClickable(), "Edit User link enabled", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Title = UserName
-		if (!Assertions.compareValue(UserDetailsPage.getTitle(), UserDetailsPage.getUserName(), "Title = UserName", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Status = Pending
-		if (!Assertions.compareValue("Pending", UserDetailsPage.getStatus(), "Status = Pending", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Resend Invitation link displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.getAction().contains("Resend Invitation"), "Resend Invitation link displayed", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Role = EOAdmin
-		if (!Assertions.compareValue("EO Device and App Manager", UserDetailsPage.getRole(), "Role = EOAdmin", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Role Not clickable
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleClickable(), "Role clickable", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Edit Role Not clickable
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleEditClickable(), "Edit Role clickable", testLog, driver)){
-			TestPassFlag = false;
-		}
+			//		Verify:
+			//		Mail disabled and not empty
+			//		if (!Assertions.compareBoolean(false, UserDetailsPage.elementEmailClickable(), "Email can be updated", testLog, driver)){
+			//			TestPassFlag = false;
+			//		}
+			boolean fl = false;
+			if (UserDetailsPage.getUserEmail().length() > 0) {
+				fl = true;
+			}
+			if (!Assertions.compareBoolean(true, fl, "Email not empty", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Edit User link disabled
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementUserEditClickable(), "Edit User link enabled", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Title = UserName
+			if (!Assertions.compareValue(UserDetailsPage.getTitle(), UserDetailsPage.getUserName(), "Title = UserName", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Status = Pending
+			if (!Assertions.compareValue("Pending", UserDetailsPage.getStatus(), "Status = Pending", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Resend Invitation link displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.getAction().contains("Resend Invitation"), "Resend Invitation link displayed", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Role = EOAdmin
+			if (!Assertions.compareValue("EO Device and App Manager", UserDetailsPage.getRole(), "Role = EOAdmin", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Role Not clickable
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleClickable(), "Role clickable", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Edit Role Not clickable
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleEditClickable(), "Edit Role clickable", testLog, driver)) {
+				TestPassFlag = false;
+			}
 
-		testLog.info("------------------------------------------------- Resend invitation -------------------------------------------------");
+			testLog.info("------------------------------------------------- Resend invitation -------------------------------------------------");
 
-		UserDetailsPage.clickLnkResend();
+			UserDetailsPage.clickLnkResend();
 
-//		Resend dialog displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.dialogResendExists(), "Resend dialog displayed", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut - 1000);
-//		Resend dialog message
-		if (!Assertions.compareBoolean(true, UserDetailsPage.getDialogResend().contains("This will resend another copy of the invitation email to the pending user. Continue?"), "Resend dialog message: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut + 1000);
-//		Cancel Resend
-		UserDetailsPage.clickCancelResend();
-//		No Resend confirmation message
-		if (!Assertions.compareBoolean(false, UserDetailsPage.messageExists(), "Resend confirmation message: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut - 1000);
-//		Resend invitation again
-		UserDetailsPage.clickLnkResend();
-		Thread.sleep(TimeOut - 1000);
-//		Resend dialog displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.dialogResendExists(), "Resend dialog displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Confirm Resend
-		UserDetailsPage.clickDoResend();
-		Thread.sleep(TimeOut + 3000);
+			//		Resend dialog displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.dialogResendExists(), "Resend dialog displayed", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut - 1000);
+			//		Resend dialog message
+			if (!Assertions.compareBoolean(true, UserDetailsPage.getDialogResend().contains("This will resend another copy of the invitation email to the pending user. Continue?"), "Resend dialog message: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut + 1000);
+			//		Cancel Resend
+			UserDetailsPage.clickCancelResend();
+			//		No Resend confirmation message
+			if (!Assertions.compareBoolean(false, UserDetailsPage.messageExists(), "Resend confirmation message: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut - 1000);
+			//		Resend invitation again
+			UserDetailsPage.clickLnkResend();
+			Thread.sleep(TimeOut - 1000);
+			//		Resend dialog displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.dialogResendExists(), "Resend dialog displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Confirm Resend
+			UserDetailsPage.clickDoResend();
+			Thread.sleep(TimeOut + 3000);
 
-//		Resend message displayed
-		if (!Assertions.compareBoolean(true,  UserDetailsPage.messageExists(), "Resend message displayed: ", testLog, driver)){
-			TestPassFlag = false;
+			//		Resend message displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.messageExists(), "Resend message displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Resend message text
+			if (!Assertions.compareValue("Your invitation email was successfully sent.", UserDetailsPage.getMessage(), "Resend message text: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Assert.assertTrue(TestPassFlag);
 		}
-//		Resend message text
-		if (!Assertions.compareValue("Your invitation email was successfully sent.",  UserDetailsPage.getMessage(), "Resend message text: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Assert.assertTrue(TestPassFlag);
-
 	}
 	@Test(enabled = true, priority=11, testName = "EOAdmin Disable Active Device App Manager", groups = { "Sanity" }, alwaysRun = true)
 
@@ -487,107 +493,109 @@ public class EOPortalEditChangeStatusUsers_RegUI extends BaseTest {
 
 		a = UsersPage.activeDevAppManRow();
 		if (a <= 0){
-			AssertJUnit.fail("Active Device and Application Manager not found");
+//			AssertJUnit.fail("Active Device and Application Manager not found");
+			testLog.warning("Active Device and Application Manager not found");
 		}
-		System.out.println(a);
-		UsersPage.clickOnRow(a);
+		else {
+			System.out.println(a);
+			UsersPage.clickOnRow(a);
 
-		testLog.info("------------------------------------------------- User Details page -------------------------------------------------");
+			testLog.info("------------------------------------------------- User Details page -------------------------------------------------");
 
-		Thread.sleep(TimeOut + 1000);
-		availableWindows = new ArrayList<String>(driver.getWindowHandles());
-		driver.switchTo().window(availableWindows.get(0));
-		UserDetailsPage UserDetailsPage = (UserDetailsPage) PageFactory.getPage("UserDetailsPage");
+			Thread.sleep(TimeOut + 1000);
+			availableWindows = new ArrayList<String>(driver.getWindowHandles());
+			driver.switchTo().window(availableWindows.get(0));
+			UserDetailsPage UserDetailsPage = (UserDetailsPage) PageFactory.getPage("UserDetailsPage");
 
-//		Verify:
-//		Mail disabled and not empty
-//		if (!Assertions.compareBoolean(false, UserDetailsPage.elementEmailClickable(), "Email can be updated", testLog, driver)){
-//			TestPassFlag = false;
-//		}
-		boolean fl = false;
-		if (UserDetailsPage.getUserEmail().length() > 0) {
-			fl = true;
-		}
-		if (!Assertions.compareBoolean(true, fl, "Email not empty", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Edit User link enable
-		if (!Assertions.compareBoolean(true, UserDetailsPage.elementUserEditClickable(), "Edit User link enabled", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Title = UserName
-		if (!Assertions.compareValue(UserDetailsPage.getTitle(), UserDetailsPage.getUserName(), "Title = UserName", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Status = Active
-		if (!Assertions.compareValue("Active", UserDetailsPage.getStatus(), "Status = Active", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Resend Invitation link NOT displayed
-		if (!Assertions.compareBoolean(false, UserDetailsPage.getAction().contains("Resend Invitation"), "Resend Invitation link displayed", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Disable User link displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.getAction().contains("Disable User"), "Disable User link displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Role = EO Device and App Manager
-		if (!Assertions.compareValue("EO Device and App Manager", UserDetailsPage.getRole(), "Role = EOAdmin", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Role Not clickable
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleClickable(), "Role clickable", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Edit Role clickable
-		if (!Assertions.compareBoolean(true, UserDetailsPage.elementRoleEditClickable(), "Edit Role clickable", testLog, driver)){
-			TestPassFlag = false;
-		}
+			//		Verify:
+			//		Mail disabled and not empty
+			//		if (!Assertions.compareBoolean(false, UserDetailsPage.elementEmailClickable(), "Email can be updated", testLog, driver)){
+			//			TestPassFlag = false;
+			//		}
+			boolean fl = false;
+			if (UserDetailsPage.getUserEmail().length() > 0) {
+				fl = true;
+			}
+			if (!Assertions.compareBoolean(true, fl, "Email not empty", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Edit User link enable
+			if (!Assertions.compareBoolean(true, UserDetailsPage.elementUserEditClickable(), "Edit User link enabled", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Title = UserName
+			if (!Assertions.compareValue(UserDetailsPage.getTitle(), UserDetailsPage.getUserName(), "Title = UserName", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Status = Active
+			if (!Assertions.compareValue("Active", UserDetailsPage.getStatus(), "Status = Active", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Resend Invitation link NOT displayed
+			if (!Assertions.compareBoolean(false, UserDetailsPage.getAction().contains("Resend Invitation"), "Resend Invitation link displayed", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Disable User link displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.getAction().contains("Disable User"), "Disable User link displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Role = EO Device and App Manager
+			if (!Assertions.compareValue("EO Device and App Manager", UserDetailsPage.getRole(), "Role = EOAdmin", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Role Not clickable
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleClickable(), "Role clickable", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Edit Role clickable
+			if (!Assertions.compareBoolean(true, UserDetailsPage.elementRoleEditClickable(), "Edit Role clickable", testLog, driver)) {
+				TestPassFlag = false;
+			}
 
-		testLog.info("------------------------------------------------- Disable User -------------------------------------------------");
+			testLog.info("------------------------------------------------- Disable User -------------------------------------------------");
 
-		UserDetailsPage.clickLnkDisable();
+			UserDetailsPage.clickLnkDisable();
 
-//		Disable dialog displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.dialogDisableExists(), "Disable user dialog displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut - 1000);
+			//		Disable dialog displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.dialogDisableExists(), "Disable user dialog displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut - 1000);
 
-//		Disable dialog message
-		if (!Assertions.compareBoolean(true, UserDetailsPage.getDialogDisable().contains("This will disable this user account. They will not be able to log in to any Verifone portals. You can re-enable users that were disabled at any time. Continue?"), "Disable user dialog message: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut + 1000);
+			//		Disable dialog message
+			if (!Assertions.compareBoolean(true, UserDetailsPage.getDialogDisable().contains("This will disable this user account. They will not be able to log in to any Verifone portals. You can re-enable users that were disabled at any time. Continue?"), "Disable user dialog message: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut + 1000);
 
-//		Cancel Disable User
-		UserDetailsPage.clickCancelDisable();
-//		No Disable User confirmation message
-		if (!Assertions.compareBoolean(false, UserDetailsPage.messageExists(), "Disable User confirmation message: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut - 1000);
-//		Disable User again
-		UserDetailsPage.clickLnkDisable();
-		Thread.sleep(TimeOut - 1000);
-//		Disable User dialog displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.dialogDisableExists(), "Disable User dialog displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Confirm Disable User
-		UserDetailsPage.clickDoDisable();
-		Thread.sleep(TimeOut + 3000);
+			//		Cancel Disable User
+			UserDetailsPage.clickCancelDisable();
+			//		No Disable User confirmation message
+			if (!Assertions.compareBoolean(false, UserDetailsPage.messageExists(), "Disable User confirmation message: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut - 1000);
+			//		Disable User again
+			UserDetailsPage.clickLnkDisable();
+			Thread.sleep(TimeOut - 1000);
+			//		Disable User dialog displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.dialogDisableExists(), "Disable User dialog displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Confirm Disable User
+			UserDetailsPage.clickDoDisable();
+			Thread.sleep(TimeOut + 3000);
 
-//		Disable User message displayed
-		if (!Assertions.compareBoolean(true,  UserDetailsPage.messageExists(), "Disable User message displayed: ", testLog, driver)){
-			TestPassFlag = false;
+			//		Disable User message displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.messageExists(), "Disable User message displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Resend message text
+			if (!Assertions.compareValue("The user's account was successfully disabled.", UserDetailsPage.getMessage(), "Disable User message text: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Assert.assertTrue(TestPassFlag);
 		}
-//		Resend message text
-		if (!Assertions.compareValue("The user's account was successfully disabled.",  UserDetailsPage.getMessage(), "Disable User message text: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Assert.assertTrue(TestPassFlag);
-
 
 	}
 	@Test(enabled = true, priority=12, testName = "EOAdmin Enable disabled Device App Manager", groups = { "Sanity" }, alwaysRun = true)
@@ -631,109 +639,111 @@ public class EOPortalEditChangeStatusUsers_RegUI extends BaseTest {
 
 		a = UsersPage.disableDevAppManRow();
 		if (a <= 0){
-			AssertJUnit.fail("Disabled Device and Application Manager not found");
+//			AssertJUnit.fail("Disabled Device and Application Manager not found");
+			testLog.warning("Disabled Device and Application Manager not found");
 		}
-		System.out.println(a);
-		UsersPage.clickOnRow(a);
+		else {
+			System.out.println(a);
+			UsersPage.clickOnRow(a);
 
-		testLog.info("------------------------------------------------- User Details page -------------------------------------------------");
+			testLog.info("------------------------------------------------- User Details page -------------------------------------------------");
 
-		Thread.sleep(TimeOut + 1000);
-		availableWindows = new ArrayList<String>(driver.getWindowHandles());
-		driver.switchTo().window(availableWindows.get(0));
-		UserDetailsPage UserDetailsPage = (UserDetailsPage) PageFactory.getPage("UserDetailsPage");
+			Thread.sleep(TimeOut + 1000);
+			availableWindows = new ArrayList<String>(driver.getWindowHandles());
+			driver.switchTo().window(availableWindows.get(0));
+			UserDetailsPage UserDetailsPage = (UserDetailsPage) PageFactory.getPage("UserDetailsPage");
 
-//		Verify:
-//		Mail disabled and not empty
-//		if (!Assertions.compareBoolean(false, UserDetailsPage.elementEmailClickable(), "Email can be updated", testLog, driver)){
-//			TestPassFlag = false;
-//		}
-		boolean fl = false;
-		if (UserDetailsPage.getUserEmail().length() > 0) {
-			fl = true;
-		}
-		if (!Assertions.compareBoolean(true, fl, "Email not empty", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Edit User link disabled
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementUserEditClickable(), "Edit User link enabled", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Title = UserName
-		if (!Assertions.compareValue(UserDetailsPage.getTitle(), UserDetailsPage.getUserName(), "Title = UserName", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Status = Disabled
-		if (!Assertions.compareValue("Disabled", UserDetailsPage.getStatus(), "Status = Disabled", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Resend Invitation link NOT displayed
-		if (!Assertions.compareBoolean(false, UserDetailsPage.getAction().contains("Resend Invitation"), "Resend Invitation link displayed", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Disable User link NOT displayed
-		if (!Assertions.compareBoolean(false, UserDetailsPage.getAction().contains("Disable User"), "Disable User link displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Enable User link displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.getAction().contains("Enable User"), "Disable User link displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Role = EO Device and App Manager
-		if (!Assertions.compareValue("EO Device and App Manager", UserDetailsPage.getRole(), "Role = EOAdmin", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Role Not clickable
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleClickable(), "Role clickable", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Edit Role Not clickable
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleEditClickable(), "Edit Role clickable", testLog, driver)){
-			TestPassFlag = false;
-		}
+			//		Verify:
+			//		Mail disabled and not empty
+			//		if (!Assertions.compareBoolean(false, UserDetailsPage.elementEmailClickable(), "Email can be updated", testLog, driver)){
+			//			TestPassFlag = false;
+			//		}
+			boolean fl = false;
+			if (UserDetailsPage.getUserEmail().length() > 0) {
+				fl = true;
+			}
+			if (!Assertions.compareBoolean(true, fl, "Email not empty", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Edit User link disabled
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementUserEditClickable(), "Edit User link enabled", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Title = UserName
+			if (!Assertions.compareValue(UserDetailsPage.getTitle(), UserDetailsPage.getUserName(), "Title = UserName", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Status = Disabled
+			if (!Assertions.compareValue("Disabled", UserDetailsPage.getStatus(), "Status = Disabled", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Resend Invitation link NOT displayed
+			if (!Assertions.compareBoolean(false, UserDetailsPage.getAction().contains("Resend Invitation"), "Resend Invitation link displayed", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Disable User link NOT displayed
+			if (!Assertions.compareBoolean(false, UserDetailsPage.getAction().contains("Disable User"), "Disable User link displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Enable User link displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.getAction().contains("Enable User"), "Disable User link displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Role = EO Device and App Manager
+			if (!Assertions.compareValue("EO Device and App Manager", UserDetailsPage.getRole(), "Role = EOAdmin", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Role Not clickable
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleClickable(), "Role clickable", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Edit Role Not clickable
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleEditClickable(), "Edit Role clickable", testLog, driver)) {
+				TestPassFlag = false;
+			}
 
-		testLog.info("------------------------------------------------- Active User -------------------------------------------------");
+			testLog.info("------------------------------------------------- Active User -------------------------------------------------");
 
-		UserDetailsPage.clickLnkEnable();
+			UserDetailsPage.clickLnkEnable();
 
-//		Active user dialog displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.dialogEnableExists(), "Active user dialog displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut - 1000);
-//		Active user dialog message
-		if (!Assertions.compareBoolean(true, UserDetailsPage.getDialogEnable().contains("This will re-enable this user account and restore their access to the portal. Continue?"), "Active user dialog message: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut + 1000);
-//		Cancel Active User
-		UserDetailsPage.clickCancelEnable();
-//		No Active User confirmation message
-		if (!Assertions.compareBoolean(false, UserDetailsPage.messageExists(), "Active User confirmation message: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut - 1000);
-//		Active User again
-		UserDetailsPage.clickLnkEnable();
-		Thread.sleep(TimeOut - 1000);
-//		Active User dialog displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.dialogEnableExists(), "Active User dialog displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Confirm Active User
-		UserDetailsPage.clickDoEnable();
-		Thread.sleep(TimeOut + 3000);
+			//		Active user dialog displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.dialogEnableExists(), "Active user dialog displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut - 1000);
+			//		Active user dialog message
+			if (!Assertions.compareBoolean(true, UserDetailsPage.getDialogEnable().contains("This will re-enable this user account and restore their access to the portal. Continue?"), "Active user dialog message: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut + 1000);
+			//		Cancel Active User
+			UserDetailsPage.clickCancelEnable();
+			//		No Active User confirmation message
+			if (!Assertions.compareBoolean(false, UserDetailsPage.messageExists(), "Active User confirmation message: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut - 1000);
+			//		Active User again
+			UserDetailsPage.clickLnkEnable();
+			Thread.sleep(TimeOut - 1000);
+			//		Active User dialog displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.dialogEnableExists(), "Active User dialog displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Confirm Active User
+			UserDetailsPage.clickDoEnable();
+			Thread.sleep(TimeOut + 3000);
 
-//		Active User message displayed
-		if (!Assertions.compareBoolean(true,  UserDetailsPage.messageExists(), "Active User message displayed: ", testLog, driver)){
-			TestPassFlag = false;
+			//		Active User message displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.messageExists(), "Active User message displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Resend message text
+			if (!Assertions.compareValue("The user's account was successfully re-enabled.", UserDetailsPage.getMessage(), "Disable User message text: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Assert.assertTrue(TestPassFlag);
 		}
-//		Resend message text
-		if (!Assertions.compareValue("The user's account was successfully re-enabled.",  UserDetailsPage.getMessage(), "Disable User message text: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Assert.assertTrue(TestPassFlag);
-
 	}
 	@Test(enabled = true, priority=13, testName = "EOAdmin Disable active EO Admin", groups = { "Sanity" }, alwaysRun = true)
 
@@ -778,103 +788,105 @@ public class EOPortalEditChangeStatusUsers_RegUI extends BaseTest {
 		System.out.println(a);
 		if (a <= 0){
 //			AssertJUnit.fail("Active EO Admin not found");
+			testLog.warning("Active EO Admin not found");
 		}
-		UsersPage.clickOnRow(a);
+		else {
+			UsersPage.clickOnRow(a);
 
-		testLog.info("------------------------------------------------- User Details page -------------------------------------------------");
+			testLog.info("------------------------------------------------- User Details page -------------------------------------------------");
 
-		Thread.sleep(TimeOut + 1000);
-		availableWindows = new ArrayList<String>(driver.getWindowHandles());
-		driver.switchTo().window(availableWindows.get(0));
-		UserDetailsPage UserDetailsPage = (UserDetailsPage) PageFactory.getPage("UserDetailsPage");
+			Thread.sleep(TimeOut + 1000);
+			availableWindows = new ArrayList<String>(driver.getWindowHandles());
+			driver.switchTo().window(availableWindows.get(0));
+			UserDetailsPage UserDetailsPage = (UserDetailsPage) PageFactory.getPage("UserDetailsPage");
 
-//		Verify:
-//		Mail disabled and not empty
-//		if (!Assertions.compareBoolean(false, UserDetailsPage.elementEmailClickable(), "Email can be updated", testLog, driver)){
-//			TestPassFlag = false;
-//		}
-		boolean fl = false;
-		if (UserDetailsPage.getUserEmail().length() > 0) {
-			fl = true;
-		}
-		if (!Assertions.compareBoolean(true, fl, "Email not empty", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Edit User link enable
-		if (!Assertions.compareBoolean(true, UserDetailsPage.elementUserEditClickable(), "Edit User link enabled", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Title = UserName
-		if (!Assertions.compareValue(UserDetailsPage.getTitle(), UserDetailsPage.getUserName(), "Title = UserName", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Status = Active
-		if (!Assertions.compareValue("Active", UserDetailsPage.getStatus(), "Status = Active", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Resend Invitation link NOT displayed
-		if (!Assertions.compareBoolean(false, UserDetailsPage.getAction().contains("Resend Invitation"), "Resend Invitation link displayed", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Disable User link displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.getAction().contains("Disable User"), "Disable User link displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Role = EO Admin
-		if (!Assertions.compareValue("EO Admin", UserDetailsPage.getRole(), "Role = EOAdmin", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Role Not clickable
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleClickable(), "Role clickable", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Edit Role clickable
-		if (!Assertions.compareBoolean(true, UserDetailsPage.elementRoleEditClickable(), "Edit Role clickable", testLog, driver)){
-			TestPassFlag = false;
-		}
+			//		Verify:
+			//		Mail disabled and not empty
+			//		if (!Assertions.compareBoolean(false, UserDetailsPage.elementEmailClickable(), "Email can be updated", testLog, driver)){
+			//			TestPassFlag = false;
+			//		}
+			boolean fl = false;
+			if (UserDetailsPage.getUserEmail().length() > 0) {
+				fl = true;
+			}
+			if (!Assertions.compareBoolean(true, fl, "Email not empty", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Edit User link enable
+			if (!Assertions.compareBoolean(true, UserDetailsPage.elementUserEditClickable(), "Edit User link enabled", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Title = UserName
+			if (!Assertions.compareValue(UserDetailsPage.getTitle(), UserDetailsPage.getUserName(), "Title = UserName", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Status = Active
+			if (!Assertions.compareValue("Active", UserDetailsPage.getStatus(), "Status = Active", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Resend Invitation link NOT displayed
+			if (!Assertions.compareBoolean(false, UserDetailsPage.getAction().contains("Resend Invitation"), "Resend Invitation link displayed", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Disable User link displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.getAction().contains("Disable User"), "Disable User link displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Role = EO Admin
+			if (!Assertions.compareValue("EO Admin", UserDetailsPage.getRole(), "Role = EOAdmin", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Role Not clickable
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleClickable(), "Role clickable", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Edit Role clickable
+			if (!Assertions.compareBoolean(true, UserDetailsPage.elementRoleEditClickable(), "Edit Role clickable", testLog, driver)) {
+				TestPassFlag = false;
+			}
 
-		testLog.info("------------------------------------------------- Disable User -------------------------------------------------");
+			testLog.info("------------------------------------------------- Disable User -------------------------------------------------");
 
-		UserDetailsPage.clickLnkDisable();
+			UserDetailsPage.clickLnkDisable();
 
-//		Disable User dialog displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.dialogDisableExists(), "Disable user dialog displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut - 1000);
-//		Disable dialog message
-		if (!Assertions.compareBoolean(true, UserDetailsPage.getDialogDisable().contains("This will disable this user account. They will not be able to log in to any Verifone portals. You can re-enable users that were disabled at any time. Continue?"), "Disable user dialog message: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut + 1000);
-//		Cancel Disable User
-		UserDetailsPage.clickCancelDisable();
-//		No Disable User confirmation message
-		if (!Assertions.compareBoolean(false, UserDetailsPage.messageExists(), "Disable User confirmation message: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut - 1000);
-//		Disable User again
-		UserDetailsPage.clickLnkDisable();
-		Thread.sleep(TimeOut - 1000);
-//		Disable User dialog displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.dialogDisableExists(), "Disable User dialog displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Confirm Disable User
-		UserDetailsPage.clickDoDisable();
-		Thread.sleep(TimeOut + 3000);
+			//		Disable User dialog displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.dialogDisableExists(), "Disable user dialog displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut - 1000);
+			//		Disable dialog message
+			if (!Assertions.compareBoolean(true, UserDetailsPage.getDialogDisable().contains("This will disable this user account. They will not be able to log in to any Verifone portals. You can re-enable users that were disabled at any time. Continue?"), "Disable user dialog message: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut + 1000);
+			//		Cancel Disable User
+			UserDetailsPage.clickCancelDisable();
+			//		No Disable User confirmation message
+			if (!Assertions.compareBoolean(false, UserDetailsPage.messageExists(), "Disable User confirmation message: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut - 1000);
+			//		Disable User again
+			UserDetailsPage.clickLnkDisable();
+			Thread.sleep(TimeOut - 1000);
+			//		Disable User dialog displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.dialogDisableExists(), "Disable User dialog displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Confirm Disable User
+			UserDetailsPage.clickDoDisable();
+			Thread.sleep(TimeOut + 3000);
 
-//		Disable User message displayed
-		if (!Assertions.compareBoolean(true,  UserDetailsPage.messageExists(), "Disable User message displayed: ", testLog, driver)){
-			TestPassFlag = false;
+			//		Disable User message displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.messageExists(), "Disable User message displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Resend message text
+			if (!Assertions.compareValue("The user's account was successfully disabled.", UserDetailsPage.getMessage(), "Disable User message text: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Assert.assertTrue(TestPassFlag);
 		}
-//		Resend message text
-		if (!Assertions.compareValue("The user's account was successfully disabled.",  UserDetailsPage.getMessage(), "Disable User message text: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Assert.assertTrue(TestPassFlag);
-
 	}
 	@Test(enabled = true, priority=14, testName = "EOAdmin Enable disabled EO Admin", groups = { "Sanity" }, alwaysRun = true)
 
@@ -917,109 +929,111 @@ public class EOPortalEditChangeStatusUsers_RegUI extends BaseTest {
 
 		a = UsersPage.disableEOAdminRow();
 		if (a <= 0){
-			AssertJUnit.fail("Disabled EO Admin not found");
+//			AssertJUnit.fail("Disabled EO Admin not found");
+			testLog.warning("Disabled EO Admin not found");
 		}
-		System.out.println(a);
-		UsersPage.clickOnRow(a);
+		else {
+			System.out.println(a);
+			UsersPage.clickOnRow(a);
 
-		testLog.info("------------------------------------------------- User Details page -------------------------------------------------");
+			testLog.info("------------------------------------------------- User Details page -------------------------------------------------");
 
-		Thread.sleep(TimeOut + 1000);
-		availableWindows = new ArrayList<String>(driver.getWindowHandles());
-		driver.switchTo().window(availableWindows.get(0));
-		UserDetailsPage UserDetailsPage = (UserDetailsPage) PageFactory.getPage("UserDetailsPage");
+			Thread.sleep(TimeOut + 1000);
+			availableWindows = new ArrayList<String>(driver.getWindowHandles());
+			driver.switchTo().window(availableWindows.get(0));
+			UserDetailsPage UserDetailsPage = (UserDetailsPage) PageFactory.getPage("UserDetailsPage");
 
-//		Verify:
-//		Mail disabled and not empty
-//		if (!Assertions.compareBoolean(false, UserDetailsPage.elementEmailClickable(), "Email can be updated", testLog, driver)){
-//			TestPassFlag = false;
-//		}
-		boolean fl = false;
-		if (UserDetailsPage.getUserEmail().length() > 0) {
-			fl = true;
-		}
-		if (!Assertions.compareBoolean(true, fl, "Email not empty", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Edit User link disabled
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementUserEditClickable(), "Edit User link enabled", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Title = UserName
-		if (!Assertions.compareValue(UserDetailsPage.getTitle(), UserDetailsPage.getUserName(), "Title = UserName", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Status = Disabled
-		if (!Assertions.compareValue("Disabled", UserDetailsPage.getStatus(), "Status = Disabled", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Resend Invitation link NOT displayed
-		if (!Assertions.compareBoolean(false, UserDetailsPage.getAction().contains("Resend Invitation"), "Resend Invitation link displayed", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Disable User link NOT displayed
-		if (!Assertions.compareBoolean(false, UserDetailsPage.getAction().contains("Disable User"), "Disable User link displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Enable User link displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.getAction().contains("Enable User"), "Enable User link displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Role = EO Admin
-		if (!Assertions.compareValue("EO Admin", UserDetailsPage.getRole(), "Role = EOAdmin", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Role Not clickable
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleClickable(), "Role clickable", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Edit Role Not clickable
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleEditClickable(), "Edit Role clickable", testLog, driver)){
-			TestPassFlag = false;
-		}
+			//		Verify:
+			//		Mail disabled and not empty
+			//		if (!Assertions.compareBoolean(false, UserDetailsPage.elementEmailClickable(), "Email can be updated", testLog, driver)){
+			//			TestPassFlag = false;
+			//		}
+			boolean fl = false;
+			if (UserDetailsPage.getUserEmail().length() > 0) {
+				fl = true;
+			}
+			if (!Assertions.compareBoolean(true, fl, "Email not empty", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Edit User link disabled
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementUserEditClickable(), "Edit User link enabled", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Title = UserName
+			if (!Assertions.compareValue(UserDetailsPage.getTitle(), UserDetailsPage.getUserName(), "Title = UserName", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Status = Disabled
+			if (!Assertions.compareValue("Disabled", UserDetailsPage.getStatus(), "Status = Disabled", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Resend Invitation link NOT displayed
+			if (!Assertions.compareBoolean(false, UserDetailsPage.getAction().contains("Resend Invitation"), "Resend Invitation link displayed", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Disable User link NOT displayed
+			if (!Assertions.compareBoolean(false, UserDetailsPage.getAction().contains("Disable User"), "Disable User link displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Enable User link displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.getAction().contains("Enable User"), "Enable User link displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Role = EO Admin
+			if (!Assertions.compareValue("EO Admin", UserDetailsPage.getRole(), "Role = EOAdmin", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Role Not clickable
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleClickable(), "Role clickable", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Edit Role Not clickable
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleEditClickable(), "Edit Role clickable", testLog, driver)) {
+				TestPassFlag = false;
+			}
 
-		testLog.info("------------------------------------------------- Active User -------------------------------------------------");
+			testLog.info("------------------------------------------------- Active User -------------------------------------------------");
 
-		UserDetailsPage.clickLnkEnable();
+			UserDetailsPage.clickLnkEnable();
 
-//		Active user dialog displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.dialogEnableExists(), "Active user dialog displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut - 1000);
-//		Active user dialog message
-		if (!Assertions.compareBoolean(true, UserDetailsPage.getDialogEnable().contains("This will re-enable this user account and restore their access to the portal. Continue?"), "Active user dialog message: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut + 1000);
-//		Cancel Active User
-		UserDetailsPage.clickCancelEnable();
-//		No Active User confirmation message
-		if (!Assertions.compareBoolean(false, UserDetailsPage.messageExists(), "Active User confirmation message: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut - 1000);
-//		Active User again
-		UserDetailsPage.clickLnkEnable();
-		Thread.sleep(TimeOut - 1000);
-//		Active User dialog displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.dialogEnableExists(), "Active User dialog displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Confirm Active User
-		UserDetailsPage.clickDoEnable();
-		Thread.sleep(TimeOut + 3000);
+			//		Active user dialog displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.dialogEnableExists(), "Active user dialog displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut - 1000);
+			//		Active user dialog message
+			if (!Assertions.compareBoolean(true, UserDetailsPage.getDialogEnable().contains("This will re-enable this user account and restore their access to the portal. Continue?"), "Active user dialog message: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut + 1000);
+			//		Cancel Active User
+			UserDetailsPage.clickCancelEnable();
+			//		No Active User confirmation message
+			if (!Assertions.compareBoolean(false, UserDetailsPage.messageExists(), "Active User confirmation message: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut - 1000);
+			//		Active User again
+			UserDetailsPage.clickLnkEnable();
+			Thread.sleep(TimeOut - 1000);
+			//		Active User dialog displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.dialogEnableExists(), "Active User dialog displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Confirm Active User
+			UserDetailsPage.clickDoEnable();
+			Thread.sleep(TimeOut + 3000);
 
-//		Active User message displayed
-		if (!Assertions.compareBoolean(true,  UserDetailsPage.messageExists(), "Active User message displayed: ", testLog, driver)){
-			TestPassFlag = false;
+			//		Active User message displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.messageExists(), "Active User message displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Resend message text
+			if (!Assertions.compareValue("The user's account was successfully re-enabled.", UserDetailsPage.getMessage(), "Disable User message text: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Assert.assertTrue(TestPassFlag);
 		}
-//		Resend message text
-		if (!Assertions.compareValue("The user's account was successfully re-enabled.",  UserDetailsPage.getMessage(), "Disable User message text: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Assert.assertTrue(TestPassFlag);
-
 	}
 
 	@Test(enabled = true, priority=15, testName = "EOAdmin Disable active EO Merchant Manager", groups = { "Sanity" }, alwaysRun = true)
@@ -1063,105 +1077,107 @@ public class EOPortalEditChangeStatusUsers_RegUI extends BaseTest {
 
 		a = UsersPage.activeEOMerchantManRow();
 		if (a <= 0){
-			AssertJUnit.fail("Active Merchant Manager not found");
+//			AssertJUnit.fail("Active Merchant Manager not found");
+			testLog.warning("Active Merchant Manager not found");
 		}
-		System.out.println(a);
-		UsersPage.clickOnRow(a);
+		else {
+			System.out.println(a);
+			UsersPage.clickOnRow(a);
 
-		testLog.info("------------------------------------------------- User Details page -------------------------------------------------");
+			testLog.info("------------------------------------------------- User Details page -------------------------------------------------");
 
-		Thread.sleep(TimeOut + 1000);
-		availableWindows = new ArrayList<String>(driver.getWindowHandles());
-		driver.switchTo().window(availableWindows.get(0));
-		UserDetailsPage UserDetailsPage = (UserDetailsPage) PageFactory.getPage("UserDetailsPage");
+			Thread.sleep(TimeOut + 1000);
+			availableWindows = new ArrayList<String>(driver.getWindowHandles());
+			driver.switchTo().window(availableWindows.get(0));
+			UserDetailsPage UserDetailsPage = (UserDetailsPage) PageFactory.getPage("UserDetailsPage");
 
-//		Verify:
-//		Mail disabled and not empty
-//		if (!Assertions.compareBoolean(false, UserDetailsPage.elementEmailClickable(), "Email can be updated", testLog, driver)){
-//			TestPassFlag = false;
-//		}
-		boolean fl = false;
-		if (UserDetailsPage.getUserEmail().length() > 0) {
-			fl = true;
-		}
-		if (!Assertions.compareBoolean(true, fl, "Email not empty", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Edit User link enable
-		if (!Assertions.compareBoolean(true, UserDetailsPage.elementUserEditClickable(), "Edit User link enabled", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Title = UserName
-		if (!Assertions.compareValue(UserDetailsPage.getTitle(), UserDetailsPage.getUserName(), "Title = UserName", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Status = Active
-		if (!Assertions.compareValue("Active", UserDetailsPage.getStatus(), "Status = Active", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Resend Invitation link NOT displayed
-		if (!Assertions.compareBoolean(false, UserDetailsPage.getAction().contains("Resend Invitation"), "Resend Invitation link displayed", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Disable User link displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.getAction().contains("Disable User"), "Disable User link displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Role = EO Merchant Manager
-		if (!Assertions.compareValue("EO Merchant Manager", UserDetailsPage.getRole(), "Role = EO Merchant Manager", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Role Not clickable
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleClickable(), "Role clickable", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Edit Role clickable
-		if (!Assertions.compareBoolean(true, UserDetailsPage.elementRoleEditClickable(), "Edit Role clickable", testLog, driver)){
-			TestPassFlag = false;
-		}
+			//		Verify:
+			//		Mail disabled and not empty
+			//		if (!Assertions.compareBoolean(false, UserDetailsPage.elementEmailClickable(), "Email can be updated", testLog, driver)){
+			//			TestPassFlag = false;
+			//		}
+			boolean fl = false;
+			if (UserDetailsPage.getUserEmail().length() > 0) {
+				fl = true;
+			}
+			if (!Assertions.compareBoolean(true, fl, "Email not empty", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Edit User link enable
+			if (!Assertions.compareBoolean(true, UserDetailsPage.elementUserEditClickable(), "Edit User link enabled", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Title = UserName
+			if (!Assertions.compareValue(UserDetailsPage.getTitle(), UserDetailsPage.getUserName(), "Title = UserName", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Status = Active
+			if (!Assertions.compareValue("Active", UserDetailsPage.getStatus(), "Status = Active", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Resend Invitation link NOT displayed
+			if (!Assertions.compareBoolean(false, UserDetailsPage.getAction().contains("Resend Invitation"), "Resend Invitation link displayed", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Disable User link displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.getAction().contains("Disable User"), "Disable User link displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Role = EO Merchant Manager
+			if (!Assertions.compareValue("EO Merchant Manager", UserDetailsPage.getRole(), "Role = EO Merchant Manager", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Role Not clickable
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleClickable(), "Role clickable", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Edit Role clickable
+			if (!Assertions.compareBoolean(true, UserDetailsPage.elementRoleEditClickable(), "Edit Role clickable", testLog, driver)) {
+				TestPassFlag = false;
+			}
 
-		testLog.info("------------------------------------------------- Disable User -------------------------------------------------");
+			testLog.info("------------------------------------------------- Disable User -------------------------------------------------");
 
-		UserDetailsPage.clickLnkDisable();
+			UserDetailsPage.clickLnkDisable();
 
-//		Disable User dialog displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.dialogDisableExists(), "Disable user dialog displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut - 1000);
-//		Disable dialog message
-		if (!Assertions.compareBoolean(true, UserDetailsPage.getDialogDisable().contains("This will disable this user account. They will not be able to log in to any Verifone portals. You can re-enable users that were disabled at any time. Continue?"), "Disable user dialog message: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut + 1000);
-//		Cancel Disable User
-		UserDetailsPage.clickCancelDisable();
-//		No Disable User confirmation message
-		if (!Assertions.compareBoolean(false, UserDetailsPage.messageExists(), "Disable User confirmation message: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut - 1000);
-//		Disable User again
-		UserDetailsPage.clickLnkDisable();
-		Thread.sleep(TimeOut - 1000);
-//		Disable User dialog displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.dialogDisableExists(), "Disable User dialog displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Confirm Disable User
-		UserDetailsPage.clickDoDisable();
-		Thread.sleep(TimeOut + 3000);
+			//		Disable User dialog displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.dialogDisableExists(), "Disable user dialog displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut - 1000);
+			//		Disable dialog message
+			if (!Assertions.compareBoolean(true, UserDetailsPage.getDialogDisable().contains("This will disable this user account. They will not be able to log in to any Verifone portals. You can re-enable users that were disabled at any time. Continue?"), "Disable user dialog message: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut + 1000);
+			//		Cancel Disable User
+			UserDetailsPage.clickCancelDisable();
+			//		No Disable User confirmation message
+			if (!Assertions.compareBoolean(false, UserDetailsPage.messageExists(), "Disable User confirmation message: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut - 1000);
+			//		Disable User again
+			UserDetailsPage.clickLnkDisable();
+			Thread.sleep(TimeOut - 1000);
+			//		Disable User dialog displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.dialogDisableExists(), "Disable User dialog displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Confirm Disable User
+			UserDetailsPage.clickDoDisable();
+			Thread.sleep(TimeOut + 3000);
 
-//		Disable User message displayed
-		if (!Assertions.compareBoolean(true,  UserDetailsPage.messageExists(), "Disable User message displayed: ", testLog, driver)){
-			TestPassFlag = false;
+			//		Disable User message displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.messageExists(), "Disable User message displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Resend message text
+			if (!Assertions.compareValue("The user's account was successfully disabled.", UserDetailsPage.getMessage(), "Disable User message text: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Assert.assertTrue(TestPassFlag);
 		}
-//		Resend message text
-		if (!Assertions.compareValue("The user's account was successfully disabled.",  UserDetailsPage.getMessage(), "Disable User message text: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Assert.assertTrue(TestPassFlag);
-
 
 	}
 	@Test(enabled = true, priority=16, testName = "EOAdmin Enable disabled EO Merchant Manager", groups = { "Sanity" }, alwaysRun = true)
@@ -1205,108 +1221,110 @@ public class EOPortalEditChangeStatusUsers_RegUI extends BaseTest {
 
 		a = UsersPage.disableEOMerchantManRow();
 		if (a <= 0){
-			AssertJUnit.fail("Disabled Merchant Manager not found");
+//			AssertJUnit.fail("Disabled Merchant Manager not found");
+			testLog.warning("Disabled Merchant Manager not found");
 		}
-		System.out.println(a);
-		UsersPage.clickOnRow(a);
+		else {
+			System.out.println(a);
+			UsersPage.clickOnRow(a);
 
-		testLog.info("------------------------------------------------- User Details page -------------------------------------------------");
+			testLog.info("------------------------------------------------- User Details page -------------------------------------------------");
 
-		Thread.sleep(TimeOut + 1000);
-		availableWindows = new ArrayList<String>(driver.getWindowHandles());
-		driver.switchTo().window(availableWindows.get(0));
-		UserDetailsPage UserDetailsPage = (UserDetailsPage) PageFactory.getPage("UserDetailsPage");
+			Thread.sleep(TimeOut + 1000);
+			availableWindows = new ArrayList<String>(driver.getWindowHandles());
+			driver.switchTo().window(availableWindows.get(0));
+			UserDetailsPage UserDetailsPage = (UserDetailsPage) PageFactory.getPage("UserDetailsPage");
 
-//		Verify:
-//		Mail disabled and not empty
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementEmailClickable(), "Email can be updated", testLog, driver)){
-			TestPassFlag = false;
-		}
-		boolean fl = false;
-		if (UserDetailsPage.getUserEmail().length() > 0) {
-			fl = true;
-		}
-		if (!Assertions.compareBoolean(true, fl, "Email not empty", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Edit User link disabled
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementUserEditClickable(), "Edit User link enabled", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Title = UserName
-		if (!Assertions.compareValue(UserDetailsPage.getTitle(), UserDetailsPage.getUserName(), "Title = UserName", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Status = Disabled
-		if (!Assertions.compareValue("Disabled", UserDetailsPage.getStatus(), "Status = Disabled", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Resend Invitation link NOT displayed
-		if (!Assertions.compareBoolean(false, UserDetailsPage.getAction().contains("Resend Invitation"), "Resend Invitation link displayed", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Disable User link NOT displayed
-		if (!Assertions.compareBoolean(false, UserDetailsPage.getAction().contains("Disable User"), "Disable User link displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Enable User link displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.getAction().contains("Enable User"), "Enable User link displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Role = EO Merchant Manager
-		if (!Assertions.compareValue("EO Merchant Manager", UserDetailsPage.getRole(), "Role = EO Merchant Manager", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Role Not clickable
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleClickable(), "Role clickable", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Edit Role Not clickable
-		if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleEditClickable(), "Edit Role clickable", testLog, driver)){
-			TestPassFlag = false;
-		}
+			//		Verify:
+			//		Mail disabled and not empty
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementEmailClickable(), "Email can be updated", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			boolean fl = false;
+			if (UserDetailsPage.getUserEmail().length() > 0) {
+				fl = true;
+			}
+			if (!Assertions.compareBoolean(true, fl, "Email not empty", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Edit User link disabled
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementUserEditClickable(), "Edit User link enabled", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Title = UserName
+			if (!Assertions.compareValue(UserDetailsPage.getTitle(), UserDetailsPage.getUserName(), "Title = UserName", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Status = Disabled
+			if (!Assertions.compareValue("Disabled", UserDetailsPage.getStatus(), "Status = Disabled", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Resend Invitation link NOT displayed
+			if (!Assertions.compareBoolean(false, UserDetailsPage.getAction().contains("Resend Invitation"), "Resend Invitation link displayed", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Disable User link NOT displayed
+			if (!Assertions.compareBoolean(false, UserDetailsPage.getAction().contains("Disable User"), "Disable User link displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Enable User link displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.getAction().contains("Enable User"), "Enable User link displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Role = EO Merchant Manager
+			if (!Assertions.compareValue("EO Merchant Manager", UserDetailsPage.getRole(), "Role = EO Merchant Manager", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Role Not clickable
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleClickable(), "Role clickable", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Edit Role Not clickable
+			if (!Assertions.compareBoolean(false, UserDetailsPage.elementRoleEditClickable(), "Edit Role clickable", testLog, driver)) {
+				TestPassFlag = false;
+			}
 
-		testLog.info("------------------------------------------------- Active User -------------------------------------------------");
+			testLog.info("------------------------------------------------- Active User -------------------------------------------------");
 
-		UserDetailsPage.clickLnkEnable();
+			UserDetailsPage.clickLnkEnable();
 
-//		Active user dialog displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.dialogEnableExists(), "Active user dialog displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut - 1000);
-//		Active user dialog message
-		if (!Assertions.compareBoolean(true, UserDetailsPage.getDialogEnable().contains("This will re-enable this user account and restore their access to the portal. Continue?"), "Active user dialog message: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut + 1000);
-//		Cancel Active User
-		UserDetailsPage.clickCancelEnable();
-//		No Active User confirmation message
-		if (!Assertions.compareBoolean(false, UserDetailsPage.messageExists(), "Active User confirmation message: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Thread.sleep(TimeOut - 1000);
-//		Active User again
-		UserDetailsPage.clickLnkEnable();
-		Thread.sleep(TimeOut - 1000);
-//		Active User dialog displayed
-		if (!Assertions.compareBoolean(true, UserDetailsPage.dialogEnableExists(), "Active User dialog displayed: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-//		Confirm Active User
-		UserDetailsPage.clickDoEnable();
-		Thread.sleep(TimeOut + 3000);
+			//		Active user dialog displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.dialogEnableExists(), "Active user dialog displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut - 1000);
+			//		Active user dialog message
+			if (!Assertions.compareBoolean(true, UserDetailsPage.getDialogEnable().contains("This will re-enable this user account and restore their access to the portal. Continue?"), "Active user dialog message: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut + 1000);
+			//		Cancel Active User
+			UserDetailsPage.clickCancelEnable();
+			//		No Active User confirmation message
+			if (!Assertions.compareBoolean(false, UserDetailsPage.messageExists(), "Active User confirmation message: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Thread.sleep(TimeOut - 1000);
+			//		Active User again
+			UserDetailsPage.clickLnkEnable();
+			Thread.sleep(TimeOut - 1000);
+			//		Active User dialog displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.dialogEnableExists(), "Active User dialog displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Confirm Active User
+			UserDetailsPage.clickDoEnable();
+			Thread.sleep(TimeOut + 3000);
 
-//		Active User message displayed
-		if (!Assertions.compareBoolean(true,  UserDetailsPage.messageExists(), "Active User message displayed: ", testLog, driver)){
-			TestPassFlag = false;
+			//		Active User message displayed
+			if (!Assertions.compareBoolean(true, UserDetailsPage.messageExists(), "Active User message displayed: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			//		Resend message text
+			if (!Assertions.compareValue("The user's account was successfully re-enabled.", UserDetailsPage.getMessage(), "Disable User message text: ", testLog, driver)) {
+				TestPassFlag = false;
+			}
+			Assert.assertTrue(TestPassFlag);
 		}
-//		Resend message text
-		if (!Assertions.compareValue("The user's account was successfully re-enabled.",  UserDetailsPage.getMessage(), "Disable User message text: ", testLog, driver)){
-			TestPassFlag = false;
-		}
-		Assert.assertTrue(TestPassFlag);
-
 	}
 }

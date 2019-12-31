@@ -2,9 +2,13 @@ package com.verifone.pages.mpPages;
 
 import com.verifone.pages.BasePage;
 import com.verifone.tests.BaseTest;
+import com.verifone.utils.Assertions;
 import com.verifone.utils.appUtils.MPUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.util.List;
 
 import static com.verifone.utils.appUtils.MPUtils.*;
 
@@ -55,6 +59,18 @@ public class MPProductsPage extends BasePage {
     private By versionCode = By.cssSelector("input[type='text'][name='versionCode']");
     private By versionName = By.cssSelector("input[type='text'][name='versionName']");
     private By errorProductVersion = By.xpath("//*[@class='js-content']/p");
+    private By triggerMenu = By.xpath("//menu[@class='adb-js-context_menu adb-context_menu']//button[@class='adb-button adb-button__small adb-button__secret adb-context_menu--trigger adb-js-context_menu--trigger']");
+    private By editPublishedProduct = By.xpath("//a[@class='adb-link__option adb-stack--item_content']//span[contains(text(),'Edit Product')]");
+    private By publishButton = By.xpath("//button[@class='adb-button__primary adb-button__small js-publish_button']");
+    private By addNewEdition = By.xpath("//*[@id='editionsAndPricing']/div/ul/li[2]/div/a");
+    private By editionName = By.cssSelector("input[type='text'][name='editionNameBorder:editionNameBorder_body:editionName']");
+    private By showAsPrimary = By.name("placementContainer:showAsPrimary");
+    private By linkToPPEdition = By.cssSelector("input[type='url'][name='editionPrivacyUrlBorder:editionPrivacyUrlBorder_body:editionPrivacyUrlField']");
+    private By linkTCEdition = By.cssSelector("input[type='url'][name='editionTermsUrlBorder:editionTermsUrlBorder_body:editionTermsUrlField']");
+    private By setRevenueModel = By.xpath("//*[@id='edit-pricing-panel']//fieldset[3]/div[2]/div[2]/div/div/select");
+    private By saveEdition = By.cssSelector("button[name='save']");
+    private By oneTimePay = By.xpath("//*[@id='editionsAndPricing']/div/ul/li/a//*[text()='One Time Pay - Custom']");
+    private By deleteEdition = By.name("deleteEdition");
 
     public MPProductsPage() {
         super(url, title);
@@ -306,4 +322,128 @@ public class MPProductsPage extends BasePage {
         return compareErrorMessageText(errorMsg, errorProductVersion);
     }
 
+    /**
+     * Method : Click on settings icon in production catalog
+     *
+     * @author Prashant Lokhande
+     */
+    public void clickOnSettingIcon() {
+        scrollToElement(triggerMenu);
+        hoverAndClickOnElement(triggerMenu);
+    }
+
+    /**
+     * Method : Wait until the Product Dashboard display
+     *
+     * @author Prashant Lokhande
+     */
+    public void loadProductDashboardPage() {
+        waitForLoader(publishButton);
+    }
+
+    /**
+     * Method : Click on Edit product option
+     * Screen - Production Catalog
+     *
+     * @author : Prashant Lokhande
+     */
+    public void clickOnEditProduct() {
+        click(editPublishedProduct);
+    }
+
+    /**
+     * Method : Click on Add New Edition
+     *
+     * @author Prashant Lokhande
+     */
+    public void clickOnAddNewEdition() {
+        click(addNewEdition);
+    }
+
+    /**
+     * Method : fill edition name and code
+     * Section - Add Edition
+     *
+     * @author Prashant Lokhande
+     */
+    public void setEditionInfo(String eName, String eCode) {
+        sendKeys(editionName, eName);
+        sendKeys(editionCode, eCode);
+        sendKeys(linkToPPEdition, privacyPolicy);
+        sendKeys(linkTCEdition, termsAndConditions);
+    }
+
+    /**
+     * Method : Select checkbox - Show as primary pricing plan.
+     *
+     * @author Prashant Lokhande
+     */
+    public void selectShowAsPrimaryPlan() {
+        click(showAsPrimary);
+    }
+
+    /**
+     * Method : Select revenue model from dropdown
+     * Edition
+     *
+     * @author Prashant Lokhande
+     */
+    public void selectRevenueModel(String rModel) {
+        WebElement revenueEle = driver.findElement(setRevenueModel);
+        switch (rModel) {
+            case "One time":
+                revenueEle.sendKeys("One time");
+                break;
+            case "Recurring":
+                revenueEle.sendKeys("Recurring");
+                break;
+            case "Tiered":
+                revenueEle.sendKeys("Tiered");
+                break;
+            default:
+                revenueEle.sendKeys("Free");
+        }
+    }
+
+    /**
+     * Method : Click on Save Plan details
+     * Edition & Pricing
+     *
+     * @author Prashant Lokhande
+     */
+    public void clickOnSaveEditionBtn() {
+        scrollToElement(saveEdition);
+        click(saveEdition);
+    }
+
+    /**
+     * Method: Check edition exist
+     * Edition
+     *
+     * @author Prashant Lokhande
+     */
+
+    public boolean checkEditionExit() {
+        List<WebElement> otpApp = driver.findElements(oneTimePay);
+        System.out.println("Is One Time Pay Exist :" + otpApp.size());
+
+        if (otpApp.size() != 0) {
+            click(oneTimePay);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Method : Delete edition
+     * Edition
+     *
+     * @author Prashant Lokhande
+     */
+    public void clickOnDeleteEditionBtn() {
+        click(deleteEdition);
+    }
 }
+
+
+

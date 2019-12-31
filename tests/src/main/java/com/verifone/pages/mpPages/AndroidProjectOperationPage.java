@@ -231,7 +231,7 @@ public class AndroidProjectOperationPage extends BasePage {
                 File gradlewFile = new File(dir.getAbsolutePath() + File.separator + "gradlew");
                 dir.setExecutable(true);
                 gradlewFile.setExecutable(true);
-                Runtime.getRuntime().exec("./gradlew build", null, dir);
+                Runtime.getRuntime().exec("./gradlew build --stacktrace --debug", null, dir);
             }
 
             //ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "gradlew build");

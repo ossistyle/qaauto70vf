@@ -11,17 +11,21 @@ import static com.verifone.tests.steps.mpPortal.Steps.*;
 public class UploadPackageInStagingCatalogUI extends BaseTest {
 
     private static String productVersionTitle;
+    private String productName;
 
     @Test(priority = 0, testName = "LogIn & Delete Package if Exists in Production Catalog ", description = "Log in to CBA MarketPlace and Delete Package if it exists in the Production Catalog.")
     public void CBADeleteProductionPackageTestUI() throws Exception {
         loginMPPortalAsEOAdmin();
+
+        //get the product name from the properties files
+        productName = BaseTest.envConfig.getCbaProductName();
 
         CBADashboardPage cbaDashboard = PageFactory.getCBADashboard();
         cbaDashboard.manageMarketPlaceProducts();
 
         //Remove product from the production catalog only if it is present
         CBAProductsPage cbaProducts = PageFactory.getCBAProducts();
-        if (cbaProducts.isProductAvailable()) {
+        if (cbaProducts.isProductAvailable(productName)) {
             System.out.println("App present");
             cbaProducts.removeProduct();
             cbaProducts.unPublishProduct();

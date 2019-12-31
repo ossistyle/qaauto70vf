@@ -150,6 +150,10 @@ public class Steps {
     }
 
     public static void verifyMyAppsCBA(String appName) {
+        //click on My Apps list option
+        CBADashboardPage dPage = PageFactory.getCBADashboard();
+        dPage.clickOnMyApps();
+
         CBAMyAppsPage myApps = PageFactory.getCBAMyApps();
         myApps.verifyAppSubcribed(appName);
     }
@@ -198,8 +202,10 @@ public class Steps {
         loginMPPortal(EOAdminSupportMail, EOAdminSupportPwd, EOAdminSupportAnsw);
     }
     //--------------------------------------------------------------------------
+
     /**
      * Method: Reseller Switch Merchant Company.
+     *
      * @authors Yana Fridman
      */
 //--------------------------------------------------------------------------
@@ -216,8 +222,10 @@ public class Steps {
         MPHomePage.clickSubMenuCompany();
     }
 //--------------------------------------------------------------------------
+
     /**
      * Method: Reseller Navigate Users Page.
+     *
      * @authors Yana Fridman
      */
 //--------------------------------------------------------------------------
@@ -239,8 +247,10 @@ public class Steps {
         MPAccountPage.clickTabUser();
     }
 //--------------------------------------------------------------------------
+
     /**
      * Method: Create Group.
+     *
      * @authors Yana Fridman
      */
 //--------------------------------------------------------------------------
@@ -267,8 +277,10 @@ public class Steps {
         MPUsersPage.clickBtnDlgCreateGroups();
     }
 //--------------------------------------------------------------------------
+
     /**
      * Method: Update Group.
+     *
      * @authors Yana Fridman
      */
 //--------------------------------------------------------------------------
@@ -316,6 +328,7 @@ public class Steps {
 
     /**
      * Method: Add/Remove Users to Group.
+     *
      * @authors Yana Fridman
      */
 //--------------------------------------------------------------------------
@@ -357,8 +370,10 @@ public class Steps {
         return TestPassFlag;
     }
 //--------------------------------------------------------------------------
+
     /**
      * Method: Delete Group from Group Details.
+     *
      * @authors Yana Fridman
      */
 //--------------------------------------------------------------------------

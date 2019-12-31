@@ -168,6 +168,8 @@ public class CBAProductsPage extends BasePage {
     private By btnEditStagingProduct = By.xpath("//*[@class='adb-button adb-button__neutral adb-button__small']");
     private By txtVerifoneDevice = By.xpath("//span[contains(text(),'Verifone Device')]");
     private By tblDetails = By.xpath("//table[@id='channelCatalog']/tbody/tr");
+    private By marketPlaceSettings = By.xpath("//a[@class='adb-link__option adb-stack--item_content']//span[contains(text(),'Edit Marketplace Settings')]");
+    private By visibleOnMarketPlace = By.xpath("//input[@data-auto='visibleOnMarketplace']");
     // private By txtVerifoneDevice = By.cssSelector("a[class ='adb-link__nav adb-stack--item_content adb-is-selected']");
 
     ////Data/////
@@ -494,8 +496,8 @@ public class CBAProductsPage extends BasePage {
      * @author Prashant Lokhande
      * This methdd verify the availablability of the app in production catalog
      */
-    public boolean isProductAvailable() {
-        testLog.info("---------------------------------- Check Presence Of App in Catalog  -----------------");
+    public boolean isProductAvailable(String productName) {
+        testLog.info("---------------------------------- Check Presence Of App : <b>" + productName + "</b> in Catalog -----------------");
         sendKeys(searchInput, productName);
         click(searchIcon);
         waitUntilPageLoad(searchIcon);
@@ -644,6 +646,7 @@ public class CBAProductsPage extends BasePage {
             waitForLoader(headerItem);
             ExpectedConditions.textToBe(headerItem, headerInfo);
             click(addProductVersion);
+            waitForLoader(versionTitle);
         }
     }
 
@@ -685,5 +688,58 @@ public class CBAProductsPage extends BasePage {
         sendKeys(linkPP, "");
         sendKeys(linkTC, "");
         click(savePreviewBtn);
+    }
+
+    /**
+     * Method : Edit MarketPlace settings
+     *
+     * @author Prashant Lokhande
+     */
+    public void editMarketPlaceSettings() {
+        scrollToElement(triggerMenu);
+        hoverAndClickOnElement(triggerMenu);
+        click(marketPlaceSettings);
+    }
+
+    /**
+     * Method : This method describe the state of Visible on marketplace option
+     *
+     * @author Prashant Lokhande
+     */
+    public boolean checkVisibilityOfAppOnMarketPlace() {
+        waitForLoader(visibleOnMarketPlace);
+        WebElement chkElement = driver.findElement(visibleOnMarketPlace);
+        System.out.println("isSelected :" + chkElement.isSelected());
+        return chkElement.isSelected();
+    }
+
+    /**
+     * Method : This method describe checkbox box operation
+     * toggled on or off
+     *
+     * @author : Prashant Lokhande
+     */
+    public void clickVisibilityOfAppOnMarketPlace() {
+        scrollToElement(visibleOnMarketPlace);
+        click(visibleOnMarketPlace);
+    }
+
+    /**
+     * Method : click on save button - Edit MarketPlace Settings
+     * General tab
+     *
+     * @author Prashant Lokhande
+     */
+    public void clickGeneralTabSaveBtn() {
+        click(saveMarket);
+    }
+
+    /**
+     * Method : Compare message after saving the product
+     *
+     * @author : Prashant Lokhande
+     */
+    public boolean checkEditMarketPlaceSettingsInfo(String info) {
+        return compareErrorMessageText(info, txtInfoFeedBackPanel);
     }
 }
