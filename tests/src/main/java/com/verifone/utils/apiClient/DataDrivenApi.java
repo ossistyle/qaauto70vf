@@ -3,9 +3,11 @@ package com.verifone.utils.apiClient;
 import com.aventstack.extentreports.ExtentTest;
 import com.google.gson.JsonObject;
 import com.verifone.tests.BaseTest;
+import org.apache.commons.lang3.StringUtils;
 import com.verifone.tests.api.tests.VFAppMarket.merchantGroup;
 import org.json.JSONException;
 import org.testng.Assert;
+import org.testng.SkipException;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,6 +58,8 @@ public class DataDrivenApi {
         this.isBearer = isBearer;
     }
 
+
+
     public void startProsess(String accessToken, String accGrantType, String accSSOURL, String uri,
                              String requestMethod, String headers, String headersForGetToken, String body,
                              String expectedStatusCode, String expectedResult, String verifyList) throws IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException, JSONException {
@@ -96,6 +100,7 @@ public class DataDrivenApi {
 
             try {
                 response = getRequestWithHeadersNoExpected(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+                validateExcludeResult(expectedResult, verifyList, verifyExcludeList);
                 System.out.println("response is: " + response);
             } catch (AssertionError e) {
                 if (raw.equals("2")) {
@@ -109,7 +114,7 @@ public class DataDrivenApi {
             try {
                 offerId = response.get("offerId").toString();
                 System.out.println(offerId);
-                testLog.info("offerID: "+ offerId);
+                testLog.info("offerID: " + offerId);
             } catch (NullPointerException e) {
                 System.out.println("offerId is missing in row number " + raw);
                 testLog.info("offerId is missing in row number " + raw);
@@ -235,7 +240,7 @@ public class DataDrivenApi {
         return id;
     }
 
-    
+
     private void validateResult(String expectedResult, String verifyList) {
         if (response != null)
             testLog.info("Response is:\n" + response.toString());

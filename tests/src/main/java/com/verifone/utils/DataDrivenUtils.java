@@ -1,18 +1,17 @@
 package com.verifone.utils;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.SQLOutput;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.DateUtil;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 
 public class DataDrivenUtils {
 
@@ -45,6 +44,10 @@ public class DataDrivenUtils {
             for (int i = 1; i <= totalNoOfRows; i++) {
                 for (int j = 0; j < totalNoOfCols; j++) {
                     Cell = ExcelWSheet.getRow(i).getCell(j);
+                    if (null == Cell) {
+                        //Most likely reached last row/column
+                        continue;
+                    }
                     int cel_Type = Cell.getCellType();
                     switch (cel_Type) {
                         case HSSFCell.CELL_TYPE_NUMERIC: // 0
@@ -99,7 +102,7 @@ public class DataDrivenUtils {
 
     public static HashMap<String, String> getMapFromStr(String headers) {
         HashMap<String, String> headersMap = new HashMap<String, String>();
-        if(headers == null) {
+        if (headers == null) {
             return headersMap;
         }
 
