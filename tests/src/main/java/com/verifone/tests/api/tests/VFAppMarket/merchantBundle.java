@@ -23,7 +23,7 @@ public class merchantBundle extends BaseTest {
         file = setFilePath("merchant-bundleVFMPQA.xls", "merchant-bundleVFMP.xls");
     }
 
-  @DataProvider(name = "bundles list")
+   @DataProvider(name = "bundles list")
     public Object[][] location() throws Exception {
         Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "returnBundles-gvcca2319");
         return arrayObject;
