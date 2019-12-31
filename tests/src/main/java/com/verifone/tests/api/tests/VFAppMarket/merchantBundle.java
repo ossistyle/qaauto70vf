@@ -7,8 +7,9 @@ import com.verifone.utils.apiClient.DataDrivenApi;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import static com.verifone.utils.apiClient.DataDrivenApi.setFilePath;
+
+
 
 public class merchantBundle extends BaseTest {
 
@@ -23,11 +24,13 @@ public class merchantBundle extends BaseTest {
         file = setFilePath("merchant-bundleVFMPQA.xls", "merchant-bundleVFMP.xls");
     }
 
-   @DataProvider(name = "bundles list")
+
+    @DataProvider(name = "bundles list")
     public Object[][] location() throws Exception {
         Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "returnBundles-gvcca2319");
         return arrayObject;
     }
+
 
     @DataProvider(name = "negative_test")
     public Object[][] negative_test() throws Exception {
@@ -35,13 +38,15 @@ public class merchantBundle extends BaseTest {
         return arrayObject;
     }
 
+
     @DataProvider(name = "freeAppsBundle")
     public Object[][] freeAppsBundle() throws Exception {
         Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "freeapps");
         return arrayObject;
     }
 
-  @DataProvider(name = "existing_assignment")
+
+    @DataProvider(name = "existing_assignment")
     public Object[][] existing_assignment() throws Exception {
         Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "existing_assignment");
         return arrayObject;
@@ -54,11 +59,13 @@ public class merchantBundle extends BaseTest {
         return arrayObject;
     }
 
+
     @DataProvider(name = "1time_existing")
     public Object[][] OneTime_existing() throws Exception {
         Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "1time_existing");
         return arrayObject;
     }
+
 
     @DataProvider(name = "recurring")
     public Object[][] recurring() throws Exception {
@@ -87,31 +94,32 @@ public class merchantBundle extends BaseTest {
         return arrayObject;
     }
 
-       @Test(dataProvider = "bundles list", groups = "VFMPapi")
 
-       public void bundlesListDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
-                                       String headers, String headersForGetToken, String body, String expectedStatusCode,
-                                       String expectedResult, String verifyList,String verifyExcludeList, String comments, String rowNum) throws Exception {
-           starTestLog(rowNum + ". " + comments, comments);
+    @Test(dataProvider = "bundles list", groups = "VFMPapi")
 
-           DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false);
-           offerId = api.startProsess_ValidateExcludeDataEvaluaet(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
-                   expectedStatusCode, expectedResult, verifyList,verifyExcludeList, offerId, rowNum );
-       }
+    public void bundlesListDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
+                               String headers, String headersForGetToken, String body, String expectedStatusCode,
+                               String expectedResult, String verifyList,String verifyExcludeList, String comments, String rowNum) throws Exception {
+        starTestLog(rowNum + ". " + comments, comments);
+
+        DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false);
+        offerId = api.startProsess_ValidateExcludeDataEvaluaet(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
+                expectedStatusCode, expectedResult, verifyList,verifyExcludeList, offerId, rowNum );
+    }
 
 
-       @Test(dataProvider = "negative_test", groups = "VFMPapi")
 
-       public void negativeTestDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
-                                       String headers, String headersForGetToken, String body, String expectedStatusCode,
+    @Test(dataProvider = "negative_test", groups = "VFMPapi")
 
-                                       String expectedResult, String verifyList,String verifyExcludeList, String comments, String rowNum) throws Exception {
-           starTestLog(rowNum + ". " + comments, comments);
+    public void negativeTestDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
+                                   String headers, String headersForGetToken, String body, String expectedStatusCode,
+                                   String expectedResult, String verifyList,String verifyExcludeList, String comments, String rowNum) throws Exception {
+        starTestLog(rowNum + ". " + comments, comments);
 
-           DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false);
-           offerId = api.startProsess_ValidateExcludeDataEvaluaet(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
-                   expectedStatusCode, expectedResult, verifyList,verifyExcludeList, offerId, rowNum );
-       }
+        DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false);
+        offerId = api.startProsess_ValidateExcludeDataEvaluaet(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
+                expectedStatusCode, expectedResult, verifyList,verifyExcludeList, offerId, rowNum );
+    }
 
     @Test(dataProvider = "freeAppsBundle", groups = "VFMPapi")
 
