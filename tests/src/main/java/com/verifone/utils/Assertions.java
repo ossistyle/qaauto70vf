@@ -2,7 +2,6 @@ package com.verifone.utils;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.verifone.infra.SeleniumUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 
 import static org.testng.AssertJUnit.assertEquals;
@@ -12,7 +11,7 @@ public class Assertions {
     public static ExtentTest testLog;
 
     public static void assertTextContains(String expectedResult, String actual) {
-        if (!StringUtils.containsIgnoreCase(actual, expectedResult.trim())) {
+        if (!actual.contains(expectedResult)) {
             org.testng.Assert.fail("Text expected: " + expectedResult + " Was: " + actual);
         }
     }
