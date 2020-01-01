@@ -51,7 +51,7 @@ public class DataDrivenUtils {
                     int cel_Type = Cell.getCellType();
                     switch (cel_Type) {
                         case HSSFCell.CELL_TYPE_NUMERIC: // 0
-                            //System.out.println(i + " "+ j); debug
+                            //System.out.println(i + " "+ j); //debug
                             if (DateUtil.isCellDateFormatted(Cell)) {
                                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
                                 tabArray[i - 1][j] = df.format(Cell.getDateCellValue());
@@ -60,7 +60,7 @@ public class DataDrivenUtils {
                             }
                             break;
                         case HSSFCell.CELL_TYPE_STRING: // 1
-                            //System.out.println("String "+ i + " "+ j); debug
+                            //System.out.println("String "+ i + " "+ j); //debug
                             tabArray[i - 1][j] = Cell.getStringCellValue();
                             break;
                     }
