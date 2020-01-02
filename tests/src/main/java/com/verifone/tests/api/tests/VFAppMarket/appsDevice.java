@@ -21,7 +21,7 @@ public class appsDevice extends BaseTest {
     @BeforeSuite
     private void getFile()
     {
-        file = setFilePath("noFilehere.xls", "appsVFMP.xls");
+        file = setFilePath("appsVFMP_QA.xls", "appsVFMP.xls");
     }
 
     @DataProvider(name = "return Apps per Device")
@@ -39,8 +39,8 @@ public class appsDevice extends BaseTest {
 
 
         DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false); // 'isBearer' is a flag to define a getToken type(with 'Bearer' or not)
-        api.startProsess_ValidateExcludeData(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
-                expectedStatusCode, expectedResult, verifyList, verifyExcludeList);
+        offerId = api.startProsess_ValidateExcludeDataEvaluaet(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
+                expectedStatusCode, expectedResult, verifyList, verifyExcludeList, offerId, rowNum);
     }
 
     @DataProvider(name = "add Apps to Device")
