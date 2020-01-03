@@ -10,9 +10,9 @@
     <parameter name="getVersions" value="false"/>
     <parameter name="isLinuxMachine" value="${isLinux}"/>
     <!-- Universal device identifier -->
-    <parameter name="udid" value="${udid}"/>
+    <parameter name="udid" value="401-686-709"/>
     <!-- Device name -->
-    <parameter name="deviceName" value="${deviceName}"/>
+    <parameter name="deviceName" value="Carbon_5"/>
     <!-- The absolute local path or remote http URL to .apk file -->
     <parameter name="app" value="${app}"/>
 
