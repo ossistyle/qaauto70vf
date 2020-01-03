@@ -9,8 +9,11 @@
     <parameter name="env" value="DEV"/>
     <parameter name="getVersions" value="false"/>
     <parameter name="isLinuxMachine" value="${isLinux}"/>
+    <!-- Universal device identifier -->
     <parameter name="udid" value="${udid}"/>
+    <!-- Device name -->
     <parameter name="deviceName" value="${deviceName}"/>
+    <!-- The absolute local path or remote http URL to .apk file -->
     <parameter name="app" value="${app}"/>
 
     <!--Set Portal Variable: -->
@@ -18,14 +21,6 @@
     <!--CGPortal-->
     <!--EOAdmin-->
     <parameter name="portal" value="VFMPPortal"/>
-
-
-    <!--Set Browser Variable:-->
-    <!--CHROME-->
-    <!--FF-->
-    <!--EDGE-->
-    <!--IE-->
-    <!--test-->
 
     <test name="AndroidMobile">
         <classes>
