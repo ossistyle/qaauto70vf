@@ -3,12 +3,9 @@ package com.verifone.utils.apiClient;
 import com.aventstack.extentreports.ExtentTest;
 import com.google.gson.JsonObject;
 import com.verifone.tests.BaseTest;
-import org.apache.commons.lang3.StringUtils;
 import com.verifone.tests.api.tests.VFAppMarket.merchantGroup;
 import org.json.JSONException;
 import org.testng.Assert;
-import org.testng.SkipException;
-
 import java.io.File;
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -137,11 +134,25 @@ public class DataDrivenApi {
             try {
                 if (raw.equals("3")) {
                     response = getRequestWithHeadersNoExpected(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+                    validateExcludeResult(expectedResult, verifyList, verifyExcludeList);
                     testLog.debug("Probably fail because of first test fail");
-                } else {
-                    response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
                 }
-                validateExcludeResult(expectedResult, verifyList, verifyExcludeList);
+                else if(requestMethod.equals("get")){
+                    try{
+                        response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+                        String numberDevices = response.getAsJsonArray("data").get(0).getAsJsonObject().get("numberDevices").toString();
+                        assertTextContains(getMapFromStr(expectedResult).get("numberDevices"), numberDevices);
+                        testLog.info("number of devices is : " + numberDevices);
+                    }
+                    catch(Exception e){
+                       validateExcludeResult(expectedResult, verifyList, verifyExcludeList);
+                       testLog.info("method get, no devices appear in response. Maybe negative test");
+                    }
+                }
+                else {
+                    response = getRequestWithHeaders(uri, requestMethod, body, headersMap, Integer.parseInt(expectedStatusCode));
+                    validateExcludeResult(expectedResult, verifyList, verifyExcludeList);
+                }
                 System.out.println("response is: " + response);
             } catch (AssertionError e) {
                 if (raw.equals("3")) {

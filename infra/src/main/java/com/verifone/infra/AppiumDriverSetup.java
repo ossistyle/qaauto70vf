@@ -25,7 +25,7 @@ public class AppiumDriverSetup implements WebDriverProvider {
     @Override
     public WebDriver createDriver(DesiredCapabilities caps) {
         try {
-            return new AndroidDriver<SelenideElement>(new URL("http://127.0.0.1:4723/wd/hub"), caps);
+            return new AndroidDriver<SelenideElement>(new URL("http://10.160.10.62:4723/wd/hub"), caps);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

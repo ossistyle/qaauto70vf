@@ -1,15 +1,12 @@
 package com.verifone.tests.mpAngularTests;
 
 import com.verifone.infra.User;
-import com.verifone.pages.mpAngularPages.pages.AppCatalogPage;
+import com.verifone.pages.mpAngularPages.pages.applications.AppCatalogPage;
 import com.verifone.pages.mpAngularPages.pages.HomePage;
 import com.verifone.pages.mpAngularPages.pages.LoginPage;
 import com.verifone.tests.BaseTest;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import static com.codeborne.selenide.Selenide.open;
 
 public class AngularAppTest extends BaseTest {
 

@@ -25,6 +25,7 @@ public class merchantBundle extends BaseTest {
     }
 
 
+
     @DataProvider(name = "bundles list")
     public Object[][] location() throws Exception {
         Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "returnBundles-gvcca2319");
@@ -91,6 +92,13 @@ public class merchantBundle extends BaseTest {
     @DataProvider(name = "mixed_existing")
     public Object[][] mixed_existing() throws Exception {
         Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "mixed_existing");
+        return arrayObject;
+    }
+
+
+    @DataProvider(name = "deviceByBundle")
+    public Object[][] deviceByBundle() throws Exception {
+        Object[][] arrayObject = DataDrivenUtils.getExcelData(file, "deviceByBundle");
         return arrayObject;
     }
 
@@ -224,5 +232,18 @@ public class merchantBundle extends BaseTest {
                 expectedStatusCode, expectedResult, verifyList,verifyExcludeList, offerId, rowNum );
     }
 
+
+
+    @Test(dataProvider = "deviceByBundle", groups = "VFMPapi")
+
+    public void deviceByBundleDDT(String accessToken, String accGrantType, String accSSOURL, String uri, String requestMethod,
+                                  String headers, String headersForGetToken, String body, String expectedStatusCode,
+                                  String expectedResult, String verifyList,String verifyExcludeList, String comments, String rowNum) throws Exception {
+        starTestLog(rowNum + ". " + comments, comments);
+
+        DataDrivenApi api = new DataDrivenApi((ExtentTest) test.get(),false);
+        offerId = api.startProsess_ValidateExcludeDataEvaluaet(accessToken, accGrantType, accSSOURL, uri, requestMethod, headers, headersForGetToken, body,
+                expectedStatusCode, expectedResult, verifyList,verifyExcludeList, offerId, rowNum );
+    }
 
 }

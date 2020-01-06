@@ -1,10 +1,8 @@
-package com.verifone.pages.mpAngularPages.pages;
+package com.verifone.pages.mpAngularPages.pages.applications;
 
 import com.codeborne.selenide.SelenideElement;
 import com.verifone.pages.BasePage;
 import com.verifone.pages.mpAngularPages.components.MainMenu;
-import org.openqa.selenium.WebDriver;
-
 import java.util.List;
 
 import static com.codeborne.selenide.Condition.*;
@@ -18,8 +16,11 @@ public class AppCatalogPage extends BasePage {
 
     public MainMenu mainMenu;
 
+    private SelenideElement header = $(byCssSelector("h1[class=title]"));
     private SelenideElement filterAppsField = $(byCssSelector("input[placeholder^=Filter]"));
     private SelenideElement searchButton = $(byXpath("//button[contains(text(), 'Search')]"));
+    private SelenideElement applicationsTab = $(byXpath("//*[@class='tabs']//a[contains(text(), 'App')]"));
+    private SelenideElement bundlesTab = $(byXpath("//*[@class='tabs']//a[contains(text(), 'Bundle')]"));
     private SelenideElement cardsViewTrigger = $(byXpath("//span[contains(text(),'Cards')]"));
     private SelenideElement gridViewTrigger = $(byXpath("//span[contains(text(),'Grid')]"));
     private List<SelenideElement> cardImages = $$(byCssSelector(".card-image img"));
@@ -31,6 +32,7 @@ public class AppCatalogPage extends BasePage {
      * @param app Application name
      */
     public void enterFilterApps(String app) {
+        testLog.info(String.format("Enter '%s' into 'Filter Apps' input field", app));
         filterAppsField.should(exist).sendKeys(app);
     }
 
@@ -38,13 +40,31 @@ public class AppCatalogPage extends BasePage {
      * Click 'Search' button
      */
     public void clickSearch() {
+        testLog.info("Click 'Search' button");
         searchButton.should(exist).click();
+    }
+
+    /**
+     * Click 'Applications' tab
+     */
+    public void clickApplicationsTab() {
+        testLog.info("Click 'Applications' tab");
+        applicationsTab.should(exist).click();
+    }
+
+    /**
+     * Click 'Bundles' tab
+     */
+    public void clickBundlesTab() {
+        testLog.info("Click 'Bundles' tab");
+        bundlesTab.should(exist).click();
     }
 
     /**
      * Switch to 'Card' view
      */
     public void clickCardsView() {
+        testLog.info("Switch to 'Card' view");
         cardsViewTrigger.should(exist).click();
     }
 
@@ -52,6 +72,7 @@ public class AppCatalogPage extends BasePage {
      * Switch to 'Grid' view
      */
     public void clickGridView() {
+        testLog.info("Switch to 'Grid' view");
         gridViewTrigger.should(exist).click();
     }
 
@@ -60,6 +81,7 @@ public class AppCatalogPage extends BasePage {
      * @param index App page button index
      */
     public void clickAppPageButton(int index) {
+        testLog.info(String.format("Click 'App page' button for app with %d index", index));
         appPageButtons.get(index).should(exist).click();
     }
 
@@ -68,7 +90,16 @@ public class AppCatalogPage extends BasePage {
      * @param index Quick View button index
      */
     public void clickQuickViewButton(int index) {
+        testLog.info(String.format("Click 'Quick View' button for app with %d index", index));
         quickViewButtons.get(index).should(exist).click();
+    }
+
+    /**
+     * Get page header
+     * @return SelenideElement Page header
+     */
+    public SelenideElement getHeader() {
+        return header;
     }
 
     public AppCatalogPage() {
