@@ -23,6 +23,7 @@ public class LoginPage extends BasePage {
      * @param login Email address
      */
     public void enterLogin(String login) {
+        testLog.info(String.format("Enter %s into 'Email address' field", login));
         loginField.should(exist).sendKeys(login);
     }
 
@@ -31,6 +32,7 @@ public class LoginPage extends BasePage {
      * @param password Password
      */
     public void enterPassword(String password) {
+        testLog.info(String.format("Enter %s into 'Password' field", password));
         WebDriverRunner.getWebDriver().switchTo().frame(passwordIFrame);
         passwordField.should(exist).sendKeys(password);
         WebDriverRunner.getWebDriver().switchTo().defaultContent();
@@ -40,6 +42,7 @@ public class LoginPage extends BasePage {
      * Click 'Log In' button
      */
     public void clickLogin() {
+        testLog.info("Click 'Log In' button");
         loginButton.should(exist).click();
     }
 
