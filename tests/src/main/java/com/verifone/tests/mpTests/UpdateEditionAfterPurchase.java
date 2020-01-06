@@ -128,6 +128,7 @@ public class UpdateEditionAfterPurchase extends BaseTest {
         productsPage.clickOnAddNewEdition();
         productsPage.setEditionInfo(editionName, editionCode);
         productsPage.selectShowAsPrimaryPlan();
+        productsPage.setLegalEditionsDetails();
         productsPage.selectRevenueModel(editionCode);
 
         testLog.info("------------------ Save Edition Plan -----------------");

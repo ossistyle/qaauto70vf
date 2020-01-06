@@ -369,8 +369,6 @@ public class MPProductsPage extends BasePage {
     public void setEditionInfo(String eName, String eCode) {
         sendKeys(editionName, eName);
         sendKeys(editionCode, eCode);
-        sendKeys(linkToPPEdition, privacyPolicy);
-        sendKeys(linkTCEdition, termsAndConditions);
     }
 
     /**
@@ -379,7 +377,20 @@ public class MPProductsPage extends BasePage {
      * @author Prashant Lokhande
      */
     public void selectShowAsPrimaryPlan() {
+        waitUntilPageLoad(showAsPrimary);
         click(showAsPrimary);
+    }
+
+    /**
+     * Method : Add Legal details link
+     * Editions
+     *
+     * @author Prashant Lokhande
+     */
+
+    public void setLegalEditionsDetails() {
+        sendKeys(linkToPPEdition, privacyPolicy);
+        sendKeys(linkTCEdition, termsAndConditions);
     }
 
     /**
@@ -389,6 +400,7 @@ public class MPProductsPage extends BasePage {
      * @author Prashant Lokhande
      */
     public void selectRevenueModel(String rModel) {
+        waitUntilPageLoad(setRevenueModel);
         WebElement revenueEle = driver.findElement(setRevenueModel);
         switch (rModel) {
             case "One time":
