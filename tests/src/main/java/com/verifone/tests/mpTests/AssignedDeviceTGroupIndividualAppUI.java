@@ -25,7 +25,6 @@ public class AssignedDeviceTGroupIndividualAppUI extends BaseTest {
         loginCBA(createAssignUser());
 
         listOfDevices = BaseTest.envConfig.getListOfDevices();
-        //listOfApp = BaseTest.envConfig.getListOfAppName();
         listOfApp = BaseTest.envConfig.getListOfIndividualApp();
 
         groupName = BaseTest.envConfig.getGroupInfo("MPFifthGroupName");
@@ -67,7 +66,7 @@ public class AssignedDeviceTGroupIndividualAppUI extends BaseTest {
         loginCBA(createAssignUser());
 
         listOfDevices = new ArrayList<>(BaseTest.envConfig.getListOfDevices().subList(0, 1));
-        listOfApp = new ArrayList<>(BaseTest.envConfig.getListOfAssignAppsToGroup());
+        //listOfApp = new ArrayList<>(BaseTest.envConfig.getListOfAssignAppsToGroup());
         //listOfApp = new ArrayList<>(BaseTest.envConfig.getListOfAppName().subList(0, 1));
 
         System.out.println("listOfDevices :" + listOfDevices);

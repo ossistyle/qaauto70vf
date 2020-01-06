@@ -154,7 +154,7 @@ public class EnvConfig {
 
     public ArrayList<String> getListOfIndividualApp() {
         listOfIndividualApp = new ArrayList<>();
-        listOfIndividualApp.add(prop.getProperty(env + "." + "MPMonthlyRecurringApp"));
+        listOfIndividualApp.add(prop.getProperty(env + "." + "MPPurchaseFreeAppFour"));
         listOfIndividualApp.add(prop.getProperty(env + "." + "MPPurchaseOneTimeApp"));
         return listOfIndividualApp;
     }
