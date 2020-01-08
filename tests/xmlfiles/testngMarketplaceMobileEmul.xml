@@ -9,6 +9,7 @@
     <parameter name="env" value="DEV"/>
     <parameter name="getVersions" value="false"/>
     <parameter name="isLinuxMachine" value="${isLinux}"/>
+    <parameter name="browserType" value="FF"/>
     <!-- Universal device identifier -->
     <parameter name="udid" value="emulator-5554"/>
     <!-- Device name -->
