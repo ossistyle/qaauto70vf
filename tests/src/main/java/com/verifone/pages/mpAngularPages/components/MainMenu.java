@@ -12,6 +12,7 @@ public class MainMenu {
 
     private ExtentTest testLog;
 
+    private SelenideElement logo = $(byCssSelector("a[data-e2e*=logo] img"));
     private SelenideElement applications = $(byXpath("//span[text() = 'Applications']"));
     private SelenideElement appCatalogue = $(byCssSelector("a[ng-reflect-router-link$=catalog]"));
     private SelenideElement myApps = $(byCssSelector("a[ng-reflect-router-link$=apps]"));
@@ -23,6 +24,14 @@ public class MainMenu {
     private SelenideElement users = $(byXpath("//a[contains(text(),'Users')]"));
     private SelenideElement currentUser = $(byCssSelector(".menu-footer a:first-child"));
     private SelenideElement logOutButton = $(byCssSelector("svg[class*='sign-out']"));
+
+    /**
+     * Get Verifone logo
+     * @return SelenideElement Verifone logo
+     */
+    public SelenideElement getLogo() {
+        return logo.should(visible);
+    }
 
     /**
      * Click 'Applications' dropdown

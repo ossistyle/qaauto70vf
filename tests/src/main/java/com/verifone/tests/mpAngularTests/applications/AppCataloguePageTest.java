@@ -16,6 +16,7 @@ public class AppCataloguePageTest extends BaseTest {
     // TODO Replace mock data to data from API
     private AppMock app;
     private User merchant;
+    private int testAppIndex = 0;
 
     private AppCatalogPage appCatalogPage;
 
@@ -39,9 +40,29 @@ public class AppCataloguePageTest extends BaseTest {
         homePage.mainMenu.clickAppCatalogue();
     }
 
+    @Test(priority=1, testName = "App Catalog > Card view elements", groups = {"ui", "regression"})
+    public void cardsViewAppsListElementsUI() {
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(appCatalogPage.cardsView.getAppName(testAppIndex).text(), app.getName(), "App name");
+        softAssert.assertTrue(appCatalogPage.cardsView.getCardImage(testAppIndex).isDisplayed(), "App image");
+        softAssert.assertEquals(appCatalogPage.cardsView.getAppDescription(testAppIndex).text(), app.getDescription(), "App description");
+        softAssert.assertAll();
+    }
+
+    @Test(priority=1, testName = "App Catalog > Grid view elements", groups = {"ui", "regression"})
+    public void gridViewAppsListElementsUI() {
+        appCatalogPage.filterPanel.clickGridView();
+
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(appCatalogPage.gridView.getAppName(testAppIndex).text(), app.getName(), "App name");
+        softAssert.assertEquals(appCatalogPage.gridView.getAppDescription(testAppIndex).text(), app.getDescription(), "App description");
+        softAssert.assertEquals(appCatalogPage.gridView.getAppVersion(testAppIndex).text(), app.getVersion(), "App version");
+        softAssert.assertAll();
+    }
+
     @Test(priority=1, testName = "App Catalog > Quick app view elements", groups = {"ui", "regression"})
     public void quickViewBlockElementsUI() {
-        appCatalogPage.cardsView.clickQuickViewButton(0);
+        appCatalogPage.cardsView.clickQuickViewButton(testAppIndex);
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(appCatalogPage.quickView.getAppName().text(), app.getName(), "App name");
