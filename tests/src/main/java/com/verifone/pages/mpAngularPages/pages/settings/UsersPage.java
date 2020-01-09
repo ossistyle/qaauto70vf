@@ -10,7 +10,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class UsersPage extends BasePage {
 
-    private final static String URL = "/settings/users";
+    private final static String URL = "settings/users";
     private final static String TITLE = "Marketplace";
 
     private List<SelenideElement> userCheckboxes = $$(byCssSelector("input[class*=check]"));

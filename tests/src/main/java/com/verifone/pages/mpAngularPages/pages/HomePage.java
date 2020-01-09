@@ -11,7 +11,7 @@ public class HomePage extends BasePage {
 
     public MainMenu mainMenu;
 
-    private final static String URL = "/home";
+    private final static String URL = "home";
     private final static String TITLE = "Marketplace";
 
     private SelenideElement companyNameTitle = $(byXpath("//h3[contains(@class, 'title')][contains(text(), 'Com')]"));

@@ -22,11 +22,12 @@
         <!--FF-->
         <!--EDGE-->
         <!--IE-->
-        <parameter name="browserType" value="${browser}"/>
+        <parameter name="browserType" value="chrome"/>
 
         <classes>
-            <!--Verfone MP-->
-            <class name="com.verifone.tests.mpAngularTests.AngularAppTest"/>
+            <!--Verifone MP -->
+            <class name="com.verifone.tests.mpAngularTests.applications.AppCataloguePageTest"/>
+            <class name="com.verifone.tests.mpAngularTests.applications.AppDetailsPageTest"/>
         </classes>
     </test>
 </suite>
