@@ -42,7 +42,7 @@ public class CardsViewTable {
 
     public SelenideElement getCardImage(int index) {
         testLog.info(String.format("Get app image for app with %d index", index));
-        return cardImages.get(index).should(exist);
+        return cardImages.get(index);
     }
 
     public SelenideElement getAppDescription(int index) {

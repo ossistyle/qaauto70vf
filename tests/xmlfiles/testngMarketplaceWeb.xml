@@ -33,4 +33,10 @@
             <class name="com.verifone.tests.mpAngularTests.applications.AppDetailsPageTest"/>
         </classes>
     </test>
+
+    <test name="Settings tests">
+        <classes>
+            <class name="com.verifone.tests.mpAngularTests.settings.UsersPageTest"/>
+        </classes>
+    </test>
 </suite>
