@@ -18,26 +18,15 @@ public class AppDetailsPage extends BasePage {
     private SelenideElement appId = $(byCssSelector(".hero-body .subtitle"));
     private SelenideElement appDescription = $(byCssSelector(".hero-body .columns .subtitle"));
 
-    /**
-     * Get App name
-     * @return SelenideElement App name
-     */
+
     public SelenideElement getAppName() {
         return appName;
     }
 
-    /**
-     * Get App id
-     * @return SelenideElement App id
-     */
     public SelenideElement getAppId() {
         return appId;
     }
 
-    /**
-     * Get App description
-     * @return SelenideElement App description
-     */
     public SelenideElement getAppDescription() {
         return appDescription;
     }

@@ -15,15 +15,15 @@ public class AppCatalogPage extends BasePage {
     public MainMenu mainMenu;
     public FilterPanel filterPanel;
     public QuickView quickView;
-    public CardsViewTable cardsView;
-    public GridViewTable gridView;
+    public CardsViewTable cardsViewTable;
+    public GridViewTable gridViewTable;
 
     public AppCatalogPage() {
         super(URL, TITLE);
         this.mainMenu = new MainMenu();
         this.filterPanel = new FilterPanel();
         this.quickView = new QuickView();
-        this.cardsView = new CardsViewTable();
-        this.gridView = new GridViewTable();
+        this.cardsViewTable = new CardsViewTable();
+        this.gridViewTable = new GridViewTable();
     }
 }

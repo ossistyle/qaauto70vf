@@ -18,28 +18,16 @@ public class GridViewTable {
     private List<SelenideElement> appDescriptions = $$(byCssSelector("td[data-label*=Desc]"));
     private List<SelenideElement> appVersions = $$(byCssSelector("td[data-label*=Ver]"));
 
-    /**
-     * Get App name for App with index
-     * @return SelenideElement App name
-     */
     public SelenideElement getAppName(int index) {
         testLog.info(String.format("Get app name for app with %d index", index));
         return appNames.get(index).should(exist);
     }
 
-    /**
-     * Get App description for App with index
-     * @return SelenideElement App descriptions
-     */
     public SelenideElement getAppDescription(int index) {
         testLog.info(String.format("Get app description for app with %d index", index));
         return appDescriptions.get(index).should(exist);
     }
 
-    /**
-     * Get App version for App with index
-     * @return SelenideElement App version
-     */
     public SelenideElement getAppVersion(int index) {
         testLog.info(String.format("Get app version for app with %d index", index));
         return appVersions.get(index).should(exist);

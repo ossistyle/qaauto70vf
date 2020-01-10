@@ -19,43 +19,26 @@ public class FilterPanel {
     private SelenideElement cardsViewTrigger = $(byXpath("//span[contains(text(),'Cards')]"));
     private SelenideElement gridViewTrigger = $(byXpath("//span[contains(text(),'Grid')]"));
 
-    /**
-     * Enter text into 'Filter App' field
-     * @param app Application name
-     */
     public void enterFilterApps(String app) {
         testLog.info(String.format("Enter '%s' into 'Filter Apps' input field", app));
         filterAppsField.should(exist).sendKeys(app);
     }
 
-    /**
-     * Click 'Search' button
-     */
     public void clickSearch() {
         testLog.info("Click 'Search' button");
         searchButton.should(exist).click();
     }
 
-    /**
-     * Switch to 'Card' view
-     */
     public void clickCardsView() {
         testLog.info("Switch to 'Card' view");
         cardsViewTrigger.should(exist).click();
     }
 
-    /**
-     * Switch to 'Grid' view
-     */
     public void clickGridView() {
         testLog.info("Switch to 'Grid' view");
         gridViewTrigger.should(exist).click();
     }
 
-    /**
-     * Get page header
-     * @return SelenideElement Page header
-     */
     public SelenideElement getHeader() {
         return header;
     }
