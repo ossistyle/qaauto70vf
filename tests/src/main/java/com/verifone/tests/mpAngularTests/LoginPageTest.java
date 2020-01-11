@@ -80,7 +80,7 @@ public class LoginPageTest extends BaseTest {
         loginPage.getLogoImage().shouldBe(visible);
         softAssert.assertEquals(loginPage.getLoginTitle().text(), "Login to your\nVerifone Account", "Login title");
         softAssert.assertEquals(loginPage.getUsernameField().parent().text(), "Email Address", "Email field");
-        softAssert.assertTrue(loginPage.getPasswordField().parent().text().contains("Password"), "Password field");
+        softAssert.assertTrue(loginPage.getPasswordField().parent().parent().text().contains("Password"), "Password field text is 'Password'");
         softAssert.assertEquals(loginPage.getForgotPasswordLink().text(), "Forgot Password?", "Forgot password link");
         softAssert.assertEquals(loginPage.getLoginButton().text(), "LOG IN", "Login button");
         softAssert.assertAll();
