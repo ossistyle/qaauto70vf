@@ -5,7 +5,6 @@ import com.verifone.pages.BasePage;
 import java.util.List;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class UsersPage extends BasePage {
@@ -13,12 +12,12 @@ public class UsersPage extends BasePage {
     private final static String URL = "settings/users";
     private final static String TITLE = "Marketplace";
 
-    private List<SelenideElement> userCheckboxes = $$(byCssSelector("input[class*=check]"));
-    private List<SelenideElement> userAvatars = $$(byCssSelector("figure[class*=avatar] img"));
-    private List<SelenideElement> userNames = $$(byCssSelector(".content strong"));
-    private List<SelenideElement> userEmails = $$(byCssSelector(".content p > span:last-child"));
-    private List<SelenideElement> userRoles = $$(byCssSelector("div[class*=tags] span"));
-    private List<SelenideElement> userActionButtons = $$(byCssSelector("button[aria-controls*=dropdown]"));
+    private List<SelenideElement> userCheckboxes = $$("input[class*=check]");
+    private List<SelenideElement> userAvatars = $$("figure[class*=avatar] img");
+    private List<SelenideElement> userNames = $$(".content strong");
+    private List<SelenideElement> userEmails = $$(".content p > span:last-child");
+    private List<SelenideElement> userRoles = $$("div[class*=tags] span");
+    private List<SelenideElement> userActionButtons = $$("button[aria-controls*=dropdown]");
 
     /**
      * Click 'User avatar'

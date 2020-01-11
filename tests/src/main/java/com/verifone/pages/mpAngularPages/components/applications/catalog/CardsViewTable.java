@@ -5,20 +5,19 @@ import com.codeborne.selenide.SelenideElement;
 import com.verifone.pages.BasePage;
 import java.util.List;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Selectors.byCssSelector;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class CardsViewTable {
 
     private ExtentTest testLog;
 
-    private List<SelenideElement> appNames = $$(byCssSelector("marketplace-app-card .card-header-title"));
-    private List<SelenideElement> moreButtons = $$(byCssSelector("svg[data-icon='angle-down']"));
-    private List<SelenideElement> cardImages = $$(byCssSelector(".card-image img"));
-    private List<SelenideElement> appDescriptions = $$(byCssSelector(".card-content p"));
-    private List<SelenideElement> appPageButtons = $$(byCssSelector("footer a:first-child"));
-    private List<SelenideElement> quickViewButtons = $$(byCssSelector("footer a:last-child"));
+    private List<SelenideElement> appNames = $$("marketplace-app-card .card-header-title");
+    private List<SelenideElement> moreButtons = $$("svg[data-icon='angle-down']");
+    private List<SelenideElement> cardImages = $$(".card-image img");
+    private List<SelenideElement> appDescriptions = $$(".card-content p");
+    private List<SelenideElement> appPageButtons = $$("footer a:first-child");
+    private List<SelenideElement> quickViewButtons = $$("footer a:last-child");
 
     public void clickAppPageButton(int index) {
         testLog.info(String.format("Click 'App page' button for app with %d index", index));

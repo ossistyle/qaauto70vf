@@ -5,24 +5,23 @@ import com.verifone.infra.User;
 import com.verifone.pages.BasePage;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.*;
-import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.*;
 
 public class LoginPage extends BasePage {
 
     private final static String URL = "";
     private final static String TITLE = "Login with Verifone Identity Server";
 
-    private SelenideElement logoImage = $(byCssSelector("div[class*=logo]"));
-    private SelenideElement loginTitle = $(byCssSelector("h1[class*=verifone]"));
-    private SelenideElement usernameField = $(byId("username"));
-    private SelenideElement usernameFieldErrorMessage = $(byXpath("//*[@id='username']/following-sibling::div[@class='help-block']"));
-    private SelenideElement passwordField = $(byId("ipassword"));
-    private SelenideElement passwordIFrame = $(byId("veriPassFrame"));
-    private SelenideElement passwordFieldErrorMessage = $(byCssSelector("#password_id .help-block"));
-    private SelenideElement hidePasswordIcon = $(byXpath("(//i[contains(text(), 'visibility')])[last()]"));
-    private SelenideElement forgotPasswordLink = $(byCssSelector("a[href*=Recover]"));
-    private SelenideElement loginButton = $(byId("btnPrimaryLogin"));
+    private SelenideElement logoImage = $("div[class*=logo]");
+    private SelenideElement loginTitle = $("h1[class*=verifone]");
+    private SelenideElement usernameField = $("#username");
+    private SelenideElement usernameFieldErrorMessage = $x("//*[@id='username']/following-sibling::div[@class='help-block']");
+    private SelenideElement passwordField = $("#ipassword");
+    private SelenideElement passwordIFrame = $("#veriPassFrame");
+    private SelenideElement passwordFieldErrorMessage = $("#password_id .help-block");
+    private SelenideElement hidePasswordIcon = $x("(//i[contains(text(), 'visibility')])[last()]");
+    private SelenideElement forgotPasswordLink = $("a[href*=Recover]");
+    private SelenideElement loginButton = $("#btnPrimaryLogin");
 
     public SelenideElement getLogoImage() {
         testLog.info("Get logo image");

@@ -5,25 +5,24 @@ import com.codeborne.selenide.SelenideElement;
 import com.verifone.pages.BasePage;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class QuickView {
 
     private ExtentTest testLog;
 
-    private SelenideElement closeButton = $(byCssSelector("button[class*=del]"));
-    private SelenideElement appName = $(byCssSelector(".media-content p[class^=title]"));
-    private SelenideElement appImage = $(byCssSelector(".media img"));
-    private SelenideElement appId = $(byCssSelector(".media-content p[class^=subtitle]"));
-    private SelenideElement appVersionLabel = $(byXpath("//marketplace-app-details//div[contains(text(), 'Ver')]"));
-    private SelenideElement appVersionValue = $(byXpath("//marketplace-app-details//div[contains(text(), 'Ver')]/following-sibling::div"));
-    private SelenideElement appDescriptionLabel = $(byXpath("//marketplace-app-details//div[contains(text(), 'Desc')]"));
-    private SelenideElement appDescriptionValue = $(byXpath("//marketplace-app-details//div[contains(text(), 'Desc')]/following-sibling::div"));
-    private SelenideElement appPublishDateLabel = $(byXpath("//marketplace-app-details//div[contains(text(), 'Pub')]"));
-    private SelenideElement appPublishDateValue = $(byXpath("//marketplace-app-details//div[contains(text(), 'Pub')]/following-sibling::div"));
-    private SelenideElement appUpdateDateLabel = $(byXpath("//marketplace-app-details//div[contains(text(), 'Upd')]"));
-    private SelenideElement appUpdateDateValue = $(byXpath("//marketplace-app-details//div[contains(text(), 'Upd')]/following-sibling::div"));
+    private SelenideElement closeButton = $("button[class*=del]");
+    private SelenideElement appName = $(".media-content p[class^=title]");
+    private SelenideElement appImage = $(".media img");
+    private SelenideElement appId = $(".media-content p[class^=subtitle]");
+    private SelenideElement appVersionLabel = $x("//marketplace-app-details//div[contains(text(), 'Ver')]");
+    private SelenideElement appVersionValue = $x("//marketplace-app-details//div[contains(text(), 'Ver')]/following-sibling::div");
+    private SelenideElement appDescriptionLabel = $x("//marketplace-app-details//div[contains(text(), 'Desc')]");
+    private SelenideElement appDescriptionValue = $x("//marketplace-app-details//div[contains(text(), 'Desc')]/following-sibling::div");
+    private SelenideElement appPublishDateLabel = $x("//marketplace-app-details//div[contains(text(), 'Pub')]");
+    private SelenideElement appPublishDateValue = $x("//marketplace-app-details//div[contains(text(), 'Pub')]/following-sibling::div");
+    private SelenideElement appUpdateDateLabel = $x("//marketplace-app-details//div[contains(text(), 'Upd')]");
+    private SelenideElement appUpdateDateValue = $x("//marketplace-app-details//div[contains(text(), 'Upd')]/following-sibling::div");
 
     public void clickCloseButton() {
         testLog.info("Click 'Close' quick view button");

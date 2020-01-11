@@ -5,25 +5,24 @@ import com.codeborne.selenide.SelenideElement;
 import com.verifone.pages.BasePage;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.*;
-import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.*;
 
 public class MainMenu {
 
     private ExtentTest testLog;
 
-    private SelenideElement logo = $(byCssSelector("a[data-e2e*=logo] img"));
-    private SelenideElement applications = $(byXpath("//span[text() = 'Applications']"));
-    private SelenideElement appCatalogue = $(byCssSelector("a[ng-reflect-router-link$=catalog]"));
-    private SelenideElement myApps = $(byCssSelector("a[ng-reflect-router-link$=apps]"));
-    private SelenideElement devices = $(byXpath("//span[text() = 'Devices']"));
-    private SelenideElement deviceList = $(byCssSelector("a[href$=devices]"));
-    private SelenideElement deviceGroups = $(byCssSelector("a[href$=groups]"));
-    private SelenideElement deviceTags = $(byCssSelector("a[href$=tags]"));
-    private SelenideElement settings = $(byXpath("//span[contains(text(),'Settings')]"));
-    private SelenideElement users = $(byXpath("//a[contains(text(),'Users')]"));
-    private SelenideElement currentUser = $(byCssSelector(".menu-footer a:first-child"));
-    private SelenideElement logOutButton = $(byCssSelector("svg[class*='sign-out']"));
+    private SelenideElement logo = $("a[data-e2e*=logo] img");
+    private SelenideElement applications = $x("//span[text() = 'Applications']");
+    private SelenideElement appCatalogue = $("a[ng-reflect-router-link$=catalog]");
+    private SelenideElement myApps = $("a[ng-reflect-router-link$=apps]");
+    private SelenideElement devices = $x("//span[text() = 'Devices']");
+    private SelenideElement deviceList = $("a[href$=devices]");
+    private SelenideElement deviceGroups = $("a[href$=groups]");
+    private SelenideElement deviceTags = $("a[href$=tags]");
+    private SelenideElement settings = $x("//span[contains(text(),'Settings')]");
+    private SelenideElement users = $x("//a[contains(text(),'Users')]");
+    private SelenideElement currentUser = $(".menu-footer a:first-child");
+    private SelenideElement logOutButton = $("svg[class*='sign-out']");
 
     /**
      * Get Verifone logo

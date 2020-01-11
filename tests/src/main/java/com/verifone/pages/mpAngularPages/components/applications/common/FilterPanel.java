@@ -4,20 +4,18 @@ import com.aventstack.extentreports.ExtentTest;
 import com.codeborne.selenide.SelenideElement;
 import com.verifone.pages.BasePage;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Selectors.byCssSelector;
-import static com.codeborne.selenide.Selectors.byXpath;
-import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.*;
 
 public class FilterPanel {
 
     private ExtentTest testLog;
 
-    private SelenideElement header = $(byCssSelector("h1[class=title]"));
-    private SelenideElement filterAppsField = $(byCssSelector("input[placeholder^=Filter]"));
-    private SelenideElement searchButton = $(byXpath("//button[contains(text(), 'Search')]"));
-    private SelenideElement cardsViewTrigger = $(byXpath("//span[contains(text(),'Cards')]"));
-    private SelenideElement gridViewTrigger = $(byXpath("//span[contains(text(),'Grid')]"));
+    private SelenideElement header = $("h1[class=title]");
+    private SelenideElement filterAppsField = $("input[placeholder^=Filter]");
+    private SelenideElement searchButton = $x("//button[contains(text(), 'Search')]");
+    private SelenideElement cardsViewTrigger = $x("//span[contains(text(),'Cards')]");
+    private SelenideElement gridViewTrigger = $x("//span[contains(text(),'Grid')]");
 
     public void enterSearch(String text) {
         testLog.info(String.format("Enter '%s' into 'Search' input field", text));
