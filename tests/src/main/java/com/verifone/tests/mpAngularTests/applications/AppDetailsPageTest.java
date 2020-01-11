@@ -46,7 +46,7 @@ public class AppDetailsPageTest extends BaseTest {
     public void applicationDetailsUI() {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(appDetailsPage.getAppName().text(), app.getName(), "App name");
-        softAssert.assertEquals(appDetailsPage.getAppId().text(), app.getId(), "App id");
+        softAssert.assertEquals(appDetailsPage.getAppId().text(), app.getMarketplaceAppId(), "Marketplace app id");
         softAssert.assertEquals(appDetailsPage.getAppDescription().text(), app.getDescription(), "App description");
         softAssert.assertAll();
     }
