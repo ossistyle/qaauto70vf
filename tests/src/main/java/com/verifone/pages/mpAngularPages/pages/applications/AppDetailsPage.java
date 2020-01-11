@@ -20,14 +20,17 @@ public class AppDetailsPage extends BasePage {
 
 
     public SelenideElement getAppName() {
+        testLog.info("Get app name");
         return appName;
     }
 
     public SelenideElement getAppId() {
+        testLog.info("Get app id");
         return appId;
     }
 
     public SelenideElement getAppDescription() {
+        testLog.info("Get app description");
         return appDescription;
     }
 

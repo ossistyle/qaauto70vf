@@ -44,6 +44,7 @@ public class UsersPage extends BasePage {
      * @return SelenideElement User Avatar
     */
     public SelenideElement getUserAvatar(int index) {
+        testLog.info(String.format("Get avatar for user with %d index", index));
         return userAvatars.get(index);
     }
 
@@ -52,6 +53,7 @@ public class UsersPage extends BasePage {
      * @return SelenideElement User Name
      */
     public SelenideElement getUserName(int index) {
+        testLog.info(String.format("Get username for user with %d index", index));
         return userNames.get(index).should(exist);
     }
 
@@ -60,6 +62,7 @@ public class UsersPage extends BasePage {
      * @return SelenideElement User Email
      */
     public SelenideElement getUserEmail(int index) {
+        testLog.info(String.format("Get email for user with %d index", index));
         return userEmails.get(index).should(exist);
     }
 
@@ -68,6 +71,7 @@ public class UsersPage extends BasePage {
      * @return SelenideElement User Role
      */
     public SelenideElement getUserRole(int index) {
+        testLog.info(String.format("Get role for user with %d index", index));
         return userRoles.get(index).should(exist);
     }
 

@@ -30,7 +30,7 @@ public class MainMenu {
      * @return SelenideElement Verifone logo
      */
     public SelenideElement getLogo() {
-        return logo.should(visible);
+        return logo.shouldBe(visible);
     }
 
     /**

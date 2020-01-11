@@ -19,9 +19,9 @@ public class FilterPanel {
     private SelenideElement cardsViewTrigger = $(byXpath("//span[contains(text(),'Cards')]"));
     private SelenideElement gridViewTrigger = $(byXpath("//span[contains(text(),'Grid')]"));
 
-    public void enterFilterApps(String app) {
-        testLog.info(String.format("Enter '%s' into 'Filter Apps' input field", app));
-        filterAppsField.should(exist).sendKeys(app);
+    public void enterSearch(String text) {
+        testLog.info(String.format("Enter '%s' into 'Search' input field", text));
+        filterAppsField.should(exist).sendKeys(text);
     }
 
     public void clickSearch() {
@@ -40,6 +40,7 @@ public class FilterPanel {
     }
 
     public SelenideElement getHeader() {
+        testLog.info("Get header");
         return header;
     }
 

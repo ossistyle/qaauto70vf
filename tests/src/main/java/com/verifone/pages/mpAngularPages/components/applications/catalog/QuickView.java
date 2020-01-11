@@ -31,46 +31,57 @@ public class QuickView {
     }
 
     public SelenideElement getAppName() {
+        testLog.info("Get app name");
         return appName;
     }
 
     public SelenideElement getAppImage() {
-        return appImage.should(visible);
+        testLog.info("Get app image");
+        return appImage.shouldBe(visible);
     }
 
     public SelenideElement getAppId() {
+        testLog.info("Get app id");
         return appId;
     }
 
     public SelenideElement getAppVersionLabel() {
+        testLog.info("Get app version label");
         return appVersionLabel;
     }
 
     public SelenideElement getAppVersionValue() {
+        testLog.info("Get app version value");
         return appVersionValue;
     }
 
     public SelenideElement getAppDescriptionLabel() {
+        testLog.info("Get app description label");
         return appDescriptionLabel;
     }
 
     public SelenideElement getAppDescriptionValue() {
+        testLog.info("Get app description value");
         return appDescriptionValue;
     }
 
     public SelenideElement getAppPublishDateLabel() {
+        testLog.info("Get app publish date label");
         return appPublishDateLabel;
     }
 
     public SelenideElement getAppPublishDateValue() {
+        testLog.info("Get app publish date value");
         return appPublishDateValue;
     }
 
     public SelenideElement getAppUpdateDateLabel() {
+        testLog.info("Get app update date label");
         return appUpdateDateLabel;
     }
 
     public SelenideElement getAppUpdateDateValue() {
+        testLog.info("Get app update date value");
         return appUpdateDateValue;
     }
 
