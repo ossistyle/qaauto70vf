@@ -1,5 +1,6 @@
 package com.verifone.infra;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverProvider;
 import io.appium.java_client.android.AndroidDriver;
@@ -25,7 +26,7 @@ public class AppiumDriverSetup implements WebDriverProvider {
     @Override
     public WebDriver createDriver(DesiredCapabilities caps) {
         try {
-            return new AndroidDriver<SelenideElement>(new URL("http://10.160.10.62:4723/wd/hub"), caps);
+            return new AndroidDriver<SelenideElement>(new URL(Configuration.proxyHost), caps);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
