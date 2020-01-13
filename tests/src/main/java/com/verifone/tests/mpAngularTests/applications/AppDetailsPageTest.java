@@ -39,14 +39,14 @@ public class AppDetailsPageTest extends BaseTest {
 //        appCatalogPage.navigate();
         homePage.mainMenu.clickApplications();
         homePage.mainMenu.clickAppCatalogue();
-        appCatalogPage.cardsView.clickAppPageButton(0);
+        appCatalogPage.cardsViewTable.clickAppPageButton(0);
     }
 
-    @Test(priority=1, testName = "App details page elements", groups = {"ui", "regression"})
-    public void appDetailsPageElementsUI() {
+    @Test(priority = 1, testName = "Displaying of Application details", groups = {"ui", "regression"})
+    public void applicationDetailsUI() {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(appDetailsPage.getAppName().text(), app.getName(), "App name");
-        softAssert.assertEquals(appDetailsPage.getAppId().text(), app.getId(), "App id");
+        softAssert.assertEquals(appDetailsPage.getAppId().text(), app.getMarketplaceAppId(), "Marketplace app id");
         softAssert.assertEquals(appDetailsPage.getAppDescription().text(), app.getDescription(), "App description");
         softAssert.assertAll();
     }

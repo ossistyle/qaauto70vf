@@ -11,11 +11,14 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static com.codeborne.selenide.Condition.*;
+
 public class AppCataloguePageTest extends BaseTest {
 
     // TODO Replace mock data to data from API
     private AppMock app;
     private User merchant;
+    private int testAppIndex = 0;
 
     private AppCatalogPage appCatalogPage;
 
@@ -39,9 +42,29 @@ public class AppCataloguePageTest extends BaseTest {
         homePage.mainMenu.clickAppCatalogue();
     }
 
-    @Test(priority=1, testName = "App Catalog > Quick app view elements", groups = {"ui", "regression"})
-    public void quickViewBlockElementsUI() {
-        appCatalogPage.cardsView.clickQuickViewButton(0);
+    @Test(priority = 1, testName = "App Catalog > Card view applications", groups = {"ui", "regression"})
+    public void cardsViewApplicationsListUI() {
+        SoftAssert softAssert = new SoftAssert();
+        appCatalogPage.cardsViewTable.getCardImage(testAppIndex).shouldBe(visible);
+        softAssert.assertEquals(appCatalogPage.cardsViewTable.getAppName(testAppIndex).text(), app.getName(), "App name");
+        softAssert.assertEquals(appCatalogPage.cardsViewTable.getAppDescription(testAppIndex).text(), app.getDescription(), "App description");
+        softAssert.assertAll();
+    }
+
+    @Test(priority = 1, testName = "App Catalog > Grid view applications", groups = {"ui", "regression"})
+    public void gridViewApplicationsListUI() {
+        appCatalogPage.filterPanel.clickGridView();
+
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(appCatalogPage.gridViewTable.getAppName(testAppIndex).text(), app.getName(), "App name");
+        softAssert.assertEquals(appCatalogPage.gridViewTable.getAppDescription(testAppIndex).text(), app.getDescription(), "App description");
+        softAssert.assertEquals(appCatalogPage.gridViewTable.getAppVersion(testAppIndex).text(), app.getVersion(), "App version");
+        softAssert.assertAll();
+    }
+
+    @Test(priority = 1, testName = "App Catalog > Quick app view of application", groups = {"ui", "regression"})
+    public void quickViewOfApplicationUI() {
+        appCatalogPage.cardsViewTable.clickQuickViewButton(testAppIndex);
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(appCatalogPage.quickView.getAppName().text(), app.getName(), "App name");

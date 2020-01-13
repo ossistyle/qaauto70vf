@@ -4,8 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import com.verifone.pages.BasePage;
 import java.util.List;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Selectors.byCssSelector;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class UsersPage extends BasePage {
@@ -13,12 +12,12 @@ public class UsersPage extends BasePage {
     private final static String URL = "settings/users";
     private final static String TITLE = "Marketplace";
 
-    private List<SelenideElement> userCheckboxes = $$(byCssSelector("input[class*=check]"));
-    private List<SelenideElement> userAvatars = $$(byCssSelector("figure[class*=avatar] img"));
-    private List<SelenideElement> userNames = $$(byCssSelector(".media-content strong"));
-    private List<SelenideElement> userEmails = $$(byCssSelector(".content p > span:last-child"));
-    private List<SelenideElement> userRoles = $$(byCssSelector("div[class*=tags] span"));
-    private List<SelenideElement> userActionButtons = $$(byCssSelector("button[aria-controls*=dropdown]"));
+    private List<SelenideElement> userCheckboxes = $$("input[class*=check]");
+    private List<SelenideElement> userAvatars = $$("figure[class*=avatar] img");
+    private List<SelenideElement> userNames = $$(".content strong");
+    private List<SelenideElement> userEmails = $$(".content p > span:last-child");
+    private List<SelenideElement> userRoles = $$("div[class*=tags] span");
+    private List<SelenideElement> userActionButtons = $$("button[aria-controls*=dropdown]");
 
     /**
      * Click 'User avatar'
@@ -40,42 +39,46 @@ public class UsersPage extends BasePage {
     }
 
     /**
-     * Get User avatars
-     * @return List<SelenideElement> User Avatars
+     * Get User avatar
+     * @return SelenideElement User Avatar
     */
-    public List<SelenideElement> getUserAvatars() {
-        return userAvatars;
+    public SelenideElement getUserAvatar(int index) {
+        testLog.info(String.format("Get avatar for user with %d index", index));
+        return userAvatars.get(index);
     }
 
     /**
-     * Get User names
-     * @return List<SelenideElement> User Names
+     * Get User name
+     * @return SelenideElement User Name
      */
-    public List<SelenideElement> getUserNames() {
-        return userNames;
+    public SelenideElement getUserName(int index) {
+        testLog.info(String.format("Get username for user with %d index", index));
+        return userNames.get(index).should(exist);
     }
 
     /**
-     * Get User emails
-     * @return List<SelenideElement> User Emails
+     * Get User email
+     * @return SelenideElement User Email
      */
-    public List<SelenideElement> getUserEmails() {
-        return userEmails;
+    public SelenideElement getUserEmail(int index) {
+        testLog.info(String.format("Get email for user with %d index", index));
+        return userEmails.get(index).should(exist);
     }
 
     /**
-     * Get User roles
-     * @return List<SelenideElement> User Roles
+     * Get User role
+     * @return SelenideElement User Role
      */
-    public List<SelenideElement> getUserRoles() {
-        return userRoles;
+    public SelenideElement getUserRole(int index) {
+        testLog.info(String.format("Get role for user with %d index", index));
+        return userRoles.get(index).should(exist);
     }
 
     /**
      * Click 'User actions' button
      * @param index Button index
      */
-    public void clickSearch(int index) {
+    public void clickUserActions(int index) {
         testLog.info(String.format("Click 'User actions' button with %d index", index));
         userActionButtons.get(index).should(exist).click();
     }

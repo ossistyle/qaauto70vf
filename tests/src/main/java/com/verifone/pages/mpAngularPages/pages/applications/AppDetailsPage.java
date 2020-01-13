@@ -4,7 +4,6 @@ import com.codeborne.selenide.SelenideElement;
 import com.verifone.pages.BasePage;
 import com.verifone.pages.mpAngularPages.components.MainMenu;
 
-import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class AppDetailsPage extends BasePage {
@@ -14,31 +13,23 @@ public class AppDetailsPage extends BasePage {
 
     public MainMenu mainMenu;
 
-    private SelenideElement appName = $(byCssSelector(".hero-body .title"));
-    private SelenideElement appId = $(byCssSelector(".hero-body .subtitle"));
-    private SelenideElement appDescription = $(byCssSelector(".hero-body .columns .subtitle"));
+    private SelenideElement appName = $(".hero-body .title");
+    private SelenideElement appId = $(".hero-body .subtitle");
+    private SelenideElement appDescription = $(".hero-body .columns .subtitle");
 
-    /**
-     * Get App name
-     * @return SelenideElement App name
-     */
+
     public SelenideElement getAppName() {
+        testLog.info("Get app name");
         return appName;
     }
 
-    /**
-     * Get App id
-     * @return SelenideElement App id
-     */
     public SelenideElement getAppId() {
+        testLog.info("Get app id");
         return appId;
     }
 
-    /**
-     * Get App description
-     * @return SelenideElement App description
-     */
     public SelenideElement getAppDescription() {
+        testLog.info("Get app description");
         return appDescription;
     }
 
