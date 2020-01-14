@@ -39,7 +39,6 @@ public abstract class BaseTest {
     private static ThreadLocal parentTest = new ThreadLocal();
     protected static ThreadLocal test = new ThreadLocal();
     public Date date = new Date();
-    private static String APPIUM_SERVER_URL = "http://localhost:4723/wd/hub";
     public SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
     //    public String reportDirectory = java.nio.file.Paths.get(
 //            System.getProperty("user.dir"), "reports", dateFormat.format(date)).toString() + File.separator;
@@ -102,6 +101,7 @@ public abstract class BaseTest {
             SeleniumUtils.setBrowser(browserType);
         } else if (methodName.contains("Mobile")) {
             AppiumDriverSetup driverSetup = new AppiumDriverSetup();
+            Configuration.proxyHost = String.format("%s/wd/hub", testngXml.getParameter("server_url"));
             DesiredCapabilities caps = driverSetup.getCapabilities(testngXml.getAllParameters());
             driverSetup.createDriver(caps);
 
@@ -109,7 +109,6 @@ public abstract class BaseTest {
             Configuration.browserSize = null;
             Configuration.browserCapabilities = caps;
             Configuration.browser = AppiumDriverSetup.class.getName();
-            Configuration.proxyHost = APPIUM_SERVER_URL;
             open();
             androidDriver = (AndroidDriver<SelenideElement>) WebDriverRunner.getAndCheckWebDriver();
         } else if (methodName.contains("DDT")) {
