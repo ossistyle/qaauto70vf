@@ -14,6 +14,7 @@ import com.verifone.pages.BasePage;
 import com.verifone.utils.apiClient.BaseApi;
 import com.verifone.utils.apiClient.BaseDDTApi;
 import com.verifone.infra.AppiumDriverSetup;
+import com.verifone.utils.mobile.Context;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestContext;
@@ -139,10 +140,13 @@ public abstract class BaseTest {
                 child.pass("Test Passed <span class='label success'>success</span>");
                 break;
             case ITestResult.FAILURE:
-                if (method.getName().contains("UI")) {
+                String methodName = method.getName();
+                if (methodName.contains("UI") || methodName.contains("Mobile")) {
+                    if (methodName.contains("Mobile")) { Context.switchTo(Context.NATIVE); }
                     String capScreenShootPath = SeleniumUtils.getScreenshot(WebDriverRunner.getWebDriver());
                     child.info("Snapshot path: " + (capScreenShootPath));
                     child.info("Snapshot below: " + child.addScreenCaptureFromPath(capScreenShootPath));
+                    if (methodName.contains("Mobile")) { Context.switchTo(Context.WEBVIEW); }
                 }
                 child.fail(result.getThrowable() + " <span class='label label-fail'>fail</span>");
                 break;
