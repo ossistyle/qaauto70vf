@@ -20,7 +20,8 @@ public class Header {
      * @return Title text
      */
     public String getTitle() {
-        return title.getText();
+        testLog.info("Get title");
+        return title.should(exist).text();
     }
 
     /**

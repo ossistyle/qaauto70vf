@@ -1,8 +1,8 @@
 package com.verifone.pages.mpAngularPages.pages.settings;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.verifone.pages.BasePage;
-import java.util.List;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -12,12 +12,12 @@ public class UsersPage extends BasePage {
     private final static String URL = "settings/users";
     private final static String TITLE = "Marketplace";
 
-    private List<SelenideElement> userCheckboxes = $$("input[class*=check]");
-    private List<SelenideElement> userAvatars = $$("figure[class*=avatar] img");
-    private List<SelenideElement> userNames = $$(".content strong");
-    private List<SelenideElement> userEmails = $$(".content p > span:last-child");
-    private List<SelenideElement> userRoles = $$("div[class*=tags] span");
-    private List<SelenideElement> userActionButtons = $$("button[aria-controls*=dropdown]");
+    private ElementsCollection userCheckboxes = $$("input[class*=check]");
+    private ElementsCollection userAvatars = $$("figure[class*=avatar] img");
+    private ElementsCollection userNames = $$(".content strong");
+    private ElementsCollection userEmails = $$(".content p > span:last-child");
+    private ElementsCollection userRoles = $$("div[class*=tags] span");
+    private ElementsCollection userActionButtons = $$("button[aria-controls*=dropdown]");
 
     /**
      * Click 'User avatar'

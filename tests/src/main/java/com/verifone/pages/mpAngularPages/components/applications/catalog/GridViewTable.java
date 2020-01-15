@@ -1,9 +1,9 @@
 package com.verifone.pages.mpAngularPages.components.applications.catalog;
 
 import com.aventstack.extentreports.ExtentTest;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.verifone.pages.BasePage;
-import java.util.List;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$$;
@@ -12,9 +12,9 @@ public class GridViewTable {
 
     private ExtentTest testLog;
 
-    private List<SelenideElement> appNames = $$("td[data-label*=Name]");
-    private List<SelenideElement> appDescriptions = $$("td[data-label*=Desc]");
-    private List<SelenideElement> appVersions = $$("td[data-label*=Ver]");
+    private ElementsCollection appNames = $$("td[data-label*=Name]");
+    private ElementsCollection appDescriptions = $$("td[data-label*=Desc]");
+    private ElementsCollection appVersions = $$("td[data-label*=Ver]");
 
     public SelenideElement getAppName(int index) {
         testLog.info(String.format("Get app name for app with %d index", index));
