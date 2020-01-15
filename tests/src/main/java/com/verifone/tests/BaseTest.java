@@ -8,9 +8,11 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import com.verifone.infra.EnvConfig;
 import com.verifone.infra.SeleniumUtils;
 import com.verifone.pages.BasePage;
+import com.verifone.utils.allure.AllureSelenide;
 import com.verifone.utils.apiClient.BaseApi;
 import com.verifone.utils.apiClient.BaseDDTApi;
 import com.verifone.infra.AppiumDriverSetup;
@@ -29,7 +31,6 @@ import java.util.Date;
 
 import static com.codeborne.selenide.Selenide.open;
 import static com.verifone.tests.steps.Steps.getVersions;
-
 
 public abstract class BaseTest {
 
@@ -52,6 +53,8 @@ public abstract class BaseTest {
     @Parameters({"env", "portal", "getVersions"})
     @BeforeSuite
     public void beforeSuite(ITestContext context, String env, String portal, String getVersions) throws Exception {
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true)); // Add screenshot as attachments
+
         testngXml = context.getCurrentXmlTest();
 //        new File(reportDirectory).mkdir();
         extent = ExtentManager.createInstance(reportLocation);
