@@ -1,9 +1,9 @@
 package com.verifone.pages.mpAngularPages.components.applications.catalog;
 
 import com.aventstack.extentreports.ExtentTest;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.verifone.pages.BasePage;
-import java.util.List;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$$;
@@ -12,12 +12,12 @@ public class CardsViewTable {
 
     private ExtentTest testLog;
 
-    private List<SelenideElement> appNames = $$("marketplace-app-card .card-header-title");
-    private List<SelenideElement> moreButtons = $$("svg[data-icon='angle-down']");
-    private List<SelenideElement> cardImages = $$(".card-image img");
-    private List<SelenideElement> appDescriptions = $$(".card-content p");
-    private List<SelenideElement> appPageButtons = $$("footer a:first-child");
-    private List<SelenideElement> quickViewButtons = $$("footer a:last-child");
+    private ElementsCollection appNames = $$("marketplace-app-card .card-header-title");
+    private ElementsCollection moreButtons = $$("svg[data-icon='angle-down']");
+    private ElementsCollection cardImages = $$(".card-image img");
+    private ElementsCollection appDescriptions = $$(".card-content p");
+    private ElementsCollection appPageButtons = $$("footer a:first-child");
+    private ElementsCollection quickViewButtons = $$("footer a:last-child");
 
     public void clickAppPageButton(int index) {
         testLog.info(String.format("Click 'App page' button for app with %d index", index));
