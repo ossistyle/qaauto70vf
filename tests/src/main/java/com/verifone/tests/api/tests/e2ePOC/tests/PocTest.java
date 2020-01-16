@@ -51,7 +51,7 @@ public class PocTest extends BaseTest {
 
         //update a bundle
 
-        CreateUpdateBundleRequestBody updateBundleRequest = new CreateUpdateBundleRequestBody("UPDATED_" + createdBundle.getBundleName(), "BundleDesc", null);
+        CreateUpdateBundleRequestBody updateBundleRequest = new CreateUpdateBundleRequestBody("UPDATED_" + createdBundle.getBundleName(), "BundleDesc", null, null);
         ApiResponse updateResp = bundlesHandler.doUpdateBundle(token, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdBundle.getId(), updateBundleRequest);
 
         System.out.println("Update bundle response code = " + updateResp.getResponseCode());

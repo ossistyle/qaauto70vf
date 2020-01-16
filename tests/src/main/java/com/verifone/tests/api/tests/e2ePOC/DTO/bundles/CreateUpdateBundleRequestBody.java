@@ -12,7 +12,7 @@ public class CreateUpdateBundleRequestBody {
      * pass null or empty String values for the fields that should not be affected
      */
 
-    public CreateUpdateBundleRequestBody(String bundleName, String bundleDescription, String bundleIcon) {
+    public CreateUpdateBundleRequestBody(String bundleName, String bundleDescription, String status, String bundleIcon) {
         this.data = new CreateUpdateBundleRequestData();
 
         if (StringUtils.isNoneBlank(bundleName)) {
@@ -20,6 +20,9 @@ public class CreateUpdateBundleRequestBody {
         }
         if (StringUtils.isNoneBlank(bundleDescription)) {
             this.data.setBundleDesc(bundleDescription);
+        }
+        if (StringUtils.isNoneBlank(status)) {
+            this.data.setStatus(status);
         }
         if (StringUtils.isNoneBlank(bundleIcon)) {
             this.data.setBundleIcon(bundleIcon);
