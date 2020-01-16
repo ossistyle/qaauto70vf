@@ -1,8 +1,9 @@
-package com.verifone.pages.mpAngularPages.pages.applications;
+package com.verifone.pages.mpWebPages.pages.applications;
 
 import com.codeborne.selenide.SelenideElement;
 import com.verifone.pages.BasePage;
-import com.verifone.pages.mpAngularPages.components.MainMenu;
+import com.verifone.pages.mpWebPages.components.MainMenu;
+import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -18,18 +19,18 @@ public class AppDetailsPage extends BasePage {
     private SelenideElement appDescription = $(".hero-body .columns .subtitle");
 
 
+    @Step("Get app name")
     public SelenideElement getAppName() {
-        testLog.info("Get app name");
         return appName;
     }
 
+    @Step("Get app id")
     public SelenideElement getAppId() {
-        testLog.info("Get app id");
         return appId;
     }
 
+    @Step("Get app description")
     public SelenideElement getAppDescription() {
-        testLog.info("Get app description");
         return appDescription;
     }
 

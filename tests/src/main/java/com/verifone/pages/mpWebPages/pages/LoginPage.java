@@ -1,4 +1,4 @@
-package com.verifone.pages.mpAngularPages.pages;
+package com.verifone.pages.mpWebPages.pages;
 
 import com.codeborne.selenide.*;
 import com.verifone.infra.User;
@@ -39,7 +39,7 @@ public class LoginPage extends BasePage {
         return usernameField;
     }
 
-    @Step("Get logo password field")
+    @Step("Switch to password field iframe")
     public SelenideElement getPasswordField() {
         if (!passwordIFrame.exists()) WebDriverRunner.getAndCheckWebDriver().switchTo().defaultContent();
         WebDriverRunner.getAndCheckWebDriver().switchTo().frame(passwordIFrame);

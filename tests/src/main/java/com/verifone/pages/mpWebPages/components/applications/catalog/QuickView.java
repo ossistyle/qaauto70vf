@@ -1,15 +1,12 @@
-package com.verifone.pages.mpAngularPages.components.applications.catalog;
+package com.verifone.pages.mpWebPages.components.applications.catalog;
 
-import com.aventstack.extentreports.ExtentTest;
 import com.codeborne.selenide.SelenideElement;
-import com.verifone.pages.BasePage;
+import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class QuickView {
-
-    private ExtentTest testLog;
 
     private SelenideElement closeButton = $("button[class*=del]");
     private SelenideElement appName = $(".media-content p[class^=title]");
@@ -24,67 +21,63 @@ public class QuickView {
     private SelenideElement appUpdateDateLabel = $x("//marketplace-app-details//div[contains(text(), 'Upd')]");
     private SelenideElement appUpdateDateValue = $x("//marketplace-app-details//div[contains(text(), 'Upd')]/following-sibling::div");
 
+    @Step("Click 'Close' quick view button")
     public void clickCloseButton() {
-        testLog.info("Click 'Close' quick view button");
         closeButton.should(exist).click();
     }
 
+    @Step("Get app name")
     public SelenideElement getAppName() {
-        testLog.info("Get app name");
         return appName;
     }
 
+    @Step("Get app image")
     public SelenideElement getAppImage() {
-        testLog.info("Get app image");
-        return appImage.shouldBe(visible);
+        return appImage;
     }
 
+    @Step("Get app id")
     public SelenideElement getAppId() {
-        testLog.info("Get app id");
         return appId;
     }
 
+    @Step("Get app version label")
     public SelenideElement getAppVersionLabel() {
-        testLog.info("Get app version label");
         return appVersionLabel;
     }
 
+    @Step("Get app version value")
     public SelenideElement getAppVersionValue() {
-        testLog.info("Get app version value");
         return appVersionValue;
     }
 
+    @Step("Get app description label")
     public SelenideElement getAppDescriptionLabel() {
-        testLog.info("Get app description label");
         return appDescriptionLabel;
     }
 
+    @Step("Get app description value")
     public SelenideElement getAppDescriptionValue() {
-        testLog.info("Get app description value");
         return appDescriptionValue;
     }
 
+    @Step("Get app publish date label")
     public SelenideElement getAppPublishDateLabel() {
-        testLog.info("Get app publish date label");
         return appPublishDateLabel;
     }
 
+    @Step("Get app publish date value")
     public SelenideElement getAppPublishDateValue() {
-        testLog.info("Get app publish date value");
         return appPublishDateValue;
     }
 
+    @Step("Get app update date label")
     public SelenideElement getAppUpdateDateLabel() {
-        testLog.info("Get app update date label");
         return appUpdateDateLabel;
     }
 
+    @Step("Get app update date value")
     public SelenideElement getAppUpdateDateValue() {
-        testLog.info("Get app update date value");
         return appUpdateDateValue;
-    }
-
-    public QuickView() {
-        this.testLog = BasePage.testLog;
     }
 }

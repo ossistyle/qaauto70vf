@@ -1,8 +1,8 @@
-package com.verifone.pages.mpAngularPages.pages;
+package com.verifone.pages.mpWebPages.pages;
 
 import com.codeborne.selenide.SelenideElement;
 import com.verifone.pages.BasePage;
-import com.verifone.pages.mpAngularPages.components.MainMenu;
+import com.verifone.pages.mpWebPages.components.MainMenu;
 
 import static com.codeborne.selenide.Selenide.*;
 

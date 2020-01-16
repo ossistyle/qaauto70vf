@@ -1,15 +1,12 @@
-package com.verifone.pages.mpAngularPages.components;
+package com.verifone.pages.mpWebPages.components;
 
-import com.aventstack.extentreports.ExtentTest;
 import com.codeborne.selenide.SelenideElement;
-import com.verifone.pages.BasePage;
+import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class MainMenu {
-
-    private ExtentTest testLog;
 
     private SelenideElement logo = $("a[data-e2e*=logo] img");
     private SelenideElement applications = $x("//span[text() = 'Applications']");
@@ -24,104 +21,63 @@ public class MainMenu {
     private SelenideElement currentUser = $(".menu-footer a:first-child");
     private SelenideElement logOutButton = $("svg[class*='sign-out']");
 
-    /**
-     * Get Verifone logo
-     * @return SelenideElement Verifone logo
-     */
+    @Step("Get logo")
     public SelenideElement getLogo() {
         return logo;
     }
 
-    /**
-     * Click 'Applications' dropdown
-     */
+    @Step("Click 'Applications' dropdown")
     public void clickApplications() {
-        testLog.info("Click 'Applications' dropdown");
         applications.should(exist).click();
     }
 
-    /**
-     * Click 'App Catalogue' item
-     */
+    @Step("Click 'App Catalogue' item")
     public void clickAppCatalogue() {
-        testLog.info("Click 'App Catalogue' item");
         appCatalogue.should(exist).click();
     }
 
-    /**
-     * Click 'My Apps' item
-     */
+    @Step("Click 'My Apps' item")
     public void clickMyApps() {
-        testLog.info("Click 'My Apps' item");
         myApps.should(exist).click();
     }
 
-    /**
-     * Click 'Devices' dropdown
-     */
+    @Step("Click 'Devices' dropdown")
     public void clickDevices() {
-        testLog.info("Click 'Devices' dropdown");
         devices.should(exist).click();
     }
 
-    /**
-     * Click 'Device List' item
-     */
+    @Step("Click 'Device List' item")
     public void clickDeviceList() {
-        testLog.info("Click 'Device List' item");
         deviceList.should(exist).click();
     }
 
-    /**
-     * Click 'Device Groups' item
-     */
+    @Step("Click 'Device Groups' item")
     public void clickDeviceGroups() {
-        testLog.info("Click 'Device Groups' item");
         deviceGroups.should(exist).click();
     }
 
-    /**
-     * Click 'Device Tags' item
-     */
+    @Step("Click 'Device Tags' item")
     public void clickDeviceTags() {
-        testLog.info("Click 'Device Tags' item");
         deviceTags.should(exist).click();
     }
 
-    /**
-     * Click 'Settings' dropdown
-     */
+    @Step("Click 'Settings' dropdown")
     public void clickSettings() {
-        testLog.info("Click 'Settings' dropdown");
         settings.should(exist).click();
     }
 
-    /**
-     * Click 'Users' item
-     */
+    @Step("Click 'Users' item")
     public void clickUsers() {
-        testLog.info("Click 'Users' item");
         users.should(exist).click();
     }
 
-    /**
-     * Open current user profile
-     */
+    @Step("Open current user profile")
     public void openCurrentUserProfile() {
-        testLog.info("Open current user profile");
         currentUser.should(exist).click();
     }
 
-    /**
-     * Click 'Log Out' button
-     */
+    @Step("Click 'Log Out' button")
     public void clickLogOut() {
-        testLog.info("Click 'Log Out' button");
         logOutButton.should(exist).click();
     }
-
-    public MainMenu() {
-        this.testLog = BasePage.testLog;
-    }
-
 }

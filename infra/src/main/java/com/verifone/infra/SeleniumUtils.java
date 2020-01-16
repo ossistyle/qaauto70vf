@@ -12,11 +12,16 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.logging.Level;
 
 //import com.gargoylesoftware.htmlunit.javascript.host.URL;
 //import org.testng.annotations.Test;
@@ -80,7 +85,13 @@ public class SeleniumUtils {
                     options.addArguments("--headless");
                     options.addArguments("window-size=1743x600");
                 }
-                driver = new ChromeDriver(options);
+                DesiredCapabilities caps = DesiredCapabilities.chrome();
+                LoggingPreferences logPrefs = new LoggingPreferences();
+                logPrefs.enable(LogType.BROWSER, Level.ALL); // Enable access to browser logs
+                logPrefs.enable(LogType.PERFORMANCE, Level.ALL); // Enable access to performance logs
+                caps.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+                options.merge(caps);
+                driver = new ChromeDriver(caps);
                 System.out.println("CHROME web driver started successfully");
                 break;
             case "EDGE":

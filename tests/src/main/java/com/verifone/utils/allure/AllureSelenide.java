@@ -13,9 +13,8 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+
+import java.util.*;
 import java.util.logging.Level;
 
 import static io.qameta.allure.util.ResultsUtils.getStatus;
@@ -27,7 +26,7 @@ public class AllureSelenide implements LogEventListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(AllureSelenide.class);
 
     private boolean saveScreenshots = true;
-    private boolean savePageHtml = true;
+    private boolean savePageHtml = false;
     private final Map<LogType, Level> logTypesToSave = new HashMap<>();
     private final AllureLifecycle lifecycle;
 
@@ -122,52 +121,5 @@ public class AllureSelenide implements LogEventListener {
             }
             lifecycle.stopStep();
         });
-    }
-
-    /**
-     * Enum wrapper of Selenium {@link org.openqa.selenium.logging.LogType}.
-     */
-    public enum LogType {
-
-        /**
-         * This log type pertains to logs from the browser.
-         */
-        BROWSER(org.openqa.selenium.logging.LogType.BROWSER),
-
-        /**
-         * This log type pertains to logs from the client.
-         */
-        CLIENT(org.openqa.selenium.logging.LogType.CLIENT),
-
-        /**
-         * This log pertains to logs from the WebDriver implementation.
-         */
-        DRIVER(org.openqa.selenium.logging.LogType.DRIVER),
-
-        /**
-         * This log type pertains to logs relating to performance timings.
-         */
-        PERFORMANCE(org.openqa.selenium.logging.LogType.PERFORMANCE),
-
-        /**
-         * This log type pertains to logs relating to performance timings.
-         */
-        PROFILER(org.openqa.selenium.logging.LogType.PROFILER),
-
-        /**
-         * This log type pertains to logs from the remote server.
-         */
-        SERVER(org.openqa.selenium.logging.LogType.SERVER);
-
-        private final String logType;
-
-        LogType(final String logType) {
-            this.logType = logType;
-        }
-
-        @Override
-        public String toString() {
-            return logType;
-        }
     }
 }

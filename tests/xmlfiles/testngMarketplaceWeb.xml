@@ -1,7 +1,7 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Verifone">
+<suite name="Verifone Marketplace">
 
     <!--Set Env Variable: -->
     <!--QA-->
@@ -23,20 +23,20 @@
 
     <test name="Login tests">
         <classes>
-            <class name="com.verifone.tests.mpAngularTests.LoginPageTest"/>
+            <class name="com.verifone.tests.mpWebTests.LoginPageTest"/>
         </classes>
     </test>
 
     <test name="Applications tests">
         <classes>
-            <class name="com.verifone.tests.mpAngularTests.applications.AppCataloguePageTest"/>
-            <class name="com.verifone.tests.mpAngularTests.applications.AppDetailsPageTest"/>
+            <class name="com.verifone.tests.mpWebTests.applications.AppCataloguePageTest"/>
+            <class name="com.verifone.tests.mpWebTests.applications.AppDetailsPageTest"/>
         </classes>
     </test>
 
     <test name="Settings tests">
         <classes>
-            <class name="com.verifone.tests.mpAngularTests.settings.UsersPageTest"/>
+            <class name="com.verifone.tests.mpWebTests.settings.UsersPageTest"/>
         </classes>
     </test>
 </suite>
