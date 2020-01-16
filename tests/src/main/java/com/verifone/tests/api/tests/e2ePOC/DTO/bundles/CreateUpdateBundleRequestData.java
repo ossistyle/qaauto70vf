@@ -4,6 +4,15 @@ public class CreateUpdateBundleRequestData {
     private String bundleName;
     private String bundleDesc;
     private String bundleIcon;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getBundleName() {
         return bundleName;

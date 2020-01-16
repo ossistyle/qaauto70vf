@@ -22,7 +22,7 @@ public class BundlesApiHandler {
 
     public ApiResponse doCreateBundle(String bearerToken, String eoId, String bundleName) throws Exception {
 
-        CreateUpdateBundleRequestBody requestBodyObject = new CreateUpdateBundleRequestBody(bundleName, null, null);
+        CreateUpdateBundleRequestBody requestBodyObject = new CreateUpdateBundleRequestBody(bundleName, null, null, null);
 
         List<Header> headers = new ArrayList<>();
         headers.add(new BasicHeader("Authorization", "Bearer " + bearerToken));
