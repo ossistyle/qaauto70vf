@@ -85,13 +85,13 @@ public class SeleniumUtils {
                     options.addArguments("--headless");
                     options.addArguments("window-size=1743x600");
                 }
-                DesiredCapabilities caps = DesiredCapabilities.chrome();
+
+                // Set Logging preferences
                 LoggingPreferences logPrefs = new LoggingPreferences();
                 logPrefs.enable(LogType.BROWSER, Level.ALL); // Enable access to browser logs
                 logPrefs.enable(LogType.PERFORMANCE, Level.ALL); // Enable access to performance logs
-                caps.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
-                options.merge(caps);
-                driver = new ChromeDriver(caps);
+                options.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+                driver = new ChromeDriver(options);
                 System.out.println("CHROME web driver started successfully");
                 break;
             case "EDGE":

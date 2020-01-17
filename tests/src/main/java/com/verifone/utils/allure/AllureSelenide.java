@@ -4,16 +4,18 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.LogEvent;
 import com.codeborne.selenide.logevents.LogEventListener;
+import com.verifone.utils.mobile.Context;
+import io.appium.java_client.android.AndroidDriver;
 import io.qameta.allure.Allure;
 import io.qameta.allure.AllureLifecycle;
 import io.qameta.allure.model.Status;
 import io.qameta.allure.model.StatusDetails;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.*;
 import java.util.logging.Level;
 
@@ -96,8 +98,18 @@ public class AllureSelenide implements LogEventListener {
                     break;
                 case FAIL:
                     if (saveScreenshots) {
+                        WebDriver driver = WebDriverRunner.getAndCheckWebDriver();
+
+                        // Switch to Native context on Mobile device before taking screenshot
+                        if (driver instanceof AndroidDriver)
+                            Context.switchTo(Context.NATIVE);
+
                         getScreenshotBytes()
                                 .ifPresent(bytes -> lifecycle.addAttachment("Screenshot", "image/png", "png", bytes));
+
+                        // Switch back to WebView context on Mobile device after taking screenshot
+                        if (driver instanceof AndroidDriver)
+                            Context.switchTo(Context.WEBVIEW);
                     }
                     if (savePageHtml) {
                         getPageSourceBytes()

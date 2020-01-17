@@ -4,6 +4,7 @@ import com.verifone.infra.User;
 import com.verifone.pages.mpMobilePages.pages.HomePage;
 import com.verifone.pages.mpMobilePages.pages.LoginPage;
 import com.verifone.tests.BaseTest;
+import io.qameta.allure.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -30,65 +31,106 @@ public class LoginPageTest extends BaseTest {
         homePage = new HomePage();
     }
 
-    @Test(priority = 1, testName = "Successful Login with correct credentials", groups = {"ui", "regression"})
+    @Test (description = "User be able login with correct credentials", groups = {"ui", "regression"}, testName = "Login with valid creds")
+    @Issue("SGI-1179")
+    @TmsLink("8907133")
+    @Epic("")
+    @Feature("")
+    @Severity(SeverityLevel.NORMAL)
+    @Description ("User be able login with correct credentials")
     public void successfulLoginMobile() {
         loginPage.doLogin(merchant);
 
-        assertEquals(homePage.header.getTitle(), "Home", "Home page title");
+        homePage.header.getTitle().should(exist).shouldBe(visible).shouldHave(textCaseSensitive("Home"));
     }
 
-    @Test(priority = 1, testName = "Unsuccessful login with empty credentials", groups = {"ui", "regression"})
+    @Test (description = "User won't be able logged in with empty credentials", groups = {"ui", "regression"}, testName = "Login with empty creds")
+    @Issue ("SGI-1179")
+    @TmsLink ("8907133")
+    @Epic ("")
+    @Feature ("")
+    @Severity (SeverityLevel.NORMAL)
+    @Description ("User won't be able logged in with empty credentials")
     public void unsuccessfulLoginWithEmptyCredentialsMobile() {
         loginPage.clickLogin();
 
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(loginPage.getUsernameFieldErrorMessage().text(), "This field is required.", "Username field validation message");
-        softAssert.assertEquals(loginPage.getPasswordFieldErrorMessage().text(), "This field is required.", "Password field validation message");
-        softAssert.assertAll();
+        loginPage.getUsernameFieldErrorMessage().shouldBe(visible).shouldHave(textCaseSensitive("This field is required."));
+        loginPage.getPasswordFieldErrorMessage().shouldBe(visible).shouldHave(textCaseSensitive("This field is required."));
     }
 
-    @Test(priority = 1, testName = "Unsuccessful login with empty Username field", groups = {"ui", "regression"})
+    @Test (description = "User be able to see 'This field is required.' error message after logging with empty username field", groups = {"ui", "regression"}, testName = "Login with empty username")
+    @Issue ("SGI-1179")
+    @TmsLink ("8907133")
+    @Epic ("")
+    @Feature ("")
+    @Severity (SeverityLevel.NORMAL)
+    @Description ("User be able to see 'This field is required.' error message after logging with empty username field")
     public void unsuccessfulLoginWithEmptyUsernameFieldMobile() {
         loginPage.enterPassword(merchant.getPassword());
         loginPage.clickLogin();
 
-        assertEquals(loginPage.getUsernameFieldErrorMessage().text(), "This field is required.", "Username field validation message");
+        loginPage.getUsernameFieldErrorMessage().shouldBe(visible).shouldHave(textCaseSensitive("This field is required."));
+        loginPage.getPasswordFieldErrorMessage().shouldNot(exist);
     }
 
-    @Test(priority = 1, testName = "Unsuccessful login with empty Password field", groups = {"ui", "regression"})
+    @Test (description = "User be able to see 'This field is required.' error message after logging with empty password field", groups = {"ui", "regression"}, testName = "Login with empty password")
+    @Issue ("SGI-1179")
+    @TmsLink ("8907133")
+    @Epic ("")
+    @Feature ("")
+    @Severity (SeverityLevel.NORMAL)
+    @Description ("User be able to see 'This field is required.' error message after logging with empty password field")
     public void unsuccessfulLoginWithEmptyPasswordFieldMobile() {
         loginPage.enterUsername(merchant.getUserName());
         loginPage.clickLogin();
 
-        assertEquals(loginPage.getPasswordFieldErrorMessage().text(), "This field is required.", "Password field validation message");
+        loginPage.getUsernameFieldErrorMessage().shouldNot(exist);
+        loginPage.getPasswordFieldErrorMessage().shouldBe(visible).shouldHave(textCaseSensitive("This field is required."));
     }
 
-    @Test(priority = 1, testName = "Unsuccessful login with incorrect Username format", groups = {"ui", "regression"})
+    @Test (description = "User be able to see 'Email has incorrect format. You can only use letters, numbers and symbols.' error message after logging with incorrect username format", groups = {"ui", "regression"}, testName = "Login with incorrect username format")
+    @Issue ("SGI-1179")
+    @TmsLink ("8907133")
+    @Epic ("")
+    @Feature ("")
+    @Severity (SeverityLevel.NORMAL)
+    @Description ("User be able to see 'Email has incorrect format. You can only use letters, numbers and symbols.' " +
+            "error message after logging with incorrect username format")
     public void unsuccessfulLoginWithIncorrectUsernameFormatMobile() {
         loginPage.enterUsername("merchant");
         loginPage.clickLogin();
 
-        assertEquals(loginPage.getUsernameFieldErrorMessage().text(),
-                "Email has incorrect format. You can only use letters, numbers and symbols.", "Username field validation message");
+        loginPage.getUsernameFieldErrorMessage().shouldBe(visible)
+                .shouldHave(textCaseSensitive("Email has incorrect format. You can only use letters, numbers and symbols."));
     }
 
-    @Test(priority = 1, testName = "Presence of title, email field, password field, forgot password link and login button", groups = {"ui", "regression"})
+    @Test (description = "User be able to see title, email field, password field, forgot password link and login button on Login page", groups = {"ui", "regression"}, testName = "Login page elements")
+    @Epic ("")
+    @Issue ("SGI-1179")
+    @TmsLink ("8907133")
+    @Feature ("")
+    @Severity (SeverityLevel.NORMAL)
+    @Description ("User be able to see title, email field, password field, forgot password link and login button on Login page")
     public void presenceOfElementsMobile() {
-        SoftAssert softAssert = new SoftAssert();
         loginPage.getLogoImage().shouldBe(visible);
-        softAssert.assertEquals(loginPage.getLoginTitle().text(), "Login to your\nVerifone Account", "Login title");
-        softAssert.assertEquals(loginPage.getUsernameField().parent().text(), "Email Address", "Email field");
-        softAssert.assertTrue(loginPage.getPasswordField().parent().parent().text().contains("Password"), "Password field text is 'Password'");
-        softAssert.assertEquals(loginPage.getForgotPasswordLink().text(), "Forgot Password?", "Forgot password link");
-        softAssert.assertEquals(loginPage.getLoginButton().text(), "LOG IN", "Login button");
-        softAssert.assertAll();
+        loginPage.getLoginTitle().shouldBe(visible).shouldHave(textCaseSensitive("Login to your\nVerifone Account"));
+        loginPage.getUsernameField().parent().shouldBe(visible).shouldHave(textCaseSensitive("Email Address"));
+        loginPage.getPasswordField().parent().parent().shouldBe(visible).shouldHave(matchesText("Password"));
+        loginPage.getForgotPasswordLink().shouldBe(visible).shouldHave(textCaseSensitive("Forgot Password?"));
+        loginPage.getLoginButton().shouldBe(visible).shouldHave(textCaseSensitive("LOG IN"));
     }
 
-    @Test(priority = 1, testName = "Hide/show password", groups = {"ui", "regression"})
+    @Test (description = "User be able to Hide/show password", groups = {"ui", "regression"}, testName = "Hide/show password")
+    @Issue ("SGI-1179")
+    @TmsLink ("8907133")
+    @Epic ("")
+    @Feature ("")
+    @Severity (SeverityLevel.NORMAL)
+    @Description ("User be able to Hide/show password")
     public void hideShowPasswordMobile() {
-        assertEquals(loginPage.getPasswordField().attr("type"), "password", "Password field type");
+        loginPage.getPasswordField().should(exist).shouldHave(attribute("type", "password"));
         loginPage.clickHidePassword();
-        assertEquals(loginPage.getPasswordField().attr("type"), "text", "Password field type");
+        loginPage.getPasswordField().should(exist).shouldHave(attribute("type", "text"));
     }
 }
 

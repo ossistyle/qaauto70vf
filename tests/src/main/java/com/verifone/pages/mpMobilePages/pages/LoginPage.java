@@ -4,6 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import com.verifone.infra.User;
 import com.verifone.pages.mpMobilePages.MobilePage;
+import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -26,63 +27,65 @@ public class LoginPage extends MobilePage {
         super();
     }
 
+    @Step("Get logo image")
     public SelenideElement getLogoImage() {
-        testLog.info("Get logo image");
-        return logoImage.should(exist);
+        return logoImage;
     }
 
+    @Step("Get login title")
     public SelenideElement getLoginTitle() {
-        testLog.info("Get login title");
-        return loginTitle.should(exist);
+        return loginTitle;
     }
 
+    @Step("Get username field")
     public SelenideElement getUsernameField() {
         testLog.info("Get username field");
-        return usernameField.should(exist);
+        return usernameField;
     }
 
+    @Step("Get password field")
     public SelenideElement getPasswordField() {
-        testLog.info("Get password field");
         if (!passwordIFrame.exists())
             WebDriverRunner.getAndCheckWebDriver().switchTo().defaultContent();
         WebDriverRunner.getAndCheckWebDriver().switchTo().frame(passwordIFrame);
-        return passwordField.should(exist);
+        return passwordField;
     }
 
+    @Step("Get forgot password link")
     public SelenideElement getForgotPasswordLink() {
-        testLog.info("Get forgot password link");
         WebDriverRunner.getAndCheckWebDriver().switchTo().defaultContent();
-        return forgotPasswordLink.should(exist);
+        return forgotPasswordLink;
     }
 
+    @Step("Get login button")
     public SelenideElement getLoginButton() {
-        testLog.info("Get login button");
-        return loginButton.should(exist);
+        return loginButton;
     }
 
+    @Step("Enter username")
     public void enterUsername(String username) {
-        testLog.info(String.format("Enter %s into 'Email address' field", username));
         usernameField.should(exist).sendKeys(username);
     }
 
+    @Step("Enter password")
     public void enterPassword(String password) {
         testLog.info(String.format("Enter %s into 'Password' field", password));
         getPasswordField().sendKeys(password);
         WebDriverRunner.getWebDriver().switchTo().defaultContent();
     }
 
+    @Step("Click 'Hide password' icon")
     public void clickHidePassword() {
-        testLog.info("Click 'Hide password' icon");
         hidePasswordIcon.should(exist).click();
     }
 
+    @Step("Click 'Forgot password' icon")
     public void clickForgotPassword() {
-        testLog.info("Click 'Forgot password' icon");
         forgotPasswordLink.should(exist).click();
     }
 
+    @Step("Click 'Log In' button")
     public void clickLogin() {
-        testLog.info("Click 'Log In' button");
         loginButton.should(exist).click();
     }
 
@@ -92,13 +95,13 @@ public class LoginPage extends MobilePage {
         clickLogin();
     }
 
+    @Step("Get Username field error message")
     public SelenideElement getUsernameFieldErrorMessage() {
-        testLog.info("Get Username field error message");
-        return usernameFieldErrorMessage.shouldBe(visible);
+        return usernameFieldErrorMessage;
     }
 
+    @Step("Get Password field error message")
     public SelenideElement getPasswordFieldErrorMessage() {
-        testLog.info("Get Password field error message");
-        return passwordFieldErrorMessage.shouldBe(visible);
+        return passwordFieldErrorMessage;
     }
 }

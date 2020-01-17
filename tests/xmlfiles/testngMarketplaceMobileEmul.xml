@@ -1,7 +1,7 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Verifone">
+<suite name="Verifone Marketplace Mobile">
 
     <!--Set Env Variable: -->
     <!--QA-->
@@ -25,7 +25,7 @@
     <!--EOAdmin-->
     <parameter name="portal" value="VFMPPortal"/>
 
-    <test name="AndroidMobile">
+    <test name="Login tests">
         <classes>
             <class name="com.verifone.tests.mpMobileTests.LoginPageTest"/>
         </classes>
