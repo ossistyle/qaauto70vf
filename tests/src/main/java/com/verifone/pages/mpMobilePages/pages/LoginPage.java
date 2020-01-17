@@ -1,16 +1,15 @@
-package com.verifone.pages.mpAngularPages.pages;
+package com.verifone.pages.mpMobilePages.pages;
 
-import com.codeborne.selenide.*;
+import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import com.verifone.infra.User;
-import com.verifone.pages.BasePage;
+import com.verifone.pages.mpMobilePages.MobilePage;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$x;
 
-public class LoginPage extends BasePage {
-
-    private final static String URL = "";
-    private final static String TITLE = "Login with Verifone Identity Server";
+public class LoginPage extends MobilePage {
 
     private SelenideElement logoImage = $("div[class*=logo]");
     private SelenideElement loginTitle = $("h1[class*=verifone]");
@@ -22,6 +21,10 @@ public class LoginPage extends BasePage {
     private SelenideElement hidePasswordIcon = $x("(//i[contains(text(), 'visibility')])[last()]");
     private SelenideElement forgotPasswordLink = $("a[href*=Recover]");
     private SelenideElement loginButton = $("#btnPrimaryLogin");
+
+    public LoginPage() {
+        super();
+    }
 
     public SelenideElement getLogoImage() {
         testLog.info("Get logo image");
@@ -97,9 +100,5 @@ public class LoginPage extends BasePage {
     public SelenideElement getPasswordFieldErrorMessage() {
         testLog.info("Get Password field error message");
         return passwordFieldErrorMessage.shouldBe(visible);
-    }
-
-    public LoginPage() {
-        super(URL, TITLE);
     }
 }

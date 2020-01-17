@@ -9,6 +9,13 @@
     <parameter name="env" value="DEV"/>
     <parameter name="getVersions" value="false"/>
     <parameter name="isLinuxMachine" value="${isLinux}"/>
+    <parameter name="browserType" value="FF"/>
+    <!-- Universal device identifier -->
+    <parameter name="udid" value="emulator-5554"/>
+    <!-- Device name -->
+    <parameter name="deviceName" value="Carbon5 Emulator"/>
+    <!-- The absolute local path or remote http URL to .apk file -->
+    <parameter name="app" value="C:\vfmp\app-debug.apk"/>
 
     <!--Set Portal Variable: -->
     <!--CPPortal-->
@@ -16,17 +23,10 @@
     <!--EOAdmin-->
     <parameter name="portal" value="VFMPPortal"/>
 
-    <test name="Automation Tests">
-        <!--Set Browser Variable:-->
-        <!--CHROME-->
-        <!--FF-->
-        <!--EDGE-->
-        <!--IE-->
-        <parameter name="browserType" value="${browser}"/>
-
+    <test name="AndroidMobile">
         <classes>
-            <!--Verfone MP-->
-            <class name="com.verifone.tests.mpAngularTests.AngularAppTest"/>
+            <class name="com.verifone.tests.appiumTests.CM5_IonicAppTest"/>
         </classes>
     </test>
+
 </suite>

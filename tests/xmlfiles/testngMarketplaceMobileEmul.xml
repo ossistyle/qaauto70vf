@@ -9,12 +9,15 @@
     <parameter name="env" value="DEV"/>
     <parameter name="getVersions" value="false"/>
     <parameter name="isLinuxMachine" value="${isLinux}"/>
+    <parameter name="browserType" value="FF"/>
     <!-- Universal device identifier -->
     <parameter name="udid" value="emulator-5554"/>
     <!-- Device name -->
     <parameter name="deviceName" value="Carbon5 Emulator"/>
     <!-- The absolute local path or remote http URL to .apk file -->
     <parameter name="app" value="${app}"/>
+    <!-- URL to Appium server-->
+    <parameter name="server_url" value="http://10.160.11.64:4723"/>
 
     <!--Set Portal Variable: -->
     <!--CPPortal-->
@@ -24,7 +27,7 @@
 
     <test name="AndroidMobile">
         <classes>
-            <class name="com.verifone.tests.appiumTests.CM5_IonicAppTest"/>
+            <class name="com.verifone.tests.mpMobileTests.LoginPageTest"/>
         </classes>
     </test>
 
