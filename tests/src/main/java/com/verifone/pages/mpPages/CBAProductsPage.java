@@ -532,6 +532,7 @@ public class CBAProductsPage extends BasePage {
         System.out.println("unPublishElement" + unPublishElement.size());
         if (unPublishElement.size() != 0) {
             testLog.info("----------------------- UnPublish App -------------------------------------");
+            waitUntilPageLoad(unpublish);
             hoverAndClickOnElement(unpublish);
 
             waitForLoader(confirmUnpublish);
