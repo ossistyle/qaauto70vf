@@ -9,58 +9,78 @@ import com.verifone.tests.api.tests.e2ePOC.DTO.internalCustomObjects.ApiResponse
 import com.verifone.tests.api.tests.e2ePOC.helpers.LoginHelper;
 import com.verifone.tests.api.tests.e2ePOC.helpers.api.BundlesApiHandler;
 import org.apache.commons.lang3.StringUtils;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class PocTest extends BaseTest {
-    private final String qa_free_app = "776a8141-73ed-4ec3-a993-7baa2be09b65";
-    private final String qa_free_app_1 = "0b9a8ca9-969d-4cf5-a35e-932a7fd8e9f8";
+    private Gson jsonParser = new Gson();
+    private BundlesApiHandler bundlesHandler;
+    private String eoToken;
+    private String createdbundleId;
 
-    @Test
-    public void firstPOCTest() throws Exception {
+    @BeforeClass
+    public void preconditions() throws Exception {
+        eoToken = LoginHelper.getRequestToken("qa", "vfameo@getnada.com", "Veri1234");
+        bundlesHandler = new BundlesApiHandler("qa");
 
-        Gson jsonPaser = new Gson();
+    }
 
-        String token = LoginHelper.getRequestToken("qa", "vfameo@getnada.com", "Veri1234");
 
-        BundlesApiHandler bundlesHandler = new BundlesApiHandler("qa");
+    @Test(priority = 100)
+    public void createBundleTest() throws Exception {
 
         //create a bundle
-        ApiResponse createBundleResponse = bundlesHandler.doCreateBundle(token, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", "DELETE_ME_Automation-" + System.currentTimeMillis());
-        BundlesData createdBundle = jsonPaser.fromJson(createBundleResponse.getResponseBody(), BundlesData.class);
+        ApiResponse createBundleResponse = bundlesHandler.doCreateBundle(eoToken, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", "DELETE_ME_Automation-" + System.currentTimeMillis());
+        BundlesData createdBundle = jsonParser.fromJson(createBundleResponse.getResponseBody(), BundlesData.class);
         System.out.println("Created bundle ID = " + createdBundle.getId());
+        createdbundleId = createdBundle.getId();
 
+
+    }
+
+
+    @Test(priority = 101, dependsOnMethods = "createBundleTest")
+    public void getAllEoBundles() throws Exception {
         //Get all bundles for EO and check if created bundle is in the list
-        ApiResponse getAllEoBundlesResponse = bundlesHandler.getAllBundlesForEo(token, "0a79306b-7b84-4aec-8f4f-d472662cbdf2");
-        BundlesResponse allBundlesResponse = jsonPaser.fromJson(getAllEoBundlesResponse.getResponseBody(), BundlesResponse.class);
+        ApiResponse getAllEoBundlesResponse = bundlesHandler.getAllBundlesForEo(eoToken, "0a79306b-7b84-4aec-8f4f-d472662cbdf2");
+        BundlesResponse allBundlesResponse = jsonParser.fromJson(getAllEoBundlesResponse.getResponseBody(), BundlesResponse.class);
 
         //Check if created bundle is presented in the list
-        BundlesData foundBundle = allBundlesResponse.getData().stream().filter(bundle -> StringUtils.equalsIgnoreCase(bundle.getId(), createdBundle.getId())).findFirst().orElse(null);
+        BundlesData foundBundle = allBundlesResponse.getData().stream().filter(bundle -> StringUtils.equalsIgnoreCase(bundle.getId(), createdbundleId)).findFirst().orElse(null);
         if (null != foundBundle) {
-            System.out.println("Created bundle with id=" + createdBundle.getId() + " was found in the list of all bundles for EO");
+            System.out.println("Created bundle with id=" + createdbundleId + " was found in the list of all bundles for EO");
         } else {
-            System.out.println("Created bundle with id=" + createdBundle.getId() + " is MISSING in the list of all bundles for EO");
+            System.out.println("Created bundle with id=" + createdbundleId + " is MISSING in the list of all bundles for EO");
         }
 
+    }
+
+    @Test(priority = 102, dependsOnMethods = "createBundleTest")
+    public void getBundleById() throws Exception {
         //get bundle by ID
-        ApiResponse bundleByIdResp = bundlesHandler.getBundleById(token, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdBundle.getId());
-        BundlesResponse bundlesByIdRespObject = jsonPaser.fromJson(bundleByIdResp.getResponseBody(), BundlesResponse.class);
+        ApiResponse bundleByIdResp = bundlesHandler.getBundleById(eoToken, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdbundleId);
+        BundlesResponse bundlesByIdRespObject = jsonParser.fromJson(bundleByIdResp.getResponseBody(), BundlesResponse.class);
 
         if (bundlesByIdRespObject.getData().size() == 1) {
             System.out.println("Created bundle was returned by ID");
         }
 
-        //update a bundle
+    }
 
-        CreateUpdateBundleRequestBody updateBundleRequest = new CreateUpdateBundleRequestBody("UPDATED_" + createdBundle.getBundleName(), "BundleDesc", null, null);
-        ApiResponse updateResp = bundlesHandler.doUpdateBundle(token, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdBundle.getId(), updateBundleRequest);
+
+    @Test(priority = 103, dependsOnMethods = "createBundleTest")
+    public void updateBundle() throws Exception {
+        //update a bundle
+        CreateUpdateBundleRequestBody updateBundleRequest = new CreateUpdateBundleRequestBody("UPDATED_" + createdbundleId, "BundleDesc", null, null);
+        ApiResponse updateResp = bundlesHandler.doUpdateBundle(eoToken, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdbundleId, updateBundleRequest);
 
         System.out.println("Update bundle response code = " + updateResp.getResponseCode());
 
-        BundlesData updatedBundle = jsonPaser.fromJson(updateResp.getResponseBody(), BundlesData.class);
-        if (StringUtils.equals(updatedBundle.getBundleName(), "UPDATED_" + createdBundle.getBundleName())) {
+        BundlesData updatedBundle = jsonParser.fromJson(updateResp.getResponseBody(), BundlesData.class);
+        if (StringUtils.equals(updatedBundle.getBundleName(), "UPDATED_DELETE_ME_Automation-" + System.currentTimeMillis())) {
             System.out.println("bundle name updated correctly " + updatedBundle.getBundleName());
         } else {
-            System.out.println("bundle name was not updated:  " + updatedBundle.getBundleName() + " But expected: " + "UPDATED_" + createdBundle.getBundleName());
+            System.out.println("bundle name was not updated:  " + updatedBundle.getBundleName() + " But expected: " + "UPDATED_DELETE_ME_Automation-" + System.currentTimeMillis());
         }
 
         if (StringUtils.equals(updatedBundle.getBundleDesc(), "BundleDesc")) {
@@ -68,11 +88,13 @@ public class PocTest extends BaseTest {
         } else {
             System.out.println("bundle description was not updated:  " + updatedBundle.getBundleDesc() + " But expected: " + "BundleDesc");
         }
+    }
 
+    @Test(priority = 104, dependsOnMethods = "createBundleTest")
+    public void assignFreeAppToBundle() throws Exception {
         //Assign app to bundle
-
         AssignAppToBundleRequestBody assignAppsRequest = new AssignAppToBundleRequestBody(qa_free_app);
-        ApiResponse assignAppResp = bundlesHandler.doAssignAppsToBundle(token, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdBundle.getId(), assignAppsRequest);
+        ApiResponse assignAppResp = bundlesHandler.doAssignAppsToBundle(eoToken, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdbundleId, assignAppsRequest);
 
         if (assignAppResp.getResponseCode() == 201) {
             System.out.println("Assign apps request response code correct: " + assignAppResp.getResponseCode());
@@ -83,8 +105,8 @@ public class PocTest extends BaseTest {
 
         //verify assigned app is returned in get bundle by id request
 
-        bundleByIdResp = bundlesHandler.getBundleById(token, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdBundle.getId());
-        bundlesByIdRespObject = jsonPaser.fromJson(bundleByIdResp.getResponseBody(), BundlesResponse.class);
+        ApiResponse bundleByIdResp = bundlesHandler.getBundleById(eoToken, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdbundleId);
+        BundlesResponse bundlesByIdRespObject = jsonParser.fromJson(bundleByIdResp.getResponseBody(), BundlesResponse.class);
 
         if (bundlesByIdRespObject.getData().size() == 1) {
             System.out.println("Created bundle was returned by ID");
@@ -99,14 +121,18 @@ public class PocTest extends BaseTest {
 
         }
 
+    }
+
+
+    @Test(priority = 105, dependsOnMethods = {"createBundleTest", "assignFreeAppToBundle"})
+    public void unassignAppFromBundle() throws Exception {
         //unassign app from bundle
 
-        ApiResponse unassignBundleResponse = bundlesHandler.doUnassignAppsToBundle(token, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdBundle.getId(), qa_free_app);
-
+        ApiResponse unassignBundleResponse = bundlesHandler.doUnassignAppsToBundle(eoToken, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdbundleId, qa_free_app);
         System.out.println("Unassign bundle response: " + unassignBundleResponse.getResponseCode());
 
-        bundleByIdResp = bundlesHandler.getBundleById(token, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdBundle.getId());
-        bundlesByIdRespObject = jsonPaser.fromJson(bundleByIdResp.getResponseBody(), BundlesResponse.class);
+        ApiResponse bundleByIdResp = bundlesHandler.getBundleById(eoToken, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdbundleId);
+        BundlesResponse bundlesByIdRespObject = jsonParser.fromJson(bundleByIdResp.getResponseBody(), BundlesResponse.class);
 
         if (bundlesByIdRespObject.getData().size() == 1) {
             System.out.println("Created bundle was returned by ID");
@@ -121,12 +147,13 @@ public class PocTest extends BaseTest {
 
         }
 
+    }
 
+    @Test(priority = 106, dependsOnMethods = "createBundleTest")
+    public void deleteBundle() throws Exception {
         //delete a bundle
-        ApiResponse deleteBundleResponse = bundlesHandler.doDeleteBundle(token, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdBundle.getId());
+        ApiResponse deleteBundleResponse = bundlesHandler.doDeleteBundle(eoToken, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdbundleId);
         System.out.println("Delete bundle response code is:" + deleteBundleResponse.getResponseCode());
-
-
     }
 
 
