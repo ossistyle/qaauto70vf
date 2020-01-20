@@ -33,8 +33,6 @@ public abstract class BaseMobileTest {
 
         config = ConfigFactory.create(EnvironmentConfig.class);
         envConfig = new EnvConfig(config.env(), config.portal());
-
-
     }
 
     @BeforeMethod (description = "Base before test")
@@ -47,6 +45,7 @@ public abstract class BaseMobileTest {
 
         Configuration.startMaximized = false;
         Configuration.browserSize = null;
+        Configuration.baseUrl = config.url();
         Configuration.browserCapabilities = caps;
         Configuration.browser = AppiumDriverSetup.class.getName();
         Selenide.open();
@@ -55,5 +54,6 @@ public abstract class BaseMobileTest {
     @BeforeMethod (description = "Base after test")
     public void tearDown() {
         if (WebDriverRunner.hasWebDriverStarted())
-            WebDriverRunner.closeWebDriver();    }
+            WebDriverRunner.closeWebDriver();
+    }
 }
