@@ -1,0 +1,24 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Verifone Marketplace">
+
+    <test name="Login tests">
+        <classes>
+            <class name="test.LoginPageTest"/>
+        </classes>
+    </test>
+
+    <test name="Applications tests">
+        <classes>
+            <class name="test.applications.AppCataloguePageTest"/>
+            <class name="test.applications.AppDetailsPageTest"/>
+        </classes>
+    </test>
+
+    <test name="Settings tests">
+        <classes>
+            <class name="test.settings.UsersPageTest"/>
+        </classes>
+    </test>
+</suite>
