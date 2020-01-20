@@ -8,8 +8,8 @@ public interface EnvironmentConfig extends Config{
     @Config.Key("url")
     String url();
 
-    @Config.Key("browser")
-    String browser();
+    @Config.Key("browserName")
+    String browserName();
 
     @Config.Key("env")
     String env();

@@ -9,13 +9,13 @@ import web.pages.HomePage;
 import web.pages.LoginPage;
 import web.pages.applications.AppCatalogPage;
 import web.pages.applications.AppDetailsPage;
-import test.web.BaseTest;
+import test.web.BaseWebTest;
 import utils.mock.AppMock;
 
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.textCaseSensitive;
 
-public class AppDetailsPageTest extends BaseTest {
+public class AppDetailsPageTest extends BaseWebTest {
 
     // TODO Replace mock data to data from API
     private AppMock app;

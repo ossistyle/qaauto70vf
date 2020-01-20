@@ -2,12 +2,12 @@ package web.pages.settings;
 
 import com.codeborne.selenide.ElementsCollection;
 import io.qameta.allure.Step;
-import web.pages.BasePage;
+import web.pages.BaseWebPage;
 
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.$$;
 
-public class UsersPage extends BasePage {
+public class UsersPage extends BaseWebPage {
 
     private final static String URL = "settings/users";
     private final static String TITLE = "Marketplace";

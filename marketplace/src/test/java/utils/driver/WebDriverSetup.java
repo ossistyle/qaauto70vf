@@ -16,7 +16,7 @@ import java.util.logging.Level;
 
 import static com.codeborne.selenide.Browsers.CHROME;
 
-public class WDSetup implements WebDriverProvider {
+public class WebDriverSetup implements WebDriverProvider {
 
     @Override
     public WebDriver createDriver(DesiredCapabilities caps) {

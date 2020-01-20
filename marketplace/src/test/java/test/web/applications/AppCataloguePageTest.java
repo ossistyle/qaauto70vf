@@ -8,13 +8,13 @@ import org.testng.annotations.Test;
 import web.pages.HomePage;
 import web.pages.LoginPage;
 import web.pages.applications.AppCatalogPage;
-import test.web.BaseTest;
+import test.web.BaseWebTest;
 import utils.mock.AppMock;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 
-public class AppCataloguePageTest extends BaseTest {
+public class AppCataloguePageTest extends BaseWebTest {
 
     // TODO Replace mock data to data from API
     private AppMock app;

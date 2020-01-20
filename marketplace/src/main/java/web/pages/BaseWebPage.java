@@ -2,7 +2,7 @@ package web.pages;
 
 import static com.codeborne.selenide.Selenide.open;
 
-public abstract class BasePage {
+public abstract class BaseWebPage {
 
     protected String url;
 
@@ -10,7 +10,7 @@ public abstract class BasePage {
         open(this.url);
     }
 
-    protected BasePage(String url) {
+    protected BaseWebPage(String url) {
         this.url = url;
     }
 }

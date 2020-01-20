@@ -5,7 +5,7 @@ import io.github.bonigarcia.wdm.FirefoxDriverManager;
 
 import static com.codeborne.selenide.Browsers.CHROME;
 
-public abstract class WDManager {
+public abstract class WebDriverManager {
 
     public static void downloadDriver(String browserName) {
         switch (browserName) {

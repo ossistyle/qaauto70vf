@@ -9,11 +9,11 @@ import org.testng.annotations.BeforeSuite;
 import utils.allure.AllureSelenide;
 import utils.allure.LogType;
 import utils.config.EnvironmentConfig;
-import utils.driver.WDManager;
-import utils.driver.WDSetup;
+import utils.driver.WebDriverManager;
+import utils.driver.WebDriverSetup;
 import java.util.logging.Level;
 
-public abstract class BaseTest {
+public abstract class BaseWebTest {
 
     protected static EnvConfig envConfig;
     protected EnvironmentConfig config;
@@ -30,10 +30,10 @@ public abstract class BaseTest {
         envConfig = new EnvConfig(config.env(), config.portal());
 
         // Download relevant driver (geckodriver/chromedriver)
-        WDManager.downloadDriver(config.browser());
+        WebDriverManager.downloadDriver(config.browserName());
 
-        WDSetup setup = new WDSetup();
-        DesiredCapabilities caps = setup.getCapabilities(config.browser());
+        WebDriverSetup setup = new WebDriverSetup();
+        DesiredCapabilities caps = setup.getCapabilities(config.browserName());
         setup.createDriver(caps);
 
         // Selenide configuration
@@ -42,7 +42,7 @@ public abstract class BaseTest {
         Configuration.headless = config.headless();
         Configuration.baseUrl = config.url();
         Configuration.startMaximized = true;
-        Configuration.browser = WDSetup.class.getName();
+        Configuration.browser = WebDriverSetup.class.getName();
     }
 
 }

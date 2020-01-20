@@ -3,11 +3,11 @@ package web.pages.applications;
 import com.codeborne.selenide.SelenideElement;
 import web.components.MainMenu;
 import io.qameta.allure.Step;
-import web.pages.BasePage;
+import web.pages.BaseWebPage;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class AppDetailsPage extends BasePage {
+public class AppDetailsPage extends BaseWebPage {
 
     private final static String URL = null;
     private final static String TITLE = "Marketplace";

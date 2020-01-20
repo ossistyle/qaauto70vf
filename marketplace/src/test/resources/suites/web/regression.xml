@@ -3,6 +3,9 @@
 
 <suite name="Verifone Marketplace">
 
+    <parameter name="browser" value="chrome"/>
+    <parameter name="headless" value="true"/>
+
     <test name="Login tests">
         <classes>
             <class name="test.web.LoginPageTest"/>

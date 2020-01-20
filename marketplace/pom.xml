@@ -161,13 +161,13 @@
         <profile>
             <id>browser_chrome</id>
             <properties>
-                <browser>chrome</browser>
+                <browserName>chrome</browserName>
             </properties>
         </profile>
         <profile>
             <id>browser_firefox</id>
             <properties>
-                <browser>firefox</browser>
+                <browserName>firefox</browserName>
             </properties>
         </profile>
 

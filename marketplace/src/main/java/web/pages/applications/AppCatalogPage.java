@@ -6,9 +6,9 @@ import web.components.applications.catalog.CardsViewTable;
 import web.components.applications.catalog.GridViewTable;
 import web.components.applications.catalog.QuickView;
 import web.components.applications.common.FilterPanel;
-import web.pages.BasePage;
+import web.pages.BaseWebPage;
 
-public class AppCatalogPage extends BasePage {
+public class AppCatalogPage extends BaseWebPage {
 
     private final static String URL = "app-catalog";
     private final static String TITLE = " Application Catalog ";

@@ -5,7 +5,7 @@ import web.components.MainMenu;
 
 import static com.codeborne.selenide.Selenide.$x;
 
-public class HomePage extends BasePage {
+public class HomePage extends BaseWebPage {
 
     public MainMenu mainMenu;
 

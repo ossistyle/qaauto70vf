@@ -8,12 +8,12 @@ import org.testng.annotations.Test;
 import web.pages.HomePage;
 import web.pages.LoginPage;
 import web.pages.settings.UsersPage;
-import test.web.BaseTest;
+import test.web.BaseWebTest;
 import utils.mock.UserMock;
 
 import static com.codeborne.selenide.Condition.*;
 
-public class UsersPageTest extends BaseTest {
+public class UsersPageTest extends BaseWebTest {
 
     private User merchant;
     private UserMock userMock;
