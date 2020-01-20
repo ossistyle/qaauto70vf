@@ -157,34 +157,6 @@
 
     <!-- PROFILES -->
     <profiles>
-        <!-- BROWSERS -->
-        <profile>
-            <id>browser_chrome</id>
-            <properties>
-                <browserName>chrome</browserName>
-            </properties>
-        </profile>
-        <profile>
-            <id>browser_firefox</id>
-            <properties>
-                <browserName>firefox</browserName>
-            </properties>
-        </profile>
-
-        <!-- HEADLESS MODE -->
-        <profile>
-            <id>headless_enabled</id>
-            <properties>
-                <headless>true</headless>
-            </properties>
-        </profile>
-        <profile>
-            <id>headless_disabled</id>
-            <properties>
-                <headless>false</headless>
-            </properties>
-        </profile>
-
     <!-- ENVIRONMENT -->
         <profile>
             <id>env_dev</id>
