@@ -10,6 +10,7 @@ import com.verifone.tests.api.tests.e2ePOC.helpers.LoginHelper;
 import com.verifone.tests.api.tests.e2ePOC.helpers.api.BundlesApiHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class PocTest extends BaseTest {
@@ -19,9 +20,10 @@ public class PocTest extends BaseTest {
     private String createdbundleId;
 
     @BeforeClass
-    public void preconditions() throws Exception {
-        eoToken = LoginHelper.getRequestToken("qa", "vfameo@getnada.com", "Veri1234");
-        bundlesHandler = new BundlesApiHandler("qa");
+    @Parameters("env")
+    public void preconditions(String env) throws Exception {
+        eoToken = LoginHelper.getRequestToken(env, "vfameo@getnada.com", "Veri1234");
+        bundlesHandler = new BundlesApiHandler(env);
 
     }
 
@@ -35,11 +37,9 @@ public class PocTest extends BaseTest {
         System.out.println("Created bundle ID = " + createdBundle.getId());
         createdbundleId = createdBundle.getId();
 
-
     }
 
-
-    @Test(priority = 101, dependsOnMethods = "createBundleTest")
+    @Test(priority = 101, dependsOnMethods = {"createBundleTest"})
     public void getAllEoBundles() throws Exception {
         //Get all bundles for EO and check if created bundle is in the list
         ApiResponse getAllEoBundlesResponse = bundlesHandler.getAllBundlesForEo(eoToken, "0a79306b-7b84-4aec-8f4f-d472662cbdf2");
@@ -55,7 +55,7 @@ public class PocTest extends BaseTest {
 
     }
 
-    @Test(priority = 102, dependsOnMethods = "createBundleTest")
+    @Test(priority = 102, dependsOnMethods = {"createBundleTest"})
     public void getBundleById() throws Exception {
         //get bundle by ID
         ApiResponse bundleByIdResp = bundlesHandler.getBundleById(eoToken, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdbundleId);
@@ -68,7 +68,7 @@ public class PocTest extends BaseTest {
     }
 
 
-    @Test(priority = 103, dependsOnMethods = "createBundleTest")
+    @Test(priority = 103, dependsOnMethods = {"createBundleTest"})
     public void updateBundle() throws Exception {
         //update a bundle
         CreateUpdateBundleRequestBody updateBundleRequest = new CreateUpdateBundleRequestBody("UPDATED_" + createdbundleId, "BundleDesc", null, null);
@@ -90,7 +90,7 @@ public class PocTest extends BaseTest {
         }
     }
 
-    @Test(priority = 104, dependsOnMethods = "createBundleTest")
+    @Test(priority = 104, dependsOnMethods = {"createBundleTest"})
     public void assignFreeAppToBundle() throws Exception {
         //Assign app to bundle
         AssignAppToBundleRequestBody assignAppsRequest = new AssignAppToBundleRequestBody(qa_free_app);
@@ -149,7 +149,7 @@ public class PocTest extends BaseTest {
 
     }
 
-    @Test(priority = 106, dependsOnMethods = "createBundleTest")
+    @Test(priority = 106, dependsOnMethods = {"createBundleTest"})
     public void deleteBundle() throws Exception {
         //delete a bundle
         ApiResponse deleteBundleResponse = bundlesHandler.doDeleteBundle(eoToken, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdbundleId);

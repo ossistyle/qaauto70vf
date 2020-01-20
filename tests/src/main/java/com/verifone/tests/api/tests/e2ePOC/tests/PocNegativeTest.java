@@ -9,6 +9,7 @@ import com.verifone.tests.api.tests.e2ePOC.helpers.LoginHelper;
 import com.verifone.tests.api.tests.e2ePOC.helpers.api.BundlesApiHandler;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class PocNegativeTest extends BaseTest {
@@ -16,15 +17,16 @@ public class PocNegativeTest extends BaseTest {
     private String createdBundleId;
     private BundlesApiHandler bundlesHandler;
     private Gson jsonParser = new Gson();
+    private String env;
 
 
     @BeforeClass
-    public void createBundle() throws Exception {
+    @Parameters("env")
+    public void createBundle(String env) throws Exception {
+        this.env = env;
         Gson jsonPaser = new Gson();
-
-        String eoToken = LoginHelper.getRequestToken("qa", "vfameo@getnada.com", "Veri1234");
-
-        bundlesHandler = new BundlesApiHandler("qa");
+        String eoToken = LoginHelper.getRequestToken(env, "vfameo@getnada.com", "Veri1234");
+        bundlesHandler = new BundlesApiHandler(env);
 
         //create a bundle
         ApiResponse createBundleResponse = bundlesHandler.doCreateBundle(eoToken, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", "DELETE_ME_Automation-" + System.currentTimeMillis());
