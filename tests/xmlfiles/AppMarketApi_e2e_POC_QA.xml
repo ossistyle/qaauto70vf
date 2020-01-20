@@ -26,8 +26,8 @@
         <parameter name="eoPassword" value="Veri1234"/>
 
         <classes>
-            <class name="com.verifone.tests.api.tests.e2ePOC.tests.PocTest"/>
-            <class name="com.verifone.tests.api.tests.e2ePOC.tests.PocNegativeTest"/>
+            <class name="com.verifone.tests.api.tests.e2ePOC.tests.BundlesSanityFlow"/>
+            <class name="com.verifone.tests.api.tests.e2ePOC.tests.BundlesNegativeTests"/>
 
         </classes>
 
