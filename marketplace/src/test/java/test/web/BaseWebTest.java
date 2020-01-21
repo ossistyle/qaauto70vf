@@ -3,6 +3,7 @@ package test.web;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import com.verifone.infra.EnvConfig;
+import io.qameta.allure.Allure;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestContext;
@@ -30,6 +31,9 @@ public abstract class BaseWebTest {
     @BeforeSuite
     @Parameters({"browserName", "headless"})
     public void beforeSuite(ITestContext context, String browserName, @Optional boolean headless) throws Exception {
+//         Clear allure-results folder
+        AllureCommon.deleteAllureResults();
+
         // Allure report configuration
         SelenideLogger.addListener("AllureSelenide",
                 new AllureSelenide()
@@ -44,7 +48,6 @@ public abstract class BaseWebTest {
         WebDriverManager.downloadDriver(browserName);
         WebDriverSetup driverSetup = new WebDriverSetup();
         DesiredCapabilities caps = driverSetup.getCapabilities(browserName);
-        driverSetup.createDriver(caps);
 
         // Selenide configuration
         Configuration.timeout = 40000;

@@ -30,6 +30,8 @@ public abstract class BaseMobileTest {
 
     @BeforeSuite
     public void beforeSuite(ITestContext context) throws Exception {
+        // Clear allure-results folder
+        AllureCommon.deleteAllureResults();
 
         // Allure report configuration
         SelenideLogger.addListener("AllureSelenide",
@@ -65,7 +67,7 @@ public abstract class BaseMobileTest {
             WebDriverRunner.closeWebDriver();
     }
 
-    @AfterSuite(alwaysRun = true)
+    @AfterSuite (alwaysRun = true)
     public void afterSuite() {
         Properties props = new Properties();
         props.setProperty("Env URL", config.url());

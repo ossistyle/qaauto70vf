@@ -1,11 +1,14 @@
 package utils.allure;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 public abstract class AllureCommon {
@@ -28,6 +31,20 @@ public abstract class AllureCommon {
             }
         } catch (Exception e) {
             LOGGER.error("Allure environment.properties file was not created");
+        }
+    }
+
+    /**
+     * Clear target/allure-results folder
+     */
+    public static void deleteAllureResults() {
+        String allureResultsFolder = "target/allure-results";
+        if (Files.exists(Paths.get(allureResultsFolder))) {
+            try {
+                FileUtils.cleanDirectory(new File(allureResultsFolder));
+            } catch (IOException | IllegalArgumentException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
