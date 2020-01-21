@@ -96,12 +96,6 @@
 
     <!-- BUILD -->
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
         <testResources>
             <testResource>
                 <directory>src/test/resources</directory>
@@ -156,7 +150,7 @@
             <id>env_dev</id>
             <properties>
                 <url>https://dev.merchant.verifonecp.com</url>
-                <env>DEV</env>
+                <env>dev</env>
                 <portal>VFMPPortal</portal>
             </properties>
         </profile>
@@ -164,7 +158,7 @@
             <id>env_qa</id>
             <properties>
                 <url>https://qa.merchant.verifonecp.com</url>
-                <env>DEV</env>
+                <env>qa</env>
                 <portal>VFMPPortal</portal>
             </properties>
         </profile>
