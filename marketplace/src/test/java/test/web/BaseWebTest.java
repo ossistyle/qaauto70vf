@@ -1,16 +1,16 @@
 package test.web;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import com.verifone.infra.EnvConfig;
 import io.qameta.allure.Allure;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 import org.testng.xml.XmlTest;
 import utils.allure.AllureCommon;
 import utils.allure.AllureSelenide;
@@ -18,12 +18,15 @@ import utils.allure.LogType;
 import utils.config.EnvironmentConfig;
 import utils.driver.WebDriverManager;
 import utils.driver.WebDriverSetup;
+
+import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 
 public abstract class BaseWebTest {
 
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected static EnvConfig envConfig;
     protected EnvironmentConfig config;
     private XmlTest testngXml;
@@ -56,6 +59,18 @@ public abstract class BaseWebTest {
         Configuration.baseUrl = config.url();
         Configuration.startMaximized = true;
         Configuration.browser = WebDriverSetup.class.getName();
+    }
+
+    @BeforeMethod
+    public void setUp(Method method) {
+        logger.info("----- Start WebDriver for test: " + method.getName() + " -----");
+    }
+
+    @AfterMethod
+    public void tearDown(Method method) {
+        logger.info("----- Close WebDriver for test: " + method.getName() + "-----");
+        if (WebDriverRunner.hasWebDriverStarted())
+            WebDriverRunner.closeWebDriver();
     }
 
     @AfterSuite (alwaysRun = true)

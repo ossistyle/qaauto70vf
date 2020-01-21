@@ -8,6 +8,8 @@ import com.verifone.infra.AppiumDriverSetup;
 import com.verifone.infra.EnvConfig;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -18,12 +20,14 @@ import utils.allure.AllureCommon;
 import utils.allure.AllureSelenide;
 import utils.allure.LogType;
 import utils.config.EnvironmentConfig;
+import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 
 public abstract class BaseMobileTest {
 
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected static EnvConfig envConfig;
     protected EnvironmentConfig config;
     private XmlTest testngXml;
@@ -57,12 +61,14 @@ public abstract class BaseMobileTest {
     }
 
     @BeforeMethod
-    public void setUp() {
+    public void setUp(Method method) {
+        logger.info("----- Start driver for test: " + method.getName() + " -----");
         Selenide.open();
     }
 
     @AfterMethod (alwaysRun = true)
-    public void tearDown() {
+    public void tearDown(Method method) {
+        logger.info("----- Close driver for test: " + method.getName() + "-----");
         if (WebDriverRunner.hasWebDriverStarted())
             WebDriverRunner.closeWebDriver();
     }

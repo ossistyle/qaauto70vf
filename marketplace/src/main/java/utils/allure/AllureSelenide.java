@@ -43,11 +43,13 @@ public class AllureSelenide implements LogEventListener {
     }
 
     public AllureSelenide screenshots(final boolean saveScreenshots) {
+        LOGGER.info(String.format("Set save screenshots: %b", saveScreenshots));
         this.saveScreenshots = saveScreenshots;
         return this;
     }
 
     public AllureSelenide savePageSource(final boolean savePageHtml) {
+        LOGGER.info(String.format("Set save html page: %b", savePageHtml));
         this.savePageHtml = savePageHtml;
         return this;
     }
@@ -64,6 +66,7 @@ public class AllureSelenide implements LogEventListener {
 
     private static Optional<byte[]> getScreenshotBytes() {
         try {
+            LOGGER.info("Take screenshot");
             return WebDriverRunner.hasWebDriverStarted()
                     ? Optional.of(((TakesScreenshot) WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.BYTES))
                     : Optional.empty();
@@ -100,6 +103,8 @@ public class AllureSelenide implements LogEventListener {
                     break;
                 case FAIL:
                     if (saveScreenshots) {
+                        LOGGER.info("Attach screenshot to report");
+
                         WebDriver driver = WebDriverRunner.getAndCheckWebDriver();
 
                         // Switch to Native context on Mobile device before taking screenshot
@@ -114,6 +119,8 @@ public class AllureSelenide implements LogEventListener {
                             Context.switchTo(Context.WEBVIEW);
                     }
                     if (savePageHtml) {
+                        LOGGER.info("Attach html page to report");
+
                         getPageSourceBytes()
                                 .ifPresent(bytes -> lifecycle.addAttachment("Page source", "text/html", "html", bytes));
                     }

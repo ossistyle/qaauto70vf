@@ -41,6 +41,7 @@ public abstract class AllureCommon {
         String allureResultsFolder = "target/allure-results";
         if (Files.exists(Paths.get(allureResultsFolder))) {
             try {
+                LOGGER.info(String.format("Cleaning %s folder", allureResultsFolder));
                 FileUtils.cleanDirectory(new File(allureResultsFolder));
             } catch (IOException | IllegalArgumentException e) {
                 e.printStackTrace();

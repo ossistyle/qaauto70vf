@@ -21,16 +21,19 @@ public class AppDetailsPage extends BaseWebPage {
 
     @Step("Get app name")
     public SelenideElement getAppName() {
+        logger.info("Get app name");
         return appName;
     }
 
     @Step("Get app id")
     public SelenideElement getAppId() {
+        logger.info("Get app id");
         return appId;
     }
 
     @Step("Get app description")
     public SelenideElement getAppDescription() {
+        logger.info("Get app description");
         return appDescription;
     }
 

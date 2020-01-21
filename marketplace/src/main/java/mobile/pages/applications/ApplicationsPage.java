@@ -12,12 +12,9 @@ public class ApplicationsPage extends MobilePage {
 
     private SelenideElement filterAppsField = $(byCssSelector("input[placeholder*=Filter]"));
 
-    /**
-     * Enter text into 'Filter Apps' field
-     * @param text Text
-     */
     @Step("Enter into search field")
     public void enterFilterApps(String text) {
+        logger.info("Enter into filter apps: " + text);
         filterAppsField.should(exist).sendKeys(text);
     }
 
