@@ -5,7 +5,7 @@ import api.DTO.bundles.BundlesData;
 import api.DTO.bundles.BundlesResponse;
 import api.DTO.internalCustomObjects.ApiResponse;
 import api.helpers.LoginHelper;
-import api.helpers.api.BundlesApiHandler;
+import api.apiHandlers.BundlesApiHandler;
 import com.google.gson.Gson;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -13,6 +13,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import test.api.BaseApiTest;
+
+import static utils.allure.LogUtil.reportMessage;
 
 public class BundlesNegativeTests extends BaseApiTest {
 
@@ -23,7 +25,7 @@ public class BundlesNegativeTests extends BaseApiTest {
     private String eoToken;
 
 
-    @BeforeClass
+    @BeforeClass(description = "Create a data to be used in the tests")
     @Parameters("env")
     public void createBundle(String env) throws Exception {
         this.env = env;
@@ -36,20 +38,20 @@ public class BundlesNegativeTests extends BaseApiTest {
         Assert.assertEquals(createBundleResponse.getResponseCode().intValue(), 201, "Unexpected Response code");
 
         BundlesData createdBundle = jsonPaser.fromJson(createBundleResponse.getResponseBody(), BundlesData.class);
-        System.out.println("Created bundle ID = " + createdBundle.getId());
+        logger.info("Created bundle ID = " + createdBundle.getId());
         createdBundleId = createdBundle.getId();
 
     }
 
-    @AfterClass
+    @AfterClass(description = "Clean up the data used in the tests")
     public void cleanUpData() throws Exception {
         ApiResponse deleteBundleResponse = bundlesHandler.doDeleteBundle(eoToken, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdBundleId);
-        System.out.println("Delete bundle response code is:" + deleteBundleResponse.getResponseCode());
+        logger.info("Delete bundle response code is:" + deleteBundleResponse.getResponseCode());
 
     }
 
 
-    @Test
+    @Test(description = "Try to create a bundle as a merchant and verify it is impossible")
     public void createBundleAsMerchantTest() throws Exception {
 
         String merchantToken = LoginHelper.getAccessToken("qa", "VFAMMerchant1@getnada.com", "Veri1234");
@@ -59,15 +61,15 @@ public class BundlesNegativeTests extends BaseApiTest {
         //create a bundle as a merchant user
         ApiResponse createBundleResponse = bundlesHandler.doCreateBundle(merchantToken, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", "DELETE_ME_Automation-" + System.currentTimeMillis());
         BundlesResponse createError = jsonParser.fromJson(createBundleResponse.getResponseBody(), BundlesResponse.class);
-        System.out.println("Response code is: " + createBundleResponse.getResponseCode());
-        System.out.println("Error message: " + createError.getErrors().get(0).getMessage());
+        logger.info("Response code is: " + createBundleResponse.getResponseCode());
+        logger.info("Error message: " + createError.getErrors().get(0).getMessage());
         Assert.assertEquals(createBundleResponse.getResponseCode().intValue(), 403, "Unexpected response code");
 
 
     }
 
-    @Test
-    public void assigAppToBundleAsMerchant() throws Exception {
+    @Test(description = "Try to assign app to the bundle as a merchant and verify it is impossible")
+    public void assignAppToBundleAsMerchant() throws Exception {
         String merchantToken = LoginHelper.getAccessToken("qa", "VFAMMerchant1@getnada.com", "Veri1234");
 
         AssignAppToBundleRequestBody assignAppsRequest = new AssignAppToBundleRequestBody(qa_free_app);
@@ -75,6 +77,7 @@ public class BundlesNegativeTests extends BaseApiTest {
 
         Assert.assertEquals(assignAppResp.getResponseCode().intValue(), 403, "Unexpected response code");
 
+        reportMessage("Get bundle by Id and verify there are no assigned apps");
         ApiResponse bundleByIdResp = bundlesHandler.getBundleById(eoToken, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdBundleId);
         BundlesResponse bundlesByIdRespObject = jsonParser.fromJson(bundleByIdResp.getResponseBody(), BundlesResponse.class);
 
