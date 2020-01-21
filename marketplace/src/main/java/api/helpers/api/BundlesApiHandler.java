@@ -6,6 +6,7 @@ import api.DTO.internalCustomObjects.ApiResponse;
 import api.helpers.ApiUrlHelper;
 import api.helpers.RequestExecutorHelper;
 import com.google.gson.Gson;
+import io.qameta.allure.Step;
 import org.apache.http.Header;
 import org.apache.http.message.BasicHeader;
 
@@ -20,6 +21,8 @@ public class BundlesApiHandler {
         this.env = env;
     }
 
+
+    @Step
     public ApiResponse doCreateBundle(String bearerToken, String eoId, String bundleName) throws Exception {
 
         CreateUpdateBundleRequestBody requestBodyObject = new CreateUpdateBundleRequestBody(bundleName, null, null, null);
@@ -34,6 +37,7 @@ public class BundlesApiHandler {
         return createBundleResponse;
     }
 
+    @Step
     public ApiResponse doUpdateBundle(String bearerToken, String eoId, String bundleId, CreateUpdateBundleRequestBody updateData) throws Exception {
 
         List<Header> headers = new ArrayList<>();
@@ -46,6 +50,7 @@ public class BundlesApiHandler {
         return updateBundleResponse;
     }
 
+    @Step
     public ApiResponse doAssignAppsToBundle(String bearerToken, String eoId, String bundleId, AssignAppToBundleRequestBody requestBody) throws Exception {
 
         List<Header> headers = new ArrayList<>();
@@ -58,7 +63,7 @@ public class BundlesApiHandler {
         return assignAppsResponse;
     }
 
-
+    @Step
     public ApiResponse doUnassignAppsToBundle(String bearerToken, String eoId, String bundleId, String appmarketId) throws Exception {
 
         List<Header> headers = new ArrayList<>();
@@ -71,7 +76,7 @@ public class BundlesApiHandler {
         return assignAppsResponse;
     }
 
-
+    @Step
     public ApiResponse getAllBundlesForEo(String bearerToken, String eoId) throws Exception {
 
         List<Header> headers = new ArrayList<>();
@@ -83,6 +88,7 @@ public class BundlesApiHandler {
         return allBundlesResponse;
     }
 
+    @Step
     public ApiResponse getBundleById(String bearerToken, String eoId, String bundleId) throws Exception {
 
         List<Header> headers = new ArrayList<>();

@@ -25,13 +25,13 @@ public class BundlesSanityFlow extends BaseApiTest {
     @BeforeClass
     @Parameters("env")
     public void preconditions(String env) throws Exception {
-        eoToken = LoginHelper.getRequestToken(env, "vfameo@getnada.com", "Veri1234");
+        eoToken = LoginHelper.getAccessToken(env, "vfameo@getnada.com", "Veri1234");
         bundlesHandler = new BundlesApiHandler(env);
 
     }
 
 
-    @Test(priority = 100)
+    @Test(priority = 100, description = "Create a bundle as merchant")
     public void createBundleTest() throws Exception {
         //create a bundle
         ApiResponse createBundleResponse = bundlesHandler.doCreateBundle(eoToken, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", "DELETE_ME_Automation-" + System.currentTimeMillis());

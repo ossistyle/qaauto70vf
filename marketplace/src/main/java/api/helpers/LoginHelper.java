@@ -3,6 +3,8 @@ package api.helpers;
 import api.DTO.auth.AuthResponse;
 import api.DTO.internalCustomObjects.ApiResponse;
 import com.google.gson.Gson;
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.message.BasicHeader;
@@ -19,7 +21,9 @@ public class LoginHelper {
     private static String identityServerUrl = ".account.verifonecp.com/oauth2/token";
 
 
-    public static String getRequestToken(String env, String username, String password) throws Exception {
+    @Step
+    @Description("Get bearer access token")
+    public static String getAccessToken(String env, String username, String password) throws Exception {
         String accessTokenUrl = "https://" + env + identityServerUrl;
         if (StringUtils.equalsIgnoreCase("qa", env)) {
             String basicToken = generateBasicToken(qaClientID, qaClientSecret);

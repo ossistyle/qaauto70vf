@@ -28,7 +28,7 @@ public class BundlesNegativeTests extends BaseApiTest {
     public void createBundle(String env) throws Exception {
         this.env = env;
         Gson jsonPaser = new Gson();
-        eoToken = LoginHelper.getRequestToken(env, "vfameo@getnada.com", "Veri1234");
+        eoToken = LoginHelper.getAccessToken(env, "vfameo@getnada.com", "Veri1234");
         bundlesHandler = new BundlesApiHandler(env);
 
         //create a bundle
@@ -52,7 +52,7 @@ public class BundlesNegativeTests extends BaseApiTest {
     @Test
     public void createBundleAsMerchantTest() throws Exception {
 
-        String merchantToken = LoginHelper.getRequestToken("qa", "VFAMMerchant1@getnada.com", "Veri1234");
+        String merchantToken = LoginHelper.getAccessToken("qa", "VFAMMerchant1@getnada.com", "Veri1234");
 
         bundlesHandler = new BundlesApiHandler("qa");
 
@@ -68,7 +68,7 @@ public class BundlesNegativeTests extends BaseApiTest {
 
     @Test
     public void assigAppToBundleAsMerchant() throws Exception {
-        String merchantToken = LoginHelper.getRequestToken("qa", "VFAMMerchant1@getnada.com", "Veri1234");
+        String merchantToken = LoginHelper.getAccessToken("qa", "VFAMMerchant1@getnada.com", "Veri1234");
 
         AssignAppToBundleRequestBody assignAppsRequest = new AssignAppToBundleRequestBody(qa_free_app);
         ApiResponse assignAppResp = bundlesHandler.doAssignAppsToBundle(merchantToken, "0a79306b-7b84-4aec-8f4f-d472662cbdf2", createdBundleId, assignAppsRequest);
