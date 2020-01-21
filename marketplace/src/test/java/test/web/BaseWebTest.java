@@ -8,6 +8,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 import org.testng.xml.XmlTest;
 import utils.allure.AllureCommon;
 import utils.allure.AllureSelenide;
@@ -26,7 +28,8 @@ public abstract class BaseWebTest {
     private XmlTest testngXml;
 
     @BeforeSuite
-    public void beforeSuite(ITestContext context) throws Exception {
+    @Parameters({"browserName", "headless"})
+    public void beforeSuite(ITestContext context, String browserName, @Optional boolean headless) throws Exception {
         // Allure report configuration
         SelenideLogger.addListener("AllureSelenide",
                 new AllureSelenide()
@@ -38,15 +41,15 @@ public abstract class BaseWebTest {
         testngXml = context.getCurrentXmlTest();
 
         // Download relevant driver (geckodriver/chromedriver) and set up browser
-        WebDriverManager.downloadDriver(config.browserName());
+        WebDriverManager.downloadDriver(browserName);
         WebDriverSetup driverSetup = new WebDriverSetup();
-        DesiredCapabilities caps = driverSetup.getCapabilities(config.browserName());
+        DesiredCapabilities caps = driverSetup.getCapabilities(browserName);
         driverSetup.createDriver(caps);
 
         // Selenide configuration
         Configuration.timeout = 40000;
         Configuration.browserCapabilities = caps;
-        Configuration.headless = config.headless();
+        Configuration.headless = headless;
         Configuration.baseUrl = config.url();
         Configuration.startMaximized = true;
         Configuration.browser = WebDriverSetup.class.getName();
