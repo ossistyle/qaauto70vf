@@ -150,7 +150,7 @@
             <id>env_dev</id>
             <properties>
                 <url>https://dev.merchant.verifonecp.com</url>
-                <env>dev</env>
+                <env>DEV</env>
                 <portal>VFMPPortal</portal>
             </properties>
         </profile>
@@ -158,7 +158,7 @@
             <id>env_qa</id>
             <properties>
                 <url>https://qa.merchant.verifonecp.com</url>
-                <env>qa</env>
+                <env>QA</env>
                 <portal>VFMPPortal</portal>
             </properties>
         </profile>

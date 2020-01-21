@@ -45,7 +45,7 @@ public abstract class BaseWebTest {
         config = ConfigFactory.create(EnvironmentConfig.class);
         envConfig = new EnvConfig(config.env(), config.portal());
         testngXml = context.getCurrentXmlTest();
-        testData = ResourceBundle.getBundle("testData/" + config.env());
+        testData = ResourceBundle.getBundle("testData/" + config.env().toLowerCase());
 
         // Download relevant driver (geckodriver/chromedriver) and set up browser
         WebDriverManager.downloadDriver(browserName);

@@ -48,7 +48,7 @@ public abstract class BaseMobileTest {
         config = ConfigFactory.create(EnvironmentConfig.class);
         envConfig = new EnvConfig(config.env(), config.portal());
         testngXml = context.getCurrentXmlTest();
-        testData = ResourceBundle.getBundle("testData/" + config.env());
+        testData = ResourceBundle.getBundle("testData/" + config.env().toLowerCase());
 
         AppiumDriverSetup driverSetup = new AppiumDriverSetup();
         Configuration.proxyHost = String.format("%s/wd/hub", testngXml.getParameter("server_url"));
