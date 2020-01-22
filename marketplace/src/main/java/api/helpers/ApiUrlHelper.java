@@ -34,6 +34,4 @@ public class ApiUrlHelper {
     private static String getRequestHost(String env) {
         return "https://" + env + ".vfappmarket.verifonecp.com";
     }
-
-
 }
