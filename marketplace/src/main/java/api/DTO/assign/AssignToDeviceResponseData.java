@@ -1,5 +1,6 @@
 package api.DTO.assign;
 
+
 public class AssignToDeviceResponseData {
 
     private String timeCreated;
@@ -15,6 +16,34 @@ public class AssignToDeviceResponseData {
     private String assignmentStatus;
     private String deploymentStatus;
     private Double price;
+    private AssignAppDetails appDto;
+    private String licensesToPurchase;
+    private Double totalPrice;
+
+
+    public AssignAppDetails getAppDto() {
+        return appDto;
+    }
+
+    public void setAppDto(AssignAppDetails appDto) {
+        this.appDto = appDto;
+    }
+
+    public String getLicensesToPurchase() {
+        return licensesToPurchase;
+    }
+
+    public void setLicensesToPurchase(String licensesToPurchase) {
+        this.licensesToPurchase = licensesToPurchase;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 
     public String getTimeCreated() {
         return timeCreated;

@@ -6,7 +6,26 @@ public class AssignToDeviceResponse {
 
     private String status;
     private List<AssignToDeviceResponseData> data;
+    private String totalPrice;
+    private String offerId;
     private List<Integer> statusCodes;
+
+
+    public String getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(String totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public String getOfferId() {
+        return offerId;
+    }
+
+    public void setOfferId(String offerId) {
+        this.offerId = offerId;
+    }
 
     public String getStatus() {
         return status;

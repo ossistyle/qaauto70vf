@@ -36,39 +36,4 @@ public class ApiUrlHelper {
     }
 
 
-    //assignment-controller
-
-
-    private static String getEvaluateAppToDeviceUrl(String env, String merchantEntityUid, String appmarketAppId){
-        return getRequestHost(env) + "/v1/assignments/merchants/" + merchantEntityUid + "/apps/" + appmarketAppId + "/assign/evaluate";
-    }
-
-    private static String getAssignAppToDeviceUrl(String env, String merchantEntityUid, String appmarketAppId){
-        return getRequestHost(env) + "/v1/assignments/merchants/" + merchantEntityUid + "/apps/" + appmarketAppId + "/assign";
-    }
-
-    private static String getUnEvaluateAppToDeviceUrl(String env, String merchantEntityUid, String appmarketAppId){
-        return getRequestHost(env) + "/v1/assignments/merchants/" + merchantEntityUid + "/apps/" + appmarketAppId + "/unassign/evaluate";
-    }
-
-    private static String getUnAssignAppToDeviceUrl(String env, String merchantEntityUid, String appmarketAppId){
-        return getRequestHost(env) + "/v1/assignments/merchants/" + merchantEntityUid + "/apps/" + appmarketAppId + "/unassign";
-    }
-
-    private static String getEvaluateBundleToDeviceUrl(String env, String merchantEntityUid, String bundleId){
-        return getRequestHost(env) + "/v1/assignments/merchants/" + merchantEntityUid + "/bundles/" + bundleId + "/assign/evaluate";
-    }
-
-    private static String getAssignBundleToDeviceUrl(String env, String merchantEntityUid, String bundleId){
-        return getRequestHost(env) + "/v1/assignments/merchants/" + merchantEntityUid + "/bundles/" + bundleId + "/assign";
-    }
-
-    private static String getUnEvaluateBundleToDeviceUrl(String env, String merchantEntityUid, String bundleId){
-        return getRequestHost(env) + "/v1/assignments/merchants/" + merchantEntityUid + "/bundles/" + bundleId + "/unassign/evaluate";
-    }
-
-    private static String getUnAssignBundleToDeviceUrl(String env, String merchantEntityUid, String bundleId){
-        return getRequestHost(env) + "/v1/assignments/merchants/" + merchantEntityUid + "/bundles/" + bundleId + "/unassign";
-    }
-
 }

@@ -1,22 +1,23 @@
 package api.DTO.assign;
 
+import java.util.List;
+import java.util.Map;
+
 public class AssignToDeviceData {
 
     private String offerId;
-    private AssignToDevicePois pois;
+    private List<Map> pois;
 
     public AssignToDeviceData(String offerId, String deviceId, String id) {
+        AssignToDevicePois assignToDevicePois = new AssignToDevicePois(deviceId, id);
+        this.pois = assignToDevicePois.getPoiList();
         this.offerId = offerId;
-        this.pois = new AssignToDevicePois(deviceId, id);
     }
 
     public AssignToDeviceData(String deviceId, String id) {
-        this.pois = new AssignToDevicePois(deviceId, id);
+        AssignToDevicePois assignToDevicePois = new AssignToDevicePois(deviceId, id);
+        this.pois = assignToDevicePois.getPoiList();
     }
-
-
-
-
 
     public String getOfferId() {
         return offerId;
@@ -26,11 +27,11 @@ public class AssignToDeviceData {
         this.offerId = offerId;
     }
 
-    public AssignToDevicePois getPois() {
+    public List<Map> getPois() {
         return pois;
     }
 
-    public void setPois(AssignToDevicePois pois) {
+    public void setPois(List<Map> pois) {
         this.pois = pois;
     }
 
