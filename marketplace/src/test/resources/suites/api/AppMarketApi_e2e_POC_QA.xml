@@ -21,13 +21,13 @@
         <!--FF-->
         <!--EDGE-->
         <!--IE-->
-        <parameter name="eoId" value="0a79306b-7b84-4aec-8f4f-d472662cbdf2"/>
+        <!--<parameter name="eoId" value="0a79306b-7b84-4aec-8f4f-d472662cbdf2"/>
         <parameter name="eoUserName" value="vfameo@getnada.com"/>
-        <parameter name="eoPassword" value="Veri1234"/>
+        <parameter name="eoPassword" value="Veri1234"/>-->
 
         <classes>
-            <class name="test.api.bundles.BundlesSanityFlow"/>
             <class name="test.api.bundles.BundlesNegativeTests"/>
+            <class name="test.api.bundles.BundlesSanityFlow"/>
 
         </classes>
 

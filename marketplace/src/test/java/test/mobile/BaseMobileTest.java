@@ -23,6 +23,7 @@ import utils.config.EnvironmentConfig;
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 
 public abstract class BaseMobileTest {
@@ -31,6 +32,7 @@ public abstract class BaseMobileTest {
     protected static EnvConfig envConfig;
     protected EnvironmentConfig config;
     private XmlTest testngXml;
+    protected static ResourceBundle testData;
 
     @BeforeSuite
     public void beforeSuite(ITestContext context) throws Exception {
@@ -46,6 +48,7 @@ public abstract class BaseMobileTest {
         config = ConfigFactory.create(EnvironmentConfig.class);
         envConfig = new EnvConfig(config.env(), config.portal());
         testngXml = context.getCurrentXmlTest();
+        testData = ResourceBundle.getBundle("testData/" + config.env().toLowerCase());
 
         AppiumDriverSetup driverSetup = new AppiumDriverSetup();
         Configuration.proxyHost = String.format("%s/wd/hub", testngXml.getParameter("server_url"));

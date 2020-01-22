@@ -10,13 +10,18 @@ import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 
 import static com.codeborne.selenide.Browsers.CHROME;
+import static com.codeborne.selenide.Browsers.FIREFOX;
 
 public class WebDriverSetup implements WebDriverProvider {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebDriverSetup.class);
 
     @Override
     public WebDriver createDriver(DesiredCapabilities caps) {
@@ -43,16 +48,17 @@ public class WebDriverSetup implements WebDriverProvider {
     }
 
     public DesiredCapabilities getCapabilities(String browserName) {
-        DesiredCapabilities caps;
+        DesiredCapabilities caps = new DesiredCapabilities();
 
         switch (browserName) {
             case CHROME:
-                caps = DesiredCapabilities.chrome();
-                caps.setCapability(CapabilityType.BROWSER_NAME, browserName);
+                caps.setCapability(CapabilityType.BROWSER_NAME, CHROME);
+                break;
+            case FIREFOX:
+                caps.setCapability(CapabilityType.BROWSER_NAME, FIREFOX);
                 break;
             default:
-                caps = DesiredCapabilities.firefox();
-                caps.setCapability(CapabilityType.BROWSER_NAME, browserName);
+                LOGGER.error(String.format("'%s' browser does not exist", browserName));
         }
 
         return caps;

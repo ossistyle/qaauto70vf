@@ -10,12 +10,16 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.SSLContext;
 import java.util.Arrays;
 import java.util.List;
 
 public class RequestExecutorHelper {
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private CloseableHttpClient httpClient;
 
     public RequestExecutorHelper() {
@@ -29,9 +33,8 @@ public class RequestExecutorHelper {
             HttpClientBuilder httpClientBuilder = HttpClients.custom().setSSLSocketFactory(sslSocketFactory);
             httpClient = httpClientBuilder.build();
         } catch (Exception e) {
-            System.out.println("Error creating httpclient with invalid sertificate handling: " + e.getMessage());
-            e.printStackTrace();
-            System.out.println("Create default http client");
+            logger.error("Error creating httpclient with invalid certificate handling: " + e);
+            logger.warn("Create default http client");
             httpClient = HttpClients.createDefault();
 
         }
@@ -39,7 +42,6 @@ public class RequestExecutorHelper {
     }
 
     public ApiResponse getPostResponseData(String url, List<Header> headers, String body) throws Exception {
-
         HttpPost request = new HttpPost(url);
         headers.forEach(request::addHeader);
         request.setEntity(new StringEntity(body));
@@ -53,7 +55,6 @@ public class RequestExecutorHelper {
     }
 
     public ApiResponse getPutResponseData(String url, List<Header> headers, String body) throws Exception {
-
         HttpPut request = new HttpPut(url);
         headers.forEach(request::addHeader);
         request.setEntity(new StringEntity(body));
@@ -67,7 +68,6 @@ public class RequestExecutorHelper {
     }
 
     public ApiResponse getGetResponseData(String url, List<Header> headers) throws Exception {
-
         HttpGet request = new HttpGet(url);
         headers.forEach(request::addHeader);
 

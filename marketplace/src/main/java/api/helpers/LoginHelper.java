@@ -2,6 +2,7 @@ package api.helpers;
 
 import api.DTO.auth.AuthResponse;
 import api.DTO.internalCustomObjects.ApiResponse;
+import api.apiHandlers.BaseApiHandler;
 import com.google.gson.Gson;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
@@ -38,8 +39,8 @@ public class LoginHelper {
 
             AuthResponse respObject = new Gson().fromJson(authResponse.getResponseBody(), AuthResponse.class);
 
+            BaseApiHandler.reportRequestData(accessTokenUrl, authResponse);
             return respObject.getAccess_token();
-
 
         }
 
