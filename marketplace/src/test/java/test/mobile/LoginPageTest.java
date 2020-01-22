@@ -28,26 +28,24 @@ public class LoginPageTest extends BaseMobileTest {
         homePage = new HomePage();
     }
 
-    @Test (description = "User be able login with correct credentials", groups = {"ui", "regression"}, testName = "Login with valid creds")
+    @Test (description = "User be able login with correct credentials", groups = {"ui", "regression"})
     @Issue("SGI-1179")
     @TmsLink("8907133")
     @Epic("")
     @Feature("")
     @Severity(SeverityLevel.NORMAL)
-    @Description ("User be able login with correct credentials")
     public void successfulLoginMobile() {
         loginPage.doLogin(merchant);
 
         homePage.header.getTitle().should(exist).shouldBe(visible).shouldHave(textCaseSensitive("Home"));
     }
 
-    @Test (description = "User won't be able logged in with empty credentials", groups = {"ui", "regression"}, testName = "Login with empty creds")
+    @Test (description = "User won't be able logged in with empty credentials", groups = {"ui", "regression"})
     @Issue ("SGI-1179")
     @TmsLink ("8907133")
     @Epic ("")
     @Feature ("")
     @Severity (SeverityLevel.NORMAL)
-    @Description ("User won't be able logged in with empty credentials")
     public void unsuccessfulLoginWithEmptyCredentialsMobile() {
         loginPage.clickLogin();
 
@@ -55,13 +53,12 @@ public class LoginPageTest extends BaseMobileTest {
         loginPage.getPasswordFieldErrorMessage().shouldBe(visible).shouldHave(textCaseSensitive("This field is required."));
     }
 
-    @Test (description = "User be able to see 'This field is required.' error message after logging with empty username field", groups = {"ui", "regression"}, testName = "Login with empty username")
+    @Test (description = "User be able to see 'This field is required.' error message after logging with empty username field", groups = {"ui", "regression"})
     @Issue ("SGI-1179")
     @TmsLink ("8907133")
     @Epic ("")
     @Feature ("")
     @Severity (SeverityLevel.NORMAL)
-    @Description ("User be able to see 'This field is required.' error message after logging with empty username field")
     public void unsuccessfulLoginWithEmptyUsernameFieldMobile() {
         loginPage.enterPassword(merchant.getPassword());
         loginPage.clickLogin();
@@ -70,13 +67,12 @@ public class LoginPageTest extends BaseMobileTest {
         loginPage.getPasswordFieldErrorMessage().shouldNot(exist);
     }
 
-    @Test (description = "User be able to see 'This field is required.' error message after logging with empty password field", groups = {"ui", "regression"}, testName = "Login with empty password")
+    @Test (description = "User be able to see 'This field is required.' error message after logging with empty password field", groups = {"ui", "regression"})
     @Issue ("SGI-1179")
     @TmsLink ("8907133")
     @Epic ("")
     @Feature ("")
     @Severity (SeverityLevel.NORMAL)
-    @Description ("User be able to see 'This field is required.' error message after logging with empty password field")
     public void unsuccessfulLoginWithEmptyPasswordFieldMobile() {
         loginPage.enterUsername(merchant.getUserName());
         loginPage.clickLogin();
@@ -85,14 +81,12 @@ public class LoginPageTest extends BaseMobileTest {
         loginPage.getPasswordFieldErrorMessage().shouldBe(visible).shouldHave(textCaseSensitive("This field is required."));
     }
 
-    @Test (description = "User be able to see 'Email has incorrect format. You can only use letters, numbers and symbols.' error message after logging with incorrect username format", groups = {"ui", "regression"}, testName = "Login with incorrect username format")
+    @Test (description = "User be able to see 'Email has incorrect format. You can only use letters, numbers and symbols.' error message after logging with incorrect username format", groups = {"ui", "regression"})
     @Issue ("SGI-1179")
     @TmsLink ("8907133")
     @Epic ("")
     @Feature ("")
     @Severity (SeverityLevel.NORMAL)
-    @Description ("User be able to see 'Email has incorrect format. You can only use letters, numbers and symbols.' " +
-            "error message after logging with incorrect username format")
     public void unsuccessfulLoginWithIncorrectUsernameFormatMobile() {
         loginPage.enterUsername("merchant");
         loginPage.clickLogin();
@@ -101,13 +95,12 @@ public class LoginPageTest extends BaseMobileTest {
                 .shouldHave(textCaseSensitive("Email has incorrect format. You can only use letters, numbers and symbols."));
     }
 
-    @Test (description = "User be able to see title, email field, password field, forgot password link and login button on Login page", groups = {"ui", "regression"}, testName = "Login page elements")
+    @Test (description = "User be able to see title, email field, password field, forgot password link and login button on Login page", groups = {"ui", "regression"})
     @Epic ("")
     @Issue ("SGI-1179")
     @TmsLink ("8907133")
     @Feature ("")
     @Severity (SeverityLevel.NORMAL)
-    @Description ("User be able to see title, email field, password field, forgot password link and login button on Login page")
     public void presenceOfElementsMobile() {
         loginPage.getLogoImage().shouldBe(visible);
         loginPage.getLoginTitle().shouldBe(visible).shouldHave(textCaseSensitive("Login to your\nVerifone Account"));
@@ -123,7 +116,6 @@ public class LoginPageTest extends BaseMobileTest {
     @Epic ("")
     @Feature ("")
     @Severity (SeverityLevel.NORMAL)
-    @Description ("User be able to Hide/show password")
     public void hideShowPasswordMobile() {
         loginPage.getPasswordField().should(exist).shouldHave(attribute("type", "password"));
         loginPage.clickHidePassword();

@@ -9,8 +9,7 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class UsersPage extends BaseWebPage {
 
-    private final static String URL = "settings/users";
-    private final static String TITLE = "Marketplace";
+    private String url = "settings/users";
 
     private ElementsCollection userCheckboxes = $$("input[class*=check]");
     private ElementsCollection userAvatars = $$("figure[class*=avatar] img");
@@ -55,6 +54,7 @@ public class UsersPage extends BaseWebPage {
     }
 
     public UsersPage() {
-        super(URL);
+        super();
+        super.url = this.url;
     }
 }

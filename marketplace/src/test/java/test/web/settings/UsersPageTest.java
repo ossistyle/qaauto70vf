@@ -40,12 +40,11 @@ public class UsersPageTest extends BaseWebTest {
         homePage.mainMenu.clickUsers();
     }
 
-    @Test (description = "User be able to see app user avatars, names, emails and roles on the Users page", groups = {"ui", "regression"}, testName = "User information")
+    @Test (description = "User be able to see app user avatars, names, emails and roles on the Users page", groups = {"ui", "regression"})
     @Feature("")
     @Link("")
     @Severity(SeverityLevel.NORMAL)
-    @Description("User be able to see app user avatars, names, emails and roles on the Users page")
-    public void userInformationUI() {
+    public void userInformation() {
         usersPage.getUserAvatars().get(testUserIndex).shouldBe(visible);
         usersPage.getUserNames().get(testUserIndex).should(exist).shouldHave(textCaseSensitive(userMock.getUsername()));
         usersPage.getUserEmails().get(testUserIndex).should(exist).shouldHave(textCaseSensitive(userMock.getEmail()));

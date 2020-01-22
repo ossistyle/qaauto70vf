@@ -43,13 +43,12 @@ public class AppCataloguePageTest extends BaseWebTest {
         homePage.mainMenu.clickAppCatalogue();
     }
 
-    @Test (description = "User be able to see app images, app names, app descriptions on the App Catalog page > Card view test.web.applications", groups = {"ui", "regression"}, testName = "Card view test.web.applications")
+    @Test (description = "User be able to see app images, app names, app descriptions on the App Catalog page > Card view test.web.applications", groups = {"ui", "regression"})
     @Epic ("")
     @Feature ("")
     @Link ("10204018")
     @Severity (SeverityLevel.NORMAL)
-    @Description ("User be able to see app images, app names, app descriptions on the App Catalog page > Card view test.web.applications")
-    public void cardsViewApplicationsListUI() {
+    public void cardsViewApplicationsList() {
         appCatalogPage.cardsViewTable.getCardImages().shouldHave(sizeGreaterThan(0))
                 .get(testAppIndex).should(exist).shouldBe(visible);
         appCatalogPage.cardsViewTable.getAppNames().shouldHave(sizeGreaterThan(0))
@@ -58,12 +57,11 @@ public class AppCataloguePageTest extends BaseWebTest {
                 .get(testAppIndex).should(exist).shouldHave(textCaseSensitive(app.getDescription()));
     }
 
-    @Test (description = "User be able to see app images, app names, app descriptions on the App Catalog page > Grid view test.web.applications", groups = {"ui", "regression"}, testName = "Grid view test.web.applications")
+    @Test (description = "User be able to see app images, app names, app descriptions on the App Catalog page > Grid view test.web.applications", groups = {"ui", "regression"})
     @Feature ("")
     @Link ("")
     @Severity (SeverityLevel.NORMAL)
-    @Description ("User be able to see app images, app names, app descriptions on the App Catalog page > Grid view test.web.applications")
-    public void gridViewApplicationsListUI() {
+    public void gridViewApplicationsList() {
         appCatalogPage.filterPanel.clickGridView();
 
         appCatalogPage.gridViewTable.getAppNames().shouldHave(sizeGreaterThan(0))
@@ -74,12 +72,11 @@ public class AppCataloguePageTest extends BaseWebTest {
                 .get(testAppIndex).should(exist).shouldHave(textCaseSensitive(app.getVersion()));
     }
 
-    @Test (description = "User be able to see app name, image, id, version, description, publish date, update date on the App Catalog page > Quick view application", groups = {"ui", "regression"},testName = "Quick view application")
+    @Test (description = "User be able to see app name, image, id, version, description, publish date, update date on the App Catalog page > Quick view application", groups = {"ui", "regression"})
     @Feature ("")
     @Link ("")
     @Severity (SeverityLevel.NORMAL)
-    @Description ("User be able to see app name, image, id, version, description, publish date, update date on the App Catalog page > Quick view application")
-    public void quickViewOfApplicationUI() {
+    public void quickViewOfApplication() {
         appCatalogPage.cardsViewTable.clickQuickViewButton(testAppIndex);
 
         appCatalogPage.quickView.getAppName().should(exist).shouldHave(textCaseSensitive(app.getName()));

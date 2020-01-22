@@ -9,8 +9,7 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class AppDetailsPage extends BaseWebPage {
 
-    private final static String URL = null;
-    private final static String TITLE = "Marketplace";
+    private String url = null;
 
     public MainMenu mainMenu;
 
@@ -38,7 +37,8 @@ public class AppDetailsPage extends BaseWebPage {
     }
 
     public AppDetailsPage() {
-        super(URL);
+        super();
+        super.url = this.url;
         this.mainMenu = new MainMenu();
     }
 }

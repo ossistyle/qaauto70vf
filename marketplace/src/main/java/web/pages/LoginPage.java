@@ -6,13 +6,11 @@ import com.verifone.infra.User;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.*;
 
 public class LoginPage extends BaseWebPage {
 
-    private final static String URL = "";
-    private final static String TITLE = "Login with Verifone Identity Server";
+    private String url = "";
 
     private SelenideElement logoImage = $("div[class*=logo]");
     private SelenideElement loginTitle = $("h1[class*=verifone]");
@@ -114,6 +112,7 @@ public class LoginPage extends BaseWebPage {
     }
 
     public LoginPage() {
-        super(URL);
+        super();
+        super.url = this.url;
     }
 }

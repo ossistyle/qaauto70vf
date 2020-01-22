@@ -10,8 +10,7 @@ import web.pages.BaseWebPage;
 
 public class AppCatalogPage extends BaseWebPage {
 
-    private final static String URL = "app-catalog";
-    private final static String TITLE = " Application Catalog ";
+    private final String url = "app-catalog";
 
     public MainMenu mainMenu;
     public FilterPanel filterPanel;
@@ -20,7 +19,8 @@ public class AppCatalogPage extends BaseWebPage {
     public GridViewTable gridViewTable;
 
     public AppCatalogPage() {
-        super(URL);
+        super();
+        super.url = this.url;
         this.mainMenu = new MainMenu();
         this.filterPanel = new FilterPanel();
         this.quickView = new QuickView();

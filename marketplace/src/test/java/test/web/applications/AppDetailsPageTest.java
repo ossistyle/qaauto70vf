@@ -45,12 +45,11 @@ public class AppDetailsPageTest extends BaseWebTest {
         appCatalogPage.cardsViewTable.clickAppPageButton(0);
     }
 
-    @Test(description = "User be able to see app details: name, id, description on the App details page", groups = {"ui", "regression"}, testName = "App details test")
+    @Test(description = "User be able to see app details: name, id, description on the App details page", groups = {"ui", "regression"})
     @Feature ("")
     @Link ("")
     @Severity (SeverityLevel.NORMAL)
-    @Description ("User be able to see app details: name, id, description on the App details page")
-    public void applicationDetailsUI() {
+    public void applicationDetails() {
         appDetailsPage.getAppName().should(exist).shouldHave(textCaseSensitive(app.getName()));
         appDetailsPage.getAppId().should(exist).shouldHave(textCaseSensitive(app.getMarketplaceAppId()));
         appDetailsPage.getAppDescription().should(exist).shouldHave(textCaseSensitive(app.getDescription()));
