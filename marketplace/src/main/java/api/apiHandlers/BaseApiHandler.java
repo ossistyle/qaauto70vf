@@ -21,7 +21,7 @@ public class BaseApiHandler {
     @Attachment(value = "{url}", type = "text/plain")
     public static String reportRequestData(String url, ApiResponse apiResponse, String requestBody) {
 
-        return "Request body: " + requestBody + " \nResponse code: " + apiResponse.getResponseCode() + " Response body: \n" + apiResponse.getResponseBody();
+        return "Request body: " + requestBody + " \nResponse code: " + apiResponse.getResponseCode() + "\n Response body: \n" + apiResponse.getResponseBody();
     }
 
     @Attachment(value = "{url}", type = "text/plain")

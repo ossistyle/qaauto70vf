@@ -13,11 +13,9 @@ import org.apache.http.message.BasicHeader;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class LoginHelper {
-
-    private static String qaClientID = "dZ9Yoz8H1QPcuxsD2bqkWnMVAcMa";
-    private static String qaClientSecret = "nEoz_FxyLYV4AlgOnOSXFAuLNlka";
 
     private static String identityServerUrl = ".account.verifonecp.com/oauth2/token";
 
@@ -25,9 +23,10 @@ public class LoginHelper {
     @Step
     @Description("Get bearer access token")
     public static String getAccessToken(String env, String username, String password) throws Exception {
+        ResourceBundle testData = ResourceBundle.getBundle("testData/" + env.toLowerCase());
         String accessTokenUrl = "https://" + env + identityServerUrl;
         if (StringUtils.equalsIgnoreCase("qa", env)) {
-            String basicToken = generateBasicToken(qaClientID, qaClientSecret);
+            String basicToken = generateBasicToken(testData.getString("client.id"), testData.getString("clien.secret"));
             List<Header> headers = new ArrayList<>();
 
             headers.add(new BasicHeader("Authorization", "Basic " + basicToken));
@@ -39,7 +38,7 @@ public class LoginHelper {
 
             AuthResponse respObject = new Gson().fromJson(authResponse.getResponseBody(), AuthResponse.class);
 
-            BaseApiHandler.reportRequestData(accessTokenUrl, authResponse);
+            BaseApiHandler.reportRequestData(accessTokenUrl, authResponse, requestBody);
             return respObject.getAccess_token();
 
         }
