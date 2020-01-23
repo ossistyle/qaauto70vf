@@ -24,7 +24,7 @@ public class AddRemoveAppFromDevice extends BaseApiTest {
     private String merchantToken;
     private Gson jsonParser = new Gson();
     private AssignmentHandler assignmentHandler;
-    private DeviceHandler deviceHendler;
+    private DeviceHandler deviceHandler;
     private String offerId;
 
 
@@ -34,47 +34,54 @@ public class AddRemoveAppFromDevice extends BaseApiTest {
         merchantToken = LoginHelper.getAccessToken(env, testData.getString("merchant.username"), testData.getString("merchant.password"));
         reportMessage("Token: " + merchantToken);
         assignmentHandler = new AssignmentHandler(env);
+        deviceHandler = new DeviceHandler(env);
     }
 
 
-    @Test(description = "precondition-unassign apps from devices",priority = 200)
-    public void unassignAppPrecondition() throws Exception{
+    @Test(description = "precondition-unassign apps from devices",priority = 201)
+    public void unassignAppPrecondition() throws Exception {
 
         //Unassign first app
-        ApiResponse getAppsAssignedDevices = deviceHendler.getDevicesWithAppId(merchantToken, testData.getString("merchant.Uuid"), testData.getString("freeapp.assignTest.one"));
+        ApiResponse getAppsAssignedDevices = deviceHandler.getDevicesWithAppId(merchantToken, testData.getString("merchant.Uuid"), testData.getString("freeapp.assignTest.one"));
         GetDevicesByAppResponse deviceByApp = jsonParser.fromJson(getAppsAssignedDevices.getResponseBody(), GetDevicesByAppResponse.class);
-        if(deviceByApp.getNumberDevices() !=0){
-            for(Devices devices : deviceByApp.getData().get(0).getDevices()){
+        if (deviceByApp.getNumberDevices() != 0) {
+            for (Devices devices : deviceByApp.getData().get(0).getDevices()) {
 
-                ApiResponse evaluateUnAssignFreeAppResponse = assignmentHandler.doEvaluationUnAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("freeapp.assignTest.one"), devices.getDeviceId(),devices.getId());
+                ApiResponse evaluateUnAssignFreeAppResponse = assignmentHandler.doEvaluationUnAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("freeapp.assignTest.one"), devices.getDeviceId(), devices.getId());
                 AssignToDeviceResponse evaluateUnAssignApp = jsonParser.fromJson(evaluateUnAssignFreeAppResponse.getResponseBody(), AssignToDeviceResponse.class);
                 offerId = evaluateUnAssignApp.getOfferId();
 
                 ApiResponse unAssignFreeAppResponse = assignmentHandler.doUnAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("freeapp.assignTest.one"), offerId, devices.getDeviceId(), devices.getId());
                 AssignToDeviceResponse unAssignApp = jsonParser.fromJson(unAssignFreeAppResponse.getResponseBody(), AssignToDeviceResponse.class);
-
-                logger.info("Status of precondition unAssign free app with id-" + testData.getString("freeapp.assignTest.one")+ " is " + unAssignApp.getStatus());
+                try {
+                    logger.info("Status of precondition unAssign free app with id-" + testData.getString("freeapp.assignTest.one") + " is " + unAssignApp.getStatus());
+                } catch (NullPointerException n) {
+                    logger.info("App " + testData.getString("freeapp.assignTest.one") + " wasn't assigned");
+                }
             }
         }
         //Unassign second app
-        ApiResponse getAppsAssignedDevices2 = deviceHendler.getDevicesWithAppId(merchantToken, testData.getString("merchant.Uuid"), testData.getString("freeapp.assignTest.two"));
+        ApiResponse getAppsAssignedDevices2 = deviceHandler.getDevicesWithAppId(merchantToken, testData.getString("merchant.Uuid"), testData.getString("freeapp.assignTest.two"));
         GetDevicesByAppResponse deviceByApp2 = jsonParser.fromJson(getAppsAssignedDevices2.getResponseBody(), GetDevicesByAppResponse.class);
-        if(deviceByApp2.getNumberDevices() !=0){
-            for(Devices devices : deviceByApp2.getData().get(0).getDevices()){
+        if (deviceByApp2.getNumberDevices() != 0) {
+            for (Devices devices : deviceByApp2.getData().get(0).getDevices()) {
 
-                ApiResponse evaluateUnAssignFreeAppResponse = assignmentHandler.doEvaluationUnAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("freeapp.assignTest.two"), devices.getDeviceId(),devices.getId());
+                ApiResponse evaluateUnAssignFreeAppResponse = assignmentHandler.doEvaluationUnAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("freeapp.assignTest.two"), devices.getDeviceId(), devices.getId());
                 AssignToDeviceResponse evaluateUnAssignApp = jsonParser.fromJson(evaluateUnAssignFreeAppResponse.getResponseBody(), AssignToDeviceResponse.class);
                 offerId = evaluateUnAssignApp.getOfferId();
 
                 ApiResponse unAssignFreeAppResponse = assignmentHandler.doUnAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("freeapp.assignTest.two"), offerId, devices.getDeviceId(), devices.getId());
                 AssignToDeviceResponse unAssignApp = jsonParser.fromJson(unAssignFreeAppResponse.getResponseBody(), AssignToDeviceResponse.class);
 
-                logger.info("Status of precondition unAssign free app with id-" + testData.getString("freeapp.assignTest.two")+ " is " + unAssignApp.getStatus());
+                try {
+                    logger.info("Status of precondition unAssign free app with id-" + testData.getString("freeapp.assignTest.two") + " is " + unAssignApp.getStatus());
+                } catch (NullPointerException n) {
+                    logger.info("App " + testData.getString("freeapp.assignTest.two") + " wasn't assigned");
+                }
             }
         }
     }
-
-    @Test(description = "Assign free app to one device",priority = 201)
+    @Test(description = "Assign free app to one device",priority = 200)
     public void EvaluateAssignFreeApp() throws Exception {
 
         ApiResponse evaluateAssignFreeAppResponse = assignmentHandler.doEvaluationAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("freeapp.assignTest.one"), testData.getString("deviceId.assignTest.one"), testData.getString("id.assignTest.one"));
@@ -91,6 +98,7 @@ public class AddRemoveAppFromDevice extends BaseApiTest {
 
         ApiResponse assignFreeAppResponse = assignmentHandler.doAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("freeapp.assignTest.one"),offerId, testData.getString("deviceId.assignTest.one"), testData.getString("id.assignTest.one"));
         jsonParser.fromJson(assignFreeAppResponse.getResponseBody(), AssignToDeviceResponse.class);
-
     }
+
+
 }
