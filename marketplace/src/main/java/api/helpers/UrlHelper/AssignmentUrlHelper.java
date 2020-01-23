@@ -1,6 +1,6 @@
 package api.helpers.UrlHelper;
 
-public class AssignmentController {
+public class AssignmentUrlHelper {
 
     private static String getRequestHost(String env) {
         return "https://" + env + ".vfappmarket.verifonecp.com";

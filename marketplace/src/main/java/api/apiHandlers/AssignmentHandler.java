@@ -2,7 +2,7 @@ package api.apiHandlers;
 
 import api.DTO.assign.AssignToDeviceRequestBody;
 import api.DTO.internalCustomObjects.ApiResponse;
-import api.helpers.UrlHelper.AssignmentController;
+import api.helpers.UrlHelper.AssignmentUrlHelper;
 import io.qameta.allure.Step;
 import org.apache.http.Header;
 import org.apache.http.message.BasicHeader;
@@ -26,7 +26,7 @@ public class AssignmentHandler extends BaseApiHandler{
         headers.add(new BasicHeader("Content-Type", "application/json"));
         headers.add(new BasicHeader("Accept", "application/json"));
 
-        String url = AssignmentController.getEvaluateAppToDeviceUrl(env, merchantEntityUid, appmarketAppId);
+        String url = AssignmentUrlHelper.getEvaluateAppToDeviceUrl(env, merchantEntityUid, appmarketAppId);
         String requestBody = jsonParser.toJson(requestBodyObject);
         ApiResponse evaluateAssignAppResponse = executorHelper.getPostResponseData(url, headers, requestBody);
 
@@ -45,7 +45,7 @@ public class AssignmentHandler extends BaseApiHandler{
         headers.add(new BasicHeader("Content-Type", "application/json"));
         headers.add(new BasicHeader("Accept", "application/json"));
 
-        String url = AssignmentController.getAssignAppToDeviceUrl(env, merchantEntityUid, appmarketAppId);
+        String url = AssignmentUrlHelper.getAssignAppToDeviceUrl(env, merchantEntityUid, appmarketAppId);
         String requestBody = jsonParser.toJson(requestBodyObject);
         ApiResponse evaluateAssignAppResponse = executorHelper.getPostResponseData(url, headers, requestBody);
 
@@ -64,7 +64,7 @@ public class AssignmentHandler extends BaseApiHandler{
         headers.add(new BasicHeader("Content-Type", "application/json"));
         headers.add(new BasicHeader("Accept", "application/json"));
 
-        String url = AssignmentController.getUnEvaluateAppToDeviceUrl(env, merchantEntityUid, appmarketAppId);
+        String url = AssignmentUrlHelper.getUnEvaluateAppToDeviceUrl(env, merchantEntityUid, appmarketAppId);
         String requestBody = jsonParser.toJson(requestBodyObject);
         ApiResponse evaluateAssignAppResponse = executorHelper.getPostResponseData(url, headers, requestBody);
 
@@ -83,7 +83,7 @@ public class AssignmentHandler extends BaseApiHandler{
         headers.add(new BasicHeader("Content-Type", "application/json"));
         headers.add(new BasicHeader("Accept", "application/json"));
 
-        String url = AssignmentController.getUnAssignAppToDeviceUrl(env, merchantEntityUid, appmarketAppId);
+        String url = AssignmentUrlHelper.getUnAssignAppToDeviceUrl(env, merchantEntityUid, appmarketAppId);
         String requestBody = jsonParser.toJson(requestBodyObject);
         ApiResponse evaluateAssignAppResponse = executorHelper.getPostResponseData(url, headers, requestBody);
 

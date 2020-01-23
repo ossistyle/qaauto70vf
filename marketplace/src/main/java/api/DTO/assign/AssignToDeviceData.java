@@ -6,16 +6,17 @@ import java.util.Map;
 public class AssignToDeviceData {
 
     private String offerId;
-    private List<Map> pois;
+    private List<Pois> pois;
+    private AssignToDevicePois assignToDevicePois;
 
     public AssignToDeviceData(String offerId, String deviceId, String id) {
-        AssignToDevicePois assignToDevicePois = new AssignToDevicePois(deviceId, id);
+        assignToDevicePois = new AssignToDevicePois(deviceId, id);
         this.pois = assignToDevicePois.getPoiList();
         this.offerId = offerId;
     }
 
     public AssignToDeviceData(String deviceId, String id) {
-        AssignToDevicePois assignToDevicePois = new AssignToDevicePois(deviceId, id);
+        assignToDevicePois = new AssignToDevicePois(deviceId, id);
         this.pois = assignToDevicePois.getPoiList();
     }
 
@@ -27,11 +28,11 @@ public class AssignToDeviceData {
         this.offerId = offerId;
     }
 
-    public List<Map> getPois() {
+    public List<Pois> getPois() {
         return pois;
     }
 
-    public void setPois(List<Map> pois) {
+    public void setPois(List<Pois> pois) {
         this.pois = pois;
     }
 

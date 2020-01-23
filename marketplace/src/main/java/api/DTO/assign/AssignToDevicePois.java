@@ -1,43 +1,32 @@
 package api.DTO.assign;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
 
 public class AssignToDevicePois {
 
-    private String deviceId;
-    private String id;
-    private Map<String,String> poi = new HashMap<>();
-    private List<Map> poiList = new ArrayList<>();
-
+    private Pois poi;
+    private List<Pois> poiList ;
 
     public AssignToDevicePois(String deviceId, String id) {
-        this.deviceId = deviceId;
-        this.id = id;
-        poi.put("deviceId", deviceId);
-        poi.put("id", id);
+        poi = new Pois(deviceId,id);
+        poiList.add(poi);
     }
 
-    public List<Map> getPoiList(){
-        poiList.add(poi);
+    public Pois getPoi() {
+        return poi;
+    }
+
+    public void setPoi(Pois poi) {
+        this.poi = poi;
+    }
+
+    public List<Pois> getPoiList() {
         return poiList;
     }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
+    public void setPoiList(List<Pois> poiList) {
+        this.poiList = poiList;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public String getId() {
-        return id;
-    }
 }
