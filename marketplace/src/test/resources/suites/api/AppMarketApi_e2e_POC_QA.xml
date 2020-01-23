@@ -7,7 +7,7 @@
     <!--QA-->
     <!--DEV-->
     <!--<parameter name="env" value="QA"/>-->
-    <parameter name="env" value="QA"/>
+    <parameter name="env" value="dev"/>
 
     <!--Set Portal Variable: -->
     <!--CPPortal-->
@@ -26,9 +26,9 @@
         <parameter name="eoPassword" value="Veri1234"/>-->
 
         <classes>
-            <class name="test.api.bundles.BundlesNegativeTests"/>
-            <class name="test.api.bundles.BundlesSanityFlow"/>
-
+        <!--<class name="test.api.bundles.BundlesNegativeTests"/>
+        <class name="test.api.bundles.BundlesSanityFlow"/>-->
+            <class name="test.api.assign.assignAppToDevice.AddRemoveAppFromDevice"/>
         </classes>
 
     </test>
