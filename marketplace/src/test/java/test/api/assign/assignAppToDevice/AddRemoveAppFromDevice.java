@@ -1,15 +1,22 @@
 package test.api.assign.assignAppToDevice;
 
 import api.DTO.assign.AssignToDeviceResponse;
+import api.DTO.device.Devices;
+import api.DTO.device.GetDevicesByAppResponse;
 import api.DTO.internalCustomObjects.ApiResponse;
 import api.apiHandlers.AssignmentHandler;
+import api.apiHandlers.DeviceHandler;
 import api.helpers.LoginHelper;
 import com.google.gson.Gson;
+import com.google.protobuf.Api;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import test.api.BaseApiTest;
+
+import java.util.List;
+
 import static utils.allure.LogUtil.reportMessage;
 
 public class AddRemoveAppFromDevice extends BaseApiTest {
@@ -17,7 +24,10 @@ public class AddRemoveAppFromDevice extends BaseApiTest {
     private String merchantToken;
     private Gson jsonParser = new Gson();
     private AssignmentHandler assignmentHandler;
+    private DeviceHandler deviceHendler;
     private String offerId;
+String devMerchant = "1b5bbd88-3705-47c5-a6c5-a2d65f4bdb8c";
+String freeApp1 = "c131093d-73d5-4244-a494-d8e41671ddec";
 
 
     @BeforeClass
@@ -29,7 +39,23 @@ public class AddRemoveAppFromDevice extends BaseApiTest {
     }
 
 
-    @Test(description = "Assign free app to one device")
+    @Test(description = "precondition-unassign apps from devices",priority = 200)
+    public void unassignAppPrecondition() throws Exception{
+        ApiResponse getAppsAssignedDevices = deviceHendler.getDevicesWithAppId(merchantToken, devMerchant, freeApp1);
+        GetDevicesByAppResponse deviceByApp = jsonParser.fromJson(getAppsAssignedDevices.getResponseBody(), GetDevicesByAppResponse.class);
+        if(deviceByApp.getNumberDevices() !=0){
+            for(Devices devices : deviceByApp.getData().get(0).getDevices()){
+                ApiResponse evaluateUnAssignFreeAppResponse = assignmentHandler.doEvaluationUnAssignApp(merchantToken, devMerchant, freeApp1, devices.getDeviceId(),devices.getId());
+                AssignToDeviceResponse evaluateUnAssignApp = jsonParser.fromJson(evaluateUnAssignFreeAppResponse.getResponseBody(), AssignToDeviceResponse.class);
+                offerId = evaluateUnAssignApp.getOfferId();
+                ApiResponse unAssignFreeAppResponse = assignmentHandler.doUnAssignApp(merchantToken, devMerchant, freeApp1, offerId, devices.getDeviceId(), devices.getId());
+            }
+        }
+
+
+    }
+
+    @Test(description = "Assign free app to one device",priority = 201)
     public void EvaluateAssignFreeApp() throws Exception {
         //Precondition
         try
