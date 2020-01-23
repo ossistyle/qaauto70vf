@@ -17,7 +17,7 @@ public class AssignmentHandler extends BaseApiHandler{
     }
 
     @Step
-    public ApiResponse doEvaluationAssignApp(String bearerToken, String merchantEntityUid, String appmarketAppId, String deviceId,String id) throws Exception {
+    public ApiResponse doEvaluationAssignApp(String bearerToken, String merchantEntityUid, String appmarketAppId, String deviceId, String id) throws Exception {
 
         AssignToDeviceRequestBody requestBodyObject = new AssignToDeviceRequestBody(deviceId, id);
 
@@ -74,9 +74,9 @@ public class AssignmentHandler extends BaseApiHandler{
 
 
     @Step
-    public ApiResponse doUnAssignApp(String bearerToken, String merchantEntityUid, String appmarketAppId, String deviceId,String id) throws Exception {
+    public ApiResponse doUnAssignApp(String bearerToken, String merchantEntityUid, String appmarketAppId, String offerId, String deviceId,String id) throws Exception {
 
-        AssignToDeviceRequestBody requestBodyObject = new AssignToDeviceRequestBody(deviceId, id);
+        AssignToDeviceRequestBody requestBodyObject = new AssignToDeviceRequestBody(offerId, deviceId, id);
 
         List<Header> headers = new ArrayList<>();
         headers.add(new BasicHeader("Authorization", "Bearer " + bearerToken));
