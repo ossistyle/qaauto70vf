@@ -44,6 +44,7 @@ public abstract class BaseWebTest {
         SelenideLogger.addListener("AllureSelenide",
                 new AllureSelenide()
                         .screenshots(true) // Add screenshot as attachments
+                        .savePageSource(true) // Save html page source
                         .enableLogs(LogType.BROWSER, Level.ALL)); // Add browser logs to report
 
         config = ConfigFactory.create(EnvironmentConfig.class);
