@@ -3,7 +3,7 @@ package test.web;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import com.verifone.infra.EnvConfig;
+import com.codeborne.selenide.testng.SoftAsserts;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
@@ -22,17 +22,21 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.logging.Level;
 
+import static com.codeborne.selenide.AssertionMode.STRICT;
+
+@Listeners({ SoftAsserts.class })
 public abstract class BaseWebTest {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-    protected static EnvConfig envConfig;
-    protected EnvironmentConfig config;
+
     private XmlTest testngXml;
-    protected static ResourceBundle testData;
+    protected EnvironmentConfig config;
+    protected ResourceBundle testData;
+    protected String env;
 
     @BeforeSuite
     @Parameters({"browserName", "headless"})
-    public void beforeSuite(ITestContext context, String browserName, @Optional boolean headless) throws Exception {
+    public void beforeSuite(ITestContext context, String browserName, @Optional boolean headless) {
 //         Clear allure-results folder
         AllureCommon.deleteAllureResults();
 
@@ -43,9 +47,7 @@ public abstract class BaseWebTest {
                         .enableLogs(LogType.BROWSER, Level.ALL)); // Add browser logs to report
 
         config = ConfigFactory.create(EnvironmentConfig.class);
-        envConfig = new EnvConfig(config.env(), config.portal());
         testngXml = context.getCurrentXmlTest();
-        testData = ResourceBundle.getBundle("testData/" + config.env().toLowerCase());
 
         // Download relevant driver (geckodriver/chromedriver) and set up browser
         WebDriverManager.downloadDriver(browserName);
@@ -53,6 +55,8 @@ public abstract class BaseWebTest {
         DesiredCapabilities caps = driverSetup.getCapabilities(browserName);
 
         // Selenide configuration
+        Configuration.reportsFolder = "allure-results/attachments";
+        Configuration.screenshots = true;
         Configuration.timeout = 40000;
         Configuration.browserCapabilities = caps;
         Configuration.headless = headless;
@@ -61,22 +65,30 @@ public abstract class BaseWebTest {
         Configuration.browser = WebDriverSetup.class.getName();
     }
 
+    @BeforeClass
+    @Parameters("env")
+    public void initializeVars(String env) {
+        this.env = env;
+        testData = ResourceBundle.getBundle("testData/" + env.toLowerCase());
+    }
+
     @BeforeMethod
-    public void setUp(Method method) {
+    public void openBrowser(Method method) {
+        Configuration.assertionMode = STRICT;
         logger.info("----- Start WebDriver for test: " + method.getName() + " -----");
     }
 
     @AfterMethod
-    public void tearDown(Method method) {
+    public void closeBrowser(Method method) {
         logger.info("----- Close WebDriver for test: " + method.getName() + "-----");
         if (WebDriverRunner.hasWebDriverStarted())
             WebDriverRunner.closeWebDriver();
     }
 
     @AfterSuite (alwaysRun = true)
-    public void afterSuite() {
+    public void addPropsToReport() {
         Properties props = new Properties();
-        props.setProperty("Env URL", config.url());
+        props.setProperty("Env URL", this.env);
         Map<String, String> params = testngXml.getAllParameters();
         for (Map.Entry<String,String> param : params.entrySet())
             props.setProperty(param.getKey(), param.getValue());

@@ -1,13 +1,12 @@
 package test.web.settings;
 
-import com.verifone.infra.User;
 import io.qameta.allure.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import web.pages.HomePage;
-import web.pages.LoginPage;
-import web.pages.settings.UsersPage;
+import web.merchant.pages.HomePage;
+import web.LoginPage;
+import web.merchant.pages.settings.UsersPage;
 import test.web.BaseWebTest;
 import utils.mock.UserMock;
 
@@ -15,14 +14,12 @@ import static com.codeborne.selenide.Condition.*;
 
 public class UsersPageTest extends BaseWebTest {
 
-    private User merchant;
     private UserMock userMock;
     private UsersPage usersPage;
     private int testUserIndex = 0;
 
     @BeforeClass (description = "Get test data")
     public void getTestData() {
-        merchant = envConfig.getCredentials().getVFMPMer();
         userMock = new UserMock();
     }
 
@@ -33,7 +30,7 @@ public class UsersPageTest extends BaseWebTest {
         usersPage = new UsersPage();
 
         loginPage.navigate();
-        loginPage.doLogin(merchant);
+        loginPage.doLogin(testData.getString("MerchantEmail"), testData.getString("MerchantPassword"));
         // TODO Uncomment after adding route
 //        usersPage.navigate();
         homePage.mainMenu.clickSettings();
@@ -46,8 +43,8 @@ public class UsersPageTest extends BaseWebTest {
     @Severity(SeverityLevel.NORMAL)
     public void userInformation() {
         usersPage.getUserAvatars().get(testUserIndex).shouldBe(visible);
-        usersPage.getUserNames().get(testUserIndex).should(exist).shouldHave(textCaseSensitive(userMock.getUsername()));
-        usersPage.getUserEmails().get(testUserIndex).should(exist).shouldHave(textCaseSensitive(userMock.getEmail()));
-        usersPage.getUserRoles().get(testUserIndex).should(exist).shouldHave(textCaseSensitive(userMock.getRole()));
+        usersPage.getUserNames().get(testUserIndex).should(exist).shouldHave(exactText(userMock.getUsername()));
+        usersPage.getUserEmails().get(testUserIndex).should(exist).shouldHave(exactText(userMock.getEmail()));
+        usersPage.getUserRoles().get(testUserIndex).should(exist).shouldHave(exactText(userMock.getRole()));
     }
 }

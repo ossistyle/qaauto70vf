@@ -1,4 +1,4 @@
-package web.pages;
+package web;
 
 import com.codeborne.selenide.Configuration;
 import org.slf4j.Logger;

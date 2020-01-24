@@ -1,8 +1,7 @@
-package web.pages;
+package web;
 
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
-import com.verifone.infra.User;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.exist;
@@ -93,9 +92,9 @@ public class LoginPage extends BaseWebPage {
         loginButton.should(exist).click();
     }
 
-    public void doLogin(User user) {
-        enterUsername(user.getUserName());
-        enterPassword(user.getPassword());
+    public void doLogin(String username, String password) {
+        enterUsername(username);
+        enterPassword(password);
         clickLogin();
     }
 

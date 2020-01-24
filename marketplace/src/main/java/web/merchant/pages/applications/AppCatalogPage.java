@@ -1,12 +1,12 @@
-package web.pages.applications;
+package web.merchant.pages.applications;
 
 
-import web.components.MainMenu;
-import web.components.applications.catalog.CardsViewTable;
-import web.components.applications.catalog.GridViewTable;
-import web.components.applications.catalog.QuickView;
-import web.components.applications.common.FilterPanel;
-import web.pages.BaseWebPage;
+import web.merchant.components.MainMenu;
+import web.merchant.components.applications.catalog.CardsViewTable;
+import web.merchant.components.applications.catalog.GridViewTable;
+import web.merchant.components.applications.catalog.QuickView;
+import web.merchant.components.applications.common.FilterPanel;
+import web.BaseWebPage;
 
 public class AppCatalogPage extends BaseWebPage {
 

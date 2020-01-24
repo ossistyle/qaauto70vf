@@ -12,8 +12,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.textCaseSensitive;
+import static com.codeborne.selenide.Condition.*;
 
 public class AppDetailsPageTest extends BaseTest {
 
@@ -51,8 +50,8 @@ public class AppDetailsPageTest extends BaseTest {
     @Severity (SeverityLevel.NORMAL)
     @Description ("User be able to see app details: name, id, description on the App details page")
     public void applicationDetailsUI() {
-        appDetailsPage.getAppName().should(exist).shouldHave(textCaseSensitive(app.getName()));
-        appDetailsPage.getAppId().should(exist).shouldHave(textCaseSensitive(app.getMarketplaceAppId()));
-        appDetailsPage.getAppDescription().should(exist).shouldHave(textCaseSensitive(app.getDescription()));
+        appDetailsPage.getAppName().should(exist).shouldHave(exactText(app.getName()));
+        appDetailsPage.getAppId().should(exist).shouldHave(exactText(app.getMarketplaceAppId()));
+        appDetailsPage.getAppDescription().should(exist).shouldHave(exactText(app.getDescription()));
     }
 }

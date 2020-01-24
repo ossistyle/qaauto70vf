@@ -1,9 +1,9 @@
-package web.pages.applications;
+package web.merchant.pages.applications;
 
 import com.codeborne.selenide.SelenideElement;
-import web.components.MainMenu;
+import web.merchant.components.MainMenu;
 import io.qameta.allure.Step;
-import web.pages.BaseWebPage;
+import web.BaseWebPage;
 
 import static com.codeborne.selenide.Selenide.$;
 

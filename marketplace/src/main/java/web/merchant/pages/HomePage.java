@@ -1,7 +1,8 @@
-package web.pages;
+package web.merchant.pages;
 
 import com.codeborne.selenide.SelenideElement;
-import web.components.MainMenu;
+import web.merchant.components.MainMenu;
+import web.BaseWebPage;
 
 import static com.codeborne.selenide.Selenide.$x;
 

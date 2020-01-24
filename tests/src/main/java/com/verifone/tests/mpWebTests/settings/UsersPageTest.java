@@ -47,8 +47,8 @@ public class UsersPageTest extends BaseTest {
     @Description("User be able to see app user avatars, names, emails and roles on the Users page")
     public void userInformationUI() {
         usersPage.getUserAvatars().get(testUserIndex).shouldBe(visible);
-        usersPage.getUserNames().get(testUserIndex).should(exist).shouldHave(textCaseSensitive(userMock.getUsername()));
-        usersPage.getUserEmails().get(testUserIndex).should(exist).shouldHave(textCaseSensitive(userMock.getEmail()));
-        usersPage.getUserRoles().get(testUserIndex).should(exist).shouldHave(textCaseSensitive(userMock.getRole()));
+        usersPage.getUserNames().get(testUserIndex).should(exist).shouldHave(exactText(userMock.getUsername()));
+        usersPage.getUserEmails().get(testUserIndex).should(exist).shouldHave(exactText(userMock.getEmail()));
+        usersPage.getUserRoles().get(testUserIndex).should(exist).shouldHave(exactText(userMock.getRole()));
     }
 }

@@ -1,8 +1,8 @@
-package web.pages.settings;
+package web.merchant.pages.settings;
 
 import com.codeborne.selenide.ElementsCollection;
 import io.qameta.allure.Step;
-import web.pages.BaseWebPage;
+import web.BaseWebPage;
 
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.$$;

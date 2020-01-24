@@ -1,5 +1,6 @@
 package utils.driver;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverProvider;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -12,8 +13,6 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.logging.Level;
 
 import static com.codeborne.selenide.Browsers.CHROME;
@@ -32,16 +31,22 @@ public class WebDriverSetup implements WebDriverProvider {
         caps.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
 
         switch (caps.getBrowserName()) {
-            case CHROME:
-                Path profile = Paths.get("feqaautomation/marketplace/src/test/resources/chrome_options");
 
-                ChromeOptions chromeOpts = new ChromeOptions()
-                        .addArguments(String.format("user-data-dri=%s", profile))
-                        .addArguments("--incognito")
+            // Chrome configuration
+            case CHROME:
+                ChromeOptions chromeOpts = new ChromeOptions();
+                if (Configuration.headless)
+                    chromeOpts.addArguments("--headless");
+
+                chromeOpts.addArguments("--incognito")
                         .merge(caps);
                 return new ChromeDriver(chromeOpts);
+
+            // Firefox configuration
             default:
                 FirefoxOptions firefoxOpts = new FirefoxOptions();
+                if (Configuration.headless)
+                    firefoxOpts.addArguments("-headless");
                 caps.setCapability(FirefoxOptions.FIREFOX_OPTIONS, firefoxOpts);
                 return new FirefoxDriver(firefoxOpts);
         }

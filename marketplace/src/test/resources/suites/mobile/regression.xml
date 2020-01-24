@@ -2,7 +2,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Verifone Marketplace">
-    <!--Device UDID -->
+    <!-- Environment -->
+    <parameter name="env" value="dev"/>
+    <!-- Device UDID -->
     <parameter name="udid" value="emulator-5554"/>
     <!-- Device name -->
     <parameter name="deviceName" value="Carbon5 Emulator"/>
