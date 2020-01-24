@@ -54,7 +54,7 @@ public abstract class BaseMobileTest {
 
         // Selenide configuration
         Configuration.proxyHost = String.format("%s/wd/hub", testngXml.getParameter("server_url"));
-        Configuration.reportsFolder = "allure-results/attachments";
+        Configuration.reportsFolder = "target/allure-results/attachments";
         Configuration.startMaximized = false;
         Configuration.browserSize = null;
         Configuration.baseUrl = config.url();

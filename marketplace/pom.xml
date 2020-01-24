@@ -147,6 +147,9 @@
                 <env>DEV</env>
                 <portal>VFMPPortal</portal>
             </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
         <profile>
             <id>env_qa</id>

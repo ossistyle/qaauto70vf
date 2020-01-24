@@ -55,7 +55,7 @@ public abstract class BaseWebTest {
         DesiredCapabilities caps = driverSetup.getCapabilities(browserName);
 
         // Selenide configuration
-        Configuration.reportsFolder = "allure-results/attachments";
+        Configuration.reportsFolder = "target/allure-results/attachments";
         Configuration.screenshots = true;
         Configuration.timeout = 40000;
         Configuration.browserCapabilities = caps;
