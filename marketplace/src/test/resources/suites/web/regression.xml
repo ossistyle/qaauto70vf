@@ -5,6 +5,7 @@
 
     <parameter name="browserName" value="chrome"/>
     <parameter name="headless" value="true"/>
+    <parameter name="env" value="dev"/>
 
     <test name="Login tests">
         <classes>

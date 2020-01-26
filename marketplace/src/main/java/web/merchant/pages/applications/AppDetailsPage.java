@@ -1,16 +1,15 @@
-package web.pages.applications;
+package web.merchant.pages.applications;
 
 import com.codeborne.selenide.SelenideElement;
-import web.components.MainMenu;
+import web.merchant.components.MainMenu;
 import io.qameta.allure.Step;
-import web.pages.BaseWebPage;
+import web.BaseWebPage;
 
 import static com.codeborne.selenide.Selenide.$;
 
 public class AppDetailsPage extends BaseWebPage {
 
-    private final static String URL = null;
-    private final static String TITLE = "Marketplace";
+    private String url = null;
 
     public MainMenu mainMenu;
 
@@ -38,7 +37,8 @@ public class AppDetailsPage extends BaseWebPage {
     }
 
     public AppDetailsPage() {
-        super(URL);
+        super();
+        super.url = this.url;
         this.mainMenu = new MainMenu();
     }
 }

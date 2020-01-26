@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.verifonecp.merchant</groupId>
+    <groupId>com.verifonecp</groupId>
     <artifactId>marketplace</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -20,7 +20,6 @@
         <allure-commandline.version>2.13.1</allure-commandline.version>
         <owner.version>1.0.10</owner.version>
         <jackson-annotations.version>2.10.1</jackson-annotations.version>
-        <infra.version>3</infra.version>
     </properties>
 
     <!-- DEPENDENCIES -->
@@ -74,11 +73,6 @@
             <artifactId>allure-commandline</artifactId>
             <version>${allure-commandline.version}</version>
             <type>zip</type>
-        </dependency>
-        <dependency>
-            <groupId>com.verifone.infra</groupId>
-            <artifactId>infra</artifactId>
-            <version>${infra.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.aeonbits.owner/owner -->
         <dependency>
@@ -153,6 +147,9 @@
                 <env>DEV</env>
                 <portal>VFMPPortal</portal>
             </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
         <profile>
             <id>env_qa</id>

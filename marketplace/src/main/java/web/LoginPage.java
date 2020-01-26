@@ -1,18 +1,15 @@
-package web.pages;
+package web;
 
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
-import com.verifone.infra.User;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.*;
 
 public class LoginPage extends BaseWebPage {
 
-    private final static String URL = "";
-    private final static String TITLE = "Login with Verifone Identity Server";
+    private String url = "";
 
     private SelenideElement logoImage = $("div[class*=logo]");
     private SelenideElement loginTitle = $("h1[class*=verifone]");
@@ -95,9 +92,9 @@ public class LoginPage extends BaseWebPage {
         loginButton.should(exist).click();
     }
 
-    public void doLogin(User user) {
-        enterUsername(user.getUserName());
-        enterPassword(user.getPassword());
+    public void doLogin(String username, String password) {
+        enterUsername(username);
+        enterPassword(password);
         clickLogin();
     }
 
@@ -114,6 +111,7 @@ public class LoginPage extends BaseWebPage {
     }
 
     public LoginPage() {
-        super(URL);
+        super();
+        super.url = this.url;
     }
 }

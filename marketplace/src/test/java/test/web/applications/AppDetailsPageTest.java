@@ -1,31 +1,28 @@
 package test.web.applications;
 
-import com.verifone.infra.User;
 import io.qameta.allure.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import web.pages.HomePage;
-import web.pages.LoginPage;
-import web.pages.applications.AppCatalogPage;
-import web.pages.applications.AppDetailsPage;
+import web.merchant.pages.HomePage;
+import web.LoginPage;
+import web.merchant.pages.applications.AppCatalogPage;
+import web.merchant.pages.applications.AppDetailsPage;
 import test.web.BaseWebTest;
 import utils.mock.AppMock;
 
 import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.textCaseSensitive;
+import static com.codeborne.selenide.Condition.*;
 
 public class AppDetailsPageTest extends BaseWebTest {
 
     // TODO Replace mock data to data from API
     private AppMock app;
-    private User merchant;
 
     private AppDetailsPage appDetailsPage;
 
     @BeforeClass (description = "Get test data")
     public void getTestData() {
-        merchant = envConfig.getCredentials().getVFMPMer();
         app = new AppMock();
     }
 
@@ -37,7 +34,7 @@ public class AppDetailsPageTest extends BaseWebTest {
         appDetailsPage = new AppDetailsPage();
 
         loginPage.navigate();
-        loginPage.doLogin(merchant);
+        loginPage.doLogin(testData.getString("MerchantEmail"), testData.getString("MerchantPassword"));
         // TODO Uncomment after adding route
 //        appCatalogPage.navigate();
         homePage.mainMenu.clickApplications();
@@ -45,14 +42,13 @@ public class AppDetailsPageTest extends BaseWebTest {
         appCatalogPage.cardsViewTable.clickAppPageButton(0);
     }
 
-    @Test(description = "User be able to see app details: name, id, description on the App details page", groups = {"ui", "regression"}, testName = "App details test")
+    @Test(description = "User be able to see app details: name, id, description on the App details page", groups = {"ui", "regression"})
     @Feature ("")
     @Link ("")
     @Severity (SeverityLevel.NORMAL)
-    @Description ("User be able to see app details: name, id, description on the App details page")
-    public void applicationDetailsUI() {
-        appDetailsPage.getAppName().should(exist).shouldHave(textCaseSensitive(app.getName()));
-        appDetailsPage.getAppId().should(exist).shouldHave(textCaseSensitive(app.getMarketplaceAppId()));
-        appDetailsPage.getAppDescription().should(exist).shouldHave(textCaseSensitive(app.getDescription()));
+    public void applicationDetails() {
+        appDetailsPage.getAppName().should(exist).shouldHave(exactText(app.getName()));
+        appDetailsPage.getAppId().should(exist).shouldHave(exactText(app.getMarketplaceAppId()));
+        appDetailsPage.getAppDescription().should(exist).shouldHave(exactText(app.getDescription()));
     }
 }

@@ -1,17 +1,16 @@
-package web.pages.applications;
+package web.merchant.pages.applications;
 
 
-import web.components.MainMenu;
-import web.components.applications.catalog.CardsViewTable;
-import web.components.applications.catalog.GridViewTable;
-import web.components.applications.catalog.QuickView;
-import web.components.applications.common.FilterPanel;
-import web.pages.BaseWebPage;
+import web.merchant.components.MainMenu;
+import web.merchant.components.applications.catalog.CardsViewTable;
+import web.merchant.components.applications.catalog.GridViewTable;
+import web.merchant.components.applications.catalog.QuickView;
+import web.merchant.components.applications.common.FilterPanel;
+import web.BaseWebPage;
 
 public class AppCatalogPage extends BaseWebPage {
 
-    private final static String URL = "app-catalog";
-    private final static String TITLE = " Application Catalog ";
+    private final String url = "app-catalog";
 
     public MainMenu mainMenu;
     public FilterPanel filterPanel;
@@ -20,7 +19,8 @@ public class AppCatalogPage extends BaseWebPage {
     public GridViewTable gridViewTable;
 
     public AppCatalogPage() {
-        super(URL);
+        super();
+        super.url = this.url;
         this.mainMenu = new MainMenu();
         this.filterPanel = new FilterPanel();
         this.quickView = new QuickView();

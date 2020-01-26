@@ -1,5 +1,6 @@
-package web.pages;
+package web;
 
+import com.codeborne.selenide.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,10 +12,9 @@ public abstract class BaseWebPage {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public void navigate() {
+        logger.info(String.format("Navigate to: %s/%s", Configuration.baseUrl, this.url));
         open(this.url);
     }
 
-    protected BaseWebPage(String url) {
-        this.url = url;
-    }
+    protected BaseWebPage() {}
 }

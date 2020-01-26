@@ -41,7 +41,7 @@ public class LoginPageTest extends BaseTest {
     public void successfulLoginMobile() {
         loginPage.doLogin(merchant);
 
-        homePage.header.getTitle().should(exist).shouldBe(visible).shouldHave(textCaseSensitive("Home"));
+        homePage.header.getTitle().should(exist).shouldBe(visible).shouldHave(exactText("Home"));
     }
 
     @Test (description = "User won't be able logged in with empty credentials", groups = {"ui", "regression"}, testName = "Login with empty creds")
@@ -54,8 +54,8 @@ public class LoginPageTest extends BaseTest {
     public void unsuccessfulLoginWithEmptyCredentialsMobile() {
         loginPage.clickLogin();
 
-        loginPage.getUsernameFieldErrorMessage().shouldBe(visible).shouldHave(textCaseSensitive("This field is required."));
-        loginPage.getPasswordFieldErrorMessage().shouldBe(visible).shouldHave(textCaseSensitive("This field is required."));
+        loginPage.getUsernameFieldErrorMessage().shouldBe(visible).shouldHave(exactText("This field is required."));
+        loginPage.getPasswordFieldErrorMessage().shouldBe(visible).shouldHave(exactText("This field is required."));
     }
 
     @Test (description = "User be able to see 'This field is required.' error message after logging with empty username field", groups = {"ui", "regression"}, testName = "Login with empty username")
@@ -69,7 +69,7 @@ public class LoginPageTest extends BaseTest {
         loginPage.enterPassword(merchant.getPassword());
         loginPage.clickLogin();
 
-        loginPage.getUsernameFieldErrorMessage().shouldBe(visible).shouldHave(textCaseSensitive("This field is required."));
+        loginPage.getUsernameFieldErrorMessage().shouldBe(visible).shouldHave(exactText("This field is required."));
         loginPage.getPasswordFieldErrorMessage().shouldNot(exist);
     }
 
@@ -85,7 +85,7 @@ public class LoginPageTest extends BaseTest {
         loginPage.clickLogin();
 
         loginPage.getUsernameFieldErrorMessage().shouldNot(exist);
-        loginPage.getPasswordFieldErrorMessage().shouldBe(visible).shouldHave(textCaseSensitive("This field is required."));
+        loginPage.getPasswordFieldErrorMessage().shouldBe(visible).shouldHave(exactText("This field is required."));
     }
 
     @Test (description = "User be able to see 'Email has incorrect format. You can only use letters, numbers and symbols.' error message after logging with incorrect username format", groups = {"ui", "regression"}, testName = "Login with incorrect username format")
@@ -101,7 +101,7 @@ public class LoginPageTest extends BaseTest {
         loginPage.clickLogin();
 
         loginPage.getUsernameFieldErrorMessage().shouldBe(visible)
-                .shouldHave(textCaseSensitive("Email has incorrect format. You can only use letters, numbers and symbols."));
+                .shouldHave(exactText("Email has incorrect format. You can only use letters, numbers and symbols."));
     }
 
     @Test (description = "User be able to see title, email field, password field, forgot password link and login button on Login page", groups = {"ui", "regression"}, testName = "Login page elements")
@@ -113,11 +113,11 @@ public class LoginPageTest extends BaseTest {
     @Description ("User be able to see title, email field, password field, forgot password link and login button on Login page")
     public void presenceOfElementsMobile() {
         loginPage.getLogoImage().shouldBe(visible);
-        loginPage.getLoginTitle().shouldBe(visible).shouldHave(textCaseSensitive("Login to your\nVerifone Account"));
-        loginPage.getUsernameField().parent().shouldBe(visible).shouldHave(textCaseSensitive("Email Address"));
+        loginPage.getLoginTitle().shouldBe(visible).shouldHave(exactText("Login to your\nVerifone Account"));
+        loginPage.getUsernameField().parent().shouldBe(visible).shouldHave(exactText("Email Address"));
         loginPage.getPasswordField().parent().parent().shouldBe(visible).shouldHave(matchesText("Password"));
-        loginPage.getForgotPasswordLink().shouldBe(visible).shouldHave(textCaseSensitive("Forgot Password?"));
-        loginPage.getLoginButton().shouldBe(visible).shouldHave(textCaseSensitive("LOG IN"));
+        loginPage.getForgotPasswordLink().shouldBe(visible).shouldHave(exactText("Forgot Password?"));
+        loginPage.getLoginButton().shouldBe(visible).shouldHave(exactText("LOG IN"));
     }
 
     @Test (description = "User be able to Hide/show password", groups = {"ui", "regression"}, testName = "Hide/show password")

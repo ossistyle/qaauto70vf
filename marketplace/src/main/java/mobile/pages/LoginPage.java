@@ -2,7 +2,6 @@ package mobile.pages;
 
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
-import com.verifone.infra.User;
 import io.qameta.allure.Step;
 import mobile.MobilePage;
 
@@ -98,9 +97,9 @@ public class LoginPage extends MobilePage {
         loginButton.should(exist).click();
     }
 
-    public void doLogin(User user) {
-        enterUsername(user.getUserName());
-        enterPassword(user.getPassword());
+    public void doLogin(String email, String password) {
+        enterUsername(email);
+        enterPassword(password);
         clickLogin();
     }
 
