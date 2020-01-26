@@ -14,11 +14,13 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import test.api.BaseApiTest;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import static utils.allure.LogUtil.reportMessage;
 
-public class AddRemoveOneTimeAppFromDevice extends BaseApiTest {
+public class AddRemoveRecurringAppToList extends BaseApiTest {
 
     private String merchantToken;
     private Gson jsonParser = new Gson();
@@ -41,7 +43,7 @@ public class AddRemoveOneTimeAppFromDevice extends BaseApiTest {
     public void unassignAppPrecondition() throws Exception {
 
         //Unassign first app
-        ApiResponse getAppsAssignedDevices = deviceHandler.getDevicesWithAppId(merchantToken, testData.getString("merchant.Uuid"), testData.getString("oneTimeApp.assignTest"));
+        ApiResponse getAppsAssignedDevices = deviceHandler.getDevicesWithAppId(merchantToken, testData.getString("merchant.Uuid"), testData.getString("recurringApp.assignTest"));
         GetDevicesByAppResponse deviceByApp = jsonParser.fromJson(getAppsAssignedDevices.getResponseBody(), GetDevicesByAppResponse.class);
         if (deviceByApp.getNumberDevices() != 0) {
             for (Devices devices : deviceByApp.getData().get(0).getDevices()) {
@@ -49,17 +51,17 @@ public class AddRemoveOneTimeAppFromDevice extends BaseApiTest {
                 List<Pois> oneDevice = new ArrayList<>();
                 oneDevice.add(new Pois(devices.getDeviceId(), devices.getId()));
 
-                ApiResponse evaluateUnAssignFreeAppResponse = assignmentHandler.doEvaluationUnAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("oneTimeApp.assignTest"), oneDevice);
+                ApiResponse evaluateUnAssignFreeAppResponse = assignmentHandler.doEvaluationUnAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("recurringApp.assignTest"), oneDevice);
                 AssignToDeviceResponse evaluateUnAssignApp = jsonParser.fromJson(evaluateUnAssignFreeAppResponse.getResponseBody(), AssignToDeviceResponse.class);
                 offerId = evaluateUnAssignApp.getOfferId();
 
-                ApiResponse unAssignFreeAppResponse = assignmentHandler.doUnAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("oneTimeApp.assignTest"), offerId, oneDevice);
+                ApiResponse unAssignFreeAppResponse = assignmentHandler.doUnAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("recurringApp.assignTest"), offerId, oneDevice);
                 AssignToDeviceResponse unAssignApp = jsonParser.fromJson(unAssignFreeAppResponse.getResponseBody(), AssignToDeviceResponse.class);
 
-                reportMessage("Status of precondition unAssign free app with id-" + testData.getString("oneTimeApp.assignTest") + " is " + unAssignApp.getStatus());
+                reportMessage("Status of precondition unAssign free app with id-" + testData.getString("recurringApp.assignTest") + " is " + unAssignApp.getStatus());
             }
         } else if (deviceByApp.getNumberDevices() == 0) {
-            reportMessage("Precondition: App wasn't assigned. Id: " + testData.getString("oneTimeApp.assignTest"));
+            reportMessage("Precondition: App wasn't assigned. Id: " + testData.getString("recurringApp.assignTest"));
         }
 }
 
@@ -70,7 +72,7 @@ public class AddRemoveOneTimeAppFromDevice extends BaseApiTest {
         List<Pois> oneDevice = new ArrayList<>();
         oneDevice.add(new Pois(testData.getString("deviceId.assignTest.one"), testData.getString("id.assignTest.one")));
 
-        ApiResponse evaluateAssignFreeAppResponse = assignmentHandler.doEvaluationAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("oneTimeApp.assignTest"), oneDevice);
+        ApiResponse evaluateAssignFreeAppResponse = assignmentHandler.doEvaluationAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("recurringApp.assignTest"), oneDevice);
         AssignToDeviceResponse evaluateAssignApp = jsonParser.fromJson(evaluateAssignFreeAppResponse.getResponseBody(), AssignToDeviceResponse.class);
         offerId = evaluateAssignApp.getOfferId();
 
@@ -78,15 +80,15 @@ public class AddRemoveOneTimeAppFromDevice extends BaseApiTest {
         reportMessage("Price for the app is: " + evaluateAssignApp.getTotalPrice());
         reportMessage("Offer id is: " + evaluateAssignApp.getOfferId());
         Assert.assertEquals(evaluateAssignFreeAppResponse.getResponseCode().intValue(), 201, "Evaluate assign fail");
-        Assert.assertEquals(evaluateAssignApp.getTotalPrice(), "0.0", "price different from 0");
+        Assert.assertEquals(evaluateAssignApp.getTotalPrice(), "15.0", "price different from expected");
         Assert.assertEquals(evaluateAssignApp.getData().get(0).getLicensesToPurchase(), "0", "Licences different from 0");
 
-        ApiResponse assignFreeAppResponse = assignmentHandler.doAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("oneTimeApp.assignTest"), offerId, oneDevice);
+        ApiResponse assignFreeAppResponse = assignmentHandler.doAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("recurringApp.assignTest"), offerId, oneDevice);
         AssignToDeviceResponse assignToDeviceResponse = jsonParser.fromJson(assignFreeAppResponse.getResponseBody(), AssignToDeviceResponse.class);
 
-        Assert.assertEquals(assignToDeviceResponse.getData().get(0).getPrice(), 0.0, "price different from 0");
+        Assert.assertEquals(assignToDeviceResponse.getData().get(0).getPrice(), 15.0, "price different from 0");
         Assert.assertEquals(assignToDeviceResponse.getData().get(0).getDeploymentStatus(), "INSTALL_PENDING_APPMARKET", "Deployment status is incorrect");
-        reportMessage("Status of assignment of app " + testData.getString("oneTimeApp.assignTest") + " to device " + testData.getString("deviceId.assignTest.one") + "is: " + assignToDeviceResponse.getData().get(0).getAssignmentStatus());
+        reportMessage("Status of assignment of app " + testData.getString("recurringApp.assignTest") + " to device " + testData.getString("deviceId.assignTest.one") + "is: " + assignToDeviceResponse.getData().get(0).getAssignmentStatus());
 
     }
 
@@ -97,7 +99,7 @@ public class AddRemoveOneTimeAppFromDevice extends BaseApiTest {
         twoDevices.add(new Pois(testData.getString("deviceId.assignTest.one"), testData.getString("id.assignTest.one")));
         twoDevices.add(new Pois(testData.getString("deviceId.assignTest.two"), testData.getString("id.assignTest.two")));
 
-        ApiResponse evaluateAssignFreeAppResponse = assignmentHandler.doEvaluationAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("oneTimeApp.assignTest"), twoDevices);
+        ApiResponse evaluateAssignFreeAppResponse = assignmentHandler.doEvaluationAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("recurringApp.assignTest"), twoDevices);
         AssignToDeviceResponse evaluateAssignApp = jsonParser.fromJson(evaluateAssignFreeAppResponse.getResponseBody(), AssignToDeviceResponse.class);
 
         Assert.assertEquals(evaluateAssignFreeAppResponse.getResponseCode().intValue(), 400, "Test get incorrect status");
@@ -111,14 +113,14 @@ public class AddRemoveOneTimeAppFromDevice extends BaseApiTest {
         List<Pois> oneDevice = new ArrayList<>();
         oneDevice.add(new Pois(testData.getString("deviceId.assignTest.one"), testData.getString("id.assignTest.one")));
 
-        ApiResponse evaluateUnAssignFreeAppResponse = assignmentHandler.doEvaluationUnAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("oneTimeApp.assignTest"), oneDevice);
+        ApiResponse evaluateUnAssignFreeAppResponse = assignmentHandler.doEvaluationUnAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("recurringApp.assignTest"), oneDevice);
         AssignToDeviceResponse evaluateUnAssignApp = jsonParser.fromJson(evaluateUnAssignFreeAppResponse.getResponseBody(), AssignToDeviceResponse.class);
         offerId = evaluateUnAssignApp.getOfferId();
 
-        ApiResponse unAssignFreeAppResponse = assignmentHandler.doUnAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("oneTimeApp.assignTest"), offerId, oneDevice);
+        ApiResponse unAssignFreeAppResponse = assignmentHandler.doUnAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("recurringApp.assignTest"), offerId, oneDevice);
         AssignToDeviceResponse unAssignApp = jsonParser.fromJson(unAssignFreeAppResponse.getResponseBody(), AssignToDeviceResponse.class);
 
-        reportMessage("Status of precondition unAssign free app with id-" + testData.getString("oneTimeApp.assignTest") + " is " + unAssignApp.getStatus());
+        reportMessage("Status of precondition unAssign free app with id-" + testData.getString("recurringApp.assignTest") + " is " + unAssignApp.getStatus());
         }
 
     @Test(description = "Assign free app to List of devices",priority = 304)
@@ -128,7 +130,7 @@ public class AddRemoveOneTimeAppFromDevice extends BaseApiTest {
         twoDevices.add(new Pois(testData.getString("deviceId.assignTest.one"), testData.getString("id.assignTest.one")));
         twoDevices.add(new Pois(testData.getString("deviceId.assignTest.two"), testData.getString("id.assignTest.two")));
 
-        ApiResponse evaluateAssignFreeAppResponse = assignmentHandler.doEvaluationAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("oneTimeApp.assignTest"), twoDevices);
+        ApiResponse evaluateAssignFreeAppResponse = assignmentHandler.doEvaluationAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("recurringApp.assignTest"), twoDevices);
         AssignToDeviceResponse evaluateAssignApp = jsonParser.fromJson(evaluateAssignFreeAppResponse.getResponseBody(), AssignToDeviceResponse.class);
         offerId = evaluateAssignApp.getOfferId();
 
@@ -136,16 +138,16 @@ public class AddRemoveOneTimeAppFromDevice extends BaseApiTest {
         reportMessage("Price for the apps is: " + evaluateAssignApp.getTotalPrice());
         reportMessage("Offer id is: " + evaluateAssignApp.getOfferId());
         Assert.assertEquals(evaluateAssignFreeAppResponse.getResponseCode().intValue(), 201, "Evaluate assign to list fail");
-        Assert.assertEquals(evaluateAssignApp.getTotalPrice(), "0.0", "price different from 0");
+        Assert.assertEquals(evaluateAssignApp.getTotalPrice(), "30.0", "price different from expected");
         Assert.assertEquals(evaluateAssignApp.getData().get(0).getLicensesToPurchase(), "0", "Licences different from 0");
 
-        ApiResponse assignFreeAppResponse = assignmentHandler.doAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("oneTimeApp.assignTest"), offerId, twoDevices);
+        ApiResponse assignFreeAppResponse = assignmentHandler.doAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("recurringApp.assignTest"), offerId, twoDevices);
         AssignToDeviceResponse assignToDeviceResponse = jsonParser.fromJson(assignFreeAppResponse.getResponseBody(), AssignToDeviceResponse.class);
 
-        Assert.assertEquals(assignToDeviceResponse.getData().get(0).getPrice(), 0.0, "price different from 0");
+        Assert.assertEquals(assignToDeviceResponse.getData().get(0).getPrice(), 30.0, "price different from 0");
         Assert.assertEquals(assignToDeviceResponse.getData().get(0).getDeploymentStatus(), "INSTALL_PENDING_APPMARKET", "Deployment status is incorrect");
 
-        ApiResponse getAppsAssignedDevices = deviceHandler.getDevicesWithAppId(merchantToken, testData.getString("merchant.Uuid"), testData.getString("oneTimeApp.assignTest"));
+        ApiResponse getAppsAssignedDevices = deviceHandler.getDevicesWithAppId(merchantToken, testData.getString("merchant.Uuid"), testData.getString("recurringApp.assignTest"));
         GetDevicesByAppResponse deviceByApp = jsonParser.fromJson(getAppsAssignedDevices.getResponseBody(), GetDevicesByAppResponse.class);
         Assert.assertEquals(deviceByApp.getNumberDevices().intValue(), 2, "Number of devices different than expected 2");
         reportMessage("Number of devices with app assigned: " + deviceByApp.getNumberDevices().intValue());
@@ -161,7 +163,7 @@ public class AddRemoveOneTimeAppFromDevice extends BaseApiTest {
         twoDevices.add(new Pois(testData.getString("deviceId.assignTest.one"), testData.getString("id.assignTest.one")));
         twoDevices.add(new Pois(testData.getString("deviceId.assignTest.two"), testData.getString("id.assignTest.two")));
 
-        ApiResponse evaluateUnAssignFreeAppResponse = assignmentHandler.doEvaluationUnAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("oneTimeApp.assignTest"), twoDevices);
+        ApiResponse evaluateUnAssignFreeAppResponse = assignmentHandler.doEvaluationUnAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("recurringApp.assignTest"), twoDevices);
         AssignToDeviceResponse evaluateUnAssignApp = jsonParser.fromJson(evaluateUnAssignFreeAppResponse.getResponseBody(), AssignToDeviceResponse.class);
         offerId = evaluateUnAssignApp.getOfferId();
 
@@ -169,11 +171,11 @@ public class AddRemoveOneTimeAppFromDevice extends BaseApiTest {
         reportMessage("Price for the apps is: " + evaluateUnAssignApp.getTotalPrice());
         reportMessage("Offer id is: " + evaluateUnAssignApp.getOfferId());
 
-        ApiResponse unAssignFreeAppResponse = assignmentHandler.doUnAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("oneTimeApp.assignTest"), offerId, twoDevices);
+        ApiResponse unAssignFreeAppResponse = assignmentHandler.doUnAssignApp(merchantToken, testData.getString("merchant.Uuid"), testData.getString("recurringApp.assignTest"), offerId, twoDevices);
         AssignToDeviceResponse unAssignApp = jsonParser.fromJson(unAssignFreeAppResponse.getResponseBody(), AssignToDeviceResponse.class);
 
         Assert.assertEquals(unAssignFreeAppResponse.getResponseCode().intValue(), 201, "Unassigned app from list fail");
-        reportMessage("Status of precondition unAssign free app with id-" + testData.getString("oneTimeApp.assignTest") + " is " + unAssignApp.getStatus());
+        reportMessage("Status of precondition unAssign free app with id-" + testData.getString("recurringApp.assignTest") + " is " + unAssignApp.getStatus());
     }
 }
 

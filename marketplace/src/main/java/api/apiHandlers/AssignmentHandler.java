@@ -1,6 +1,7 @@
 package api.apiHandlers;
 
 import api.DTO.assign.AssignToDeviceRequestBody;
+import api.DTO.assign.Pois;
 import api.DTO.internalCustomObjects.ApiResponse;
 import api.helpers.UrlHelper.AssignmentUrlHelper;
 import io.qameta.allure.Step;
@@ -17,9 +18,9 @@ public class AssignmentHandler extends BaseApiHandler{
     }
 
     @Step
-    public ApiResponse doEvaluationAssignApp(String bearerToken, String merchantEntityUid, String appmarketAppId, String deviceId, String id) throws Exception {
+    public ApiResponse doEvaluationAssignApp(String bearerToken, String merchantEntityUid, String appmarketAppId, List<Pois> pois) throws Exception {
 
-        AssignToDeviceRequestBody requestBodyObject = new AssignToDeviceRequestBody(deviceId, id);
+        AssignToDeviceRequestBody requestBodyObject = new AssignToDeviceRequestBody(pois);
 
         List<Header> headers = new ArrayList<>();
         headers.add(new BasicHeader("Authorization", "Bearer " + bearerToken));
@@ -36,9 +37,9 @@ public class AssignmentHandler extends BaseApiHandler{
 
 
     @Step
-    public ApiResponse doAssignApp(String bearerToken, String merchantEntityUid, String appmarketAppId, String offerId, String deviceId,String id) throws Exception {
+    public ApiResponse doAssignApp(String bearerToken, String merchantEntityUid, String appmarketAppId, String offerId, List<Pois> pois) throws Exception {
 
-        AssignToDeviceRequestBody requestBodyObject = new AssignToDeviceRequestBody(offerId, deviceId, id);
+        AssignToDeviceRequestBody requestBodyObject = new AssignToDeviceRequestBody(offerId, pois);
 
         List<Header> headers = new ArrayList<>();
         headers.add(new BasicHeader("Authorization", "Bearer " + bearerToken));
@@ -55,9 +56,9 @@ public class AssignmentHandler extends BaseApiHandler{
 
 
     @Step
-    public ApiResponse doEvaluationUnAssignApp(String bearerToken, String merchantEntityUid, String appmarketAppId, String deviceId,String id) throws Exception {
+    public ApiResponse doEvaluationUnAssignApp(String bearerToken, String merchantEntityUid, String appmarketAppId, List<Pois> pois) throws Exception {
 
-        AssignToDeviceRequestBody requestBodyObject = new AssignToDeviceRequestBody(deviceId, id);
+        AssignToDeviceRequestBody requestBodyObject = new AssignToDeviceRequestBody(pois);
 
         List<Header> headers = new ArrayList<>();
         headers.add(new BasicHeader("Authorization", "Bearer " + bearerToken));
@@ -74,9 +75,9 @@ public class AssignmentHandler extends BaseApiHandler{
 
 
     @Step
-    public ApiResponse doUnAssignApp(String bearerToken, String merchantEntityUid, String appmarketAppId, String offerId, String deviceId,String id) throws Exception {
+    public ApiResponse doUnAssignApp(String bearerToken, String merchantEntityUid, String appmarketAppId, String offerId, List<Pois> pois) throws Exception {
 
-        AssignToDeviceRequestBody requestBodyObject = new AssignToDeviceRequestBody(offerId, deviceId, id);
+        AssignToDeviceRequestBody requestBodyObject = new AssignToDeviceRequestBody(offerId, pois);
 
         List<Header> headers = new ArrayList<>();
         headers.add(new BasicHeader("Authorization", "Bearer " + bearerToken));

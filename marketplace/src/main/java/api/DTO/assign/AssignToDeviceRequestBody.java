@@ -1,15 +1,17 @@
 package api.DTO.assign;
 
+import java.util.List;
+
 public class AssignToDeviceRequestBody {
 
     private AssignToDeviceData data;
 
-    public AssignToDeviceRequestBody(String deviceId, String id) {
-        this.data = new AssignToDeviceData(deviceId, id);
+    public AssignToDeviceRequestBody(List<Pois> pois) {
+        this.data = new AssignToDeviceData( pois);
     }
 
-    public AssignToDeviceRequestBody(String offerId, String deviceId, String id) {
-        this.data = new AssignToDeviceData(offerId, deviceId, id);
+    public AssignToDeviceRequestBody(String offerId, List<Pois> pois) {
+        this.data = new AssignToDeviceData(offerId, pois);
     }
 
     public AssignToDeviceData getData() {

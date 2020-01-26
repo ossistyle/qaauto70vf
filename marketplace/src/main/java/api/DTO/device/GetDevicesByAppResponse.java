@@ -6,13 +6,13 @@ public class GetDevicesByAppResponse {
 
     private String status;
     private List<GetDeviceByAppData> data;
-    private Integer NumberDevices;
+    private Integer numberDevices;
     private LicensesData licensesData;
 
     public GetDevicesByAppResponse(String status, List<GetDeviceByAppData> data, Integer numberDevices, LicensesData licensesData) {
         this.status = status;
         this.data = data;
-        NumberDevices = numberDevices;
+        this.numberDevices = numberDevices;
         this.licensesData = licensesData;
     }
 
@@ -33,11 +33,11 @@ public class GetDevicesByAppResponse {
     }
 
     public Integer getNumberDevices() {
-        return NumberDevices;
+        return numberDevices;
     }
 
     public void setNumberDevices(Integer numberDevices) {
-        NumberDevices = numberDevices;
+        this.numberDevices = numberDevices;
     }
 
     public LicensesData getLicensesData() {

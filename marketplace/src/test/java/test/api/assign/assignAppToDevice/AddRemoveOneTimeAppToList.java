@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static utils.allure.LogUtil.reportMessage;
 
-public class AddRemoveOneTimeAppFromDevice extends BaseApiTest {
+public class AddRemoveOneTimeAppToList extends BaseApiTest {
 
     private String merchantToken;
     private Gson jsonParser = new Gson();

@@ -5,11 +5,19 @@ import java.util.List;
 public class AssignToDeviceResponse {
 
     private String status;
+    private List<Errors> errors;
     private List<AssignToDeviceResponseData> data;
     private String totalPrice;
     private String offerId;
     private List<Integer> statusCodes;
 
+    public List<Errors> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(List<Errors> errors) {
+        this.errors = errors;
+    }
 
     public String getTotalPrice() {
         return totalPrice;
