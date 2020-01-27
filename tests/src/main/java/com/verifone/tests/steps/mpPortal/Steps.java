@@ -124,6 +124,15 @@ public class Steps {
     }
 
     /**
+     * @author Prashant Lokhande
+     * This method describe to get the account credentials of Reseller Companies user
+     */
+    public static User createResellerCompaniesUser() {
+        User mpResellerCompanies = EntitiesFactory.getEntity("MPResellerCompanies");
+        return mpResellerCompanies;
+    }
+
+    /**
      * @author : Prashant Lokhande
      * This method described to create new assign user.
      */

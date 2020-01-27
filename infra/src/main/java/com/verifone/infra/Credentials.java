@@ -75,4 +75,8 @@ public class Credentials {
     public User getVFMPMer() {
         return new User(prop.getProperty(env + "VFMPMerEmail"), prop.getProperty(env + "VFMPMerPwd"));
     }
+
+    public User getMPResellerCompanies() {
+        return new User(prop.getProperty(env + "MPResellerCompaniesEmail"), prop.getProperty(env + "MPResellerCompaniesPwd"));
+    }
 }
