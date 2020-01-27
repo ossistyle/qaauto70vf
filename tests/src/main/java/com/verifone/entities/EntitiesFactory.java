@@ -82,6 +82,10 @@ public class EntitiesFactory {
             case "VFMPMer":
                 user = BaseTest.envConfig.getCredentials().getVFMPMer();
                 break;
+
+            case "MPResellerCompanies":
+                user = BaseTest.envConfig.getCredentials().getMPResellerCompanies();
+
         }
 
         System.out.println("User is: " + user.getUserName());

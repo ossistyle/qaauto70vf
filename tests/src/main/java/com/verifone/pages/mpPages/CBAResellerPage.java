@@ -1,6 +1,7 @@
 package com.verifone.pages.mpPages;
 
 import com.verifone.pages.BasePage;
+import com.verifone.tests.BaseTest;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 
@@ -10,6 +11,7 @@ public class CBAResellerPage extends BasePage {
 
     private final static String title = "Reseller - User";
     private final static String url = "";
+    private String resellerCompanyName = BaseTest.envConfig.getGroupInfo("MPResellerCompanyName");
 
     private By linkManage = By.xpath("//a[@class='ad-component--link ad-component_dropdown--trigger manage-link']");
     private By selectReseller = By.xpath("//a[@class='ad-component--link '][@href='/reseller']");
@@ -59,6 +61,10 @@ public class CBAResellerPage extends BasePage {
 
         testLog.info("--------------------------- Select Searched Companies ------------------------------");
         waitForLoader(searchBox);
+        sendKeys(searchBox, resellerCompanyName);
+        click(searchBtn);
+        waitForLoader(searchBox);
+
         scrollToElement(selectSearchedCompanies);
         click(selectSearchedCompanies);
     }

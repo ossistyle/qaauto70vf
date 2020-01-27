@@ -5,8 +5,7 @@ import com.verifone.pages.mpPages.CBAResellerPage;
 import com.verifone.tests.BaseTest;
 import org.testng.annotations.Test;
 
-import static com.verifone.tests.steps.mpPortal.Steps.createVHQMumbaiUser;
-import static com.verifone.tests.steps.mpPortal.Steps.loginCBA;
+import static com.verifone.tests.steps.mpPortal.Steps.*;
 
 public class ResellerManageCompanies extends BaseTest {
 
@@ -14,7 +13,7 @@ public class ResellerManageCompanies extends BaseTest {
     public void CBAResellerJoinTheCompanyTestUI() {
 
         // Login in to CBA Marketplace
-        loginCBA(createVHQMumbaiUser());
+        loginCBA(createResellerCompaniesUser());
 
         CBAResellerPage resellerPage = PageFactory.getCBAResellerPage();
         resellerPage.selectCompanies();
@@ -26,7 +25,7 @@ public class ResellerManageCompanies extends BaseTest {
     public void CBAResellerLeaveTheCompanyTestUI() {
 
         // Login in to CBA Marketplace
-        loginCBA(createVHQMumbaiUser());
+        loginCBA(createResellerCompaniesUser());
 
         CBAResellerPage resellerPage = PageFactory.getCBAResellerPage();
         resellerPage.selectCompanies();
