@@ -9,20 +9,20 @@
 
     <test name="Login tests">
         <classes>
-            <class name="test.web.LoginPageTest"/>
+            <class name="test.web.merchant.LoginPageTest"/>
         </classes>
     </test>
 
     <test name="Applications tests">
         <classes>
-            <class name="test.web.applications.AppCataloguePageTest"/>
-            <class name="test.web.applications.AppDetailsPageTest"/>
+            <class name="test.web.merchant.applications.AppCataloguePageTest"/>
+            <class name="test.web.merchant.applications.AppDetailsPageTest"/>
         </classes>
     </test>
 
     <test name="Settings tests">
         <classes>
-            <class name="test.web.settings.UsersPageTest"/>
+            <class name="test.web.merchant.settings.UsersPageTest"/>
         </classes>
     </test>
 </suite>

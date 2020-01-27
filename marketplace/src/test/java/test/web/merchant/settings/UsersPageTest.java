@@ -1,4 +1,4 @@
-package test.web.settings;
+package test.web.merchant.settings;
 
 import io.qameta.allure.*;
 import org.testng.annotations.BeforeClass;

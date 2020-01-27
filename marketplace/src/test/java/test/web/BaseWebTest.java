@@ -18,6 +18,7 @@ import utils.allure.LogType;
 import utils.config.EnvironmentConfig;
 import utils.driver.WebDriverManager;
 import utils.driver.WebDriverSetup;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.logging.Level;
@@ -36,9 +37,11 @@ public abstract class BaseWebTest {
 
     @BeforeSuite
     @Parameters({"browserName", "headless"})
-    public void beforeSuite(ITestContext context, String browserName, @Optional boolean headless) {
+    public void beforeSuite(ITestContext context, String browserName, @Optional boolean headless) throws IOException {
 //         Clear allure-results folder
         AllureCommon.deleteAllureResults();
+//         Create open_report.bat file in generate directory
+        AllureCommon.addAllureOpenFile();
 
         // Allure report configuration
         SelenideLogger.addListener("AllureSelenide",

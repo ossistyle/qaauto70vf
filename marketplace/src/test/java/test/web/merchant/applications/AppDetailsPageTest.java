@@ -1,4 +1,4 @@
-package test.web.applications;
+package test.web.merchant.applications;
 
 import io.qameta.allure.*;
 import org.testng.annotations.BeforeClass;

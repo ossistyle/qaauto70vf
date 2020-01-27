@@ -1,9 +1,10 @@
-package test.web;
+package test.web.merchant;
 
 import com.codeborne.selenide.Configuration;
 import io.qameta.allure.*;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import test.web.BaseWebTest;
 import web.merchant.pages.HomePage;
 import web.LoginPage;
 

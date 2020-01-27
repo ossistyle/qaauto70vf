@@ -1,4 +1,4 @@
-package test.web.applications;
+package test.web.merchant.applications;
 
 import io.qameta.allure.*;
 import org.testng.annotations.BeforeClass;
@@ -40,7 +40,7 @@ public class AppCataloguePageTest extends BaseWebTest {
         homePage.mainMenu.clickAppCatalogue();
     }
 
-    @Test (description = "User be able to see app images, app names, app descriptions on the App Catalog page > Card view test.web.applications", groups = {"ui", "regression"})
+    @Test (description = "User be able to see app images, app names, app descriptions on the App Catalog page > Card view test.web.merchant.applications", groups = {"ui", "regression"})
     @Epic ("")
     @Feature ("")
     @Link ("")
@@ -54,7 +54,7 @@ public class AppCataloguePageTest extends BaseWebTest {
                 .get(testAppIndex).should(exist).shouldHave(exactText(app.getDescription()));
     }
 
-    @Test (description = "User be able to see app images, app names, app descriptions on the App Catalog page > Grid view test.web.applications", groups = {"ui", "regression"})
+    @Test (description = "User be able to see app images, app names, app descriptions on the App Catalog page > Grid view test.web.merchant.applications", groups = {"ui", "regression"})
     @Feature ("")
     @Link ("")
     @Severity (SeverityLevel.NORMAL)

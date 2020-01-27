@@ -35,8 +35,10 @@ public class WebDriverSetup implements WebDriverProvider {
             // Chrome configuration
             case CHROME:
                 ChromeOptions chromeOpts = new ChromeOptions();
-                if (Configuration.headless)
+                if (Configuration.headless) {
                     chromeOpts.addArguments("--headless");
+                    chromeOpts.addArguments("--window-size=1920,1080");
+                }
 
                 chromeOpts.addArguments("--incognito")
                         .merge(caps);

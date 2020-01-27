@@ -37,8 +37,10 @@ public abstract class BaseMobileTest {
 
     @BeforeSuite
     public void beforeSuite(ITestContext context) {
-        // Clear allure-results folder
+//         Clear allure-results folder
         AllureCommon.deleteAllureResults();
+//         Create open_report.bat file in generate directory
+        AllureCommon.addAllureOpenFile();
 
         // Allure report configuration
         SelenideLogger.addListener("AllureSelenide",

@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
@@ -46,6 +47,30 @@ public abstract class AllureCommon {
             } catch (IOException | IllegalArgumentException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    /**
+     * Create open_report.bat file in generate directory
+     */
+    public static void addAllureOpenFile() {
+        String fileContent = "cd .. && allure generate --clean && allure open";
+        File currentDir = new File("");
+
+        Path path = Paths.get(currentDir.getAbsolutePath(), "/target/allure-results/_open_report.bat");
+
+        try {
+            LOGGER.info("Create open-report.bat file in " + path + "folder");
+            Files.createFile(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            LOGGER.info("Write into open-report.bat file: " + fileContent);
+            Files.write(path, fileContent.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
