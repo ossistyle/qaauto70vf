@@ -65,7 +65,7 @@ public class AddRemoveFreeAppToList extends BaseApiTest {
 
 
     @Test(description = "Assign free app to one device", priority = 301)
-    public void AssignFreeApp() throws Exception {
+    public void AssignApp() throws Exception {
 
         List<Pois> oneDevice = new ArrayList<>();
         oneDevice.add(new Pois(testData.getString("deviceId.assignTest.one"), testData.getString("id.assignTest.one")));

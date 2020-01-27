@@ -29,6 +29,8 @@
         <!--<class name="test.api.bundles.BundlesNegativeTests"/>
         <class name="test.api.bundles.BundlesSanityFlow"/>-->
             <class name="test.api.assign.assignAppToDevice.AddRemoveFreeAppToList"/>
+            <class name="test.api.assign.assignAppToDevice.AddRemoveOneTimeAppToList"/>
+            <class name="test.api.assign.assignAppToDevice.AddRemoveRecurringAppToList"/>
         </classes>
 
     </test>
