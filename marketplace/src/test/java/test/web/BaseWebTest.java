@@ -92,7 +92,6 @@ public abstract class BaseWebTest {
     @AfterSuite (alwaysRun = true)
     public void addPropsToReport() {
         Properties props = new Properties();
-        props.setProperty("Env URL", this.env);
         Map<String, String> params = testngXml.getAllParameters();
         for (Map.Entry<String,String> param : params.entrySet())
             props.setProperty(param.getKey(), param.getValue());

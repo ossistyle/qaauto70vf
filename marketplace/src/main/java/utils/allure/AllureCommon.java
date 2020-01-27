@@ -15,13 +15,14 @@ import java.util.Properties;
 public abstract class AllureCommon {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AllureCommon.class);
+    private static final String ALLURE_RESULTS_FOLDER = "target/allure-results";
 
     /**
      * Create environment.properties file for Allure report
      * @param props Properties
      */
     public static void addAllureEnvProperties(Properties props) {
-        File f = new File("target/allure-results/environment.properties");
+        File f = new File(ALLURE_RESULTS_FOLDER + "/environment.properties");
 
         try {
             if (f.createNewFile()) {
@@ -39,11 +40,10 @@ public abstract class AllureCommon {
      * Clear target/allure-results folder
      */
     public static void deleteAllureResults() {
-        String allureResultsFolder = "target/allure-results";
-        if (Files.exists(Paths.get(allureResultsFolder))) {
+        if (Files.exists(Paths.get(ALLURE_RESULTS_FOLDER))) {
             try {
-                LOGGER.info(String.format("Cleaning %s folder", allureResultsFolder));
-                FileUtils.cleanDirectory(new File(allureResultsFolder));
+                LOGGER.info(String.format("Cleaning %s folder", ALLURE_RESULTS_FOLDER));
+                FileUtils.cleanDirectory(new File(ALLURE_RESULTS_FOLDER));
             } catch (IOException | IllegalArgumentException e) {
                 e.printStackTrace();
             }
@@ -54,17 +54,20 @@ public abstract class AllureCommon {
      * Create open_report.bat file in generate directory
      */
     public static void createAllureOpenBatFile() {
-        String fileContent = "cd .. && allure generate --clean && allure open";
-        File currentDir = new File("");
-
-        Path path = Paths.get(currentDir.getAbsolutePath(), "/target/allure-results/_open_report.bat");
+        String script = "cd .. && allure generate --clean && allure open";
+        Path path = Paths.get(ALLURE_RESULTS_FOLDER, "_open_report.bat");
 
         try {
-            LOGGER.info("Create open-report.bat file in " + path + "folder");
+            // Create allure-results dir if not exists
+            if (!Files.exists(Paths.get(ALLURE_RESULTS_FOLDER))) {
+                Files.createDirectory(Paths.get(ALLURE_RESULTS_FOLDER));
+            }
+
+            LOGGER.info("Create open-report.bat file in " + ALLURE_RESULTS_FOLDER + "folder");
             Files.createFile(path);
 
-            LOGGER.info("Write into open-report.bat file: " + fileContent);
-            Files.write(path, fileContent.getBytes());
+            LOGGER.info("Write into open-report.bat file: " + script);
+            Files.write(path, script.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
