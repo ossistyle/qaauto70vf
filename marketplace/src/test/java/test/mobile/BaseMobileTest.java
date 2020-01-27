@@ -40,7 +40,7 @@ public abstract class BaseMobileTest {
 //         Clear allure-results folder
         AllureCommon.deleteAllureResults();
 //         Create open_report.bat file in generate directory
-        AllureCommon.addAllureOpenFile();
+        AllureCommon.createAllureOpenBatFile();
 
         // Allure report configuration
         SelenideLogger.addListener("AllureSelenide",

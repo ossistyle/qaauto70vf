@@ -53,7 +53,7 @@ public abstract class AllureCommon {
     /**
      * Create open_report.bat file in generate directory
      */
-    public static void addAllureOpenFile() {
+    public static void createAllureOpenBatFile() {
         String fileContent = "cd .. && allure generate --clean && allure open";
         File currentDir = new File("");
 
@@ -62,11 +62,7 @@ public abstract class AllureCommon {
         try {
             LOGGER.info("Create open-report.bat file in " + path + "folder");
             Files.createFile(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        try {
             LOGGER.info("Write into open-report.bat file: " + fileContent);
             Files.write(path, fileContent.getBytes());
         } catch (IOException e) {
