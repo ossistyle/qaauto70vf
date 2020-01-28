@@ -1,0 +1,28 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Verifone Marketplace">
+
+    <parameter name="browserName" value="chrome"/>
+    <parameter name="headless" value="true"/>
+    <parameter name="env" value="dev"/>
+
+    <test name="Login tests">
+        <classes>
+            <class name="test.web.merchant.LoginPageTest"/>
+        </classes>
+    </test>
+
+    <test name="Applications tests">
+        <classes>
+            <class name="test.web.merchant.applications.AppCataloguePageTest"/>
+            <class name="test.web.merchant.applications.AppDetailsPageTest"/>
+        </classes>
+    </test>
+
+    <test name="Settings tests">
+        <classes>
+            <class name="test.web.merchant.settings.UsersPageTest"/>
+        </classes>
+    </test>
+</suite>

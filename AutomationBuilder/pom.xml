@@ -16,6 +16,7 @@
     <modules>
         <module>../tests</module>
         <module>../infra</module>
+        <module>../marketplace</module>
     </modules>
 
 </project>

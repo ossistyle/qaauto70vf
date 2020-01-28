@@ -1,0 +1,36 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="VF AppMarket API E2E Tests">
+
+    <!--Set Env Variable: -->
+    <!--QA-->
+    <!--DEV-->
+    <!--<parameter name="env" value="QA"/>-->
+    <parameter name="env" value="QA"/>
+
+    <!--Set Portal Variable: -->
+    <!--CPPortal-->
+    <!--CGPortal-->
+    <!--EOAdmin-->
+    <parameter name="portal" value="CPPortal"/>
+
+    <test name="Automation Tests">
+        <!--Set Browser Variable:-->
+        <!--CHROME-->
+        <!--FF-->
+        <!--EDGE-->
+        <!--IE-->
+        <!--<parameter name="eoId" value="0a79306b-7b84-4aec-8f4f-d472662cbdf2"/>
+        <parameter name="eoUserName" value="vfameo@getnada.com"/>
+        <parameter name="eoPassword" value="Veri1234"/>-->
+
+        <classes>
+            <class name="test.api.bundles.BundlesNegativeTests"/>
+            <class name="test.api.bundles.BundlesSanityFlow"/>
+
+        </classes>
+
+    </test>
+
+</suite> 

@@ -4,7 +4,6 @@ import com.verifone.pages.BasePage;
 import com.verifone.tests.BaseTest;
 import com.verifone.tests.mpTests.ZipArchiver;
 import org.apache.commons.io.FileUtils;
-import org.aspectj.util.FileUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;

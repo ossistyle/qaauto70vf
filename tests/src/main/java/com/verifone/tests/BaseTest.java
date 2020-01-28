@@ -8,9 +8,13 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import com.verifone.infra.EnvConfig;
 import com.verifone.infra.SeleniumUtils;
 import com.verifone.pages.BasePage;
+import com.verifone.utils.allure.AllureCommon;
+import com.verifone.utils.allure.AllureSelenide;
+import com.verifone.utils.allure.LogType;
 import com.verifone.utils.apiClient.BaseApi;
 import com.verifone.utils.apiClient.BaseDDTApi;
 import com.verifone.infra.AppiumDriverSetup;
@@ -26,10 +30,12 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
+import java.util.Properties;
+import java.util.logging.Level;
 
 import static com.codeborne.selenide.Selenide.open;
 import static com.verifone.tests.steps.Steps.getVersions;
-
 
 public abstract class BaseTest {
 
@@ -52,6 +58,11 @@ public abstract class BaseTest {
     @Parameters({"env", "portal", "getVersions"})
     @BeforeSuite
     public void beforeSuite(ITestContext context, String env, String portal, String getVersions) throws Exception {
+        SelenideLogger.addListener("AllureSelenide",
+                new AllureSelenide()
+                        .screenshots(true) // Add screenshot as attachments
+                        .enableLogs(LogType.BROWSER, Level.ALL)); // Add browser logs to report
+
         testngXml = context.getCurrentXmlTest();
 //        new File(reportDirectory).mkdir();
         extent = ExtentManager.createInstance(reportLocation);
@@ -60,7 +71,7 @@ public abstract class BaseTest {
         setEnv(env, portal);
 
         Configuration.baseUrl = envConfig.getWebUrl();
-        Configuration.timeout = 40000;
+        Configuration.timeout = 15000;
 
         if (getVersions.equalsIgnoreCase("true")) {
             ExtentTest parent = extent.createTest("Get Versions");
@@ -160,6 +171,15 @@ public abstract class BaseTest {
         extent.flush();
     }
 
+    @AfterSuite
+    public void afterSuite() {
+        Properties props = new Properties();
+        props.setProperty("Env URL", envConfig.getWebUrl());
+        Map<String, String> params = testngXml.getAllParameters();
+        for (Map.Entry<String,String> param : params.entrySet())
+            props.setProperty(param.getKey(), param.getValue());
+        AllureCommon.addAllureEnvProperties(props);
+    }
 }
 
 
