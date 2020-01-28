@@ -87,6 +87,12 @@
             <artifactId>jackson-annotations</artifactId>
             <version>${jackson-annotations.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <!-- BUILD -->

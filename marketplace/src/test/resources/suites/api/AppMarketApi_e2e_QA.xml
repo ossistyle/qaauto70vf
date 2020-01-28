@@ -28,7 +28,6 @@
         <classes>
             <class name="test.api.bundles.BundlesNegativeTests"/>
             <class name="test.api.bundles.BundlesSanityFlow"/>
-
         </classes>
 
     </test>

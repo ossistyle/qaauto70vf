@@ -25,7 +25,7 @@ public class LoginHelper {
     public static String getAccessToken(String env, String username, String password) throws Exception {
         ResourceBundle testData = ResourceBundle.getBundle("testData/" + env.toLowerCase());
         String accessTokenUrl = "https://" + env + identityServerUrl;
-        if (StringUtils.equalsIgnoreCase("qa", env)) {
+
             String basicToken = generateBasicToken(testData.getString("client.id"), testData.getString("clien.secret"));
             List<Header> headers = new ArrayList<>();
 
@@ -41,9 +41,6 @@ public class LoginHelper {
             BaseApiHandler.reportRequestData(accessTokenUrl, authResponse, requestBody);
             return respObject.getAccess_token();
 
-        }
-
-        return "";
     }
 
     private static String generateBasicToken(String clientId, String clientSecret) {

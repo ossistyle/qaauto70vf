@@ -4,7 +4,7 @@
 <suite name="Verifone Marketplace">
 
     <parameter name="browserName" value="chrome"/>
-    <parameter name="headless" value="true"/>
+    <parameter name="headless" value="false"/>
     <parameter name="env" value="dev"/>
 
     <test name="Login tests">
