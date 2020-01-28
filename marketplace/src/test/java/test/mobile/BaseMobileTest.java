@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
 import org.testng.annotations.*;
+import org.testng.reporters.EmailableReporter2;
 import org.testng.xml.XmlTest;
 import utils.allure.AllureCommon;
 import utils.allure.AllureSelenide;
@@ -25,7 +26,7 @@ import java.util.logging.Level;
 
 import static com.codeborne.selenide.AssertionMode.STRICT;
 
-@Listeners({ SoftAsserts.class} )
+@Listeners({ SoftAsserts.class, EmailableReporter2.class })
 public abstract class BaseMobileTest {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());

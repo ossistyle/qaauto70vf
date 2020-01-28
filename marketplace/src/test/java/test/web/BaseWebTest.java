@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
 import org.testng.annotations.*;
 import org.testng.annotations.Optional;
+import org.testng.reporters.EmailableReporter2;
 import org.testng.xml.XmlTest;
 import utils.allure.AllureCommon;
 import utils.allure.AllureSelenide;
@@ -18,14 +19,13 @@ import utils.allure.LogType;
 import utils.config.EnvironmentConfig;
 import utils.driver.WebDriverManager;
 import utils.driver.WebDriverSetup;
-import java.io.*;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.logging.Level;
 
 import static com.codeborne.selenide.AssertionMode.STRICT;
 
-@Listeners({ SoftAsserts.class })
+@Listeners({ SoftAsserts.class, EmailableReporter2.class })
 public abstract class BaseWebTest {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -37,7 +37,7 @@ public abstract class BaseWebTest {
 
     @BeforeSuite
     @Parameters({"browserName", "headless"})
-    public void beforeSuite(ITestContext context, String browserName, @Optional boolean headless) throws IOException {
+    public void beforeSuite(ITestContext context, String browserName, @Optional boolean headless) {
 //         Clear allure-results folder
         AllureCommon.deleteAllureResults();
 //         Create open_report.bat file in generate directory
